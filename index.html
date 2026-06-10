@@ -1,639 +1,1070 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title> Stock Véhicules - Présence par site</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="manifest" href="manifest.json" />
+    <title>BNETD TRACKER | Gestion de parc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        * { box-sizing: border-box; font-family: system-ui, 'Segoe UI', Roboto, sans-serif; }
-        body { margin: 0; background: #f4f7fc; color: #1e293b; transition: all 0.2s; }
-        body.dark-mode { background: #0f172a; color: #e2e8f0; }
-        .dark-mode .card, .dark-mode .toolbar, .dark-mode .filter-bar, .dark-mode .vehicles-container, .dark-mode .add-section {
-            background: #1e293b; border-color: #334155;
-        }
-        header { background: #0f172a; color: white; padding: 1rem; text-align: center; }
-        h1 { margin: 0; font-size: 1.6rem; }
-        .toolbar {
-            display: flex; flex-wrap: wrap; gap: 10px; padding: 1rem;
-            background: white; border-bottom: 1px solid #ddd;
-            align-items: center; justify-content: space-between;
-        }
-        .btn-group { display: flex; flex-wrap: wrap; gap: 8px; }
-        button {
-            background: #2563eb; border: none; color: white; padding: 8px 16px;
-            border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 0.85rem;
-        }
-        button:hover { background: #1d4ed8; }
-        .btn-secondary { background: #475569; }
-        .filter-bar {
-            background: white; padding: 0.7rem 1rem; display: flex; flex-wrap: wrap;
-            gap: 15px; align-items: center; border-bottom: 1px solid #e2e8f0;
-        }
-        select, input[type="text"] { padding: 6px 12px; border-radius: 30px; border: 1px solid #cbd5e1; }
-        .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 1rem; }
-        .stat-card {
-            background: white; border-radius: 20px; padding: 10px 15px;
-            min-width: 120px; text-align: center; cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .stat-card:hover { transform: scale(1.02); background: #eef2ff; }
-        .vehicles-container, .add-section {
-            background: white; border-radius: 24px; margin: 1rem; padding: 1rem;
-        }
-        .vehicle-item {
-            display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
-            padding: 12px; border-bottom: 1px solid #e2e8f0;
-        }
-        .vehicle-info { flex: 2; }
-        .vehicle-info strong { font-size: 1rem; display: block; }
-        select.site-select { width: 140px; }
-        .present-check { width: 22px; height: 22px; cursor: pointer; }
-        .photo-preview { max-width: 50px; max-height: 50px; border-radius: 8px; cursor: pointer; }
-        .small-btn { background: #f1f5f9; border: none; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; }
-        .add-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
-        .add-form input, .add-form select { padding: 8px; border-radius: 20px; border: 1px solid #ccc; }
-        footer { text-align: center; font-size: 0.75rem; padding: 1rem; color: #64748b; }
-        @media (max-width: 700px) {
-            .vehicle-item { flex-direction: column; align-items: stretch; }
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .btn-group { justify-content: center; }
-        }
-        .dark-toggle { background: #334155; margin-left: auto; }
-        .filter-site-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-        .detail-line { font-size: 0.8rem; color: #475569; }
-        .dark-mode .detail-line { color: #cbd5e1; }
-        .backup-info {
-            font-size: 0.7rem;
-            padding: 4px 8px;
-            background: #e0e7ff;
-            border-radius: 20px;
-            color: #1e40af;
-        }
-        .dark-mode .backup-info { background: #1e3a5f; color: #93c5fd; }
+      /* ========== DESIGN PROFESSIONNEL SOBRE ========== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        background: #f4f6f9;
+        color: #1a2c3e;
+        line-height: 1.4;
+      }
+
+      /* Header professionnel */
+      header {
+        background: #0a2942;
+        color: white;
+        padding: 0.8rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        border-bottom: 1px solid #1e4a6e;
+      }
+
+      header h1 {
+        font-size: 1.3rem;
+        font-weight: 500;
+        letter-spacing: -0.3px;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+
+      header h1 i {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+
+      /* Boutons */
+      .btn-primary, .btn-secondary, .btn-danger {
+        border: none;
+        padding: 0.45rem 1rem;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 0.85rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s ease;
+        font-family: inherit;
+      }
+
+      .btn-primary {
+        background: #2c5f8a;
+        color: white;
+      }
+      .btn-primary:hover {
+        background: #1e4668;
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: #eef2f5;
+        color: #2c5f8a;
+        border: 1px solid #dce4ec;
+      }
+      .btn-secondary:hover {
+        background: #e2e8ef;
+      }
+
+      .btn-danger {
+        background: #dc3545;
+        color: white;
+      }
+      .btn-danger:hover {
+        background: #b02a37;
+      }
+
+      /* Onglets */
+      .tabs {
+        display: flex;
+        gap: 0.2rem;
+        background: white;
+        padding: 0 1.5rem;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .tab-btn {
+        background: none;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        font-weight: 500;
+        font-size: 0.9rem;
+        cursor: pointer;
+        color: #5a6e7c;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .tab-btn.active {
+        color: #2c5f8a;
+        border-bottom: 2px solid #2c5f8a;
+        font-weight: 600;
+      }
+
+      /* Panneaux */
+      .dashboard {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        max-width: 1600px;
+        margin: 0 auto;
+      }
+      .vehicle-list-panel, .vehicle-detail-panel {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        border: 1px solid #eef2f6;
+        overflow-y: auto;
+      }
+      .vehicle-list-panel {
+        flex: 1.2;
+        min-width: 300px;
+        padding: 1.2rem;
+        height: calc(100vh - 110px);
+      }
+      .vehicle-detail-panel {
+        flex: 3;
+        min-width: 400px;
+        padding: 1.5rem;
+        height: calc(100vh - 110px);
+      }
+
+      /* Filtres */
+      .search-filter {
+        display: flex;
+        gap: 0.7rem;
+        margin-bottom: 1.2rem;
+        flex-wrap: wrap;
+      }
+      .search-filter input, .search-filter select {
+        flex: 1;
+        padding: 0.5rem 0.8rem;
+        border: 1px solid #dce4ec;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        background: white;
+        font-family: inherit;
+      }
+      .search-filter input:focus, .search-filter select:focus {
+        outline: none;
+        border-color: #2c5f8a;
+      }
+
+      /* Cartes véhicules - dimensions uniformes */
+      .vehicles-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .vehicle-card {
+        background: #fafcfd;
+        border-left: 3px solid #8aaec0;
+        padding: 0.8rem 1rem;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.15s;
+        border: 1px solid #edf2f6;
+        display: block;
+        width: 100%;
+      }
+      .vehicle-card.selected {
+        background: #f0f4f9;
+        border-left-color: #2c5f8a;
+        border-color: #d0e0ec;
+      }
+      .vehicle-card:hover {
+        background: #f5f8fb;
+      }
+      .vehicle-card h4 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .vehicle-card p {
+        font-size: 0.8rem;
+        color: #5a6e7c;
+        margin-bottom: 0.3rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .status-badge {
+        display: inline-block;
+        background: #eef2f5;
+        padding: 0.2rem 0.6rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        margin-top: 0.3rem;
+        color: #2c5f8a;
+      }
+      .vehicle-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.3rem;
+      }
+
+      /* Formulaires */
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      .form-group label {
+        font-weight: 500;
+        font-size: 0.8rem;
+        display: block;
+        margin-bottom: 0.3rem;
+        color: #2c3e4e;
+      }
+      .form-group input, .form-group select, .form-group textarea {
+        width: 100%;
+        padding: 0.5rem 0.8rem;
+        border: 1px solid #dce4ec;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.85rem;
+        background: white;
+      }
+      .form-row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.8rem;
+      }
+      .form-row .form-group {
+        flex: 1;
+        margin-bottom: 0;
+      }
+      .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 0.4rem;
+        max-height: 100px;
+        overflow-y: auto;
+        padding: 0.3rem;
+      }
+      .checkbox-group label {
+        font-weight: normal;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      /* Dashboard stats */
+      .dashboard-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .stat-card {
+        background: white;
+        border-radius: 16px;
+        padding: 1rem;
+        text-align: center;
+        border: 1px solid #eef2f6;
+      }
+      .stat-number {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #0a2942;
+        line-height: 1.2;
+      }
+      .stat-label {
+        font-size: 0.75rem;
+        color: #6c8396;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+      .alert-card {
+        background: #fefaf5;
+        border-left: 3px solid #e67e22;
+      }
+      .pending-list {
+        max-height: 200px;
+        overflow-y: auto;
+        text-align: left;
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+      }
+      .flex-btns {
+        display: flex;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        margin-top: 0.8rem;
+      }
+
+      /* Carte et photos */
+      .map-container {
+        height: 220px;
+        border-radius: 12px;
+        margin: 0.5rem 0 0.8rem;
+        background: #eef2f5;
+        border: 1px solid #e2e8f0;
+      }
+      .photo-preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+      .photo-preview img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+      }
+
+      /* Modale */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.4);
+        backdrop-filter: blur(2px);
+      }
+      .modal-content {
+        background: white;
+        margin: 10% auto;
+        width: 90%;
+        max-width: 500px;
+        border-radius: 20px;
+        padding: 1.5rem;
+        position: relative;
+      }
+      .close {
+        position: absolute;
+        right: 1.2rem;
+        top: 0.8rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #8aa0ae;
+      }
+
+      .placeholder {
+        text-align: center;
+        padding: 2rem;
+        color: #8aa0ae;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      /* Notification toast */
+      .toast-notification {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #2c5f8a;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        z-index: 2000;
+        animation: slideIn 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      }
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+
+      /* Responsive */
+      @media (max-width: 700px) {
+        .dashboard { flex-direction: column; }
+        .vehicle-list-panel, .vehicle-detail-panel { height: auto; max-height: 60vh; }
+        header { flex-direction: column; align-items: stretch; }
+      }
     </style>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0f172a">
-</head>
-<body>
-<header>
-    <h1> STOCK VEHICULES </h1>
-    <p>Import Odoo → cocher présence + assigner site → ajout manuel</p>
-</header>
+  </head>
+  <body>
+    <header>
+      <h1><i class="fas fa-chart-line"></i> BNETD TRACKER</h1>
+      <div style="display: flex; gap: 0.6rem; flex-wrap: wrap">
+        <button id="exportExcelBtn" class="btn-primary"><i class="fas fa-file-excel"></i> Excel</button>
+        <button id="exportPdfBtn" class="btn-primary"><i class="fas fa-file-pdf"></i> PDF</button>
+        <button id="importExcelBtn" class="btn-secondary"><i class="fas fa-file-import"></i> Importer Odoo</button>
+        <button id="backupDataBtn" class="btn-secondary"><i class="fas fa-download"></i> Sauvegarder</button>
+        <button id="restoreDataBtn" class="btn-secondary"><i class="fas fa-upload"></i> Restaurer</button>
+        <button id="addVehicleBtn" class="btn-primary"><i class="fas fa-plus"></i> Nouveau</button>
+      </div>
+    </header>
 
-<div class="toolbar">
-    <div class="btn-group">
-        <input type="file" id="excelInput" accept=".xlsx, .xls" style="display:none" />
-        <button id="importBtn"> Importer non livrés</button>
-        <button id="saveBackupBtn" style="background:#10b981;">💾 Sauvegarder l'état</button>
-        <button id="restoreBackupBtn" style="background:#f59e0b;">↩️ Restaurer</button>
-        <button id="resetCheckBtn" style="background:#ef4444;">🔄 Réinitialiser (cases)</button>
-        <button id="exportPresentExcel"> Tous présents (Excel)</button>
-        <button id="exportPresentPDF"> Tous présents (PDF)</button>
-        <button id="exportAbsentExcel"> Absents (Excel)</button>
-        <button id="exportAbsentPDF"> Absents (PDF)</button>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="list">📋 Liste & Détails</button>
+      <button class="tab-btn" data-tab="dashboard">📊 Tableau de bord</button>
     </div>
-    <button id="darkModeToggle" class="dark-toggle">🌙 Mode nuit</button>
-</div>
 
-<div class="filter-bar">
-    <div class="filter-site-row">
-        <label>📍 Filtrer par site :</label>
-        <select id="siteFilterSelect">
-            <option value="all">Tous les véhicules</option>
-            <option value="present_all">✅ Tous les présents</option>
-        </select>
-        <button id="exportSiteExcelBtn" class="btn-secondary"> Exporter ce site (Excel)</button>
-        <button id="exportSitePdfBtn" class="btn-secondary"> Exporter ce site (PDF)</button>
+    <main class="dashboard" id="mainContainer">
+      <div id="tab-list" style="display: flex; gap: 1.5rem; width: 100%; flex-wrap: wrap">
+        <aside class="vehicle-list-panel">
+          <div class="search-filter">
+            <input type="text" id="searchInput" placeholder="🔍 Plaque, client..." />
+            <select id="statusFilter">
+              <option value="all">Tous statuts</option>
+              <option value="Réceptionné">📥 Réceptionné</option>
+              <option value="Diagnostic en cours">🔧 Diagnostic</option>
+              <option value="En attente accord client">⏳ Attente accord</option>
+              <option value="Travaux en cours">⚙️ Travaux en cours</option>
+              <option value="Prêt pour livraison">✅ Prêt livraison</option>
+              <option value="Livré">🏁 Livré</option>
+            </select>
+          </div>
+          <div id="vehiclesList" class="vehicles-list">Chargement...</div>
+        </aside>
+        <section class="vehicle-detail-panel">
+          <div id="detailPlaceholder" class="placeholder">
+            <i class="fas fa-car-side" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+            <p>Sélectionnez un véhicule</p>
+          </div>
+          <div id="vehicleDetailForm" style="display: none"></div>
+        </section>
+      </div>
+
+      <div id="tab-dashboard" style="display: none; width: 100%">
+        <div class="dashboard-stats" id="statsContainer"></div>
+        <div class="dashboard-stats" id="pendingAccordContainer"></div>
+
+        <div class="stat-card alert-card" style="text-align: left;">
+          <div class="stat-label">⚠️ Véhicules SANS numéro d'intervention</div>
+          <div class="stat-number" id="countNoIntervention">0</div>
+          <div class="flex-btns">
+            <button id="exportNoInterventionExcel" class="btn-secondary"><i class="fas fa-file-excel"></i> Excel</button>
+            <button id="exportNoInterventionPdf" class="btn-secondary"><i class="fas fa-file-pdf"></i> PDF</button>
+          </div>
+        </div>
+
+        <div class="stat-card alert-card" style="text-align: left;">
+          <div class="stat-label">⏳ Véhicules non livrés depuis trop longtemps</div>
+          <div style="margin: 10px 0; display: flex; align-items: center; gap: 1rem;">
+            <select id="delaySelect" style="padding: 0.3rem; border-radius: 8px;">
+              <option value="7">+ d'1 semaine</option>
+              <option value="30" selected>+ d'1 mois</option>
+              <option value="365">+ d'1 an</option>
+            </select>
+            <span id="countOverdue" style="font-size: 1.5rem; font-weight: 600;">0</span>
+          </div>
+          <div id="overdueListPreview" class="pending-list"></div>
+          <div class="flex-btns">
+            <button id="exportOverdueExcel" class="btn-secondary"><i class="fas fa-file-excel"></i> Excel (retard)</button>
+            <button id="exportOverduePdf" class="btn-secondary"><i class="fas fa-file-pdf"></i> PDF (retard)</button>
+          </div>
+        </div>
+
+        <div class="stat-card" style="text-align: left;">
+          <div class="stat-label">📂 Exports spécifiques</div>
+          <div class="flex-btns">
+            <button id="exportLivresExcel" class="btn-secondary"><i class="fas fa-file-excel"></i> Excel - Livrés</button>
+            <button id="exportLivresPdf" class="btn-secondary"><i class="fas fa-file-pdf"></i> PDF - Livrés</button>
+            <button id="exportNonLivresExcel" class="btn-secondary"><i class="fas fa-file-excel"></i> Excel - Non livrés</button>
+            <button id="exportNonLivresPdf" class="btn-secondary"><i class="fas fa-file-pdf"></i> PDF - Non livrés</button>
+          </div>
+        </div>
+
+        <div id="chartContainer" style="background: white; border-radius: 16px; padding: 1rem; margin-top: 1rem; border: 1px solid #eef2f6;"></div>
+      </div>
+    </main>
+
+    <div id="addModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Nouveau véhicule</h2>
+        <form id="quickAddForm">
+          <input type="text" id="newPlaque" placeholder="Plaque *" required style="width:100%; padding:0.6rem; margin-bottom:0.8rem; border-radius:10px; border:1px solid #dce4ec;" />
+          <input type="text" id="newClient" placeholder="Client *" required style="width:100%; padding:0.6rem; margin-bottom:0.8rem; border-radius:10px; border:1px solid #dce4ec;" />
+          <input type="text" id="newModel" placeholder="Modèle" style="width:100%; padding:0.6rem; margin-bottom:1rem; border-radius:10px; border:1px solid #dce4ec;" />
+          <button type="submit" class="btn-primary" style="width:100%;">Créer</button>
+        </form>
+      </div>
     </div>
-    <div>
-        <label>🔍 Recherche :</label>
-        <input type="text" id="searchInput" placeholder="Immat, client, modèle...">
-        <span id="resultCount"></span>
-    </div>
-    <div id="backupInfo" class="backup-info">📦 Aucune sauvegarde</div>
-</div>
 
-<div id="statsContainer" class="stats"></div>
-
-<div class="vehicles-container">
-    <h2>📋 Liste des véhicules non livrés</h2>
-    <div id="listContainer">Chargement...</div>
-</div>
-
-<div class="add-section">
-    <h3>➕ Ajouter un véhicule trouvé sur site (hors liste Odoo)</h3>
-    <div class="add-form">
-        <input type="text" id="newImmat" placeholder="Immatriculation *" required>
-        <input type="text" id="newMarque" placeholder="Marque">
-        <input type="text" id="newModele" placeholder="Modèle">
-        <select id="newSite">
-            <option value="Garage 1">Garage 1</option>
-            <option value="Garage 2">Garage 2</option>
-            <option value="Garage 3">Garage 3</option>
-            <option value="Dépôt 1">Dépôt 1</option>
-            <option value="Dépôt Aéroport">Dépôt Aéroport</option>
-        </select>
-        <button id="addVehicleBtn">✅ Ajouter</button>
-    </div>
-</div>
-
-<footer>✅ Mode hors ligne actif | Dernière synchro : <span id="lastSync">jamais</span></footer>
-
-<script>
-    // ==================== CONFIGURATION ====================
-    const SITE_OPTIONS = ["Garage 1", "Garage 2", "Garage 3", "Dépôt 1", "Dépôt Aéroport"];
-    const STORAGE_BACKUP_KEY = "ronde_vehicules_backup";
-    
-    let db;
-    let allVehicles = [];
-    let currentSiteFilter = "all";
-    let currentSearch = "";
-    
-    // Éléments DOM
-    const statsContainer = document.getElementById("statsContainer");
-    const listContainer = document.getElementById("listContainer");
-    const siteFilterSelect = document.getElementById("siteFilterSelect");
-    const searchInput = document.getElementById("searchInput");
-    const resultCountSpan = document.getElementById("resultCount");
-    const lastSyncSpan = document.getElementById("lastSync");
-    const backupInfoSpan = document.getElementById("backupInfo");
-    
-    // ==================== INDEXEDDB ====================
-    function openDB() {
-        return new Promise((resolve, reject) => {
-            const req = indexedDB.open("RondePresenceDB", 6);
-            req.onerror = () => reject("DB error");
-            req.onsuccess = (e) => { db = e.target.result; resolve(); };
-            req.onupgradeneeded = (e) => {
-                const db = e.target.result;
-                if (!db.objectStoreNames.contains("vehicules")) {
-                    db.createObjectStore("vehicules", { keyPath: "id" });
-                }
-            };
-        });
-    }
-    
-    async function saveVehicle(vehicle) {
-        const tx = db.transaction("vehicules", "readwrite");
-        tx.objectStore("vehicules").put(vehicle);
-        return tx.complete;
-    }
-    
-    async function saveMultipleVehicles(vehicles) {
-        const tx = db.transaction("vehicules", "readwrite");
-        const store = tx.objectStore("vehicules");
-        for (let v of vehicles) store.put(v);
-        return tx.complete;
-    }
-    
-    async function getAllVehicles() {
-        return new Promise((resolve) => {
-            const tx = db.transaction("vehicules", "readonly");
-            const req = tx.objectStore("vehicules").getAll();
-            req.onsuccess = () => resolve(req.result || []);
-        });
-    }
-    
-    async function clearVehicles() {
-        const tx = db.transaction("vehicules", "readwrite");
-        tx.objectStore("vehicules").clear();
-        return tx.complete;
-    }
-    
-    // ==================== SAUVEGARDE / RESTAURATION ====================
-    function saveBackup() {
-        const backup = allVehicles.map(v => ({
-            id: v.id,
-            immat: v.immat,
-            present: v.present,
-            site: v.site,
-            lastSeen: v.lastSeen,
-            photo: v.photo,
-            isCustom: v.isCustom,
-            client: v.client,
-            marque: v.marque,
-            modele: v.modele,
-            refCommande: v.refCommande,
-            typeMaintenance: v.typeMaintenance
-        }));
-        localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(backup));
-        const backupDate = new Date().toLocaleString();
-        backupInfoSpan.innerHTML = `💾 Sauvegardé le ${backupDate}`;
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      // ======================== FONCTION NOTIFICATION ========================
+      function showNotification(message, isError = false) {
+        const notification = document.createElement('div');
+        notification.className = 'toast-notification';
+        notification.style.background = isError ? '#dc3545' : '#2c5f8a';
+        notification.innerHTML = message;
+        document.body.appendChild(notification);
         setTimeout(() => {
-            if (!localStorage.getItem(STORAGE_BACKUP_KEY)) return;
-            backupInfoSpan.innerHTML = `📦 Sauvegarde existante (${backupDate})`;
+          notification.remove();
         }, 3000);
-        alert("✅ État sauvegardé !");
-    }
-    
-    async function restoreBackup() {
-        const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
-        if (!backup) {
-            alert("❌ Aucune sauvegarde trouvée.");
-            return;
+      }
+
+      // ======================== DONNÉES BNETD (47 véhicules) ========================
+      const bnetdRaw = [
+        { nb: 1, dateCreation: "2026-05-06 09:08:52", immat: "853LY01", marque: "CHANGAN", modele: "HUNTER", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 2, dateCreation: "2026-05-05 10:24:40", immat: "2467KL01", marque: "CHANGAN", modele: "HUNTER", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 3, dateCreation: "2026-04-28 16:58:50", immat: "3235KL01", marque: "CHANGAN", modele: "HUNTER", pannes: "", rapport: "", pieces: "", positionGeo: "DEPOT 1" },
+        { nb: 4, dateCreation: "2026-04-28 14:50:06", immat: "41LA01", marque: "CHANGAN", modele: "HUNTER", pannes: "BRUIT ANORMAL DANS LE MOTEUR - AFFICHAGE SUR TABLEAU DE BORD - PRESENCE D'EAU DANS LE CARBURANT - PERTE DE PUISSANCE - CLIM DEFAILLANTE", rapport: "BRUIT DE BIELLE - CRAQUEMENT AU NIVEAU DES INJECTEURS - PERTE DE  PUISSANCE", pieces: "MOTEUR + INJECTEURS + TURBO + ELEMENTS FILTRANTS", positionGeo: "DEPOT AEROPORT" },
+        { nb: 5, dateCreation: "2026-04-28 14:40:37", immat: "AA969LR", marque: "DONGFENG", modele: "RICH6-ZNA", pannes: "VEHICULE REMORQUE -REMPLACEMENT DE MOTEUR", rapport: "ABSENCE DU GROUPE MOTOPROPULSEUR DANS LE COMPATIMENT MOTEUR", pieces: "MOTEUR + INJECTEURS + TURBO +  COURROIE DE DISTRIBUTION + COURROIE D'ALTERNATEUR + TENDEUR + ELEMENTS FILTRANTS", positionGeo: "DEPOT AEROPORT" },
+        { nb: 6, dateCreation: "2026-04-25 12:32:17", immat: "AA829VZ", marque: "MITSUBISHI", modele: "L200", pannes: "", rapport: "", pieces: "", positionGeo: "DEPOT AEROPORT" },
+        { nb: 7, dateCreation: "2026-04-25 12:27:33", immat: "AA677EY", marque: "MG", modele: "T60", pannes: "", rapport: "", pieces: "", positionGeo: "DEPOT AEROPORT" },
+        { nb: 8, dateCreation: "2026-04-25 12:22:43", immat: "855LY01", marque: "CHANGAN", modele: "HUNTER", pannes: "", rapport: "", pieces: "", positionGeo: "DEPOT AEROPORT" },
+        { nb: 9, dateCreation: "2026-04-25 12:19:04", immat: "2458KL01", marque: "CHANGAN", modele: "HUNTER", pannes: "", rapport: "", pieces: "", positionGeo: "DEPOT AEROPORT" },
+        { nb: 10, dateCreation: "2026-04-25 10:46:39", immat: "38LA01", marque: "CHANGAN", modele: "HUNTER", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 11, dateCreation: "2026-04-25 09:17:09", immat: "2502KL01", marque: "CHANGAN", modele: "HUNTER", pannes: "", rapport: "", pieces: "", positionGeo: "DEPOT AEROPORT" },
+        { nb: 12, dateCreation: "2026-04-24 08:40:03", immat: "AA601AF", marque: "CHANGAN", modele: "HUNTER", pannes: "FUITE DE CARBURANT AU NIVEAU DES INJECTEURS", rapport: "MANQUE DE PUISSANCE - INJECTEUR NE PISSE PAS", pieces: "MOTEUR + INJECTEURS + TURBOS", positionGeo: "DEPOT AEROPORT" },
+        { nb: 13, dateCreation: "2026-04-23 13:43:35", immat: "5897HF01", marque: "TOYOTA", modele: "HILUX", pannes: "", rapport: "", pieces: "", positionGeo: "DEPOT 1" },
+        { nb: 14, dateCreation: "2026-04-23 13:21:34", immat: "6763JE01", marque: "MITSUBISHI", modele: "L200", pannes: "FORTE CHALEUR AU NIVEAU DES PEDALES - FUITE D'HUILE DE MOTEUR - REGIME MOTEUR INSTABLE - ABSCE DE FERMETURE DU BOCAL D'HUILE DE FREIN - BIEN FIXE LE BOCAL DE FILTRE A AIR - VOYANT ALLUME SUR LE TABLEAU DE BORD", rapport: "MOTEUR SANS PUISSANCE - TURBO DEFECTUEUX - BOCAL D'HUILE DE FREIN A REMPLACER - BOCAL DU FILTRE A AIR A FIXER", pieces: "MOTEUR + TURBO + BOCAL D'HUILE DE FREIN + BOCAL DE FILTRE A AIR", positionGeo: "DEPOT 2" },
+        { nb: 15, dateCreation: "2026-04-23 13:12:31", immat: "58LA01", marque: "CHANGAN", modele: "HUNTER", pannes: "DEMARRAGE DIFFICILE - VOYANT MOTEUR ALLUME - PERTE DE PUISSANCE", rapport: "MANQUE DE PUISSANCE - INJECTEUR NE PISSE PAS", pieces: "MOTEUR + INJECTEURS + TURBOS", positionGeo: "DEPOT 2" },
+        { nb: 16, dateCreation: "2026-04-21 17:14:21", immat: "64LA01", marque: "CHANGAN", modele: "HUNTER", pannes: "", rapport: "", pieces: "", positionGeo: "DEPOT AEROPORT" },
+        { nb: 17, dateCreation: "2026-04-21 14:36:31", immat: "221LA01", marque: "CHANGAN", modele: "HUNTER", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 18, dateCreation: "2026-04-20 14:39:31", immat: "2296KA01", marque: "CHANGAN", modele: "CS 15", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 19, dateCreation: "2026-04-16 15:53:20", immat: "AA153PG", marque: "MG", modele: "T60", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 20, dateCreation: "2026-04-16 12:36:47", immat: "2309KA01", marque: "CHANGAN", modele: "CS 15", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 21, dateCreation: "2026-04-07 15:08:33", immat: "AA248SX", marque: "MITSUBISHI", modele: "L200", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 22, dateCreation: "2026-04-07 12:40:54", immat: "7887JT01", marque: "BMW", modele: "520I", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 23, dateCreation: "2026-04-02 16:52:19", immat: "AA223LR", marque: "DONGFENG", modele: "RICH6-ZNA", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 24, dateCreation: "2026-04-02 16:46:01", immat: "AA285AL", marque: "FORD", modele: "Territory", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 25, dateCreation: "2026-04-01 16:57:21", immat: "2303KA01", marque: "CHANGAN", modele: "CS 15", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 26, dateCreation: "2026-04-01 16:53:25", immat: "2467KL01", marque: "CHANGAN", modele: "HUNTER", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 27, dateCreation: "2026-04-01 11:47:26", immat: "2910KB01", marque: "CHANGAN", modele: "CS 15", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 28, dateCreation: "2026-04-01 09:11:21", immat: "94LL01", marque: "DONGFENG", modele: "RICH6-ZNA", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 29, dateCreation: "2026-03-31 12:49:13", immat: "AA175PG", marque: "MG", modele: "T60", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 30, dateCreation: "2026-03-30 08:51:15", immat: "1922LZ01", marque: "CHANGAN", modele: "HUNTER", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 31, dateCreation: "2026-03-27 16:28:36", immat: "AA986PF", marque: "CHANGAN", modele: "CS 15", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 32, dateCreation: "2026-03-27 16:22:04", immat: "AA678BX", marque: "CHANGAN", modele: "CS 15", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 33, dateCreation: "2026-03-27 12:31:21", immat: "260LA01", marque: "CHANGAN", modele: "HUNTER", pannes: "VEHICULE REMORQUE - PERTE DE PUISSANCE - PANNE MOTEUR", rapport: "MANQUE DE PUISSANCE - JEU AU NIVEAU DE LA TURBINE - INJECTEUR DEFECTUEUX", pieces: "MOTEUR +  INJECTEURS + TURBO + KIT DE JOINT", positionGeo: "DEPOT AEROPORT" },
+        { nb: 34, dateCreation: "2026-03-26 16:40:27", immat: "2462KL01", marque: "CHANGAN", modele: "HUNTER", pannes: "DIAGNOSTIC - PROBLEME DE DEMARRAGE", rapport: "MOTEUR SANS PRESSION - TURBO DEFECTUEUX - INJECTEUR BLOQUE", pieces: "MOTEUR +  INJECTEURS + TURBO + KIT DE JOINT", positionGeo: "DEPOT 2" },
+        { nb: 35, dateCreation: "2026-03-26 15:44:57", immat: "2503KL01", marque: "CHANGAN", modele: "HUNTER", pannes: "FUITE D'HUILE MOTEUR CACHE CULBITEUR+ FUITE AU NIVEAU DU TURBO + CIRCUIT D'ALIMENTATION + FUITE CACHE DE DISTRIBUTION", rapport: "SOUPAPE DEFORMEE - JEU AU NIVEAU DE LA TURBINE - FUMEE ANORMALE", pieces: "MOTEUR +  INJECTEURS + TURBO + KIT DE JOINT", positionGeo: "DEPOT 2" },
+        { nb: 36, dateCreation: "2026-03-25 17:12:37", immat: "862LY01", marque: "CHANGAN", modele: "HUNTER", pannes: "PANNE MOTEUR", rapport: "MANQUE DE PUISSANCE - FUMEE NOIRE", pieces: "MOTEUR + INJECTEURS + TURBO + ELEMENTS FILTRANTS", positionGeo: "DEPOT 2" },
+        { nb: 37, dateCreation: "2026-03-25 17:09:33", immat: "75LL01", marque: "DONGFENG", modele: "RICH6-ZNA", pannes: "DIAGNOSTIC", rapport: "MANQUE DE PUISSANCE - INJECTEUR NE PISSE PAS", pieces: "MOTEUR + INJECTEURS + TURBO +  COURROIE DE DISTRIBUTION + COURROIE D'ALTERNATEUR + TENDEUR + ELEMENTS FILTRANTS", positionGeo: "DEPOT AEROPORT" },
+        { nb: 38, dateCreation: "2026-03-25 15:08:06", immat: "56LA01", marque: "CHANGAN", modele: "HUNTER", pannes: "DIAGNOSTIC", rapport: "MOTEUR SANS PRESSION - TURBO DEFECTUEUX - COURROIE D'ALTERNATEUR DEFECTUEUX", pieces: "MOTEUR + INJECTEURS + TURBO + COURROIE D'ALTERNATEUR + ELEMENTS FILTRANTS", positionGeo: "DEPOT AEROPORT" },
+        { nb: 39, dateCreation: "2026-03-25 09:19:26", immat: "AA445CA", marque: "CHANGAN", modele: "CS 15", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 40, dateCreation: "2026-03-25 09:15:34", immat: "AA150CB", marque: "MG", modele: "T60", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 41, dateCreation: "2026-03-25 09:09:19", immat: "212JJ01", marque: "RENAULT", modele: "LOGAN", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 42, dateCreation: "2026-03-25 09:04:39", immat: "1207JP01", marque: "RENAULT", modele: "DUSTER", pannes: "", rapport: "", pieces: "", positionGeo: "" },
+        { nb: 43, dateCreation: "2026-05-12 09:04:39", immat: "AA933VZ", marque: "DONGFENG", modele: "RICH6 ZNA", pannes: "", rapport: "", pieces: "", positionGeo: "UNITED MOTORS" },
+        { nb: 44, dateCreation: "2026-05-13 00:00:00", immat: "63LA01", marque: "CHANGAN", modele: "HUNTER", pannes: "VEHICULE REMORQUE", rapport: "ABSENCE DU GROUPE MOTOPROPULSEUR DANS LE COMPATIMENT MOTEUR", pieces: "MOTEUR +  INJECTEURS + TURBO + KIT DE JOINT", positionGeo: "" },
+        { nb: 45, dateCreation: "2026-05-19 00:00:00", immat: "2467KL01", marque: "CHANGAN", modele: "HUNTER", pannes: "VEHICULE REMORQUE", rapport: "PANNE MOTEUR", pieces: "MOTEUR + TURBO", positionGeo: "GARAGE 2" },
+        { nb: 46, dateCreation: "2026-05-20 00:00:00", immat: "2667KL01", marque: "CHANGAN", modele: "HUNTER", pannes: "VEHICULE REMORQUE", rapport: "PANNE MOTEUR - VISTE TECHNIQUE", pieces: "", positionGeo: "DEPOT 1" },
+        { nb: 47, dateCreation: "2026-06-01 00:00:00", immat: "AA609VE", marque: "MITSUBISHI", modele: "L200", pannes: "PROBLEME DE DEMARRAGE-VEHICULE REMORQUE", rapport: "", pieces: "", positionGeo: "GARAGE 2" },
+      ];
+
+      // LISTES ACCESSOIRES & DOCUMENTS
+      const accessoriesList = [
+        "Roue de secours", "Cric", "Triangle", "Extincteur", "Trousse de secours", "Gilet jaune",
+        "Manivelle", "Poste radio", "CD", "Radio VHF", "Clé de roue", "Enjoliveurs", "Tapis au sol", "Axe de remorquage"
+      ];
+      const documentsList = [
+        "Carte grise", "Certificat d'immatriculation", "Attestation assurance", "Permis de conduire",
+        "Carnet d'entretien", "Manuel d'utilisation", "Vignette", "Carte SICTa", "Patente", "Carte de stationnement", "Carte de transport"
+      ];
+
+      function getCoordFromPositionGeo(pos) {
+        if (!pos) return { lat: 5.3364, lng: -4.0267, adresse: "Abidjan" };
+        const lower = pos.toLowerCase();
+        if (lower.includes("aeroport")) return { lat: 5.2614, lng: -3.9268, adresse: "Aéroport d'Abidjan" };
+        if (lower.includes("depot 1")) return { lat: 5.3364, lng: -4.0267, adresse: "Dépôt 1, Abidjan" };
+        if (lower.includes("depot 2")) return { lat: 5.3411, lng: -4.0211, adresse: "Dépôt 2, Abidjan" };
+        if (lower.includes("garage 2")) return { lat: 5.3497, lng: -4.0161, adresse: "Garage 2, Abidjan" };
+        if (lower.includes("united motors")) return { lat: 5.3542, lng: -4.0089, adresse: "United Motors, Abidjan" };
+        return { lat: 5.3364, lng: -4.0267, adresse: pos || "Abidjan" };
+      }
+
+      let vehicles = [];
+      let selectedVehicleId = null;
+      let map = null, marker = null;
+      const DEFAULT_POSITION = { lat: 5.3364, lng: -4.0267 };
+      const DEFAULT_ZOOM = 12;
+      const vehiclesListDiv = document.getElementById("vehiclesList");
+      const detailFormDiv = document.getElementById("vehicleDetailForm");
+      const placeholderDiv = document.getElementById("detailPlaceholder");
+      const addModal = document.getElementById("addModal");
+      const searchInput = document.getElementById("searchInput");
+      const statusFilter = document.getElementById("statusFilter");
+
+      function getEmptyVehicle(plaque, client, modele) {
+        return {
+          id: Date.now().toString(),
+          client, plaque, marque: "", modele, statut: "Réceptionné",
+          dateCreation: new Date().toISOString().slice(0, 19).replace("T", " "),
+          dateLivraison: "", kilometrage: "", chassis: "", energie: "Diesel", niveauCarburant: "1/2",
+          miseEnService: "", proprietaireNom: "", proprietaireContact: "", chauffeurNom: "", chauffeurContact: "",
+          transmission: "Manuelle", couleur: "", puissance: "", finAssurance: "", finVignette: "",
+          travauxClient: "", rapportDiagnostic: "", pieces: "", observations: "", positionGeo: "",
+          position: DEFAULT_POSITION, adresseTexte: "Abidjan", accessoires: [], documents: [], photos: [],
+          numeroIntervention: "", history: [{ date: new Date().toISOString(), action: "Création dossier", status: "Réceptionné" }]
+        };
+      }
+
+      function saveVehicles() { 
+        localStorage.setItem("sav_vehicles", JSON.stringify(vehicles));
+      }
+      
+      function loadVehicles() {
+        const data = localStorage.getItem("sav_vehicles");
+        if (data && JSON.parse(data).length > 0) {
+          try {
+            let loaded = JSON.parse(data);
+            vehicles = loaded.map(v => ({ ...getEmptyVehicle(v.plaque || "", v.client || "", v.modele || ""), ...v, accessoires: v.accessoires || [], documents: v.documents || [], photos: v.photos || [], history: v.history || [], numeroIntervention: v.numeroIntervention || "" }));
+          } catch(e) { vehicles = []; }
         }
+        if (!vehicles || vehicles.length === 0) {
+          vehicles = bnetdRaw.map((row, idx) => {
+            const pos = getCoordFromPositionGeo(row.positionGeo);
+            return { ...getEmptyVehicle(row.immat, "BNETD", `${row.marque} ${row.modele}`), id: `bnetd_${idx}`, dateCreation: row.dateCreation, marque: row.marque, modele: row.modele, travauxClient: row.pannes, rapportDiagnostic: row.rapport, pieces: row.pieces, positionGeo: row.positionGeo, position: pos, adresseTexte: pos.adresse, history: [{ date: new Date().toISOString(), action: "Import BNETD", status: "Réceptionné" }] };
+          });
+        }
+        saveVehicles();
+        renderVehicleList();
+        if (document.getElementById("tab-dashboard").style.display === "block") renderDashboard();
+      }
+
+      function renderVehicleList() {
+        const filterText = searchInput.value.toLowerCase();
+        const filterStatus = statusFilter.value;
+        let filtered = vehicles.filter(v => (v.plaque.toLowerCase().includes(filterText) || v.client.toLowerCase().includes(filterText) || (v.modele && v.modele.toLowerCase().includes(filterText))) && (filterStatus === "all" || v.statut === filterStatus));
+        if (filtered.length === 0) { vehiclesListDiv.innerHTML = '<div class="placeholder">Aucun véhicule</div>'; return; }
+        vehiclesListDiv.innerHTML = filtered.map(v => `
+          <div class="vehicle-card ${selectedVehicleId === v.id ? "selected" : ""}" data-id="${v.id}">
+            <h4>${escapeHtml(v.plaque)} - ${escapeHtml(v.client)}</h4>
+            <p>${escapeHtml(v.marque)} ${escapeHtml(v.modele)}</p>
+            <div class="vehicle-card-footer">
+              <span class="status-badge"><i class="fas fa-tag"></i> ${v.statut}</span>
+              <span class="status-badge"><i class="fas fa-calendar-alt"></i> ${v.dateCreation?.split(" ")[0] || ""}</span>
+              ${v.photos?.length ? `<span class="status-badge"><i class="fas fa-camera"></i> ${v.photos.length}</span>` : ""}
+            </div>
+          </div>
+        `).join("");
+        document.querySelectorAll(".vehicle-card").forEach(card => card.addEventListener("click", () => selectVehicle(card.dataset.id)));
+      }
+      
+      function escapeHtml(str) { if (!str) return ""; return str.replace(/[&<>]/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[m]); }
+      
+      function selectVehicle(id) { 
+        selectedVehicleId = id; 
+        const v = vehicles.find(v => v.id === id); 
+        if (v) { 
+          renderVehicleList(); 
+          showDetailForm(v); 
+        } 
+      }
+      
+      function showDetailForm(v) {
+        placeholderDiv.style.display = "none";
+        detailFormDiv.style.display = "block";
+        const statusOptions = ["Réceptionné","Diagnostic en cours","En attente accord client","Travaux en cours","Prêt pour livraison","Livré"];
+        const photosHtml = (v.photos || []).map(p => `<img src="${p}" style="max-width:80px; max-height:80px; border-radius:8px; margin:5px;">`).join("");
+        let accessoriesHtml = '<div class="checkbox-group">'; accessoriesList.forEach(acc => { const checked = v.accessoires && v.accessoires.includes(acc) ? "checked" : ""; accessoriesHtml += `<label><input type="checkbox" class="accessoire-check" value="${acc}" ${checked}> ${acc}</label>`; }); accessoriesHtml += "</div>";
+        let documentsHtml = '<div class="checkbox-group">'; documentsList.forEach(doc => { const checked = v.documents && v.documents.includes(doc) ? "checked" : ""; documentsHtml += `<label><input type="checkbox" class="document-check" value="${doc}" ${checked}> ${doc}</label>`; }); documentsHtml += "</div>";
         
-        if (!confirm("⚠️ Restaurer la sauvegarde remplacera l'état actuel (cases cochées et sites). Les véhicules importés restent. Confirmer ?")) {
-            return;
-        }
-        
-        const backupVehicles = JSON.parse(backup);
-        
-        for (let backupV of backupVehicles) {
-            const existingV = allVehicles.find(v => v.id === backupV.id);
-            if (existingV) {
-                existingV.present = backupV.present;
-                existingV.site = backupV.site;
-                existingV.lastSeen = backupV.lastSeen;
-                existingV.photo = backupV.photo;
-                await saveVehicle(existingV);
-            }
-        }
-        
-        await loadAndDisplay();
-        alert("✅ Restauration terminée !");
-    }
-    
-    async function resetOnlyCheckboxes() {
-        if (!confirm("⚠️ Réinitialiser les cases à cocher et les sites ? Les véhicules importés restent, mais toutes les cases seront décochées et les sites supprimés.")) {
-            return;
-        }
-        
-        for (let v of allVehicles) {
-            v.present = false;
-            v.site = null;
-            v.lastSeen = null;
-            await saveVehicle(v);
-        }
-        await loadAndDisplay();
-        alert("✅ Réinitialisation terminée (cases décochées).");
-    }
-    
-    // ==================== IMPORT EXCEL ====================
-    document.getElementById("importBtn").onclick = () => {
-        if (allVehicles.length > 0) {
-            if (!confirm("⚠️ L'import va effacer la liste actuelle. Voulez-vous sauvegarder avant ?")) {
-                return;
-            }
-        }
-        document.getElementById("excelInput").click();
-        document.getElementById("excelInput").onchange = (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                const data = new Uint8Array(ev.target.result);
-                const workbook = XLSX.read(data, { type: "array" });
-                const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                const rows = XLSX.utils.sheet_to_json(sheet);
-                
-                const vehicles = rows.map(row => ({
-                    id: (row["Immatriculation"] || "inconnu_" + Date.now() + "_" + Math.random()),
-                    immat: row["Immatriculation"] || "",
-                    client: row["Client"] || "",
-                    marque: row["Marque"] || "",
-                    modele: row["Modele"] || "",
-                    refCommande: row["Référence de commande"] || "",
-                    typeMaintenance: row["Type de Maintenance"] || "",
-                    present: false,
-                    site: null,
-                    lastSeen: null,
-                    photo: null,
-                    isCustom: false
-                }));
-                
-                clearVehicles().then(async () => {
-                    await saveMultipleVehicles(vehicles);
-                    await loadAndDisplay();
-                    lastSyncSpan.innerText = new Date().toLocaleString();
-                    alert(`✅ Import terminé : ${vehicles.length} véhicules`);
-                }).catch(err => console.error(err));
+        detailFormDiv.innerHTML = `<h2>${escapeHtml(v.plaque)} - ${escapeHtml(v.client)}</h2><div class="form-row"><div class="form-group"><label>Numéro intervention</label><input type="text" id="detailNumeroIntervention" value="${escapeHtml(v.numeroIntervention || "")}"></div><div class="form-group"><label>Statut</label><select id="detailStatus">${statusOptions.map(s => `<option ${v.statut === s ? "selected" : ""}>${s}</option>`).join("")}</select></div><div class="form-group"><label>Date création</label><input type="datetime-local" id="detailDateCreation" value="${v.dateCreation?.replace(" ", "T") || ""}"></div></div><div class="form-row"><div class="form-group"><label>Date livraison</label><input type="datetime-local" id="detailDateLivraison" value="${v.dateLivraison?.replace(" ", "T") || ""}"></div><div class="form-group"><label>Immatriculation</label><input type="text" id="detailPlaque" value="${escapeHtml(v.plaque)}"></div><div class="form-group"><label>Marque</label><input type="text" id="detailMarque" value="${escapeHtml(v.marque)}"></div></div><div class="form-row"><div class="form-group"><label>Modèle</label><input type="text" id="detailModele" value="${escapeHtml(v.modele)}"></div><div class="form-group"><label>Kilométrage</label><input type="number" id="detailKilometrage" value="${v.kilometrage || ""}"></div><div class="form-group"><label>N° Châssis</label><input type="text" id="detailChassis" value="${escapeHtml(v.chassis || "")}"></div></div><div class="form-row"><div class="form-group"><label>Énergie</label><select id="detailEnergie"><option ${v.energie === "Essence" ? "selected" : ""}>Essence</option><option ${v.energie === "Diesel" ? "selected" : ""}>Diesel</option><option ${v.energie === "Électrique" ? "selected" : ""}>Électrique</option><option ${v.energie === "Hybride" ? "selected" : ""}>Hybride</option></select></div><div class="form-group"><label>Niveau carburant</label><select id="detailNiveauCarburant"><option ${v.niveauCarburant === "Vide" ? "selected" : ""}>Vide</option><option ${v.niveauCarburant === "1/4" ? "selected" : ""}>1/4</option><option ${v.niveauCarburant === "1/2" ? "selected" : ""}>1/2</option><option ${v.niveauCarburant === "3/4" ? "selected" : ""}>3/4</option><option ${v.niveauCarburant === "Plein" ? "selected" : ""}>Plein</option></select></div><div class="form-group"><label>Mise en service</label><input type="date" id="detailMiseEnService" value="${v.miseEnService || ""}"></div></div><div class="form-row"><div class="form-group"><label>Transmission</label><select id="detailTransmission"><option ${v.transmission === "Manuelle" ? "selected" : ""}>Manuelle</option><option ${v.transmission === "Automatique" ? "selected" : ""}>Automatique</option></select></div><div class="form-group"><label>Couleur</label><input type="text" id="detailCouleur" value="${escapeHtml(v.couleur || "")}"></div><div class="form-group"><label>Puissance (ch)</label><input type="text" id="detailPuissance" value="${escapeHtml(v.puissance || "")}"></div></div><div class="form-row"><div class="form-group"><label>Nom propriétaire</label><input type="text" id="detailProprietaireNom" value="${escapeHtml(v.proprietaireNom || "")}"></div><div class="form-group"><label>Contact propriétaire</label><input type="tel" id="detailProprietaireContact" value="${escapeHtml(v.proprietaireContact || "")}"></div></div><div class="form-row"><div class="form-group"><label>Nom chauffeur déposant</label><input type="text" id="detailChauffeurNom" value="${escapeHtml(v.chauffeurNom || "")}"></div><div class="form-group"><label>Contact chauffeur</label><input type="tel" id="detailChauffeurContact" value="${escapeHtml(v.chauffeurContact || "")}"></div></div><div class="form-row"><div class="form-group"><label>Fin assurance</label><input type="date" id="detailFinAssurance" value="${v.finAssurance || ""}"></div><div class="form-group"><label>Fin vignette</label><input type="date" id="detailFinVignette" value="${v.finVignette || ""}"></div></div><div class="form-group"><label>Pannes signalées (client)</label><textarea id="detailPannes" rows="2">${escapeHtml(v.travauxClient || "")}</textarea></div><div class="form-group"><label>Rapport diagnostic (garage)</label><textarea id="detailRapport" rows="2">${escapeHtml(v.rapportDiagnostic || "")}</textarea></div><div class="form-group"><label>Pièces à remplacer</label><textarea id="detailPieces" rows="2">${escapeHtml(v.pieces || "")}</textarea></div><div class="form-group"><label>Autres observations</label><textarea id="detailObservations" rows="2">${escapeHtml(v.observations || "")}</textarea></div><div class="form-group"><label>Accessoires de bord</label>${accessoriesHtml}</div><div class="form-group"><label>Documents fournis</label>${documentsHtml}</div><div class="form-group"><label>Position géographique (texte)</label><input type="text" id="detailPositionGeo" value="${escapeHtml(v.positionGeo || "")}"></div><div class="form-group"><label>Photos réception</label><input type="file" id="photoUpload" accept="image/*" multiple><div id="photoPreview" class="photo-preview">${photosHtml}</div></div><div class="form-group"><label>Carte</label><div id="mapContainer" class="map-container"></div><button id="getCurrentPosBtn" class="btn-secondary"><i class="fas fa-location-dot"></i> Ma position</button></div><div class="action-buttons"><button id="deleteVehicleBtn" class="btn-danger">Supprimer</button><button id="saveDetailBtn" class="btn-primary">Enregistrer</button></div>`;
+        setTimeout(() => initMap(v.position), 100);
+        document.getElementById("saveDetailBtn").addEventListener("click", () => saveVehicleDetails(v.id));
+        document.getElementById("deleteVehicleBtn").addEventListener("click", () => deleteVehicle(v.id));
+        document.getElementById("getCurrentPosBtn").addEventListener("click", () => getCurrentLocationForVehicle(v.id));
+        const up = document.getElementById("photoUpload"); if(up) up.addEventListener("change", (e) => handlePhotoUpload(v.id, e.target.files));
+      }
+      
+      function handlePhotoUpload(id, files) {
+        const v = vehicles.find(v => v.id === id);
+        if (v) {
+          Array.from(files).forEach((f) => {
+            const r = new FileReader();
+            r.onload = (e) => {
+              v.photos.push(e.target.result);
+              saveVehicles();
+              const pv = document.getElementById("photoPreview");
+              if (pv) {
+                let img = document.createElement("img");
+                img.src = e.target.result;
+                img.style.maxWidth = "80px";
+                pv.appendChild(img);
+              }
+              showNotification("Photo ajoutée avec succès");
             };
-            reader.readAsArrayBuffer(file);
-        };
-    };
-    
-    // ==================== AJOUT MANUEL ====================
-    document.getElementById("addVehicleBtn").onclick = async () => {
-        const immat = document.getElementById("newImmat").value.trim();
-        if (!immat) { alert("Immatriculation obligatoire"); return; }
-        const marque = document.getElementById("newMarque").value.trim();
-        const modele = document.getElementById("newModele").value.trim();
-        const site = document.getElementById("newSite").value;
-        
-        if (allVehicles.some(v => v.immat === immat)) {
-            alert("Ce véhicule existe déjà.");
-            return;
+            r.readAsDataURL(f);
+          });
         }
-        
-        const newVehicle = {
-            id: immat + "_custom_" + Date.now(),
-            immat: immat,
-            client: "Ajout manuel",
-            marque: marque,
-            modele: modele,
-            refCommande: "",
-            typeMaintenance: "",
-            present: true,
-            site: site,
-            lastSeen: new Date().toISOString(),
-            photo: null,
-            isCustom: true
-        };
-        
-        await saveVehicle(newVehicle);
-        document.getElementById("newImmat").value = "";
-        document.getElementById("newMarque").value = "";
-        document.getElementById("newModele").value = "";
-        await loadAndDisplay();
-        alert(`✅ Véhicule ${immat} ajouté sur ${site}`);
-    };
-    
-    // ==================== RENDU OPTIMISÉ ====================
-    function getFilteredVehicles() {
-        let filtered = allVehicles;
-        
-        if (currentSearch.trim() !== "") {
-            const search = currentSearch.toLowerCase();
-            filtered = filtered.filter(v => 
-                v.immat.toLowerCase().includes(search) || 
-                v.client.toLowerCase().includes(search) ||
-                v.marque.toLowerCase().includes(search) || 
-                v.modele.toLowerCase().includes(search)
-            );
+      }
+      
+      function initMap(pos) {
+        if (map) map.remove();
+        const lat = pos?.lat || DEFAULT_POSITION.lat, lng = pos?.lng || DEFAULT_POSITION.lng;
+        map = L.map("mapContainer").setView([lat, lng], DEFAULT_ZOOM);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "© OpenStreetMap" }).addTo(map);
+        if (marker) marker.remove();
+        marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+        marker.on("dragend", () => updateVehiclePosition(selectedVehicleId, marker.getLatLng()));
+      }
+      
+      function updateVehiclePosition(id, coords) {
+        const v = vehicles.find(v => v.id === id);
+        if (v) {
+          v.position = { lat: coords.lat, lng: coords.lng };
+          saveVehicles();
+          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords.lat}&lon=${coords.lng}&zoom=18`)
+            .then(r => r.json())
+            .then(d => { if (d.display_name) { v.adresseTexte = d.display_name.substring(0, 100); saveVehicles(); } })
+            .catch(() => {});
+          showNotification("Position mise à jour");
         }
-        
-        if (currentSiteFilter === "present_all") {
-            filtered = filtered.filter(v => v.present === true);
-        } else if (currentSiteFilter !== "all") {
-            filtered = filtered.filter(v => v.present === true && v.site === currentSiteFilter);
-        }
-        
-        return filtered;
-    }
-    
-    function renderStatsOnly() {
-        let html = "";
-        for (let site of SITE_OPTIONS) {
-            const count = allVehicles.filter(v => v.present === true && v.site === site).length;
-            html += `<div class="stat-card" data-site="${site}"><h3>${site}</h3><p class="number">${count}</p><small>véhicules présents</small></div>`;
-        }
-        statsContainer.innerHTML = html;
-        
-        document.querySelectorAll(".stat-card").forEach(card => {
-            card.addEventListener("click", () => {
-                const site = card.getAttribute("data-site");
-                siteFilterSelect.value = site;
-                currentSiteFilter = site;
-                renderListOnly();
-            });
-        });
-    }
-    
-    function renderListOnly() {
-        const filtered = getFilteredVehicles();
-        resultCountSpan.innerText = `${filtered.length} véhicule(s)`;
-        
-        if (filtered.length === 0) {
-            listContainer.innerHTML = "<p>Aucun véhicule correspondant.</p>";
-            return;
-        }
-        
-        let html = "";
-        for (let v of filtered) {
-            html += `
-                <div class="vehicle-item" data-id="${v.id}">
-                    <input type="checkbox" class="present-check" data-id="${v.id}" ${v.present ? "checked" : ""}>
-                    <div class="vehicle-info">
-                        <strong>${v.immat || "?"}</strong>
-                        <div class="detail-line">${v.marque} ${v.modele} | ${v.client} ${v.refCommande ? ' | Cmd: '+v.refCommande : ''}${v.typeMaintenance ? ' | '+v.typeMaintenance : ''}</div>
-                        ${v.isCustom ? '<span style="background:#facc15; padding:2px 6px; border-radius:20px; font-size:0.7rem;">Ajout manuel</span>' : ''}
-                        ${v.lastSeen ? `<div><small>🕒 Vu le : ${new Date(v.lastSeen).toLocaleString()}</small></div>` : ''}
-                    </div>
-                    <select class="site-select" data-id="${v.id}" ${!v.present ? 'disabled' : ''}>
-                        <option value="">-- Choisir site --</option>
-                        ${SITE_OPTIONS.map(site => `<option value="${site}" ${v.site === site ? 'selected' : ''}>${site}</option>`).join('')}
-                    </select>
-                    <button class="photoBtn small-btn" data-id="${v.id}">📸 Photo</button>
-                    ${v.photo ? `<img src="${v.photo}" class="photo-preview" alt="photo">` : ""}
-                </div>
-            `;
-        }
-        listContainer.innerHTML = html;
-        
-        attachEventsToCurrentList();
-    }
-    
-    function attachEventsToCurrentList() {
-        document.querySelectorAll(".present-check").forEach(cb => {
-            cb.replaceWith(cb.cloneNode(true));
-        });
-        document.querySelectorAll(".present-check").forEach(cb => {
-            cb.addEventListener("change", async (e) => {
-                const id = cb.getAttribute("data-id");
-                const vehicle = allVehicles.find(v => v.id === id);
-                if (vehicle) {
-                    vehicle.present = cb.checked;
-                    if (!vehicle.present) vehicle.site = null;
-                    vehicle.lastSeen = new Date().toISOString();
-                    await saveVehicle(vehicle);
-                    renderStatsOnly();
-                    renderListOnly();
+      }
+      
+      function getCurrentLocationForVehicle(id) {
+        if (navigator.geolocation)
+          navigator.geolocation.getCurrentPosition(p => {
+            const coords = { lat: p.coords.latitude, lng: p.coords.longitude };
+            updateVehiclePosition(id, coords);
+            if (marker) marker.setLatLng(coords);
+            if (map) map.setView([coords.lat, coords.lng], DEFAULT_ZOOM);
+          }, () => alert("Géolocalisation refusée"));
+        else alert("Non supporté");
+      }
+      
+      function saveVehicleDetails(id) {
+        const v = vehicles.find(v => v.id === id); 
+        if (!v) return;
+        v.numeroIntervention = document.getElementById("detailNumeroIntervention").value;
+        v.statut = document.getElementById("detailStatus").value;
+        v.dateCreation = document.getElementById("detailDateCreation").value?.replace("T", " ");
+        v.dateLivraison = document.getElementById("detailDateLivraison").value?.replace("T", " ");
+        v.plaque = document.getElementById("detailPlaque").value;
+        v.marque = document.getElementById("detailMarque").value;
+        v.modele = document.getElementById("detailModele").value;
+        v.kilometrage = document.getElementById("detailKilometrage").value;
+        v.chassis = document.getElementById("detailChassis").value;
+        v.energie = document.getElementById("detailEnergie").value;
+        v.niveauCarburant = document.getElementById("detailNiveauCarburant").value;
+        v.miseEnService = document.getElementById("detailMiseEnService").value;
+        v.transmission = document.getElementById("detailTransmission").value;
+        v.couleur = document.getElementById("detailCouleur").value;
+        v.puissance = document.getElementById("detailPuissance").value;
+        v.proprietaireNom = document.getElementById("detailProprietaireNom").value;
+        v.proprietaireContact = document.getElementById("detailProprietaireContact").value;
+        v.chauffeurNom = document.getElementById("detailChauffeurNom").value;
+        v.chauffeurContact = document.getElementById("detailChauffeurContact").value;
+        v.finAssurance = document.getElementById("detailFinAssurance").value;
+        v.finVignette = document.getElementById("detailFinVignette").value;
+        v.travauxClient = document.getElementById("detailPannes").value;
+        v.rapportDiagnostic = document.getElementById("detailRapport").value;
+        v.pieces = document.getElementById("detailPieces").value;
+        v.observations = document.getElementById("detailObservations").value;
+        v.positionGeo = document.getElementById("detailPositionGeo").value;
+        v.accessoires = Array.from(document.querySelectorAll(".accessoire-check:checked")).map(cb => cb.value);
+        v.documents = Array.from(document.querySelectorAll(".document-check:checked")).map(cb => cb.value);
+        saveVehicles(); 
+        renderVehicleList(); 
+        showNotification("Véhicule enregistré avec succès");
+      }
+      
+      function deleteVehicle(id) { 
+        if (confirm("Supprimer définitivement ce véhicule ?")) {
+          vehicles = vehicles.filter(v => v.id !== id); 
+          if (selectedVehicleId === id) { 
+            selectedVehicleId = null; 
+            detailFormDiv.style.display = "none"; 
+            placeholderDiv.style.display = "block"; 
+          } 
+          saveVehicles(); 
+          renderVehicleList(); 
+          showNotification("Véhicule supprimé", true);
+        } 
+      }
+      
+      function addVehicle(plaque, client, modele) { 
+        const newVehicle = getEmptyVehicle(plaque, client, modele); 
+        vehicles.push(newVehicle); 
+        saveVehicles(); 
+        renderVehicleList(); 
+        selectVehicle(newVehicle.id);
+        showNotification("Nouveau véhicule créé avec succès");
+      }
+
+      // ======================== IMPORT EXCEL ODOO ========================
+      function importFromOdoo() {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".xlsx, .xls, .csv";
+        input.onchange = (e) => {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            try {
+              const data = new Uint8Array(ev.target.result);
+              const workbook = XLSX.read(data, { type: 'array' });
+              const sheet = workbook.Sheets[workbook.SheetNames[0]];
+              const rows = XLSX.utils.sheet_to_json(sheet);
+              
+              let imported = 0;
+              for (const row of rows) {
+                // Mapping intelligent des colonnes Odoo
+                const plaque = row['Immatriculation'] || row['immatriculation'] || row['Plaque'] || row['plaque'] || row['Immat'] || '';
+                const client = row['Client'] || row['client'] || row['Nom client'] || row['CLIENT'] || '';
+                const modele = row['Modèle'] || row['modèle'] || row['Modele'] || row['modele'] || row['Marque'] || '';
+                const marque = row['Marque'] || row['marque'] || '';
+                const dateCreation = row['Date création'] || row['date création'] || row['Date de création'] || new Date().toISOString().slice(0,19).replace("T", " ");
+                const statut = row['Statut'] || row['statut'] || "Réceptionné";
+                const travauxClient = row['Pannes'] || row['pannes'] || row['Description'] || '';
+                const rapportDiagnostic = row['Diagnostic'] || row['diagnostic'] || '';
+                const pieces = row['Pièces'] || row['pièces'] || '';
+                
+                if (plaque && client) {
+                  const newVehicle = getEmptyVehicle(plaque, client, modele);
+                  if (marque) newVehicle.marque = marque;
+                  if (dateCreation && dateCreation !== newVehicle.dateCreation) newVehicle.dateCreation = dateCreation;
+                  if (statut) newVehicle.statut = statut;
+                  if (travauxClient) newVehicle.travauxClient = travauxClient;
+                  if (rapportDiagnostic) newVehicle.rapportDiagnostic = rapportDiagnostic;
+                  if (pieces) newVehicle.pieces = pieces;
+                  vehicles.push(newVehicle);
+                  imported++;
                 }
-            });
-        });
-        
-        document.querySelectorAll(".site-select").forEach(select => {
-            select.replaceWith(select.cloneNode(true));
-        });
-        document.querySelectorAll(".site-select").forEach(select => {
-            select.addEventListener("change", async (e) => {
-                const id = select.getAttribute("data-id");
-                const vehicle = allVehicles.find(v => v.id === id);
-                if (vehicle && vehicle.present) {
-                    vehicle.site = e.target.value || null;
-                    vehicle.lastSeen = new Date().toISOString();
-                    await saveVehicle(vehicle);
-                    renderStatsOnly();
-                    renderListOnly();
-                }
-            });
-        });
-        
-        document.querySelectorAll(".photoBtn").forEach(btn => {
-            btn.replaceWith(btn.cloneNode(true));
-        });
-        document.querySelectorAll(".photoBtn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                const id = btn.getAttribute("data-id");
-                const input = document.createElement("input");
-                input.type = "file";
-                input.accept = "image/*";
-                input.capture = "environment";
-                input.onchange = async (ev) => {
-                    const file = ev.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = async (ev2) => {
-                            const vehicle = allVehicles.find(v => v.id === id);
-                            if (vehicle) {
-                                vehicle.photo = ev2.target.result;
-                                await saveVehicle(vehicle);
-                                renderListOnly();
-                            }
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                };
-                input.click();
-            });
-        });
-    }
-    
-    function updateSiteFilterOptions() {
-        let options = `<option value="all" ${currentSiteFilter === 'all' ? 'selected' : ''}>🌍 Tous les véhicules</option>
-                       <option value="present_all" ${currentSiteFilter === 'present_all' ? 'selected' : ''}>✅ Tous les présents</option>`;
-        for (let site of SITE_OPTIONS) {
-            options += `<option value="${site}" ${currentSiteFilter === site ? 'selected' : ''}>📍 Présents sur ${site}</option>`;
-        }
-        siteFilterSelect.innerHTML = options;
-    }
-    
-    async function loadAndDisplay() {
-        allVehicles = await getAllVehicles();
-        updateSiteFilterOptions();
-        renderStatsOnly();
-        renderListOnly();
-        
-        const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
-        if (backup) {
-            backupInfoSpan.innerHTML = `📦 Sauvegarde disponible`;
-        } else {
-            backupInfoSpan.innerHTML = `📦 Aucune sauvegarde`;
-        }
-    }
-    
-    // ==================== EXPORTS ====================
-    async function exportPresentToExcel() {
-        const vehicles = allVehicles.filter(v => v.present === true);
-        const data = vehicles.map(v => ({
-            "Immatriculation": v.immat, "Client": v.client, "Marque": v.marque,
-            "Modèle": v.modele, "Référence commande": v.refCommande,
-            "Type de Maintenance": v.typeMaintenance, "Site": v.site || "",
-            "Dernier constat": v.lastSeen ? new Date(v.lastSeen).toLocaleString() : ""
+              }
+              if (imported > 0) {
+                saveVehicles();
+                renderVehicleList();
+                showNotification(`${imported} véhicules importés avec succès depuis Odoo`);
+              } else {
+                showNotification("Aucun véhicule valide trouvé dans le fichier", true);
+              }
+            } catch(err) {
+              console.error(err);
+              showNotification("Erreur lors de l'import du fichier", true);
+            }
+          };
+          reader.readAsArrayBuffer(file);
+        };
+        input.click();
+      }
+
+      // Exports principaux
+      function exportToExcel() {
+        const data = vehicles.map((v, idx) => ({
+          NB: idx+1,
+          "Numéro intervention": v.numeroIntervention || "",
+          CLIENT: v.client,
+          "Date de création": v.dateCreation || "",
+          "Date de Livraison": v.dateLivraison || "",
+          Immatriculation: v.plaque,
+          Marque: v.marque,
+          Modèle: v.modele,
+          "PANNES SIGNALEES": v.travauxClient || "",
+          "RAPPORT DIAGNOSTIC": v.rapportDiagnostic || "",
+          "PIECES ET ELEMENTS A REMPLACER": v.pieces || "",
+          STATUT: v.statut,
+          "POSITION GEO": v.positionGeo || "",
         }));
         const ws = XLSX.utils.json_to_sheet(data);
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Présents");
-        XLSX.writeFile(wb, `tous_presents_${new Date().toISOString().slice(0,19)}.xlsx`);
-    }
-    
-    async function exportPresentToPDF() {
-        const vehicles = allVehicles.filter(v => v.present === true);
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ orientation: 'landscape' });
-        doc.text("Véhicules présents (tous sites)", 14, 15);
-        doc.text(`Généré le ${new Date().toLocaleString()}`, 14, 22);
-        const tableData = vehicles.map(v => [v.immat, v.client, v.marque, v.modele, v.site || "", v.lastSeen ? new Date(v.lastSeen).toLocaleString() : ""]);
-        doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle", "Site", "Dernier constat"]], body: tableData, startY: 30 });
-        doc.save(`tous_presents_${new Date().toISOString().slice(0,19)}.pdf`);
-    }
-    
-    async function exportAbsentToExcel() {
-        const vehicles = allVehicles.filter(v => v.present === false);
-        const data = vehicles.map(v => ({
-            "Immatriculation": v.immat, "Client": v.client, "Marque": v.marque,
-            "Modèle": v.modele, "Référence commande": v.refCommande, "Type de Maintenance": v.typeMaintenance
+        XLSX.utils.book_append_sheet(wb, ws, "Suivi BNETD");
+        XLSX.writeFile(wb, `BNETD_vehicules_${new Date().toISOString().slice(0,10)}.xlsx`);
+        showNotification("Export Excel effectué");
+      }
+      
+      function exportToPDF() {
+        const element = document.createElement("div");
+        element.style.position = "absolute";
+        element.style.left = "-9999px";
+        element.style.top = "0";
+        element.style.padding = "1rem";
+        element.style.fontFamily = "'Segoe UI', 'Arial', sans-serif";
+        element.style.backgroundColor = "#fff";
+        const total = vehicles.length, received = vehicles.filter(v => v.statut === "Réceptionné").length, delivered = vehicles.filter(v => v.statut === "Livré").length;
+        let html = `<div style="margin-bottom:1.5rem;text-align:center;"><h1 style="color:#1e3c72;">SUIVI DES VÉHICULES</h1><p style="font-size:0.9rem;">BNETD / GARAGE - Export ${new Date().toLocaleString()}</p><hr style="border:1px solid #ff9800;width:80px;margin:0.5rem auto;"><div style="display:flex;justify-content:center;gap:1.5rem;"><div style="background:#eef2ff;padding:0.3rem 0.8rem;border-radius:20px;">📦 Total : ${total}</div><div style="background:#eef2ff;padding:0.3rem 0.8rem;border-radius:20px;">📥 Réceptionnés : ${received}</div><div style="background:#eef2ff;padding:0.3rem 0.8rem;border-radius:20px;">🏁 Livrés : ${delivered}</div></div></div><table style="width:100%;border-collapse:collapse;font-size:0.7rem;"><thead><tr style="background-color:#1e3c72;color:white;"><th style="padding:8px 4px;border:1px solid #ddd;">#</th><th style="padding:8px 4px;border:1px solid #ddd;">N° Intervention</th><th style="padding:8px 4px;border:1px solid #ddd;">Client</th><th style="padding:8px 4px;border:1px solid #ddd;">Date création</th><th style="padding:8px 4px;border:1px solid #ddd;">Date livraison</th><th style="padding:8px 4px;border:1px solid #ddd;">Immatriculation</th><th style="padding:8px 4px;border:1px solid #ddd;">Marque</th><th style="padding:8px 4px;border:1px solid #ddd;">Modèle</th><th style="padding:8px 4px;border:1px solid #ddd;">Pannes signalées</th><th style="padding:8px 4px;border:1px solid #ddd;">Rapport diagnostic</th><th style="padding:8px 4px;border:1px solid #ddd;">Pièces à remplacer</th><th style="padding:8px 4px;border:1px solid #ddd;">Statut</th><th style="padding:8px 4px;border:1px solid #ddd;">Position GEO</th></tr></thead><tbody>`;
+        vehicles.forEach((v, idx) => { html += `<tr style="background-color:${idx%2===0?"#f9fafb":"#ffffff"};"><td style="padding:6px 4px;border:1px solid #ddd;">${idx+1}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.numeroIntervention || "")}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.client)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${v.dateCreation || ""}</td><td style="padding:6px 4px;border:1px solid #ddd;">${v.dateLivraison || ""}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.plaque)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.marque)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.modele)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.travauxClient || "").substring(0,60)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.rapportDiagnostic || "").substring(0,60)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.pieces || "").substring(0,60)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${v.statut}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.positionGeo || "")}</td></tr>`; });
+        html += `</tbody></table><div style="margin-top:1rem;font-size:0.6rem;text-align:center;">Document généré automatiquement par BNETD TRACKER</div>`;
+        element.innerHTML = html;
+        document.body.appendChild(element);
+        html2pdf().from(element).set({ margin: [0.5,0.5,0.5,0.5], filename: `BNETD_export_${new Date().toISOString().slice(0,10)}.pdf`, image: { type: "jpeg", quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: "in", format: "a4", orientation: "landscape" } }).save().then(() => { element.remove(); showNotification("Export PDF effectué"); });
+      }
+
+      // Exports spécifiques
+      function exportListToExcel(list, filename, sheetName) {
+        const data = list.map((v, idx) => ({
+          NB: idx+1,
+          "Numéro intervention": v.numeroIntervention || "",
+          CLIENT: v.client,
+          "Date de création": v.dateCreation || "",
+          "Date de Livraison": v.dateLivraison || "",
+          Immatriculation: v.plaque,
+          Marque: v.marque,
+          Modèle: v.modele,
+          "PANNES SIGNALEES": v.travauxClient || "",
+          "RAPPORT DIAGNOSTIC": v.rapportDiagnostic || "",
+          "PIECES ET ELEMENTS A REMPLACER": v.pieces || "",
+          STATUT: v.statut,
+          "POSITION GEO": v.positionGeo || "",
         }));
         const ws = XLSX.utils.json_to_sheet(data);
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Absents");
-        XLSX.writeFile(wb, `absents_${new Date().toISOString().slice(0,19)}.xlsx`);
-    }
-    
-    async function exportAbsentToPDF() {
-        const vehicles = allVehicles.filter(v => v.present === false);
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ orientation: 'landscape' });
-        doc.text("Véhicules absents (non trouvés)", 14, 15);
-        doc.text(`Date : ${new Date().toLocaleString()}`, 14, 22);
-        const tableData = vehicles.map(v => [v.immat, v.client, v.marque, v.modele, v.refCommande, v.typeMaintenance]);
-        doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle", "Réf commande", "Type maintenance"]], body: tableData, startY: 30 });
-        doc.save(`absents_${new Date().toISOString().slice(0,19)}.pdf`);
-    }
-    
-    async function exportCurrentSiteToExcel() {
-        let vehicles = [];
-        if (currentSiteFilter === "all") { alert("Sélectionnez un site spécifique"); return; }
-        else if (currentSiteFilter === "present_all") vehicles = allVehicles.filter(v => v.present === true);
-        else vehicles = allVehicles.filter(v => v.present === true && v.site === currentSiteFilter);
-        if (vehicles.length === 0) { alert("Aucun véhicule"); return; }
-        const data = vehicles.map(v => ({
-            "Immatriculation": v.immat, "Client": v.client, "Marque": v.marque,
-            "Modèle": v.modele, "Site": v.site || "", "Dernier constat": v.lastSeen ? new Date(v.lastSeen).toLocaleString() : ""
-        }));
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Présents");
-        XLSX.writeFile(wb, `site_${currentSiteFilter}_${new Date().toISOString().slice(0,19)}.xlsx`);
-    }
-    
-    async function exportCurrentSiteToPDF() {
-        let vehicles = [];
-        if (currentSiteFilter === "all") { alert("Sélectionnez un site spécifique"); return; }
-        else if (currentSiteFilter === "present_all") vehicles = allVehicles.filter(v => v.present === true);
-        else vehicles = allVehicles.filter(v => v.present === true && v.site === currentSiteFilter);
-        if (vehicles.length === 0) { alert("Aucun véhicule"); return; }
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ orientation: 'landscape' });
-        doc.text(`Véhicules présents - ${currentSiteFilter}`, 14, 15);
-        doc.text(`Généré le ${new Date().toLocaleString()}`, 14, 22);
-        const tableData = vehicles.map(v => [v.immat, v.client, v.marque, v.modele, v.lastSeen ? new Date(v.lastSeen).toLocaleString() : ""]);
-        doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle", "Dernier constat"]], body: tableData, startY: 30 });
-        doc.save(`site_${currentSiteFilter}_${new Date().toISOString().slice(0,19)}.pdf`);
-    }
-    
-    // ==================== ÉVÉNEMENTS ====================
-    siteFilterSelect.addEventListener("change", (e) => {
-        currentSiteFilter = e.target.value;
-        renderListOnly();
-    });
-    
-    searchInput.addEventListener("input", (e) => {
-        currentSearch = e.target.value;
-        renderListOnly();
-    });
-    
-    document.getElementById("saveBackupBtn").onclick = saveBackup;
-    document.getElementById("restoreBackupBtn").onclick = restoreBackup;
-    document.getElementById("resetCheckBtn").onclick = resetOnlyCheckboxes;
-    
-    // ==================== MODE NUIT ====================
-    const darkToggle = document.getElementById("darkModeToggle");
-    darkToggle.onclick = () => {
-        document.body.classList.toggle("dark-mode");
-        darkToggle.innerHTML = document.body.classList.contains("dark-mode") ? "☀️ Mode jour" : "🌙 Mode nuit";
-    };
-    
-    // ==================== BOUTONS EXPORT ====================
-    document.getElementById("exportPresentExcel").onclick = exportPresentToExcel;
-    document.getElementById("exportPresentPDF").onclick = exportPresentToPDF;
-    document.getElementById("exportAbsentExcel").onclick = exportAbsentToExcel;
-    document.getElementById("exportAbsentPDF").onclick = exportAbsentToPDF;
-    document.getElementById("exportSiteExcelBtn").onclick = exportCurrentSiteToExcel;
-    document.getElementById("exportSitePdfBtn").onclick = exportCurrentSiteToPDF;
-    
-    // ==================== INITIALISATION ====================
-    window.addEventListener("load", async () => {
-        await openDB();
-        await loadAndDisplay();
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("/sw.js").catch(console.error);
+        XLSX.utils.book_append_sheet(wb, ws, sheetName || "export");
+        XLSX.writeFile(wb, `${filename}_${new Date().toISOString().slice(0,10)}.xlsx`);
+        showNotification(`Export ${filename} effectué`);
+      }
+      
+      function exportListToPdf(list, filename, title) {
+        const element = document.createElement("div");
+        element.style.position = "absolute";
+        element.style.left = "-9999px";
+        element.style.top = "0";
+        element.style.padding = "1rem";
+        element.style.fontFamily = "'Segoe UI', 'Arial', sans-serif";
+        element.style.backgroundColor = "#fff";
+        const total = list.length;
+        let html = `<div style="margin-bottom:1.5rem;text-align:center;"><h1 style="color:#1e3c72;">${title}</h1><p style="font-size:0.9rem;">Export généré le ${new Date().toLocaleString()}</p><hr style="border:1px solid #ff9800;width:80px;margin:0.5rem auto;"><div style="display:flex;justify-content:center;gap:1.5rem;"><div style="background:#eef2ff;padding:0.3rem 0.8rem;border-radius:20px;">📦 Total : ${total}</div></div></div><table style="width:100%;border-collapse:collapse;font-size:0.7rem;"><thead><tr style="background-color:#1e3c72;color:white;"><th style="padding:8px 4px;border:1px solid #ddd;">#</th><th style="padding:8px 4px;border:1px solid #ddd;">N° Intervention</th><th style="padding:8px 4px;border:1px solid #ddd;">Client</th><th style="padding:8px 4px;border:1px solid #ddd;">Date création</th><th style="padding:8px 4px;border:1px solid #ddd;">Date livraison</th><th style="padding:8px 4px;border:1px solid #ddd;">Immatriculation</th><th style="padding:8px 4px;border:1px solid #ddd;">Marque</th><th style="padding:8px 4px;border:1px solid #ddd;">Modèle</th><th style="padding:8px 4px;border:1px solid #ddd;">Pannes signalées</th><th style="padding:8px 4px;border:1px solid #ddd;">Rapport diagnostic</th><th style="padding:8px 4px;border:1px solid #ddd;">Pièces à remplacer</th><th style="padding:8px 4px;border:1px solid #ddd;">Statut</th><th style="padding:8px 4px;border:1px solid #ddd;">Position GEO</th></tr></thead><tbody>`;
+        list.forEach((v, idx) => { html += `<tr style="background-color:${idx%2===0?"#f9fafb":"#ffffff"};"><td style="padding:6px 4px;border:1px solid #ddd;">${idx+1}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.numeroIntervention || "")}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.client)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${v.dateCreation || ""}</td><td style="padding:6px 4px;border:1px solid #ddd;">${v.dateLivraison || ""}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.plaque)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.marque)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.modele)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.travauxClient || "").substring(0,60)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.rapportDiagnostic || "").substring(0,60)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.pieces || "").substring(0,60)}</td><td style="padding:6px 4px;border:1px solid #ddd;">${v.statut}</td><td style="padding:6px 4px;border:1px solid #ddd;">${escapeHtml(v.positionGeo || "")}</td></tr>`; });
+        html += `</tbody></table><div style="margin-top:1rem;font-size:0.6rem;text-align:center;">Document généré automatiquement par BNETD TRACKER</div>`;
+        element.innerHTML = html;
+        document.body.appendChild(element);
+        html2pdf().from(element).set({ margin: [0.5,0.5,0.5,0.5], filename: `${filename}_${new Date().toISOString().slice(0,10)}.pdf`, image: { type: "jpeg", quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: "in", format: "a4", orientation: "landscape" } }).save().then(() => { element.remove(); showNotification(`Export ${filename} PDF effectué`); });
+      }
+
+      function renderDashboard() {
+        const total = vehicles.length;
+        const statusCount = {};
+        vehicles.forEach(v => { statusCount[v.statut] = (statusCount[v.statut] || 0) + 1; });
+        document.getElementById("statsContainer").innerHTML = `<div class="stat-card"><div class="stat-number">${total}</div><div class="stat-label">Total</div></div><div class="stat-card"><div class="stat-number">${statusCount["Réceptionné"] || 0}</div><div class="stat-label">Réceptionné</div></div><div class="stat-card"><div class="stat-number">${statusCount["Diagnostic en cours"] || 0}</div><div class="stat-label">Diagnostic</div></div><div class="stat-card"><div class="stat-number">${statusCount["En attente accord client"] || 0}</div><div class="stat-label">Attente accord</div></div><div class="stat-card"><div class="stat-number">${statusCount["Travaux en cours"] || 0}</div><div class="stat-label">Travaux</div></div><div class="stat-card"><div class="stat-number">${statusCount["Prêt pour livraison"] || 0}</div><div class="stat-label">Prêt livraison</div></div><div class="stat-card"><div class="stat-number">${statusCount["Livré"] || 0}</div><div class="stat-label">Livrés</div></div>`;
+        
+        const pending = vehicles.filter(v => v.statut !== "Livré" && (!v.dateLivraison || v.dateLivraison === ""));
+        document.getElementById("pendingAccordContainer").innerHTML = `<div class="stat-card" style="grid-column: span 2;"><div class="stat-label">🚚 Non livrés (${pending.length})</div><div class="pending-list"><ul>${pending.map(v => `<li>${v.plaque} - ${v.client} (${v.statut})</li>`).join("")}</ul></div></div>`;
+        document.getElementById("chartContainer").innerHTML = `<h3>Répartition</h3><div style="display:flex; gap:10px; flex-wrap:wrap;">${Object.entries(statusCount).map(([k,v]) => `<div style="background:#eef2f5; padding:5px 12px; border-radius:20px;">${k} (${v})</div>`).join("")}</div>`;
+        
+        const withoutIntervention = vehicles.filter(v => !v.numeroIntervention || v.numeroIntervention.trim() === "");
+        document.getElementById("countNoIntervention").innerText = withoutIntervention.length;
+        document.getElementById("exportNoInterventionExcel").onclick = () => exportListToExcel(withoutIntervention, "sans_intervention", "Sans_intervention");
+        document.getElementById("exportNoInterventionPdf").onclick = () => exportListToPdf(withoutIntervention, "sans_intervention", "Véhicules sans numéro d'intervention");
+
+        const delayDays = parseInt(document.getElementById("delaySelect").value);
+        const now = new Date();
+        const overdue = vehicles.filter(v => {
+          if (v.statut === "Livré") return false;
+          if (!v.dateCreation) return false;
+          const creation = new Date(v.dateCreation.replace(" ", "T"));
+          const diffDays = (now - creation) / (1000 * 3600 * 24);
+          return diffDays > delayDays;
+        });
+        document.getElementById("countOverdue").innerText = overdue.length;
+        const previewHtml = overdue.slice(0,10).map(v => `<li>${v.plaque} - ${v.client} (créé le ${v.dateCreation?.split(" ")[0]})</li>`).join("");
+        document.getElementById("overdueListPreview").innerHTML = `<ul>${previewHtml || "<li>Aucun</li>"}</ul>`;
+        document.getElementById("exportOverdueExcel").onclick = () => exportListToExcel(overdue, "retard_livraison", "Retard_livraison");
+        document.getElementById("exportOverduePdf").onclick = () => exportListToPdf(overdue, "retard_livraison", "Véhicules non livrés en retard");
+
+        const livres = vehicles.filter(v => v.statut === "Livré");
+        const nonLivres = vehicles.filter(v => v.statut !== "Livré");
+        document.getElementById("exportLivresExcel").onclick = () => exportListToExcel(livres, "livres", "Vehicules_livres");
+        document.getElementById("exportLivresPdf").onclick = () => exportListToPdf(livres, "livres", "Véhicules livrés");
+        document.getElementById("exportNonLivresExcel").onclick = () => exportListToExcel(nonLivres, "non_livres", "Vehicules_non_livres");
+        document.getElementById("exportNonLivresPdf").onclick = () => exportListToPdf(nonLivres, "non_livres", "Véhicules non livrés");
+      }
+
+      function backupData() { 
+        const dataStr = JSON.stringify(vehicles, null, 2); 
+        const blob = new Blob([dataStr], {type:"application/json"}); 
+        const url = URL.createObjectURL(blob); 
+        const a = document.createElement("a"); 
+        a.href = url; 
+        a.download = `sauvegarde_SAV_${new Date().toISOString().slice(0,19)}.json`; 
+        a.click(); 
+        URL.revokeObjectURL(url);
+        showNotification("Sauvegarde effectuée");
+      }
+      
+      function restoreData() { 
+        const input = document.createElement("input"); 
+        input.type = "file"; 
+        input.accept = "application/json"; 
+        input.onchange = (e) => { 
+          const file = e.target.files[0]; 
+          const reader = new FileReader(); 
+          reader.onload = (ev) => { 
+            try { 
+              const restored = JSON.parse(ev.target.result); 
+              if (!Array.isArray(restored)) throw new Error(); 
+              const migrated = restored.map(v => ({ ...getEmptyVehicle(v.plaque||"", v.client||"", v.modele||""), ...v, accessoires: v.accessoires||[], documents: v.documents||[], photos: v.photos||[], history: v.history||[], numeroIntervention: v.numeroIntervention||"" })); 
+              vehicles = migrated; 
+              saveVehicles(); 
+              renderVehicleList(); 
+              showNotification("Restauration réussie !");
+            } catch(err) { 
+              showNotification("Fichier invalide", true);
+            } 
+          }; 
+          reader.readAsText(file); 
+        }; 
+        input.click(); 
+      }
+
+      // Gestion onglets
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        if (btn.dataset.tab === "list") { 
+          document.getElementById("tab-list").style.display = "flex"; 
+          document.getElementById("tab-dashboard").style.display = "none"; 
+          renderVehicleList(); 
+        } else { 
+          document.getElementById("tab-list").style.display = "none"; 
+          document.getElementById("tab-dashboard").style.display = "block"; 
+          renderDashboard(); 
         }
-    });
-</script>
-</body>
+      }));
+      
+      document.getElementById("addVehicleBtn").onclick = () => addModal.style.display = "block";
+      document.querySelector(".close").onclick = () => addModal.style.display = "none";
+      document.getElementById("importExcelBtn").onclick = () => importFromOdoo();
+      window.onclick = (e) => { if (e.target === addModal) addModal.style.display = "none"; };
+      document.getElementById("quickAddForm").onsubmit = (e) => { 
+        e.preventDefault(); 
+        const plaque = document.getElementById("newPlaque").value.trim(); 
+        const client = document.getElementById("newClient").value.trim(); 
+        const modele = document.getElementById("newModel").value.trim(); 
+        if (!plaque || !client) { 
+          showNotification("Plaque et client requis", true); 
+          return; 
+        } 
+        addVehicle(plaque, client, modele); 
+        addModal.style.display = "none"; 
+        document.getElementById("quickAddForm").reset(); 
+      };
+      searchInput.addEventListener("input", renderVehicleList);
+      statusFilter.addEventListener("change", renderVehicleList);
+      document.getElementById("exportExcelBtn").addEventListener("click", exportToExcel);
+      document.getElementById("exportPdfBtn").addEventListener("click", exportToPDF);
+      document.getElementById("backupDataBtn").addEventListener("click", backupData);
+      document.getElementById("restoreDataBtn").addEventListener("click", restoreData);
+      document.getElementById("delaySelect").addEventListener("change", () => { if (document.getElementById("tab-dashboard").style.display === "block") renderDashboard(); });
+      
+      loadVehicles();
+
+      // Service Worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('Service worker enregistré', reg))
+          .catch(err => console.error('Erreur SW', err));
+      }
+    </script>
+  </body>
 </html>
