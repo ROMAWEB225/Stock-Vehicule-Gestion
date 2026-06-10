@@ -65,6 +65,14 @@
         .filter-site-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
         .detail-line { font-size: 0.8rem; color: #475569; }
         .dark-mode .detail-line { color: #cbd5e1; }
+        .backup-info {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            background: #e0e7ff;
+            border-radius: 20px;
+            color: #1e40af;
+        }
+        .dark-mode .backup-info { background: #1e3a5f; color: #93c5fd; }
     </style>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
@@ -79,11 +87,13 @@
     <div class="btn-group">
         <input type="file" id="excelInput" accept=".xlsx, .xls" style="display:none" />
         <button id="importBtn"> Importer non livrés</button>
+        <button id="saveBackupBtn" style="background:#10b981;">💾 Sauvegarder l'état</button>
+        <button id="restoreBackupBtn" style="background:#f59e0b;">↩️ Restaurer</button>
+        <button id="resetCheckBtn" style="background:#ef4444;">🔄 Réinitialiser (cases)</button>
         <button id="exportPresentExcel"> Tous présents (Excel)</button>
         <button id="exportPresentPDF"> Tous présents (PDF)</button>
         <button id="exportAbsentExcel"> Absents (Excel)</button>
         <button id="exportAbsentPDF"> Absents (PDF)</button>
-        <button id="resetAllBtn" class="btn-secondary"> Réinitialiser</button>
     </div>
     <button id="darkModeToggle" class="dark-toggle">🌙 Mode nuit</button>
 </div>
@@ -103,6 +113,7 @@
         <input type="text" id="searchInput" placeholder="Immat, client, modèle...">
         <span id="resultCount"></span>
     </div>
+    <div id="backupInfo" class="backup-info">📦 Aucune sauvegarde</div>
 </div>
 
 <div id="statsContainer" class="stats"></div>
@@ -134,12 +145,12 @@
 <script>
     // ==================== CONFIGURATION ====================
     const SITE_OPTIONS = ["Garage 1", "Garage 2", "Garage 3", "Dépôt 1", "Dépôt Aéroport"];
+    const STORAGE_BACKUP_KEY = "ronde_vehicules_backup";
     
     let db;
     let allVehicles = [];
     let currentSiteFilter = "all";
     let currentSearch = "";
-    let updateTimeout = null;
     
     // Éléments DOM
     const statsContainer = document.getElementById("statsContainer");
@@ -148,11 +159,12 @@
     const searchInput = document.getElementById("searchInput");
     const resultCountSpan = document.getElementById("resultCount");
     const lastSyncSpan = document.getElementById("lastSync");
+    const backupInfoSpan = document.getElementById("backupInfo");
     
     // ==================== INDEXEDDB ====================
     function openDB() {
         return new Promise((resolve, reject) => {
-            const req = indexedDB.open("RondePresenceDB", 5);
+            const req = indexedDB.open("RondePresenceDB", 6);
             req.onerror = () => reject("DB error");
             req.onsuccess = (e) => { db = e.target.result; resolve(); };
             req.onupgradeneeded = (e) => {
@@ -191,8 +203,82 @@
         return tx.complete;
     }
     
+    // ==================== SAUVEGARDE / RESTAURATION ====================
+    function saveBackup() {
+        const backup = allVehicles.map(v => ({
+            id: v.id,
+            immat: v.immat,
+            present: v.present,
+            site: v.site,
+            lastSeen: v.lastSeen,
+            photo: v.photo,
+            isCustom: v.isCustom,
+            client: v.client,
+            marque: v.marque,
+            modele: v.modele,
+            refCommande: v.refCommande,
+            typeMaintenance: v.typeMaintenance
+        }));
+        localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(backup));
+        const backupDate = new Date().toLocaleString();
+        backupInfoSpan.innerHTML = `💾 Sauvegardé le ${backupDate}`;
+        setTimeout(() => {
+            if (!localStorage.getItem(STORAGE_BACKUP_KEY)) return;
+            backupInfoSpan.innerHTML = `📦 Sauvegarde existante (${backupDate})`;
+        }, 3000);
+        alert("✅ État sauvegardé !");
+    }
+    
+    async function restoreBackup() {
+        const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
+        if (!backup) {
+            alert("❌ Aucune sauvegarde trouvée.");
+            return;
+        }
+        
+        if (!confirm("⚠️ Restaurer la sauvegarde remplacera l'état actuel (cases cochées et sites). Les véhicules importés restent. Confirmer ?")) {
+            return;
+        }
+        
+        const backupVehicles = JSON.parse(backup);
+        
+        for (let backupV of backupVehicles) {
+            const existingV = allVehicles.find(v => v.id === backupV.id);
+            if (existingV) {
+                existingV.present = backupV.present;
+                existingV.site = backupV.site;
+                existingV.lastSeen = backupV.lastSeen;
+                existingV.photo = backupV.photo;
+                await saveVehicle(existingV);
+            }
+        }
+        
+        await loadAndDisplay();
+        alert("✅ Restauration terminée !");
+    }
+    
+    async function resetOnlyCheckboxes() {
+        if (!confirm("⚠️ Réinitialiser les cases à cocher et les sites ? Les véhicules importés restent, mais toutes les cases seront décochées et les sites supprimés.")) {
+            return;
+        }
+        
+        for (let v of allVehicles) {
+            v.present = false;
+            v.site = null;
+            v.lastSeen = null;
+            await saveVehicle(v);
+        }
+        await loadAndDisplay();
+        alert("✅ Réinitialisation terminée (cases décochées).");
+    }
+    
     // ==================== IMPORT EXCEL ====================
     document.getElementById("importBtn").onclick = () => {
+        if (allVehicles.length > 0) {
+            if (!confirm("⚠️ L'import va effacer la liste actuelle. Voulez-vous sauvegarder avant ?")) {
+                return;
+            }
+        }
         document.getElementById("excelInput").click();
         document.getElementById("excelInput").onchange = (e) => {
             const file = e.target.files[0];
@@ -266,7 +352,7 @@
         alert(`✅ Véhicule ${immat} ajouté sur ${site}`);
     };
     
-    // ==================== RENDU OPTIMISÉ (sans rechargement complet) ====================
+    // ==================== RENDU OPTIMISÉ ====================
     function getFilteredVehicles() {
         let filtered = allVehicles;
         
@@ -297,7 +383,6 @@
         }
         statsContainer.innerHTML = html;
         
-        // Réattacher les événements de clic sur les stats
         document.querySelectorAll(".stat-card").forEach(card => {
             card.addEventListener("click", () => {
                 const site = card.getAttribute("data-site");
@@ -339,12 +424,10 @@
         }
         listContainer.innerHTML = html;
         
-        // Attacher événements sans rechargement lourd
         attachEventsToCurrentList();
     }
     
     function attachEventsToCurrentList() {
-        // Checkboxes
         document.querySelectorAll(".present-check").forEach(cb => {
             cb.replaceWith(cb.cloneNode(true));
         });
@@ -363,7 +446,6 @@
             });
         });
         
-        // Sélecteurs de site
         document.querySelectorAll(".site-select").forEach(select => {
             select.replaceWith(select.cloneNode(true));
         });
@@ -381,7 +463,6 @@
             });
         });
         
-        // Boutons photo
         document.querySelectorAll(".photoBtn").forEach(btn => {
             btn.replaceWith(btn.cloneNode(true));
         });
@@ -426,6 +507,13 @@
         updateSiteFilterOptions();
         renderStatsOnly();
         renderListOnly();
+        
+        const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
+        if (backup) {
+            backupInfoSpan.innerHTML = `📦 Sauvegarde disponible`;
+        } else {
+            backupInfoSpan.innerHTML = `📦 Aucune sauvegarde`;
+        }
     }
     
     // ==================== EXPORTS ====================
@@ -508,7 +596,7 @@
         doc.save(`site_${currentSiteFilter}_${new Date().toISOString().slice(0,19)}.pdf`);
     }
     
-    // ==================== ÉVÉNEMENTS FILTRES ====================
+    // ==================== ÉVÉNEMENTS ====================
     siteFilterSelect.addEventListener("change", (e) => {
         currentSiteFilter = e.target.value;
         renderListOnly();
@@ -519,19 +607,9 @@
         renderListOnly();
     });
     
-    // ==================== RÉINITIALISATION ====================
-    document.getElementById("resetAllBtn").onclick = async () => {
-        if (confirm("⚠️ Réinitialiser tous les véhicules ?")) {
-            for (let v of allVehicles) {
-                v.present = false;
-                v.site = null;
-                v.lastSeen = null;
-                await saveVehicle(v);
-            }
-            await loadAndDisplay();
-            alert("Réinitialisation terminée.");
-        }
-    };
+    document.getElementById("saveBackupBtn").onclick = saveBackup;
+    document.getElementById("restoreBackupBtn").onclick = restoreBackup;
+    document.getElementById("resetCheckBtn").onclick = resetOnlyCheckboxes;
     
     // ==================== MODE NUIT ====================
     const darkToggle = document.getElementById("darkModeToggle");
