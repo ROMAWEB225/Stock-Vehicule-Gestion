@@ -168,7 +168,7 @@
     // ==================== INDEXEDDB ====================
     function openDB() {
         return new Promise((resolve, reject) => {
-            const req = indexedDB.open("RondePresenceDB", 6);
+            const req = indexedDB.open("RondePresenceDB", 7);
             req.onerror = () => reject("DB error");
             req.onsuccess = (e) => { db = e.target.result; resolve(); };
             req.onupgradeneeded = (e) => {
@@ -241,18 +241,49 @@
         alert("✅ État sauvegardé !");
     }
     
+    // *** FONCTION RESTAURATION CORRIGÉE : crée les véhicules manquants ***
     async function restoreBackupFromData(backupVehicles) {
+        // 1. Créer ou mettre à jour chaque véhicule
         for (let backupV of backupVehicles) {
             const existingV = allVehicles.find(v => v.id === backupV.id);
             if (existingV) {
+                // Mise à jour de l'existant
                 existingV.present = backupV.present;
                 existingV.site = backupV.site;
                 existingV.lastSeen = backupV.lastSeen;
                 existingV.photo = backupV.photo;
+                existingV.client = backupV.client || existingV.client;
+                existingV.marque = backupV.marque || existingV.marque;
+                existingV.modele = backupV.modele || existingV.modele;
+                existingV.refCommande = backupV.refCommande || existingV.refCommande;
+                existingV.typeMaintenance = backupV.typeMaintenance || existingV.typeMaintenance;
+                existingV.isCustom = backupV.isCustom || false;
                 await saveVehicle(existingV);
+            } else {
+                // Création du véhicule manquant (cas des ajouts manuels)
+                const newVehicle = {
+                    id: backupV.id,
+                    immat: backupV.immat || "inconnu",
+                    client: backupV.client || "Ajout manuel",
+                    marque: backupV.marque || "",
+                    modele: backupV.modele || "",
+                    refCommande: backupV.refCommande || "",
+                    typeMaintenance: backupV.typeMaintenance || "",
+                    present: backupV.present || false,
+                    site: backupV.site || null,
+                    lastSeen: backupV.lastSeen || null,
+                    photo: backupV.photo || null,
+                    isCustom: true
+                };
+                await saveVehicle(newVehicle);
             }
         }
-        await loadAndDisplay();
+        
+        // 2. Recharger la liste complète depuis la base
+        allVehicles = await getAllVehicles();
+        updateSiteFilterOptions();
+        renderStatsOnly();
+        renderListOnly();
     }
 
     async function restoreBackup() {
@@ -566,9 +597,22 @@
         renderStatsOnly();
         renderListOnly();
         
+        // Vérifier si une sauvegarde existe et la restaurer automatiquement
         const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
         if (backup) {
-            backupInfoSpan.innerHTML = `📦 Sauvegarde disponible`;
+            try {
+                const backupData = JSON.parse(backup);
+                if (Array.isArray(backupData) && backupData.length > 0) {
+                    await restoreBackupFromData(backupData);
+                    backupInfoSpan.innerHTML = `✅ Sauvegarde restaurée automatiquement (${new Date().toLocaleString()})`;
+                    console.log("✅ Sauvegarde restaurée automatiquement.");
+                } else {
+                    backupInfoSpan.innerHTML = `📦 Sauvegarde disponible (vide ou invalide)`;
+                }
+            } catch (error) {
+                backupInfoSpan.innerHTML = `⚠️ Sauvegarde corrompue, utilisez "Restaurer" manuellement.`;
+                console.error("Erreur restauration auto:", error);
+            }
         } else {
             backupInfoSpan.innerHTML = `📦 Aucune sauvegarde`;
         }
