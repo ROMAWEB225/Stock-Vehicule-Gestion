@@ -73,6 +73,7 @@
             color: #1e40af;
         }
         .dark-mode .backup-info { background: #1e3a5f; color: #93c5fd; }
+        .file-input-hidden { display: none; }
     </style>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
@@ -90,6 +91,9 @@
         <button id="saveBackupBtn" style="background:#10b981;">💾 Sauvegarder l'état</button>
         <button id="restoreBackupBtn" style="background:#f59e0b;">↩️ Restaurer</button>
         <button id="resetCheckBtn" style="background:#ef4444;">🔄 Réinitialiser (cases)</button>
+        <button id="exportBackupBtn" style="background:#8b5cf6;">📤 Exporter la sauvegarde</button>
+        <button id="importBackupBtn" style="background:#8b5cf6;">📥 Importer une sauvegarde</button>
+        <input type="file" id="backupFileInput" accept=".json" style="display:none" />
         <button id="exportPresentExcel"> Tous présents (Excel)</button>
         <button id="exportPresentPDF"> Tous présents (PDF)</button>
         <button id="exportAbsentExcel"> Absents (Excel)</button>
@@ -204,8 +208,8 @@
     }
     
     // ==================== SAUVEGARDE / RESTAURATION ====================
-    function saveBackup() {
-        const backup = allVehicles.map(v => ({
+    function getBackupData() {
+        return allVehicles.map(v => ({
             id: v.id,
             immat: v.immat,
             present: v.present,
@@ -219,29 +223,25 @@
             refCommande: v.refCommande,
             typeMaintenance: v.typeMaintenance
         }));
-        localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(backup));
+    }
+
+    function saveBackupToLocalStorage(backupData) {
+        localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(backupData));
         const backupDate = new Date().toLocaleString();
         backupInfoSpan.innerHTML = `💾 Sauvegardé le ${backupDate}`;
         setTimeout(() => {
             if (!localStorage.getItem(STORAGE_BACKUP_KEY)) return;
             backupInfoSpan.innerHTML = `📦 Sauvegarde existante (${backupDate})`;
         }, 3000);
+    }
+
+    function saveBackup() {
+        const backup = getBackupData();
+        saveBackupToLocalStorage(backup);
         alert("✅ État sauvegardé !");
     }
     
-    async function restoreBackup() {
-        const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
-        if (!backup) {
-            alert("❌ Aucune sauvegarde trouvée.");
-            return;
-        }
-        
-        if (!confirm("⚠️ Restaurer la sauvegarde remplacera l'état actuel (cases cochées et sites). Les véhicules importés restent. Confirmer ?")) {
-            return;
-        }
-        
-        const backupVehicles = JSON.parse(backup);
-        
+    async function restoreBackupFromData(backupVehicles) {
         for (let backupV of backupVehicles) {
             const existingV = allVehicles.find(v => v.id === backupV.id);
             if (existingV) {
@@ -252,8 +252,20 @@
                 await saveVehicle(existingV);
             }
         }
-        
         await loadAndDisplay();
+    }
+
+    async function restoreBackup() {
+        const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
+        if (!backup) {
+            alert("❌ Aucune sauvegarde trouvée.");
+            return;
+        }
+        if (!confirm("⚠️ Restaurer la sauvegarde remplacera l'état actuel (cases cochées et sites). Les véhicules importés restent. Confirmer ?")) {
+            return;
+        }
+        const backupVehicles = JSON.parse(backup);
+        await restoreBackupFromData(backupVehicles);
         alert("✅ Restauration terminée !");
     }
     
@@ -261,7 +273,6 @@
         if (!confirm("⚠️ Réinitialiser les cases à cocher et les sites ? Les véhicules importés restent, mais toutes les cases seront décochées et les sites supprimés.")) {
             return;
         }
-        
         for (let v of allVehicles) {
             v.present = false;
             v.site = null;
@@ -270,6 +281,53 @@
         }
         await loadAndDisplay();
         alert("✅ Réinitialisation terminée (cases décochées).");
+    }
+
+    // ==================== EXPORT / IMPORT DE SAUVEGARDE (FICHIER JSON) ====================
+    function exportBackupFile() {
+        const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
+        if (!backup) {
+            alert("❌ Aucune sauvegarde à exporter. Faites d'abord une sauvegarde.");
+            return;
+        }
+        const blob = new Blob([backup], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `sauvegarde_ronde_${new Date().toISOString().slice(0,19)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function importBackupFile() {
+        document.getElementById("backupFileInput").click();
+        document.getElementById("backupFileInput").onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (ev) => {
+                try {
+                    const backupData = JSON.parse(ev.target.result);
+                    if (!Array.isArray(backupData) || backupData.length === 0) {
+                        alert("❌ Fichier invalide ou vide.");
+                        return;
+                    }
+                    // Sauvegarder dans localStorage
+                    localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(backupData));
+                    backupInfoSpan.innerHTML = `📥 Sauvegarde importée depuis fichier (${new Date().toLocaleString()})`;
+                    
+                    if (confirm("✅ Fichier importé avec succès. Voulez-vous restaurer cette sauvegarde maintenant ?")) {
+                        await restoreBackupFromData(backupData);
+                        alert("✅ Restauration terminée !");
+                    }
+                } catch (error) {
+                    alert("❌ Erreur lors de la lecture du fichier : " + error.message);
+                }
+            };
+            reader.readAsText(file);
+        };
     }
     
     // ==================== IMPORT EXCEL ====================
@@ -610,6 +668,8 @@
     document.getElementById("saveBackupBtn").onclick = saveBackup;
     document.getElementById("restoreBackupBtn").onclick = restoreBackup;
     document.getElementById("resetCheckBtn").onclick = resetOnlyCheckboxes;
+    document.getElementById("exportBackupBtn").onclick = exportBackupFile;
+    document.getElementById("importBackupBtn").onclick = importBackupFile;
     
     // ==================== MODE NUIT ====================
     const darkToggle = document.getElementById("darkModeToggle");
