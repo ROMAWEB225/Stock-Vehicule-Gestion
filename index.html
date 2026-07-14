@@ -168,7 +168,7 @@
     // ==================== INDEXEDDB ====================
     function openDB() {
         return new Promise((resolve, reject) => {
-            const req = indexedDB.open("RondePresenceDB", 7);
+            const req = indexedDB.open("RondePresenceDB", 8);
             req.onerror = () => reject("DB error");
             req.onsuccess = (e) => { db = e.target.result; resolve(); };
             req.onupgradeneeded = (e) => {
@@ -241,13 +241,10 @@
         alert("✅ État sauvegardé !");
     }
     
-    // *** FONCTION RESTAURATION CORRIGÉE : crée les véhicules manquants ***
     async function restoreBackupFromData(backupVehicles) {
-        // 1. Créer ou mettre à jour chaque véhicule
         for (let backupV of backupVehicles) {
             const existingV = allVehicles.find(v => v.id === backupV.id);
             if (existingV) {
-                // Mise à jour de l'existant
                 existingV.present = backupV.present;
                 existingV.site = backupV.site;
                 existingV.lastSeen = backupV.lastSeen;
@@ -260,7 +257,6 @@
                 existingV.isCustom = backupV.isCustom || false;
                 await saveVehicle(existingV);
             } else {
-                // Création du véhicule manquant (cas des ajouts manuels)
                 const newVehicle = {
                     id: backupV.id,
                     immat: backupV.immat || "inconnu",
@@ -279,7 +275,6 @@
             }
         }
         
-        // 2. Recharger la liste complète depuis la base
         allVehicles = await getAllVehicles();
         updateSiteFilterOptions();
         renderStatsOnly();
@@ -300,18 +295,38 @@
         alert("✅ Restauration terminée !");
     }
     
+    // ==================== RÉINITIALISATION ====================
+    // *** FONCTION RÉINITIALISATION CORRIGÉE : efface aussi la sauvegarde ***
     async function resetOnlyCheckboxes() {
-        if (!confirm("⚠️ Réinitialiser les cases à cocher et les sites ? Les véhicules importés restent, mais toutes les cases seront décochées et les sites supprimés.")) {
+        if (!confirm("⚠️ Réinitialiser les cases à cocher et les sites ?\n\n" +
+                     "• Les véhicules importés restent.\n" +
+                     "• Toutes les cases seront décochées et les sites supprimés.\n" +
+                     "• La sauvegarde sera effacée pour recommencer un nouveau cycle.\n\n" +
+                     "Confirmer ?")) {
             return;
         }
+        
+        // 1. Décocher tous les véhicules
         for (let v of allVehicles) {
             v.present = false;
             v.site = null;
             v.lastSeen = null;
             await saveVehicle(v);
         }
+        
+        // 2. Effacer la sauvegarde du localStorage
+        localStorage.removeItem(STORAGE_BACKUP_KEY);
+        
+        // 3. Recharger l'affichage
         await loadAndDisplay();
-        alert("✅ Réinitialisation terminée (cases décochées).");
+        
+        // 4. Mettre à jour le bandeau d'information
+        backupInfoSpan.innerHTML = `🔄 Réinitialisé - Aucune sauvegarde`;
+        
+        alert("✅ Réinitialisation terminée.\n\n" +
+              "• Toutes les cases sont décochées.\n" +
+              "• La sauvegarde a été effacée.\n" +
+              "• Vous pouvez recommencer votre ronde.");
     }
 
     // ==================== EXPORT / IMPORT DE SAUVEGARDE (FICHIER JSON) ====================
@@ -345,7 +360,6 @@
                         alert("❌ Fichier invalide ou vide.");
                         return;
                     }
-                    // Sauvegarder dans localStorage
                     localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(backupData));
                     backupInfoSpan.innerHTML = `📥 Sauvegarde importée depuis fichier (${new Date().toLocaleString()})`;
                     
