@@ -3,755 +3,1169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title> Stock Véhicules - Présence par site</title>
+    <title>Stock Véhicules - Gestion de présence</title>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
     <style>
-        * { box-sizing: border-box; font-family: system-ui, 'Segoe UI', Roboto, sans-serif; }
-        body { margin: 0; background: #f4f7fc; color: #1e293b; transition: all 0.2s; }
-        body.dark-mode { background: #0f172a; color: #e2e8f0; }
-        .dark-mode .card, .dark-mode .toolbar, .dark-mode .filter-bar, .dark-mode .vehicles-container, .dark-mode .add-section {
-            background: #1e293b; border-color: #334155;
+        /* ========== BASE ========== */
+        * { box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+        body {
+            margin: 0;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding-bottom: 20px;
+            transition: background 0.2s;
         }
-        header { background: #0f172a; color: white; padding: 1rem; text-align: center; }
-        h1 { margin: 0; font-size: 1.6rem; }
-        .toolbar {
-            display: flex; flex-wrap: wrap; gap: 10px; padding: 1rem;
-            background: white; border-bottom: 1px solid #ddd;
-            align-items: center; justify-content: space-between;
+
+        /* ========== HEADER ========== */
+        header {
+            background: #0f172a;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            border-bottom: 1px solid #1e293b;
         }
-        .btn-group { display: flex; flex-wrap: wrap; gap: 8px; }
-        button {
-            background: #2563eb; border: none; color: white; padding: 8px 16px;
-            border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 0.85rem;
+        header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        button:hover { background: #1d4ed8; }
-        .btn-secondary { background: #475569; }
+        header .logo h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: #e2e8f0;
+        }
+        header .logo span { color: #64748b; font-weight: 300; }
+        header .logo .badge {
+            background: #1e293b;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* ========== NAVIGATION ========== */
+        .nav-bar {
+            background: #0f172a;
+            padding: 0.6rem 2rem;
+            border-bottom: 1px solid #1e293b;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+        .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: #94a3b8;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .nav-btn:hover { background: #1e293b; color: #e2e8f0; }
+        .nav-btn.primary { background: #1e293b; color: #e2e8f0; }
+        .nav-btn.primary:hover { background: #2d3a4e; }
+        .nav-btn.accent { color: #60a5fa; }
+        .nav-btn.accent:hover { background: #1e293b; }
+        .nav-divider {
+            width: 1px;
+            height: 24px;
+            background: #1e293b;
+            margin: 0 6px;
+        }
+
+        /* ========== FILTRES ========== */
         .filter-bar {
-            background: white; padding: 0.7rem 1rem; display: flex; flex-wrap: wrap;
-            gap: 15px; align-items: center; border-bottom: 1px solid #e2e8f0;
+            background: #0f172a;
+            padding: 0.6rem 2rem;
+            border-bottom: 1px solid #1e293b;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
         }
-        select, input[type="text"] { padding: 6px 12px; border-radius: 30px; border: 1px solid #cbd5e1; }
-        .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 1rem; }
+        .filter-bar label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+        }
+        .filter-bar select,
+        .filter-bar input[type="text"] {
+            background: #1e293b;
+            border: 1px solid #2d3a4e;
+            color: #e2e8f0;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .filter-bar select:focus,
+        .filter-bar input[type="text"]:focus {
+            border-color: #60a5fa;
+        }
+        .filter-bar input[type="text"]::placeholder { color: #64748b; }
+
+        /* ========== CONTENU ========== */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+        }
+
+        /* ========== DASHBOARD ========== */
+        .dashboard-container {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.2rem;
+            display: none;
+        }
+        .dashboard-container.visible { display: block; }
+        .dashboard-container h2 {
+            margin: 0 0 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .dash-card {
+            background: #0f172a;
+            border-radius: 6px;
+            padding: 14px 12px;
+            text-align: center;
+        }
+        .dash-card .number {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin: 0;
+            color: #e2e8f0;
+        }
+        .dash-card .label {
+            font-size: 0.7rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+        .dash-card .bar {
+            height: 3px;
+            background: #1e293b;
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .dash-card .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s;
+            background: #60a5fa;
+        }
+        .dash-sites {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        .dash-sites .dash-card { padding: 10px; }
+        .dash-sites .dash-card .number { font-size: 1.2rem; }
+
+        /* ========== STATS ========== */
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 1.2rem;
+        }
         .stat-card {
-            background: white; border-radius: 20px; padding: 10px 15px;
-            min-width: 120px; text-align: center; cursor: pointer;
-            transition: transform 0.1s;
+            background: #1e293b;
+            border-radius: 6px;
+            padding: 10px 18px;
+            min-width: 100px;
+            text-align: center;
+            cursor: pointer;
+            flex: 1;
+            transition: background 0.2s;
+            border: 1px solid transparent;
         }
-        .stat-card:hover { transform: scale(1.02); background: #eef2ff; }
-        .vehicles-container, .add-section {
-            background: white; border-radius: 24px; margin: 1rem; padding: 1rem;
+        .stat-card:hover {
+            background: #2d3a4e;
+            border-color: #2d3a4e;
+        }
+        .stat-card h3 {
+            margin: 0;
+            font-size: 0.7rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+        }
+        .stat-card .number {
+            font-size: 1.6rem;
+            font-weight: 300;
+            margin: 2px 0 0;
+        }
+
+        /* ========== GALERIE ========== */
+        .gallery-container {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.2rem;
+            display: none;
+        }
+        .gallery-container.visible { display: block; }
+        .gallery-container h3 {
+            margin: 0 0 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+        }
+        .gallery-item {
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            background: #0f172a;
+            aspect-ratio: 1;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-item .gallery-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.85);
+            color: #e2e8f0;
+            font-size: 0.6rem;
+            padding: 3px 8px;
+            text-align: center;
+        }
+
+        /* ========== LISTE VÉHICULES ========== */
+        .vehicles-container {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .vehicles-container .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .vehicles-container .header-row h2 {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .vehicles-container .header-row .badge-count {
+            background: #0f172a;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: #94a3b8;
         }
         .vehicle-item {
-            display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
-            padding: 12px; border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #0f172a;
         }
-        .vehicle-info { flex: 2; }
-        .vehicle-info strong { font-size: 1rem; display: block; }
-        select.site-select { width: 140px; }
-        .present-check { width: 22px; height: 22px; cursor: pointer; }
-        .photo-preview { max-width: 50px; max-height: 50px; border-radius: 8px; cursor: pointer; }
-        .small-btn { background: #f1f5f9; border: none; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; }
-        .add-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
-        .add-form input, .add-form select { padding: 8px; border-radius: 20px; border: 1px solid #ccc; }
-        footer { text-align: center; font-size: 0.75rem; padding: 1rem; color: #64748b; }
-        @media (max-width: 700px) {
-            .vehicle-item { flex-direction: column; align-items: stretch; }
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .btn-group { justify-content: center; }
+        .vehicle-item:last-child { border-bottom: none; }
+        .vehicle-item .present-check {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #60a5fa;
+            flex-shrink: 0;
         }
-        .dark-toggle { background: #334155; margin-left: auto; }
-        .filter-site-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-        .detail-line { font-size: 0.8rem; color: #475569; }
-        .dark-mode .detail-line { color: #cbd5e1; }
+        .vehicle-item .vehicle-info {
+            flex: 2;
+            min-width: 160px;
+        }
+        .vehicle-item .vehicle-info strong {
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: block;
+        }
+        .vehicle-item .vehicle-info .detail-line {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+        .vehicle-item .site-select {
+            background: #0f172a;
+            border: 1px solid #2d3a4e;
+            color: #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            min-width: 120px;
+        }
+        .vehicle-item .site-select:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .vehicle-item .photo-btn {
+            background: #0f172a;
+            border: 1px solid #2d3a4e;
+            color: #94a3b8;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .vehicle-item .photo-btn:hover {
+            background: #2d3a4e;
+            color: #e2e8f0;
+        }
+        .vehicle-item .photo-preview {
+            max-width: 40px;
+            max-height: 40px;
+            border-radius: 4px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .vehicle-item .badge-custom {
+            background: #2d3a4e;
+            padding: 1px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            color: #94a3b8;
+        }
+        .vehicle-item .last-seen {
+            font-size: 0.65rem;
+            color: #64748b;
+        }
+
+        /* ========== AJOUT MANUEL ========== */
+        .add-section {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .add-section h3 {
+            margin: 0 0 0.8rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .add-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .add-form input,
+        .add-form select {
+            background: #0f172a;
+            border: 1px solid #2d3a4e;
+            color: #e2e8f0;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            flex: 1;
+            min-width: 120px;
+            outline: none;
+        }
+        .add-form input:focus,
+        .add-form select:focus {
+            border-color: #60a5fa;
+        }
+        .add-form input::placeholder { color: #64748b; }
+
+        /* ========== TIMER ========== */
+        .timer-container {
+            background: #1e293b;
+            padding: 0.6rem 2rem;
+            border-bottom: 1px solid #0f172a;
+            display: none;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .timer-container.visible { display: flex; }
+        .timer-display {
+            font-size: 1.6rem;
+            font-weight: 300;
+            font-family: 'Courier New', monospace;
+            background: #0f172a;
+            padding: 2px 16px;
+            border-radius: 4px;
+            color: #e2e8f0;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            padding: 1rem;
+            color: #64748b;
+            border-top: 1px solid #1e293b;
+            margin-top: 1rem;
+        }
+
+        /* ========== BACKUP INFO ========== */
         .backup-info {
             font-size: 0.7rem;
-            padding: 4px 8px;
-            background: #e0e7ff;
-            border-radius: 20px;
-            color: #1e40af;
+            padding: 2px 12px;
+            background: #1e293b;
+            border-radius: 4px;
+            color: #94a3b8;
         }
-        .dark-mode .backup-info { background: #1e3a5f; color: #93c5fd; }
-        .file-input-hidden { display: none; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            header { padding: 1rem; }
+            .nav-bar { padding: 0.5rem 1rem; }
+            .filter-bar { padding: 0.5rem 1rem; }
+            .main-content { padding: 0.5rem 1rem; }
+            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+            .vehicle-item { flex-direction: column; align-items: stretch; }
+            .vehicle-item .site-select { width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .dashboard-grid { grid-template-columns: 1fr 1fr; }
+            .stats .stat-card { min-width: 70px; }
+        }
+
+        /* ========== MODE TERRAIN ========== */
+        body.terrain-mode .present-check { width: 32px; height: 32px; }
+        body.terrain-mode .vehicle-item { padding: 14px; }
+        body.terrain-mode .nav-btn { padding: 10px 20px; font-size: 0.9rem; }
+        body.terrain-mode select,
+        body.terrain-mode input { padding: 10px 16px; font-size: 0.95rem; }
+        body.terrain-mode .stat-card { padding: 14px 20px; min-width: 130px; }
+        body.terrain-mode .vehicle-info strong { font-size: 1.2rem; }
     </style>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
 </head>
 <body>
-<header>
-    <h1> STOCK VEHICULES </h1>
-    <p>Import Odoo → cocher présence + assigner site → ajout manuel</p>
-</header>
 
-<div class="toolbar">
-    <div class="btn-group">
+    <!-- ========== HEADER ========== -->
+    <header>
+        <div class="logo">
+            <h1>STOCK<span>VÉHICULES</span></h1>
+            <span class="badge">v2.0</span>
+        </div>
+        <div class="header-right">
+            <span id="backupInfo" class="backup-info">Aucune sauvegarde</span>
+            <button id="darkModeToggle" class="nav-btn" style="font-size:1.1rem;">●</button>
+        </div>
+    </header>
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav class="nav-bar">
         <input type="file" id="excelInput" accept=".xlsx, .xls" style="display:none" />
-        <button id="importBtn"> Importer non livrés</button>
-        <button id="saveBackupBtn" style="background:#10b981;">💾 Sauvegarder l'état</button>
-        <button id="restoreBackupBtn" style="background:#f59e0b;">↩️ Restaurer</button>
-        <button id="resetCheckBtn" style="background:#ef4444;">🔄 Réinitialiser (cases)</button>
-        <button id="exportBackupBtn" style="background:#8b5cf6;">📤 Exporter la sauvegarde</button>
-        <button id="importBackupBtn" style="background:#8b5cf6;">📥 Importer une sauvegarde</button>
+        <button id="importBtn" class="nav-btn primary">Importer</button>
+        <button id="saveBackupBtn" class="nav-btn accent">Sauvegarder</button>
+        <button id="restoreBackupBtn" class="nav-btn accent">Restaurer</button>
+        <button id="resetCheckBtn" class="nav-btn" style="color:#f87171;">Réinitialiser</button>
+        <span class="nav-divider"></span>
+        <button id="exportBackupBtn" class="nav-btn">Exporter</button>
+        <button id="importBackupBtn" class="nav-btn">Importer</button>
         <input type="file" id="backupFileInput" accept=".json" style="display:none" />
-        <button id="exportPresentExcel"> Tous présents (Excel)</button>
-        <button id="exportPresentPDF"> Tous présents (PDF)</button>
-        <button id="exportAbsentExcel"> Absents (Excel)</button>
-        <button id="exportAbsentPDF"> Absents (PDF)</button>
-    </div>
-    <button id="darkModeToggle" class="dark-toggle">🌙 Mode nuit</button>
-</div>
+        <span class="nav-divider"></span>
+        <button id="dashboardToggleBtn" class="nav-btn">Dashboard</button>
+        <button id="galleryToggleBtn" class="nav-btn">Galerie</button>
+        <button id="timerToggleBtn" class="nav-btn">Chrono</button>
+        <button id="terrainModeBtn" class="nav-btn">Terrain</button>
+        <button id="reportBtn" class="nav-btn">Rapport</button>
+        <span class="nav-divider"></span>
+        <button id="exportPresentExcel" class="nav-btn" style="color:#60a5fa;">Présents</button>
+        <button id="exportAbsentExcel" class="nav-btn" style="color:#f87171;">Absents</button>
+    </nav>
 
-<div class="filter-bar">
-    <div class="filter-site-row">
-        <label>📍 Filtrer par site :</label>
+    <!-- ========== TIMER ========== -->
+    <div id="timerContainer" class="timer-container">
+        <span class="timer-display" id="timerDisplay">00:00:00</span>
+        <button id="timerStartBtn" class="nav-btn accent">Démarrer</button>
+        <button id="timerStopBtn" class="nav-btn" style="color:#f87171;">Arrêter</button>
+        <button id="timerResetBtn" class="nav-btn">Reset</button>
+    </div>
+
+    <!-- ========== FILTRES ========== -->
+    <div class="filter-bar">
+        <label>Site</label>
         <select id="siteFilterSelect">
-            <option value="all">Tous les véhicules</option>
-            <option value="present_all">✅ Tous les présents</option>
+            <option value="all">Tous</option>
+            <option value="present_all">Présents</option>
         </select>
-        <button id="exportSiteExcelBtn" class="btn-secondary"> Exporter ce site (Excel)</button>
-        <button id="exportSitePdfBtn" class="btn-secondary"> Exporter ce site (PDF)</button>
-    </div>
-    <div>
-        <label>🔍 Recherche :</label>
-        <input type="text" id="searchInput" placeholder="Immat, client, modèle...">
-        <span id="resultCount"></span>
-    </div>
-    <div id="backupInfo" class="backup-info">📦 Aucune sauvegarde</div>
-</div>
-
-<div id="statsContainer" class="stats"></div>
-
-<div class="vehicles-container">
-    <h2>📋 Liste des véhicules non livrés</h2>
-    <div id="listContainer">Chargement...</div>
-</div>
-
-<div class="add-section">
-    <h3>➕ Ajouter un véhicule trouvé sur site (hors liste Odoo)</h3>
-    <div class="add-form">
-        <input type="text" id="newImmat" placeholder="Immatriculation *" required>
-        <input type="text" id="newMarque" placeholder="Marque">
-        <input type="text" id="newModele" placeholder="Modèle">
-        <select id="newSite">
-            <option value="Garage 1">Garage 1</option>
-            <option value="Garage 2">Garage 2</option>
-            <option value="Garage 3">Garage 3</option>
-            <option value="Dépôt 1">Dépôt 1</option>
-            <option value="Dépôt Aéroport">Dépôt Aéroport</option>
+        <label>Marque</label>
+        <select id="marqueFilter">
+            <option value="all">Toutes</option>
+            <option value="Changan">Changan</option>
+            <option value="MG">MG</option>
+            <option value="Jetour">Jetour</option>
         </select>
-        <button id="addVehicleBtn">✅ Ajouter</button>
+        <label>Type</label>
+        <select id="typeFilter">
+            <option value="all">Tous</option>
+            <option value="Vidange">Vidange</option>
+            <option value="Révision">Révision</option>
+            <option value="Carrosserie">Carrosserie</option>
+            <option value="Diagnostic">Diagnostic</option>
+        </select>
+        <input type="text" id="searchInput" placeholder="Rechercher..." style="flex:1;min-width:140px;">
+        <span id="resultCount" style="font-size:0.75rem;color:#64748b;"></span>
     </div>
-</div>
 
-<footer>✅ Mode hors ligne actif | Dernière synchro : <span id="lastSync">jamais</span></footer>
+    <!-- ========== CONTENU PRINCIPAL ========== -->
+    <div class="main-content">
 
-<script>
-    // ==================== CONFIGURATION ====================
-    const SITE_OPTIONS = ["Garage 1", "Garage 2", "Garage 3", "Dépôt 1", "Dépôt Aéroport"];
-    const STORAGE_BACKUP_KEY = "ronde_vehicules_backup";
-    
-    let db;
-    let allVehicles = [];
-    let currentSiteFilter = "all";
-    let currentSearch = "";
-    
-    // Éléments DOM
-    const statsContainer = document.getElementById("statsContainer");
-    const listContainer = document.getElementById("listContainer");
-    const siteFilterSelect = document.getElementById("siteFilterSelect");
-    const searchInput = document.getElementById("searchInput");
-    const resultCountSpan = document.getElementById("resultCount");
-    const lastSyncSpan = document.getElementById("lastSync");
-    const backupInfoSpan = document.getElementById("backupInfo");
-    
-    // ==================== INDEXEDDB ====================
-    function openDB() {
-        return new Promise((resolve, reject) => {
-            const req = indexedDB.open("RondePresenceDB", 8);
-            req.onerror = () => reject("DB error");
-            req.onsuccess = (e) => { db = e.target.result; resolve(); };
-            req.onupgradeneeded = (e) => {
-                const db = e.target.result;
-                if (!db.objectStoreNames.contains("vehicules")) {
-                    db.createObjectStore("vehicules", { keyPath: "id" });
-                }
-            };
-        });
-    }
-    
-    async function saveVehicle(vehicle) {
-        const tx = db.transaction("vehicules", "readwrite");
-        tx.objectStore("vehicules").put(vehicle);
-        return tx.complete;
-    }
-    
-    async function saveMultipleVehicles(vehicles) {
-        const tx = db.transaction("vehicules", "readwrite");
-        const store = tx.objectStore("vehicules");
-        for (let v of vehicles) store.put(v);
-        return tx.complete;
-    }
-    
-    async function getAllVehicles() {
-        return new Promise((resolve) => {
-            const tx = db.transaction("vehicules", "readonly");
-            const req = tx.objectStore("vehicules").getAll();
-            req.onsuccess = () => resolve(req.result || []);
-        });
-    }
-    
-    async function clearVehicles() {
-        const tx = db.transaction("vehicules", "readwrite");
-        tx.objectStore("vehicules").clear();
-        return tx.complete;
-    }
-    
-    // ==================== SAUVEGARDE / RESTAURATION ====================
-    function getBackupData() {
-        return allVehicles.map(v => ({
-            id: v.id,
-            immat: v.immat,
-            present: v.present,
-            site: v.site,
-            lastSeen: v.lastSeen,
-            photo: v.photo,
-            isCustom: v.isCustom,
-            client: v.client,
-            marque: v.marque,
-            modele: v.modele,
-            refCommande: v.refCommande,
-            typeMaintenance: v.typeMaintenance
-        }));
-    }
+        <!-- DASHBOARD -->
+        <div id="dashboardContainer" class="dashboard-container">
+            <h2>📊 Tableau de bord</h2>
+            <div class="dashboard-grid" id="dashboardGrid">
+                <div class="dash-card"><p class="number" id="dashTotal">0</p><p class="label">Total</p></div>
+                <div class="dash-card"><p class="number" id="dashPresent">0</p><p class="label">Présents</p></div>
+                <div class="dash-card"><p class="number" id="dashAbsent">0</p><p class="label">Absents</p></div>
+                <div class="dash-card">
+                    <p class="number" id="dashCompletion">0%</p>
+                    <p class="label">Complétion</p>
+                    <div class="bar"><div class="bar-fill" id="dashBar" style="width:0%;"></div></div>
+                </div>
+            </div>
+            <div class="dash-sites" id="dashSites"></div>
+        </div>
 
-    function saveBackupToLocalStorage(backupData) {
-        localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(backupData));
-        const backupDate = new Date().toLocaleString();
-        backupInfoSpan.innerHTML = `💾 Sauvegardé le ${backupDate}`;
-        setTimeout(() => {
-            if (!localStorage.getItem(STORAGE_BACKUP_KEY)) return;
-            backupInfoSpan.innerHTML = `📦 Sauvegarde existante (${backupDate})`;
-        }, 3000);
-    }
+        <!-- STATS -->
+        <div id="statsContainer" class="stats"></div>
 
-    function saveBackup() {
-        const backup = getBackupData();
-        saveBackupToLocalStorage(backup);
-        alert("✅ État sauvegardé !");
-    }
-    
-    async function restoreBackupFromData(backupVehicles) {
-        for (let backupV of backupVehicles) {
-            const existingV = allVehicles.find(v => v.id === backupV.id);
-            if (existingV) {
-                existingV.present = backupV.present;
-                existingV.site = backupV.site;
-                existingV.lastSeen = backupV.lastSeen;
-                existingV.photo = backupV.photo;
-                existingV.client = backupV.client || existingV.client;
-                existingV.marque = backupV.marque || existingV.marque;
-                existingV.modele = backupV.modele || existingV.modele;
-                existingV.refCommande = backupV.refCommande || existingV.refCommande;
-                existingV.typeMaintenance = backupV.typeMaintenance || existingV.typeMaintenance;
-                existingV.isCustom = backupV.isCustom || false;
-                await saveVehicle(existingV);
-            } else {
-                const newVehicle = {
-                    id: backupV.id,
-                    immat: backupV.immat || "inconnu",
-                    client: backupV.client || "Ajout manuel",
-                    marque: backupV.marque || "",
-                    modele: backupV.modele || "",
-                    refCommande: backupV.refCommande || "",
-                    typeMaintenance: backupV.typeMaintenance || "",
-                    present: backupV.present || false,
-                    site: backupV.site || null,
-                    lastSeen: backupV.lastSeen || null,
-                    photo: backupV.photo || null,
-                    isCustom: true
+        <!-- GALERIE -->
+        <div id="galleryContainer" class="gallery-container">
+            <h3>🖼️ Galerie photos</h3>
+            <div id="galleryContent"><p style="color:#64748b;font-size:0.8rem;">Aucune photo</p></div>
+        </div>
+
+        <!-- LISTE -->
+        <div class="vehicles-container">
+            <div class="header-row">
+                <h2>📋 Véhicules</h2>
+                <span class="badge-count" id="resultCountBadge">0</span>
+            </div>
+            <div id="listContainer">Chargement...</div>
+        </div>
+
+        <!-- AJOUT -->
+        <div class="add-section">
+            <h3>➕ Ajouter un véhicule</h3>
+            <div class="add-form">
+                <input type="text" id="newImmat" placeholder="Immatriculation *" required>
+                <input type="text" id="newMarque" placeholder="Marque">
+                <input type="text" id="newModele" placeholder="Modèle">
+                <select id="newSite">
+                    <option value="Garage 1">Garage 1</option>
+                    <option value="Garage 2">Garage 2</option>
+                    <option value="Garage 3">Garage 3</option>
+                    <option value="Dépôt 1">Dépôt 1</option>
+                    <option value="Dépôt Aéroport">Dépôt Aéroport</option>
+                </select>
+                <button id="addVehicleBtn" class="nav-btn primary">Ajouter</button>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>Hors ligne actif · Dernière synchro : <span id="lastSync">jamais</span></footer>
+
+    <script>
+        // ==================== CONFIGURATION ====================
+        const SITE_OPTIONS = ["Garage 1", "Garage 2", "Garage 3", "Dépôt 1", "Dépôt Aéroport"];
+        const STORAGE_BACKUP_KEY = "ronde_vehicules_backup";
+        
+        let db;
+        let allVehicles = [];
+        let currentSiteFilter = "all";
+        let currentSearch = "";
+        let currentMarqueFilter = "all";
+        let currentTypeFilter = "all";
+        let timerSeconds = 0;
+        let timerInterval = null;
+        let timerRunning = false;
+        
+        const statsContainer = document.getElementById("statsContainer");
+        const listContainer = document.getElementById("listContainer");
+        const siteFilterSelect = document.getElementById("siteFilterSelect");
+        const marqueFilter = document.getElementById("marqueFilter");
+        const typeFilter = document.getElementById("typeFilter");
+        const searchInput = document.getElementById("searchInput");
+        const resultCountSpan = document.getElementById("resultCount");
+        const resultCountBadge = document.getElementById("resultCountBadge");
+        const lastSyncSpan = document.getElementById("lastSync");
+        const backupInfoSpan = document.getElementById("backupInfo");
+        const dashboardContainer = document.getElementById("dashboardContainer");
+        const galleryContainer = document.getElementById("galleryContainer");
+        const timerContainer = document.getElementById("timerContainer");
+        const timerDisplay = document.getElementById("timerDisplay");
+
+        // ==================== BIP ====================
+        function playBeep() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.value = 880;
+                osc.type = "sine";
+                gain.gain.value = 0.1;
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.06);
+            } catch(e) {}
+        }
+
+        // ==================== INDEXEDDB ====================
+        function openDB() {
+            return new Promise((resolve, reject) => {
+                const req = indexedDB.open("RondePresenceDB", 9);
+                req.onerror = () => reject("DB error");
+                req.onsuccess = (e) => { db = e.target.result; resolve(); };
+                req.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains("vehicules")) {
+                        db.createObjectStore("vehicules", { keyPath: "id" });
+                    }
                 };
-                await saveVehicle(newVehicle);
-            }
+            });
         }
         
-        allVehicles = await getAllVehicles();
-        updateSiteFilterOptions();
-        renderStatsOnly();
-        renderListOnly();
-    }
+        async function saveVehicle(v) {
+            const tx = db.transaction("vehicules", "readwrite");
+            tx.objectStore("vehicules").put(v);
+            return tx.complete;
+        }
+        
+        async function saveMultipleVehicles(vehicles) {
+            const tx = db.transaction("vehicules", "readwrite");
+            const store = tx.objectStore("vehicules");
+            for (let v of vehicles) store.put(v);
+            return tx.complete;
+        }
+        
+        async function getAllVehicles() {
+            return new Promise((resolve) => {
+                const tx = db.transaction("vehicules", "readonly");
+                const req = tx.objectStore("vehicules").getAll();
+                req.onsuccess = () => resolve(req.result || []);
+            });
+        }
+        
+        async function clearVehicles() {
+            const tx = db.transaction("vehicules", "readwrite");
+            tx.objectStore("vehicules").clear();
+            return tx.complete;
+        }
 
-    async function restoreBackup() {
-        const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
-        if (!backup) {
-            alert("❌ Aucune sauvegarde trouvée.");
-            return;
+        // ==================== SAUVEGARDE ====================
+        function getBackupData() {
+            return allVehicles.map(v => ({
+                id: v.id, immat: v.immat, present: v.present, site: v.site,
+                lastSeen: v.lastSeen, photo: v.photo, isCustom: v.isCustom,
+                client: v.client, marque: v.marque, modele: v.modele,
+                refCommande: v.refCommande, typeMaintenance: v.typeMaintenance
+            }));
         }
-        if (!confirm("⚠️ Restaurer la sauvegarde remplacera l'état actuel (cases cochées et sites). Les véhicules importés restent. Confirmer ?")) {
-            return;
-        }
-        const backupVehicles = JSON.parse(backup);
-        await restoreBackupFromData(backupVehicles);
-        alert("✅ Restauration terminée !");
-    }
-    
-    // ==================== RÉINITIALISATION ====================
-    // *** FONCTION RÉINITIALISATION CORRIGÉE : efface aussi la sauvegarde ***
-    async function resetOnlyCheckboxes() {
-        if (!confirm("⚠️ Réinitialiser les cases à cocher et les sites ?\n\n" +
-                     "• Les véhicules importés restent.\n" +
-                     "• Toutes les cases seront décochées et les sites supprimés.\n" +
-                     "• La sauvegarde sera effacée pour recommencer un nouveau cycle.\n\n" +
-                     "Confirmer ?")) {
-            return;
-        }
-        
-        // 1. Décocher tous les véhicules
-        for (let v of allVehicles) {
-            v.present = false;
-            v.site = null;
-            v.lastSeen = null;
-            await saveVehicle(v);
-        }
-        
-        // 2. Effacer la sauvegarde du localStorage
-        localStorage.removeItem(STORAGE_BACKUP_KEY);
-        
-        // 3. Recharger l'affichage
-        await loadAndDisplay();
-        
-        // 4. Mettre à jour le bandeau d'information
-        backupInfoSpan.innerHTML = `🔄 Réinitialisé - Aucune sauvegarde`;
-        
-        alert("✅ Réinitialisation terminée.\n\n" +
-              "• Toutes les cases sont décochées.\n" +
-              "• La sauvegarde a été effacée.\n" +
-              "• Vous pouvez recommencer votre ronde.");
-    }
 
-    // ==================== EXPORT / IMPORT DE SAUVEGARDE (FICHIER JSON) ====================
-    function exportBackupFile() {
-        const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
-        if (!backup) {
-            alert("❌ Aucune sauvegarde à exporter. Faites d'abord une sauvegarde.");
-            return;
+        function saveBackupToLocalStorage(data) {
+            localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(data));
+            const date = new Date().toLocaleString();
+            backupInfoSpan.innerHTML = `Sauvegardé ${date}`;
+            setTimeout(() => {
+                if (!localStorage.getItem(STORAGE_BACKUP_KEY)) return;
+                backupInfoSpan.innerHTML = `Sauvegarde (${date})`;
+            }, 3000);
         }
-        const blob = new Blob([backup], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `sauvegarde_ronde_${new Date().toISOString().slice(0,19)}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
 
-    function importBackupFile() {
-        document.getElementById("backupFileInput").click();
-        document.getElementById("backupFileInput").onchange = (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = async (ev) => {
-                try {
-                    const backupData = JSON.parse(ev.target.result);
-                    if (!Array.isArray(backupData) || backupData.length === 0) {
-                        alert("❌ Fichier invalide ou vide.");
-                        return;
-                    }
-                    localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(backupData));
-                    backupInfoSpan.innerHTML = `📥 Sauvegarde importée depuis fichier (${new Date().toLocaleString()})`;
-                    
-                    if (confirm("✅ Fichier importé avec succès. Voulez-vous restaurer cette sauvegarde maintenant ?")) {
-                        await restoreBackupFromData(backupData);
-                        alert("✅ Restauration terminée !");
-                    }
-                } catch (error) {
-                    alert("❌ Erreur lors de la lecture du fichier : " + error.message);
+        function saveBackup() {
+            saveBackupToLocalStorage(getBackupData());
+            alert("✅ État sauvegardé");
+        }
+        
+        async function restoreBackupFromData(data) {
+            for (let b of data) {
+                const existing = allVehicles.find(v => v.id === b.id);
+                if (existing) {
+                    existing.present = b.present;
+                    existing.site = b.site;
+                    existing.lastSeen = b.lastSeen;
+                    existing.photo = b.photo;
+                    existing.client = b.client || existing.client;
+                    existing.marque = b.marque || existing.marque;
+                    existing.modele = b.modele || existing.modele;
+                    existing.refCommande = b.refCommande || existing.refCommande;
+                    existing.typeMaintenance = b.typeMaintenance || existing.typeMaintenance;
+                    existing.isCustom = b.isCustom || false;
+                    await saveVehicle(existing);
+                } else {
+                    await saveVehicle({
+                        id: b.id, immat: b.immat || "inconnu",
+                        client: b.client || "Ajout manuel",
+                        marque: b.marque || "", modele: b.modele || "",
+                        refCommande: b.refCommande || "",
+                        typeMaintenance: b.typeMaintenance || "",
+                        present: b.present || false, site: b.site || null,
+                        lastSeen: b.lastSeen || null, photo: b.photo || null,
+                        isCustom: true
+                    });
                 }
+            }
+            allVehicles = await getAllVehicles();
+            updateSiteFilterOptions();
+            renderAll();
+        }
+
+        async function restoreBackup() {
+            const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
+            if (!backup) { alert("❌ Aucune sauvegarde"); return; }
+            if (!confirm("Restaurer la sauvegarde ?")) return;
+            await restoreBackupFromData(JSON.parse(backup));
+            alert("✅ Restauration terminée");
+        }
+        
+        async function resetOnlyCheckboxes() {
+            if (!confirm("Réinitialiser les cases et effacer la sauvegarde ?")) return;
+            for (let v of allVehicles) {
+                v.present = false; v.site = null; v.lastSeen = null;
+                await saveVehicle(v);
+            }
+            localStorage.removeItem(STORAGE_BACKUP_KEY);
+            await loadAndDisplay();
+            backupInfoSpan.innerHTML = "Réinitialisé";
+            alert("✅ Réinitialisation terminée");
+        }
+
+        // ==================== EXPORT/IMPORT BACKUP ====================
+        function exportBackupFile() {
+            const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
+            if (!backup) { alert("❌ Aucune sauvegarde"); return; }
+            const blob = new Blob([backup], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `sauvegarde_${new Date().toISOString().slice(0,19)}.json`;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importBackupFile() {
+            document.getElementById("backupFileInput").click();
+            document.getElementById("backupFileInput").onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = async (ev) => {
+                    try {
+                        const data = JSON.parse(ev.target.result);
+                        if (!Array.isArray(data) || data.length === 0) {
+                            alert("❌ Fichier invalide"); return;
+                        }
+                        localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(data));
+                        backupInfoSpan.innerHTML = `Importé ${new Date().toLocaleString()}`;
+                        if (confirm("Restaurer maintenant ?")) {
+                            await restoreBackupFromData(data);
+                            alert("✅ Restauration terminée");
+                        }
+                    } catch (error) {
+                        alert("❌ Erreur: " + error.message);
+                    }
+                };
+                reader.readAsText(file);
             };
-            reader.readAsText(file);
+        }
+
+        // ==================== IMPORT EXCEL ====================
+        document.getElementById("importBtn").onclick = () => {
+            if (allVehicles.length > 0 && !confirm("Effacer la liste actuelle ?")) return;
+            document.getElementById("excelInput").click();
+            document.getElementById("excelInput").onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const data = new Uint8Array(ev.target.result);
+                    const workbook = XLSX.read(data, { type: "array" });
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const rows = XLSX.utils.sheet_to_json(sheet);
+                    const vehicles = rows.map(row => ({
+                        id: (row["Immatriculation"] || "inconnu_" + Date.now() + "_" + Math.random()),
+                        immat: row["Immatriculation"] || "",
+                        client: row["Client"] || "",
+                        marque: row["Marque"] || "",
+                        modele: row["Modele"] || "",
+                        refCommande: row["Référence de commande"] || "",
+                        typeMaintenance: row["Type de Maintenance"] || "",
+                        present: false, site: null, lastSeen: null, photo: null, isCustom: false
+                    }));
+                    clearVehicles().then(async () => {
+                        await saveMultipleVehicles(vehicles);
+                        await loadAndDisplay();
+                        lastSyncSpan.innerText = new Date().toLocaleString();
+                        alert(`✅ ${vehicles.length} véhicules importés`);
+                    });
+                };
+                reader.readAsArrayBuffer(file);
+            };
         };
-    }
-    
-    // ==================== IMPORT EXCEL ====================
-    document.getElementById("importBtn").onclick = () => {
-        if (allVehicles.length > 0) {
-            if (!confirm("⚠️ L'import va effacer la liste actuelle. Voulez-vous sauvegarder avant ?")) {
+
+        // ==================== AJOUT MANUEL ====================
+        document.getElementById("addVehicleBtn").onclick = async () => {
+            const immat = document.getElementById("newImmat").value.trim();
+            if (!immat) { alert("Immatriculation requise"); return; }
+            const marque = document.getElementById("newMarque").value.trim();
+            const modele = document.getElementById("newModele").value.trim();
+            const site = document.getElementById("newSite").value;
+            if (allVehicles.some(v => v.immat === immat)) { alert("Existe déjà"); return; }
+            const newVehicle = {
+                id: immat + "_custom_" + Date.now(),
+                immat, client: "Ajout manuel", marque, modele,
+                refCommande: "", typeMaintenance: "", present: true, site,
+                lastSeen: new Date().toISOString(), photo: null, isCustom: true
+            };
+            await saveVehicle(newVehicle);
+            document.getElementById("newImmat").value = "";
+            document.getElementById("newMarque").value = "";
+            document.getElementById("newModele").value = "";
+            await loadAndDisplay();
+            alert(`✅ ${immat} ajouté sur ${site}`);
+        };
+
+        // ==================== TIMER ====================
+        function updateTimerDisplay() {
+            const h = String(Math.floor(timerSeconds / 3600)).padStart(2, '0');
+            const m = String(Math.floor((timerSeconds % 3600) / 60)).padStart(2, '0');
+            const s = String(timerSeconds % 60).padStart(2, '0');
+            timerDisplay.textContent = `${h}:${m}:${s}`;
+        }
+        document.getElementById("timerStartBtn").onclick = () => {
+            if (timerRunning) return;
+            timerRunning = true;
+            timerInterval = setInterval(() => { timerSeconds++; updateTimerDisplay(); }, 1000);
+        };
+        document.getElementById("timerStopBtn").onclick = () => {
+            timerRunning = false;
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+        };
+        document.getElementById("timerResetBtn").onclick = () => {
+            timerRunning = false;
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+            timerSeconds = 0; updateTimerDisplay();
+        };
+        document.getElementById("timerToggleBtn").onclick = () => timerContainer.classList.toggle("visible");
+
+        // ==================== RENDU ====================
+        function getFilteredVehicles() {
+            let filtered = allVehicles;
+            if (currentSearch.trim()) {
+                const s = currentSearch.toLowerCase();
+                filtered = filtered.filter(v => v.immat.toLowerCase().includes(s) || v.client.toLowerCase().includes(s) || v.marque.toLowerCase().includes(s) || v.modele.toLowerCase().includes(s));
+            }
+            if (currentSiteFilter === "present_all") filtered = filtered.filter(v => v.present);
+            else if (currentSiteFilter !== "all") filtered = filtered.filter(v => v.present && v.site === currentSiteFilter);
+            if (currentMarqueFilter !== "all") filtered = filtered.filter(v => v.marque === currentMarqueFilter);
+            if (currentTypeFilter !== "all") filtered = filtered.filter(v => v.typeMaintenance === currentTypeFilter);
+            return filtered;
+        }
+
+        function renderDashboard() {
+            const total = allVehicles.length, presents = allVehicles.filter(v => v.present).length;
+            const absents = total - presents, completion = total === 0 ? 0 : Math.round((presents / total) * 100);
+            document.getElementById("dashTotal").textContent = total;
+            document.getElementById("dashPresent").textContent = presents;
+            document.getElementById("dashAbsent").textContent = absents;
+            document.getElementById("dashCompletion").textContent = completion + "%";
+            document.getElementById("dashBar").style.width = completion + "%";
+            let html = "";
+            for (let site of SITE_OPTIONS) {
+                const count = allVehicles.filter(v => v.present && v.site === site).length;
+                const totalSite = allVehicles.filter(v => v.site === site).length;
+                html += `<div class="dash-card"><p class="number">${count}</p><p class="label">${site}</p></div>`;
+            }
+            document.getElementById("dashSites").innerHTML = html;
+        }
+
+        function renderGallery() {
+            const container = document.getElementById("galleryContent");
+            const photos = allVehicles.filter(v => v.photo);
+            if (photos.length === 0) { container.innerHTML = "<p style='color:#64748b;font-size:0.8rem;'>Aucune photo</p>"; return; }
+            let html = "";
+            for (let site of SITE_OPTIONS) {
+                const sitePhotos = photos.filter(v => v.site === site);
+                if (sitePhotos.length === 0) continue;
+                html += `<h4 style="margin:12px 0 6px;font-size:0.75rem;font-weight:400;color:#94a3b8;">${site}</h4><div class="gallery-grid">`;
+                for (let v of sitePhotos) {
+                    html += `<div class="gallery-item"><img src="${v.photo}" alt="${v.immat}"><div class="gallery-label">${v.immat}</div></div>`;
+                }
+                html += `</div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function renderStatsOnly() {
+            let html = "";
+            for (let site of SITE_OPTIONS) {
+                const count = allVehicles.filter(v => v.present && v.site === site).length;
+                html += `<div class="stat-card" data-site="${site}"><h3>${site}</h3><p class="number">${count}</p></div>`;
+            }
+            statsContainer.innerHTML = html;
+            document.querySelectorAll(".stat-card").forEach(card => {
+                card.addEventListener("click", () => {
+                    const site = card.getAttribute("data-site");
+                    siteFilterSelect.value = site;
+                    currentSiteFilter = site;
+                    renderListOnly();
+                });
+            });
+        }
+
+        function renderListOnly() {
+            const filtered = getFilteredVehicles();
+            resultCountSpan.textContent = `${filtered.length} véhicule(s)`;
+            resultCountBadge.textContent = filtered.length;
+            if (filtered.length === 0) {
+                listContainer.innerHTML = "<p style='color:#64748b;padding:20px 0;text-align:center;font-size:0.9rem;'>Aucun véhicule</p>";
                 return;
             }
-        }
-        document.getElementById("excelInput").click();
-        document.getElementById("excelInput").onchange = (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                const data = new Uint8Array(ev.target.result);
-                const workbook = XLSX.read(data, { type: "array" });
-                const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                const rows = XLSX.utils.sheet_to_json(sheet);
-                
-                const vehicles = rows.map(row => ({
-                    id: (row["Immatriculation"] || "inconnu_" + Date.now() + "_" + Math.random()),
-                    immat: row["Immatriculation"] || "",
-                    client: row["Client"] || "",
-                    marque: row["Marque"] || "",
-                    modele: row["Modele"] || "",
-                    refCommande: row["Référence de commande"] || "",
-                    typeMaintenance: row["Type de Maintenance"] || "",
-                    present: false,
-                    site: null,
-                    lastSeen: null,
-                    photo: null,
-                    isCustom: false
-                }));
-                
-                clearVehicles().then(async () => {
-                    await saveMultipleVehicles(vehicles);
-                    await loadAndDisplay();
-                    lastSyncSpan.innerText = new Date().toLocaleString();
-                    alert(`✅ Import terminé : ${vehicles.length} véhicules`);
-                }).catch(err => console.error(err));
-            };
-            reader.readAsArrayBuffer(file);
-        };
-    };
-    
-    // ==================== AJOUT MANUEL ====================
-    document.getElementById("addVehicleBtn").onclick = async () => {
-        const immat = document.getElementById("newImmat").value.trim();
-        if (!immat) { alert("Immatriculation obligatoire"); return; }
-        const marque = document.getElementById("newMarque").value.trim();
-        const modele = document.getElementById("newModele").value.trim();
-        const site = document.getElementById("newSite").value;
-        
-        if (allVehicles.some(v => v.immat === immat)) {
-            alert("Ce véhicule existe déjà.");
-            return;
-        }
-        
-        const newVehicle = {
-            id: immat + "_custom_" + Date.now(),
-            immat: immat,
-            client: "Ajout manuel",
-            marque: marque,
-            modele: modele,
-            refCommande: "",
-            typeMaintenance: "",
-            present: true,
-            site: site,
-            lastSeen: new Date().toISOString(),
-            photo: null,
-            isCustom: true
-        };
-        
-        await saveVehicle(newVehicle);
-        document.getElementById("newImmat").value = "";
-        document.getElementById("newMarque").value = "";
-        document.getElementById("newModele").value = "";
-        await loadAndDisplay();
-        alert(`✅ Véhicule ${immat} ajouté sur ${site}`);
-    };
-    
-    // ==================== RENDU OPTIMISÉ ====================
-    function getFilteredVehicles() {
-        let filtered = allVehicles;
-        
-        if (currentSearch.trim() !== "") {
-            const search = currentSearch.toLowerCase();
-            filtered = filtered.filter(v => 
-                v.immat.toLowerCase().includes(search) || 
-                v.client.toLowerCase().includes(search) ||
-                v.marque.toLowerCase().includes(search) || 
-                v.modele.toLowerCase().includes(search)
-            );
-        }
-        
-        if (currentSiteFilter === "present_all") {
-            filtered = filtered.filter(v => v.present === true);
-        } else if (currentSiteFilter !== "all") {
-            filtered = filtered.filter(v => v.present === true && v.site === currentSiteFilter);
-        }
-        
-        return filtered;
-    }
-    
-    function renderStatsOnly() {
-        let html = "";
-        for (let site of SITE_OPTIONS) {
-            const count = allVehicles.filter(v => v.present === true && v.site === site).length;
-            html += `<div class="stat-card" data-site="${site}"><h3>${site}</h3><p class="number">${count}</p><small>véhicules présents</small></div>`;
-        }
-        statsContainer.innerHTML = html;
-        
-        document.querySelectorAll(".stat-card").forEach(card => {
-            card.addEventListener("click", () => {
-                const site = card.getAttribute("data-site");
-                siteFilterSelect.value = site;
-                currentSiteFilter = site;
-                renderListOnly();
-            });
-        });
-    }
-    
-    function renderListOnly() {
-        const filtered = getFilteredVehicles();
-        resultCountSpan.innerText = `${filtered.length} véhicule(s)`;
-        
-        if (filtered.length === 0) {
-            listContainer.innerHTML = "<p>Aucun véhicule correspondant.</p>";
-            return;
-        }
-        
-        let html = "";
-        for (let v of filtered) {
-            html += `
-                <div class="vehicle-item" data-id="${v.id}">
-                    <input type="checkbox" class="present-check" data-id="${v.id}" ${v.present ? "checked" : ""}>
-                    <div class="vehicle-info">
-                        <strong>${v.immat || "?"}</strong>
-                        <div class="detail-line">${v.marque} ${v.modele} | ${v.client} ${v.refCommande ? ' | Cmd: '+v.refCommande : ''}${v.typeMaintenance ? ' | '+v.typeMaintenance : ''}</div>
-                        ${v.isCustom ? '<span style="background:#facc15; padding:2px 6px; border-radius:20px; font-size:0.7rem;">Ajout manuel</span>' : ''}
-                        ${v.lastSeen ? `<div><small>🕒 Vu le : ${new Date(v.lastSeen).toLocaleString()}</small></div>` : ''}
+            let html = "";
+            for (let v of filtered) {
+                html += `
+                    <div class="vehicle-item" data-id="${v.id}">
+                        <input type="checkbox" class="present-check" data-id="${v.id}" ${v.present ? "checked" : ""}>
+                        <div class="vehicle-info">
+                            <strong>${v.immat}</strong>
+                            <div class="detail-line">${v.marque} ${v.modele} · ${v.client} ${v.typeMaintenance ? '· '+v.typeMaintenance : ''}</div>
+                            ${v.isCustom ? '<span class="badge-custom">Manuel</span>' : ''}
+                            ${v.lastSeen ? `<span class="last-seen">${new Date(v.lastSeen).toLocaleString()}</span>` : ''}
+                        </div>
+                        <select class="site-select" data-id="${v.id}" ${!v.present ? 'disabled' : ''}>
+                            <option value="">--</option>
+                            ${SITE_OPTIONS.map(site => `<option value="${site}" ${v.site === site ? 'selected' : ''}>${site}</option>`).join('')}
+                        </select>
+                        <button class="photo-btn" data-id="${v.id}">Photo</button>
+                        ${v.photo ? `<img src="${v.photo}" class="photo-preview">` : ""}
                     </div>
-                    <select class="site-select" data-id="${v.id}" ${!v.present ? 'disabled' : ''}>
-                        <option value="">-- Choisir site --</option>
-                        ${SITE_OPTIONS.map(site => `<option value="${site}" ${v.site === site ? 'selected' : ''}>${site}</option>`).join('')}
-                    </select>
-                    <button class="photoBtn small-btn" data-id="${v.id}">📸 Photo</button>
-                    ${v.photo ? `<img src="${v.photo}" class="photo-preview" alt="photo">` : ""}
-                </div>
-            `;
-        }
-        listContainer.innerHTML = html;
-        
-        attachEventsToCurrentList();
-    }
-    
-    function attachEventsToCurrentList() {
-        document.querySelectorAll(".present-check").forEach(cb => {
-            cb.replaceWith(cb.cloneNode(true));
-        });
-        document.querySelectorAll(".present-check").forEach(cb => {
-            cb.addEventListener("change", async (e) => {
-                const id = cb.getAttribute("data-id");
-                const vehicle = allVehicles.find(v => v.id === id);
-                if (vehicle) {
-                    vehicle.present = cb.checked;
-                    if (!vehicle.present) vehicle.site = null;
-                    vehicle.lastSeen = new Date().toISOString();
-                    await saveVehicle(vehicle);
-                    renderStatsOnly();
-                    renderListOnly();
-                }
-            });
-        });
-        
-        document.querySelectorAll(".site-select").forEach(select => {
-            select.replaceWith(select.cloneNode(true));
-        });
-        document.querySelectorAll(".site-select").forEach(select => {
-            select.addEventListener("change", async (e) => {
-                const id = select.getAttribute("data-id");
-                const vehicle = allVehicles.find(v => v.id === id);
-                if (vehicle && vehicle.present) {
-                    vehicle.site = e.target.value || null;
-                    vehicle.lastSeen = new Date().toISOString();
-                    await saveVehicle(vehicle);
-                    renderStatsOnly();
-                    renderListOnly();
-                }
-            });
-        });
-        
-        document.querySelectorAll(".photoBtn").forEach(btn => {
-            btn.replaceWith(btn.cloneNode(true));
-        });
-        document.querySelectorAll(".photoBtn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                const id = btn.getAttribute("data-id");
-                const input = document.createElement("input");
-                input.type = "file";
-                input.accept = "image/*";
-                input.capture = "environment";
-                input.onchange = async (ev) => {
-                    const file = ev.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = async (ev2) => {
-                            const vehicle = allVehicles.find(v => v.id === id);
-                            if (vehicle) {
-                                vehicle.photo = ev2.target.result;
-                                await saveVehicle(vehicle);
-                                renderListOnly();
-                            }
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                };
-                input.click();
-            });
-        });
-    }
-    
-    function updateSiteFilterOptions() {
-        let options = `<option value="all" ${currentSiteFilter === 'all' ? 'selected' : ''}>🌍 Tous les véhicules</option>
-                       <option value="present_all" ${currentSiteFilter === 'present_all' ? 'selected' : ''}>✅ Tous les présents</option>`;
-        for (let site of SITE_OPTIONS) {
-            options += `<option value="${site}" ${currentSiteFilter === site ? 'selected' : ''}>📍 Présents sur ${site}</option>`;
-        }
-        siteFilterSelect.innerHTML = options;
-    }
-    
-    async function loadAndDisplay() {
-        allVehicles = await getAllVehicles();
-        updateSiteFilterOptions();
-        renderStatsOnly();
-        renderListOnly();
-        
-        // Vérifier si une sauvegarde existe et la restaurer automatiquement
-        const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
-        if (backup) {
-            try {
-                const backupData = JSON.parse(backup);
-                if (Array.isArray(backupData) && backupData.length > 0) {
-                    await restoreBackupFromData(backupData);
-                    backupInfoSpan.innerHTML = `✅ Sauvegarde restaurée automatiquement (${new Date().toLocaleString()})`;
-                    console.log("✅ Sauvegarde restaurée automatiquement.");
-                } else {
-                    backupInfoSpan.innerHTML = `📦 Sauvegarde disponible (vide ou invalide)`;
-                }
-            } catch (error) {
-                backupInfoSpan.innerHTML = `⚠️ Sauvegarde corrompue, utilisez "Restaurer" manuellement.`;
-                console.error("Erreur restauration auto:", error);
+                `;
             }
-        } else {
-            backupInfoSpan.innerHTML = `📦 Aucune sauvegarde`;
+            listContainer.innerHTML = html;
+            attachEvents();
         }
-    }
-    
-    // ==================== EXPORTS ====================
-    async function exportPresentToExcel() {
-        const vehicles = allVehicles.filter(v => v.present === true);
-        const data = vehicles.map(v => ({
-            "Immatriculation": v.immat, "Client": v.client, "Marque": v.marque,
-            "Modèle": v.modele, "Référence commande": v.refCommande,
-            "Type de Maintenance": v.typeMaintenance, "Site": v.site || "",
-            "Dernier constat": v.lastSeen ? new Date(v.lastSeen).toLocaleString() : ""
-        }));
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Présents");
-        XLSX.writeFile(wb, `tous_presents_${new Date().toISOString().slice(0,19)}.xlsx`);
-    }
-    
-    async function exportPresentToPDF() {
-        const vehicles = allVehicles.filter(v => v.present === true);
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ orientation: 'landscape' });
-        doc.text("Véhicules présents (tous sites)", 14, 15);
-        doc.text(`Généré le ${new Date().toLocaleString()}`, 14, 22);
-        const tableData = vehicles.map(v => [v.immat, v.client, v.marque, v.modele, v.site || "", v.lastSeen ? new Date(v.lastSeen).toLocaleString() : ""]);
-        doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle", "Site", "Dernier constat"]], body: tableData, startY: 30 });
-        doc.save(`tous_presents_${new Date().toISOString().slice(0,19)}.pdf`);
-    }
-    
-    async function exportAbsentToExcel() {
-        const vehicles = allVehicles.filter(v => v.present === false);
-        const data = vehicles.map(v => ({
-            "Immatriculation": v.immat, "Client": v.client, "Marque": v.marque,
-            "Modèle": v.modele, "Référence commande": v.refCommande, "Type de Maintenance": v.typeMaintenance
-        }));
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Absents");
-        XLSX.writeFile(wb, `absents_${new Date().toISOString().slice(0,19)}.xlsx`);
-    }
-    
-    async function exportAbsentToPDF() {
-        const vehicles = allVehicles.filter(v => v.present === false);
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ orientation: 'landscape' });
-        doc.text("Véhicules absents (non trouvés)", 14, 15);
-        doc.text(`Date : ${new Date().toLocaleString()}`, 14, 22);
-        const tableData = vehicles.map(v => [v.immat, v.client, v.marque, v.modele, v.refCommande, v.typeMaintenance]);
-        doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle", "Réf commande", "Type maintenance"]], body: tableData, startY: 30 });
-        doc.save(`absents_${new Date().toISOString().slice(0,19)}.pdf`);
-    }
-    
-    async function exportCurrentSiteToExcel() {
-        let vehicles = [];
-        if (currentSiteFilter === "all") { alert("Sélectionnez un site spécifique"); return; }
-        else if (currentSiteFilter === "present_all") vehicles = allVehicles.filter(v => v.present === true);
-        else vehicles = allVehicles.filter(v => v.present === true && v.site === currentSiteFilter);
-        if (vehicles.length === 0) { alert("Aucun véhicule"); return; }
-        const data = vehicles.map(v => ({
-            "Immatriculation": v.immat, "Client": v.client, "Marque": v.marque,
-            "Modèle": v.modele, "Site": v.site || "", "Dernier constat": v.lastSeen ? new Date(v.lastSeen).toLocaleString() : ""
-        }));
-        const ws = XLSX.utils.json_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Présents");
-        XLSX.writeFile(wb, `site_${currentSiteFilter}_${new Date().toISOString().slice(0,19)}.xlsx`);
-    }
-    
-    async function exportCurrentSiteToPDF() {
-        let vehicles = [];
-        if (currentSiteFilter === "all") { alert("Sélectionnez un site spécifique"); return; }
-        else if (currentSiteFilter === "present_all") vehicles = allVehicles.filter(v => v.present === true);
-        else vehicles = allVehicles.filter(v => v.present === true && v.site === currentSiteFilter);
-        if (vehicles.length === 0) { alert("Aucun véhicule"); return; }
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ orientation: 'landscape' });
-        doc.text(`Véhicules présents - ${currentSiteFilter}`, 14, 15);
-        doc.text(`Généré le ${new Date().toLocaleString()}`, 14, 22);
-        const tableData = vehicles.map(v => [v.immat, v.client, v.marque, v.modele, v.lastSeen ? new Date(v.lastSeen).toLocaleString() : ""]);
-        doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle", "Dernier constat"]], body: tableData, startY: 30 });
-        doc.save(`site_${currentSiteFilter}_${new Date().toISOString().slice(0,19)}.pdf`);
-    }
-    
-    // ==================== ÉVÉNEMENTS ====================
-    siteFilterSelect.addEventListener("change", (e) => {
-        currentSiteFilter = e.target.value;
-        renderListOnly();
-    });
-    
-    searchInput.addEventListener("input", (e) => {
-        currentSearch = e.target.value;
-        renderListOnly();
-    });
-    
-    document.getElementById("saveBackupBtn").onclick = saveBackup;
-    document.getElementById("restoreBackupBtn").onclick = restoreBackup;
-    document.getElementById("resetCheckBtn").onclick = resetOnlyCheckboxes;
-    document.getElementById("exportBackupBtn").onclick = exportBackupFile;
-    document.getElementById("importBackupBtn").onclick = importBackupFile;
-    
-    // ==================== MODE NUIT ====================
-    const darkToggle = document.getElementById("darkModeToggle");
-    darkToggle.onclick = () => {
-        document.body.classList.toggle("dark-mode");
-        darkToggle.innerHTML = document.body.classList.contains("dark-mode") ? "☀️ Mode jour" : "🌙 Mode nuit";
-    };
-    
-    // ==================== BOUTONS EXPORT ====================
-    document.getElementById("exportPresentExcel").onclick = exportPresentToExcel;
-    document.getElementById("exportPresentPDF").onclick = exportPresentToPDF;
-    document.getElementById("exportAbsentExcel").onclick = exportAbsentToExcel;
-    document.getElementById("exportAbsentPDF").onclick = exportAbsentToPDF;
-    document.getElementById("exportSiteExcelBtn").onclick = exportCurrentSiteToExcel;
-    document.getElementById("exportSitePdfBtn").onclick = exportCurrentSiteToPDF;
-    
-    // ==================== INITIALISATION ====================
-    window.addEventListener("load", async () => {
-        await openDB();
-        await loadAndDisplay();
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("/sw.js").catch(console.error);
+
+        function attachEvents() {
+            document.querySelectorAll(".present-check").forEach(cb => {
+                cb.replaceWith(cb.cloneNode(true));
+            });
+            document.querySelectorAll(".present-check").forEach(cb => {
+                cb.addEventListener("change", async (e) => {
+                    const id = cb.getAttribute("data-id");
+                    const v = allVehicles.find(v => v.id === id);
+                    if (v) {
+                        v.present = cb.checked;
+                        if (!v.present) v.site = null;
+                        v.lastSeen = new Date().toISOString();
+                        await saveVehicle(v);
+                        playBeep();
+                        renderAll();
+                    }
+                });
+            });
+            document.querySelectorAll(".site-select").forEach(select => {
+                select.replaceWith(select.cloneNode(true));
+            });
+            document.querySelectorAll(".site-select").forEach(select => {
+                select.addEventListener("change", async (e) => {
+                    const id = select.getAttribute("data-id");
+                    const v = allVehicles.find(v => v.id === id);
+                    if (v && v.present) {
+                        v.site = e.target.value || null;
+                        v.lastSeen = new Date().toISOString();
+                        await saveVehicle(v);
+                        renderAll();
+                    }
+                });
+            });
+            document.querySelectorAll(".photo-btn").forEach(btn => {
+                btn.replaceWith(btn.cloneNode(true));
+            });
+            document.querySelectorAll(".photo-btn").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    const id = btn.getAttribute("data-id");
+                    const input = document.createElement("input");
+                    input.type = "file"; input.accept = "image/*"; input.capture = "environment";
+                    input.onchange = async (ev) => {
+                        const file = ev.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = async (ev2) => {
+                                const v = allVehicles.find(v => v.id === id);
+                                if (v) { v.photo = ev2.target.result; await saveVehicle(v); renderAll(); alert("✅ Photo ajoutée"); }
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    };
+                    input.click();
+                });
+            });
         }
-    });
-</script>
+
+        function updateSiteFilterOptions() {
+            let options = `<option value="all" ${currentSiteFilter === 'all' ? 'selected' : ''}>Tous</option>
+                           <option value="present_all" ${currentSiteFilter === 'present_all' ? 'selected' : ''}>Présents</option>`;
+            for (let site of SITE_OPTIONS) {
+                options += `<option value="${site}" ${currentSiteFilter === site ? 'selected' : ''}>${site}</option>`;
+            }
+            siteFilterSelect.innerHTML = options;
+        }
+
+        function renderAll() {
+            renderDashboard();
+            renderStatsOnly();
+            renderListOnly();
+            renderGallery();
+        }
+
+        async function loadAndDisplay() {
+            allVehicles = await getAllVehicles();
+            updateSiteFilterOptions();
+            renderAll();
+            const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
+            if (backup) {
+                try {
+                    const data = JSON.parse(backup);
+                    if (Array.isArray(data) && data.length > 0) {
+                        await restoreBackupFromData(data);
+                        backupInfoSpan.innerHTML = `Restaurée ${new Date().toLocaleString()}`;
+                    }
+                } catch(e) { backupInfoSpan.innerHTML = "Corrompue"; }
+            } else {
+                backupInfoSpan.innerHTML = "Aucune sauvegarde";
+            }
+        }
+
+        // ==================== RAPPORT ====================
+        async function generateReport() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'landscape' });
+            doc.setFontSize(16);
+            doc.text("RAPPORT DE RONDE", 14, 15);
+            doc.setFontSize(9);
+            doc.text(new Date().toLocaleString(), 14, 22);
+            const total = allVehicles.length, presents = allVehicles.filter(v => v.present).length;
+            const absents = total - presents, completion = total === 0 ? 0 : Math.round((presents / total) * 100);
+            doc.text(`Total: ${total} · Présents: ${presents} · Absents: ${absents} · Taux: ${completion}%`, 14, 30);
+            let siteData = [["Site", "Présents", "Total"]];
+            for (let site of SITE_OPTIONS) {
+                const count = allVehicles.filter(v => v.present && v.site === site).length;
+                const totalSite = allVehicles.filter(v => v.site === site).length;
+                siteData.push([site, count.toString(), totalSite.toString()]);
+            }
+            doc.autoTable({ head: [siteData[0]], body: siteData.slice(1), startY: 35, theme: 'plain' });
+            const pData = allVehicles.filter(v => v.present).map(v => [v.immat, v.client, v.marque, v.modele, v.site || ""]);
+            if (pData.length) {
+                doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle", "Site"]], body: pData, startY: doc.lastAutoTable.finalY + 5, theme: 'plain' });
+            }
+            const aData = allVehicles.filter(v => !v.present).map(v => [v.immat, v.client, v.marque, v.modele]);
+            if (aData.length) {
+                doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle"]], body: aData, startY: doc.lastAutoTable.finalY + 5, theme: 'plain' });
+            }
+            doc.save(`rapport_${new Date().toISOString().slice(0,19)}.pdf`);
+        }
+
+        // ==================== EXPORTS EXCEL ====================
+        async function exportPresentExcel() {
+            const data = allVehicles.filter(v => v.present).map(v => ({ Immatriculation: v.immat, Client: v.client, Marque: v.marque, Modele: v.modele, Site: v.site || "" }));
+            const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Présents");
+            XLSX.writeFile(wb, `presences_${new Date().toISOString().slice(0,19)}.xlsx`);
+        }
+        async function exportAbsentExcel() {
+            const data = allVehicles.filter(v => !v.present).map(v => ({ Immatriculation: v.immat, Client: v.client, Marque: v.marque, Modele: v.modele }));
+            const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Absents");
+            XLSX.writeFile(wb, `absents_${new Date().toISOString().slice(0,19)}.xlsx`);
+        }
+
+        // ==================== ÉVÉNEMENTS ====================
+        document.getElementById("dashboardToggleBtn").onclick = () => { dashboardContainer.classList.toggle("visible"); renderDashboard(); };
+        document.getElementById("galleryToggleBtn").onclick = () => { galleryContainer.classList.toggle("visible"); renderGallery(); };
+        document.getElementById("reportBtn").onclick = generateReport;
+        document.getElementById("exportPresentExcel").onclick = exportPresentExcel;
+        document.getElementById("exportAbsentExcel").onclick = exportAbsentExcel;
+        document.getElementById("terrainModeBtn").onclick = () => {
+            document.body.classList.toggle("terrain-mode");
+            document.getElementById("terrainModeBtn").textContent = document.body.classList.contains("terrain-mode") ? "Normal" : "Terrain";
+        };
+        siteFilterSelect.addEventListener("change", (e) => { currentSiteFilter = e.target.value; renderListOnly(); });
+        marqueFilter.addEventListener("change", (e) => { currentMarqueFilter = e.target.value; renderListOnly(); });
+        typeFilter.addEventListener("change", (e) => { currentTypeFilter = e.target.value; renderListOnly(); });
+        searchInput.addEventListener("input", (e) => { currentSearch = e.target.value; renderListOnly(); });
+        document.getElementById("saveBackupBtn").onclick = saveBackup;
+        document.getElementById("restoreBackupBtn").onclick = restoreBackup;
+        document.getElementById("resetCheckBtn").onclick = resetOnlyCheckboxes;
+        document.getElementById("exportBackupBtn").onclick = exportBackupFile;
+        document.getElementById("importBackupBtn").onclick = importBackupFile;
+
+        // ==================== MODE NUIT ====================
+        const darkToggle = document.getElementById("darkModeToggle");
+        darkToggle.onclick = () => {
+            document.body.style.background = document.body.style.background === "#0f172a" ? "#1e293b" : "#0f172a";
+        };
+
+        // ==================== INIT ====================
+        window.addEventListener("load", async () => {
+            await openDB();
+            await loadAndDisplay();
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.register("/sw.js").catch(console.error);
+            }
+        });
+    </script>
 </body>
 </html>
