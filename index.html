@@ -7,6 +7,7 @@
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@8.2.3/build/index.min.js"></script>
     <style>
         /* ========== BASE ========== */
         * { box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
@@ -83,6 +84,15 @@
         body.light-mode .gallery-item .gallery-label { background: rgba(255,255,255,0.9); color: #1e293b; }
         body.light-mode .dash-card .label { color: #64748b; }
         body.light-mode .header-right { color: #64748b; }
+        body.light-mode #attestationModal .modal-content { background: #ffffff; color: #1e293b; }
+        body.light-mode #attestationModal input,
+        body.light-mode #attestationModal select {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+            color: #1e293b;
+        }
+        body.light-mode #attestationModal label { color: #64748b; }
+        body.light-mode #attestationModal h2 { color: #1e293b; }
 
         /* ========== HEADER ========== */
         header {
@@ -549,6 +559,107 @@
             transition: background 0.3s, color 0.3s;
         }
 
+        /* ========== MODALE ATTESTATION ========== */
+        #attestationModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        #attestationModal .modal-content {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transition: background 0.3s, color 0.3s;
+        }
+        #attestationModal .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        #attestationModal .close-btn:hover { color: #e2e8f0; }
+        #attestationModal h2 {
+            margin: 0 0 1.5rem 0;
+            color: #e2e8f0;
+            font-weight: 400;
+            font-size: 1.2rem;
+        }
+        #attestationModal label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        #attestationModal input,
+        #attestationModal select {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #2d3a4e;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
+            outline: none;
+        }
+        #attestationModal input:focus,
+        #attestationModal select:focus {
+            border-color: #60a5fa;
+        }
+        #attestationModal .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        #attestationModal .form-grid .full-width { grid-column: span 2; }
+        #attestationModal .btn-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        #attestationModal .btn-generate {
+            flex: 1;
+            background: #34d399;
+            border: none;
+            color: #0f172a;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        #attestationModal .btn-generate:hover { background: #2dce89; }
+        #attestationModal .btn-cancel {
+            flex: 1;
+            background: #2d3a4e;
+            border: none;
+            color: #94a3b8;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        #attestationModal .btn-cancel:hover { background: #3d4a5e; }
+
         /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
             header { padding: 1rem; }
@@ -558,6 +669,9 @@
             .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
             .vehicle-item { flex-direction: column; align-items: stretch; }
             .vehicle-item .site-select { width: 100%; }
+            #attestationModal .form-grid { grid-template-columns: 1fr; }
+            #attestationModal .form-grid .full-width { grid-column: span 1; }
+            #attestationModal .modal-content { padding: 1.2rem; }
         }
         @media (max-width: 480px) {
             .dashboard-grid { grid-template-columns: 1fr 1fr; }
@@ -610,6 +724,8 @@
         <span class="nav-divider"></span>
         <button id="exportPresentExcel" class="nav-btn" style="color:#60a5fa;">Présents</button>
         <button id="exportAbsentExcel" class="nav-btn" style="color:#f87171;">Absents</button>
+        <span class="nav-divider"></span>
+        <button id="attestationBtn" class="nav-btn" style="color:#34d399;">📄 Attestation</button>
     </nav>
 
     <!-- ========== TIMER ========== -->
@@ -704,6 +820,54 @@
     </div>
 
     <footer>Hors ligne actif · Dernière synchro : <span id="lastSync">jamais</span></footer>
+
+    <!-- ========== MODALE ATTESTATION ========== -->
+    <div id="attestationModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeModalBtn">✕</button>
+            <h2>📄 GÉNÉRER UNE ATTESTATION</h2>
+            
+            <div class="form-grid">
+                <div class="full-width">
+                    <label>Immatriculation *</label>
+                    <input type="text" id="attImmat" value="AA565TG01">
+                </div>
+                <div>
+                    <label>Marque *</label>
+                    <input type="text" id="attMarque" value="JETOUR">
+                </div>
+                <div>
+                    <label>Modèle *</label>
+                    <input type="text" id="attModele" value="X70+">
+                </div>
+                <div class="full-width">
+                    <label>Couleur *</label>
+                    <input type="text" id="attCouleur" value="GRISE">
+                </div>
+                <div class="full-width">
+                    <label>Nom de l'Assuré(e) *</label>
+                    <input type="text" id="attAssure" value="DJAGBO EPSE TIEMELE DANOYO ANGE FRANCINE">
+                </div>
+                <div>
+                    <label>Date début *</label>
+                    <input type="date" id="attDateDebut" value="2026-07-22">
+                </div>
+                <div>
+                    <label>Date fin *</label>
+                    <input type="date" id="attDateFin" value="2026-07-27">
+                </div>
+                <div class="full-width">
+                    <label>Durée (en jours ouvrés)</label>
+                    <input type="number" id="attDuree" value="5" min="1" max="30">
+                </div>
+            </div>
+            
+            <div class="btn-row">
+                <button class="btn-generate" id="generateAttestationBtn">📄 Générer l'attestation</button>
+                <button class="btn-cancel" id="cancelAttestationBtn">Annuler</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // ==================== CONFIGURATION ====================
@@ -1218,6 +1382,229 @@
             XLSX.writeFile(wb, `absents_${new Date().toISOString().slice(0,19)}.xlsx`);
         }
 
+        // ==================== ATTESTATION ====================
+        document.getElementById("attestationBtn").onclick = () => {
+            document.getElementById("attestationModal").style.display = "flex";
+        };
+
+        document.getElementById("closeModalBtn").onclick = () => {
+            document.getElementById("attestationModal").style.display = "none";
+        };
+
+        document.getElementById("cancelAttestationBtn").onclick = () => {
+            document.getElementById("attestationModal").style.display = "none";
+        };
+
+        document.getElementById("attestationModal").addEventListener("click", (e) => {
+            if (e.target === e.currentTarget) {
+                document.getElementById("attestationModal").style.display = "none";
+            }
+        });
+
+        document.getElementById("generateAttestationBtn").onclick = async () => {
+            const immat = document.getElementById("attImmat").value.trim();
+            const marque = document.getElementById("attMarque").value.trim();
+            const modele = document.getElementById("attModele").value.trim();
+            const couleur = document.getElementById("attCouleur").value.trim();
+            const assure = document.getElementById("attAssure").value.trim();
+            const dateDebut = document.getElementById("attDateDebut").value;
+            const dateFin = document.getElementById("attDateFin").value;
+            const duree = document.getElementById("attDuree").value || 5;
+            
+            if (!immat || !marque || !modele || !couleur || !assure || !dateDebut || !dateFin) {
+                alert("❌ Veuillez remplir tous les champs obligatoires.");
+                return;
+            }
+            
+            const formatDate = (dateStr) => {
+                const d = new Date(dateStr + "T00:00:00");
+                const mois = ["JANVIER", "FEVRIER", "MARS", "AVRIL", "MAI", "JUIN", "JUILLET", "AOUT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DECEMBRE"];
+                return `${d.getDate()} ${mois[d.getMonth()]} ${d.getFullYear()}`;
+            };
+            
+            const dateDebutFormatee = formatDate(dateDebut);
+            const dateFinFormatee = formatDate(dateFin);
+            
+            const now = new Date();
+            const mois = ["JANVIER", "FEVRIER", "MARS", "AVRIL", "MAI", "JUIN", "JUILLET", "AOUT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DECEMBRE"];
+            const numAttestation = `N°${String(Math.floor(Math.random() * 9000) + 1000)}/${mois[now.getMonth()]}/${now.getFullYear()}`;
+            
+            try {
+                const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, convertInchesToTwip } = docx;
+                
+                const doc = new Document({
+                    sections: [{
+                        properties: {
+                            page: {
+                                margin: {
+                                    top: convertInchesToTwip(0.8),
+                                    bottom: convertInchesToTwip(0.8),
+                                    left: convertInchesToTwip(1.2),
+                                    right: convertInchesToTwip(1.2),
+                                }
+                            }
+                        },
+                        children: [
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: "ATTESTATION D'IMMOBILISATION DE VEHICULE",
+                                        bold: true,
+                                        size: 28,
+                                        font: "Arial",
+                                    })
+                                ],
+                                alignment: AlignmentType.CENTER,
+                                spacing: { after: 400 },
+                            }),
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: numAttestation,
+                                        bold: true,
+                                        size: 24,
+                                        font: "Arial",
+                                    })
+                                ],
+                                alignment: AlignmentType.CENTER,
+                                spacing: { after: 400 },
+                            }),
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: "Nous soussignés entreprise UNITED MOTORS, située à Marcory Zone 4 Biétry, Blvrd de Marseille, 30 BP 739 Abidjan 30, numéro de téléphone +225 07 88 88 88 24, attestons que le véhicule immatriculé ",
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: immat,
+                                        bold: true,
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: " de type ",
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: marque + " " + modele,
+                                        bold: true,
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: " de couleur ",
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: couleur,
+                                        bold: true,
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: " appartenant à l'Assuré ",
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: assure,
+                                        bold: true,
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: " est admis dans notre garage pour des travaux suivant LE BON DE PRISE EN CHARGE ET LA FICHE D'EXPERTISE pour une durée de ",
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: "(" + duree + ") Jours ouvrés",
+                                        bold: true,
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: ", soit du ",
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: dateDebutFormatee,
+                                        bold: true,
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: " au ",
+                                        size: 22,
+                                        font: "Arial",
+                                    }),
+                                    new TextRun({
+                                        text: dateFinFormatee + ".",
+                                        bold: true,
+                                        size: 22,
+                                        font: "Arial",
+                                    })
+                                ],
+                                alignment: AlignmentType.BOTH,
+                                spacing: { after: 400 },
+                            }),
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: "En foi de quoi, la présente Attestation lui est établie pour servir et valoir ce que de droit.",
+                                        size: 22,
+                                        font: "Arial",
+                                    })
+                                ],
+                                alignment: AlignmentType.BOTH,
+                                spacing: { after: 600 },
+                            }),
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: "Fait à Abidjan le " + formatDate(new Date().toISOString().split('T')[0]),
+                                        size: 22,
+                                        font: "Arial",
+                                    })
+                                ],
+                                alignment: AlignmentType.RIGHT,
+                                spacing: { after: 600 },
+                            }),
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: "Le Directeur des Opérations",
+                                        bold: true,
+                                        size: 22,
+                                        font: "Arial",
+                                    })
+                                ],
+                                alignment: AlignmentType.RIGHT,
+                            }),
+                        ]
+                    }]
+                });
+                
+                const blob = await Packer.toBlob(doc);
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = `Attestation_${immat}_${new Date().toISOString().slice(0,10)}.docx`;
+                link.click();
+                URL.revokeObjectURL(link.href);
+                
+                document.getElementById("attestationModal").style.display = "none";
+                alert("✅ Attestation générée avec succès !");
+                
+            } catch (error) {
+                console.error(error);
+                alert("❌ Erreur lors de la génération : " + error.message);
+            }
+        };
+
         // ==================== ÉVÉNEMENTS ====================
         document.getElementById("dashboardToggleBtn").onclick = () => { dashboardContainer.classList.toggle("visible"); renderDashboard(); };
         document.getElementById("galleryToggleBtn").onclick = () => { galleryContainer.classList.toggle("visible"); renderGallery(); };
@@ -1239,15 +1626,12 @@
         document.getElementById("importBackupBtn").onclick = importBackupFile;
 
         // ==================== MODE NUIT/JOUR ====================
-        const darkToggle = document.getElementById("darkToggle");
-        if (darkToggle) {
-            darkToggle.onclick = () => {
-                document.body.classList.toggle("light-mode");
-                const isLight = document.body.classList.contains("light-mode");
-                darkToggle.textContent = isLight ? "🌙" : "☀️";
-                darkToggle.title = isLight ? "Passer en mode nuit" : "Passer en mode jour";
-            };
-        }
+        const darkToggle = document.getElementById("darkModeToggle");
+        darkToggle.onclick = () => {
+            document.body.classList.toggle("light-mode");
+            const isLight = document.body.classList.contains("light-mode");
+            darkToggle.textContent = isLight ? "🌙" : "☀️";
+        };
 
         // ==================== INIT ====================
         window.addEventListener("load", async () => {
