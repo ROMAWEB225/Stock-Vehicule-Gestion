@@ -7,7 +7,8 @@
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docx@8.2.3/build/index.min.js"></script>
+    <!-- Version stable de docx -->
+    <script src="https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js"></script>
     <style>
         /* ========== BASE ========== */
         * { box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
@@ -1402,6 +1403,12 @@
         });
 
         document.getElementById("generateAttestationBtn").onclick = async () => {
+            // Vérifier que docx est chargé
+            if (typeof docx === 'undefined') {
+                alert("❌ La bibliothèque docx n'est pas chargée. Veuillez rafraîchir la page.");
+                return;
+            }
+
             const immat = document.getElementById("attImmat").value.trim();
             const marque = document.getElementById("attMarque").value.trim();
             const modele = document.getElementById("attModele").value.trim();
@@ -1430,7 +1437,7 @@
             const numAttestation = `N°${String(Math.floor(Math.random() * 9000) + 1000)}/${mois[now.getMonth()]}/${now.getFullYear()}`;
             
             try {
-                const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, convertInchesToTwip } = docx;
+                const { Document, Packer, Paragraph, TextRun, AlignmentType, convertInchesToTwip } = docx;
                 
                 const doc = new Document({
                     sections: [{
@@ -1593,15 +1600,17 @@
                 const link = document.createElement("a");
                 link.href = URL.createObjectURL(blob);
                 link.download = `Attestation_${immat}_${new Date().toISOString().slice(0,10)}.docx`;
+                document.body.appendChild(link);
                 link.click();
-                URL.revokeObjectURL(link.href);
+                document.body.removeChild(link);
+                setTimeout(() => URL.revokeObjectURL(link.href), 1000);
                 
                 document.getElementById("attestationModal").style.display = "none";
                 alert("✅ Attestation générée avec succès !");
                 
             } catch (error) {
-                console.error(error);
-                alert("❌ Erreur lors de la génération : " + error.message);
+                console.error("Erreur détaillée:", error);
+                alert("❌ Erreur lors de la génération : " + error.message + "\n\nVérifie la console pour plus de détails (F12).");
             }
         };
 
