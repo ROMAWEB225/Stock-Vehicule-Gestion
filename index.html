@@ -7,7 +7,6 @@
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-    <!-- Version stable de docx -->
     <script src="https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js"></script>
     <style>
         /* ========== BASE ========== */
@@ -811,6 +810,7 @@
                     <option value="Garage 1">Garage 1</option>
                     <option value="Garage 2">Garage 2</option>
                     <option value="Garage 3">Garage 3</option>
+                    <option value="Garage A+">Garage A+</option>
                     <option value="Dépôt 1">Dépôt 1</option>
                     <option value="Dépôt Aéroport">Dépôt Aéroport</option>
                 </select>
@@ -872,7 +872,8 @@
 
     <script>
         // ==================== CONFIGURATION ====================
-        const SITE_OPTIONS = ["Garage 1", "Garage 2", "Garage 3", "Dépôt 1", "Dépôt Aéroport"];
+        // *** AJOUT DE GARAGE A+ DANS LA LISTE DES SITES ***
+        const SITE_OPTIONS = ["Garage 1", "Garage 2", "Garage 3", "Garage A+", "Dépôt 1", "Dépôt Aéroport"];
         const STORAGE_BACKUP_KEY = "ronde_vehicules_backup";
         
         let db;
@@ -919,7 +920,7 @@
         // ==================== INDEXEDDB ====================
         function openDB() {
             return new Promise((resolve, reject) => {
-                const req = indexedDB.open("RondePresenceDB", 9);
+                const req = indexedDB.open("RondePresenceDB", 10);
                 req.onerror = () => reject("DB error");
                 req.onsuccess = (e) => { db = e.target.result; resolve(); };
                 req.onupgradeneeded = (e) => {
@@ -969,84 +970,112 @@
         }
 
         function saveBackupToLocalStorage(data) {
-            localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(data));
-            const date = new Date().toLocaleString();
-            backupInfoSpan.innerHTML = `Sauvegardé ${date}`;
-            setTimeout(() => {
-                if (!localStorage.getItem(STORAGE_BACKUP_KEY)) return;
-                backupInfoSpan.innerHTML = `Sauvegarde (${date})`;
-            }, 3000);
+            try {
+                localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(data));
+                const date = new Date().toLocaleString();
+                backupInfoSpan.innerHTML = `Sauvegardé ${date}`;
+                setTimeout(() => {
+                    if (!localStorage.getItem(STORAGE_BACKUP_KEY)) return;
+                    backupInfoSpan.innerHTML = `Sauvegarde (${date})`;
+                }, 3000);
+            } catch (e) {
+                console.error("Erreur sauvegarde:", e);
+                alert("❌ Erreur lors de la sauvegarde: " + e.message);
+            }
         }
 
         function saveBackup() {
-            saveBackupToLocalStorage(getBackupData());
-            alert("✅ État sauvegardé");
+            try {
+                const backup = getBackupData();
+                saveBackupToLocalStorage(backup);
+                alert("✅ État sauvegardé");
+            } catch (e) {
+                console.error("Erreur saveBackup:", e);
+                alert("❌ Erreur: " + e.message);
+            }
         }
         
         async function restoreBackupFromData(data) {
-            for (let b of data) {
-                const existing = allVehicles.find(v => v.id === b.id);
-                if (existing) {
-                    existing.present = b.present;
-                    existing.site = b.site;
-                    existing.lastSeen = b.lastSeen;
-                    existing.photo = b.photo;
-                    existing.client = b.client || existing.client;
-                    existing.marque = b.marque || existing.marque;
-                    existing.modele = b.modele || existing.modele;
-                    existing.refCommande = b.refCommande || existing.refCommande;
-                    existing.typeMaintenance = b.typeMaintenance || existing.typeMaintenance;
-                    existing.isCustom = b.isCustom || false;
-                    await saveVehicle(existing);
-                } else {
-                    await saveVehicle({
-                        id: b.id, immat: b.immat || "inconnu",
-                        client: b.client || "Ajout manuel",
-                        marque: b.marque || "", modele: b.modele || "",
-                        refCommande: b.refCommande || "",
-                        typeMaintenance: b.typeMaintenance || "",
-                        present: b.present || false, site: b.site || null,
-                        lastSeen: b.lastSeen || null, photo: b.photo || null,
-                        isCustom: true
-                    });
+            try {
+                for (let b of data) {
+                    const existing = allVehicles.find(v => v.id === b.id);
+                    if (existing) {
+                        existing.present = b.present;
+                        existing.site = b.site;
+                        existing.lastSeen = b.lastSeen;
+                        existing.photo = b.photo;
+                        existing.client = b.client || existing.client;
+                        existing.marque = b.marque || existing.marque;
+                        existing.modele = b.modele || existing.modele;
+                        existing.refCommande = b.refCommande || existing.refCommande;
+                        existing.typeMaintenance = b.typeMaintenance || existing.typeMaintenance;
+                        existing.isCustom = b.isCustom || false;
+                        await saveVehicle(existing);
+                    } else {
+                        await saveVehicle({
+                            id: b.id, immat: b.immat || "inconnu",
+                            client: b.client || "Ajout manuel",
+                            marque: b.marque || "", modele: b.modele || "",
+                            refCommande: b.refCommande || "",
+                            typeMaintenance: b.typeMaintenance || "",
+                            present: b.present || false, site: b.site || null,
+                            lastSeen: b.lastSeen || null, photo: b.photo || null,
+                            isCustom: true
+                        });
+                    }
                 }
+                allVehicles = await getAllVehicles();
+                updateSiteFilterOptions();
+                renderAll();
+            } catch (e) {
+                console.error("Erreur restore:", e);
+                alert("❌ Erreur lors de la restauration: " + e.message);
             }
-            allVehicles = await getAllVehicles();
-            updateSiteFilterOptions();
-            renderAll();
         }
 
         async function restoreBackup() {
             const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
             if (!backup) { alert("❌ Aucune sauvegarde"); return; }
             if (!confirm("Restaurer la sauvegarde ?")) return;
-            await restoreBackupFromData(JSON.parse(backup));
-            alert("✅ Restauration terminée");
+            try {
+                await restoreBackupFromData(JSON.parse(backup));
+                alert("✅ Restauration terminée");
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
+            }
         }
         
         async function resetOnlyCheckboxes() {
             if (!confirm("Réinitialiser les cases et effacer la sauvegarde ?")) return;
-            for (let v of allVehicles) {
-                v.present = false; v.site = null; v.lastSeen = null;
-                await saveVehicle(v);
+            try {
+                for (let v of allVehicles) {
+                    v.present = false; v.site = null; v.lastSeen = null;
+                    await saveVehicle(v);
+                }
+                localStorage.removeItem(STORAGE_BACKUP_KEY);
+                await loadAndDisplay();
+                backupInfoSpan.innerHTML = "Réinitialisé";
+                alert("✅ Réinitialisation terminée");
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
             }
-            localStorage.removeItem(STORAGE_BACKUP_KEY);
-            await loadAndDisplay();
-            backupInfoSpan.innerHTML = "Réinitialisé";
-            alert("✅ Réinitialisation terminée");
         }
 
         // ==================== EXPORT/IMPORT BACKUP ====================
         function exportBackupFile() {
-            const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
-            if (!backup) { alert("❌ Aucune sauvegarde"); return; }
-            const blob = new Blob([backup], { type: "application/json" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `sauvegarde_${new Date().toISOString().slice(0,19)}.json`;
-            document.body.appendChild(a); a.click(); document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            try {
+                const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
+                if (!backup) { alert("❌ Aucune sauvegarde"); return; }
+                const blob = new Blob([backup], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `sauvegarde_${new Date().toISOString().slice(0,19)}.json`;
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
+            }
         }
 
         function importBackupFile() {
@@ -1084,26 +1113,30 @@
                 if (!file) return;
                 const reader = new FileReader();
                 reader.onload = (ev) => {
-                    const data = new Uint8Array(ev.target.result);
-                    const workbook = XLSX.read(data, { type: "array" });
-                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const rows = XLSX.utils.sheet_to_json(sheet);
-                    const vehicles = rows.map(row => ({
-                        id: (row["Immatriculation"] || "inconnu_" + Date.now() + "_" + Math.random()),
-                        immat: row["Immatriculation"] || "",
-                        client: row["Client"] || "",
-                        marque: row["Marque"] || "",
-                        modele: row["Modele"] || "",
-                        refCommande: row["Référence de commande"] || "",
-                        typeMaintenance: row["Type de Maintenance"] || "",
-                        present: false, site: null, lastSeen: null, photo: null, isCustom: false
-                    }));
-                    clearVehicles().then(async () => {
-                        await saveMultipleVehicles(vehicles);
-                        await loadAndDisplay();
-                        lastSyncSpan.innerText = new Date().toLocaleString();
-                        alert(`✅ ${vehicles.length} véhicules importés`);
-                    });
+                    try {
+                        const data = new Uint8Array(ev.target.result);
+                        const workbook = XLSX.read(data, { type: "array" });
+                        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                        const rows = XLSX.utils.sheet_to_json(sheet);
+                        const vehicles = rows.map(row => ({
+                            id: (row["Immatriculation"] || "inconnu_" + Date.now() + "_" + Math.random()),
+                            immat: row["Immatriculation"] || "",
+                            client: row["Client"] || "",
+                            marque: row["Marque"] || "",
+                            modele: row["Modele"] || "",
+                            refCommande: row["Référence de commande"] || "",
+                            typeMaintenance: row["Type de Maintenance"] || "",
+                            present: false, site: null, lastSeen: null, photo: null, isCustom: false
+                        }));
+                        clearVehicles().then(async () => {
+                            await saveMultipleVehicles(vehicles);
+                            await loadAndDisplay();
+                            lastSyncSpan.innerText = new Date().toLocaleString();
+                            alert(`✅ ${vehicles.length} véhicules importés`);
+                        });
+                    } catch (err) {
+                        alert("❌ Erreur lors de l'import: " + err.message);
+                    }
                 };
                 reader.readAsArrayBuffer(file);
             };
@@ -1117,18 +1150,22 @@
             const modele = document.getElementById("newModele").value.trim();
             const site = document.getElementById("newSite").value;
             if (allVehicles.some(v => v.immat === immat)) { alert("Existe déjà"); return; }
-            const newVehicle = {
-                id: immat + "_custom_" + Date.now(),
-                immat, client: "Ajout manuel", marque, modele,
-                refCommande: "", typeMaintenance: "", present: true, site,
-                lastSeen: new Date().toISOString(), photo: null, isCustom: true
-            };
-            await saveVehicle(newVehicle);
-            document.getElementById("newImmat").value = "";
-            document.getElementById("newMarque").value = "";
-            document.getElementById("newModele").value = "";
-            await loadAndDisplay();
-            alert(`✅ ${immat} ajouté sur ${site}`);
+            try {
+                const newVehicle = {
+                    id: immat + "_custom_" + Date.now(),
+                    immat, client: "Ajout manuel", marque, modele,
+                    refCommande: "", typeMaintenance: "", present: true, site,
+                    lastSeen: new Date().toISOString(), photo: null, isCustom: true
+                };
+                await saveVehicle(newVehicle);
+                document.getElementById("newImmat").value = "";
+                document.getElementById("newMarque").value = "";
+                document.getElementById("newModele").value = "";
+                await loadAndDisplay();
+                alert(`✅ ${immat} ajouté sur ${site}`);
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
+            }
         };
 
         // ==================== TIMER ====================
@@ -1325,62 +1362,79 @@
         }
 
         async function loadAndDisplay() {
-            allVehicles = await getAllVehicles();
-            updateSiteFilterOptions();
-            renderAll();
-            const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
-            if (backup) {
-                try {
-                    const data = JSON.parse(backup);
-                    if (Array.isArray(data) && data.length > 0) {
-                        await restoreBackupFromData(data);
-                        backupInfoSpan.innerHTML = `Restaurée ${new Date().toLocaleString()}`;
-                    }
-                } catch(e) { backupInfoSpan.innerHTML = "Corrompue"; }
-            } else {
-                backupInfoSpan.innerHTML = "Aucune sauvegarde";
+            try {
+                allVehicles = await getAllVehicles();
+                updateSiteFilterOptions();
+                renderAll();
+                const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
+                if (backup) {
+                    try {
+                        const data = JSON.parse(backup);
+                        if (Array.isArray(data) && data.length > 0) {
+                            await restoreBackupFromData(data);
+                            backupInfoSpan.innerHTML = `Restaurée ${new Date().toLocaleString()}`;
+                        }
+                    } catch(e) { backupInfoSpan.innerHTML = "Corrompue"; }
+                } else {
+                    backupInfoSpan.innerHTML = "Aucune sauvegarde";
+                }
+            } catch (e) {
+                console.error("Erreur loadAndDisplay:", e);
+                alert("❌ Erreur au chargement: " + e.message);
             }
         }
 
         // ==================== RAPPORT ====================
         async function generateReport() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({ orientation: 'landscape' });
-            doc.setFontSize(16);
-            doc.text("RAPPORT DE RONDE", 14, 15);
-            doc.setFontSize(9);
-            doc.text(new Date().toLocaleString(), 14, 22);
-            const total = allVehicles.length, presents = allVehicles.filter(v => v.present).length;
-            const absents = total - presents, completion = total === 0 ? 0 : Math.round((presents / total) * 100);
-            doc.text(`Total: ${total} · Présents: ${presents} · Absents: ${absents} · Taux: ${completion}%`, 14, 30);
-            let siteData = [["Site", "Présents", "Total"]];
-            for (let site of SITE_OPTIONS) {
-                const count = allVehicles.filter(v => v.present && v.site === site).length;
-                const totalSite = allVehicles.filter(v => v.site === site).length;
-                siteData.push([site, count.toString(), totalSite.toString()]);
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({ orientation: 'landscape' });
+                doc.setFontSize(16);
+                doc.text("RAPPORT DE RONDE", 14, 15);
+                doc.setFontSize(9);
+                doc.text(new Date().toLocaleString(), 14, 22);
+                const total = allVehicles.length, presents = allVehicles.filter(v => v.present).length;
+                const absents = total - presents, completion = total === 0 ? 0 : Math.round((presents / total) * 100);
+                doc.text(`Total: ${total} · Présents: ${presents} · Absents: ${absents} · Taux: ${completion}%`, 14, 30);
+                let siteData = [["Site", "Présents", "Total"]];
+                for (let site of SITE_OPTIONS) {
+                    const count = allVehicles.filter(v => v.present && v.site === site).length;
+                    const totalSite = allVehicles.filter(v => v.site === site).length;
+                    siteData.push([site, count.toString(), totalSite.toString()]);
+                }
+                doc.autoTable({ head: [siteData[0]], body: siteData.slice(1), startY: 35, theme: 'plain' });
+                const pData = allVehicles.filter(v => v.present).map(v => [v.immat, v.client, v.marque, v.modele, v.site || ""]);
+                if (pData.length) {
+                    doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle", "Site"]], body: pData, startY: doc.lastAutoTable.finalY + 5, theme: 'plain' });
+                }
+                const aData = allVehicles.filter(v => !v.present).map(v => [v.immat, v.client, v.marque, v.modele]);
+                if (aData.length) {
+                    doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle"]], body: aData, startY: doc.lastAutoTable.finalY + 5, theme: 'plain' });
+                }
+                doc.save(`rapport_${new Date().toISOString().slice(0,19)}.pdf`);
+            } catch (e) {
+                alert("❌ Erreur rapport: " + e.message);
             }
-            doc.autoTable({ head: [siteData[0]], body: siteData.slice(1), startY: 35, theme: 'plain' });
-            const pData = allVehicles.filter(v => v.present).map(v => [v.immat, v.client, v.marque, v.modele, v.site || ""]);
-            if (pData.length) {
-                doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle", "Site"]], body: pData, startY: doc.lastAutoTable.finalY + 5, theme: 'plain' });
-            }
-            const aData = allVehicles.filter(v => !v.present).map(v => [v.immat, v.client, v.marque, v.modele]);
-            if (aData.length) {
-                doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle"]], body: aData, startY: doc.lastAutoTable.finalY + 5, theme: 'plain' });
-            }
-            doc.save(`rapport_${new Date().toISOString().slice(0,19)}.pdf`);
         }
 
         // ==================== EXPORTS EXCEL ====================
         async function exportPresentExcel() {
-            const data = allVehicles.filter(v => v.present).map(v => ({ Immatriculation: v.immat, Client: v.client, Marque: v.marque, Modele: v.modele, Site: v.site || "" }));
-            const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Présents");
-            XLSX.writeFile(wb, `presences_${new Date().toISOString().slice(0,19)}.xlsx`);
+            try {
+                const data = allVehicles.filter(v => v.present).map(v => ({ Immatriculation: v.immat, Client: v.client, Marque: v.marque, Modele: v.modele, Site: v.site || "" }));
+                const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Présents");
+                XLSX.writeFile(wb, `presences_${new Date().toISOString().slice(0,19)}.xlsx`);
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
+            }
         }
         async function exportAbsentExcel() {
-            const data = allVehicles.filter(v => !v.present).map(v => ({ Immatriculation: v.immat, Client: v.client, Marque: v.marque, Modele: v.modele }));
-            const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Absents");
-            XLSX.writeFile(wb, `absents_${new Date().toISOString().slice(0,19)}.xlsx`);
+            try {
+                const data = allVehicles.filter(v => !v.present).map(v => ({ Immatriculation: v.immat, Client: v.client, Marque: v.marque, Modele: v.modele }));
+                const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Absents");
+                XLSX.writeFile(wb, `absents_${new Date().toISOString().slice(0,19)}.xlsx`);
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
+            }
         }
 
         // ==================== ATTESTATION ====================
@@ -1403,7 +1457,6 @@
         });
 
         document.getElementById("generateAttestationBtn").onclick = async () => {
-            // Vérifier que docx est chargé
             if (typeof docx === 'undefined') {
                 alert("❌ La bibliothèque docx n'est pas chargée. Veuillez rafraîchir la page.");
                 return;
@@ -1644,10 +1697,15 @@
 
         // ==================== INIT ====================
         window.addEventListener("load", async () => {
-            await openDB();
-            await loadAndDisplay();
-            if ("serviceWorker" in navigator) {
-                navigator.serviceWorker.register("/sw.js").catch(console.error);
+            try {
+                await openDB();
+                await loadAndDisplay();
+                if ("serviceWorker" in navigator) {
+                    navigator.serviceWorker.register("/sw.js").catch(console.error);
+                }
+            } catch (e) {
+                console.error("Erreur init:", e);
+                alert("❌ Erreur au démarrage: " + e.message);
             }
         });
     </script>
