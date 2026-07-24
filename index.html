@@ -872,7 +872,6 @@
 
     <script>
         // ==================== CONFIGURATION ====================
-        // *** AJOUT DE GARAGE A+ DANS LA LISTE DES SITES ***
         const SITE_OPTIONS = ["Garage 1", "Garage 2", "Garage 3", "Garage A+", "Dépôt 1", "Dépôt Aéroport"];
         const STORAGE_BACKUP_KEY = "ronde_vehicules_backup";
         
@@ -920,7 +919,7 @@
         // ==================== INDEXEDDB ====================
         function openDB() {
             return new Promise((resolve, reject) => {
-                const req = indexedDB.open("RondePresenceDB", 10);
+                const req = indexedDB.open("RondePresenceDB", 11);
                 req.onerror = () => reject("DB error");
                 req.onsuccess = (e) => { db = e.target.result; resolve(); };
                 req.onupgradeneeded = (e) => {
@@ -959,28 +958,57 @@
             return tx.complete;
         }
 
-        // ==================== SAUVEGARDE ====================
+        // ==================== SAUVEGARDE (SANS PHOTOS) ====================
         function getBackupData() {
+            // On exclut les photos pour réduire la taille de la sauvegarde
             return allVehicles.map(v => ({
-                id: v.id, immat: v.immat, present: v.present, site: v.site,
-                lastSeen: v.lastSeen, photo: v.photo, isCustom: v.isCustom,
-                client: v.client, marque: v.marque, modele: v.modele,
-                refCommande: v.refCommande, typeMaintenance: v.typeMaintenance
+                id: v.id, 
+                immat: v.immat, 
+                present: v.present, 
+                site: v.site,
+                lastSeen: v.lastSeen,
+                // photo: v.photo,  // EXCLU pour éviter quota exceeded
+                isCustom: v.isCustom,
+                client: v.client,
+                marque: v.marque,
+                modele: v.modele,
+                refCommande: v.refCommande,
+                typeMaintenance: v.typeMaintenance
             }));
         }
 
         function saveBackupToLocalStorage(data) {
             try {
-                localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(data));
+                const jsonData = JSON.stringify(data);
+                // Vérifier la taille approximative
+                const sizeKB = Math.round(jsonData.length / 1024);
+                console.log(`Taille de la sauvegarde : ${sizeKB} KB`);
+                
+                if (jsonData.length > 4 * 1024 * 1024) { // 4MB
+                    if (!confirm("⚠️ La sauvegarde est volumineuse (" + sizeKB + " KB). Continuer ?")) {
+                        return;
+                    }
+                }
+                
+                localStorage.setItem(STORAGE_BACKUP_KEY, jsonData);
                 const date = new Date().toLocaleString();
                 backupInfoSpan.innerHTML = `Sauvegardé ${date}`;
                 setTimeout(() => {
                     if (!localStorage.getItem(STORAGE_BACKUP_KEY)) return;
                     backupInfoSpan.innerHTML = `Sauvegarde (${date})`;
                 }, 3000);
+                alert("✅ Sauvegarde réussie ! (" + sizeKB + " KB)");
             } catch (e) {
                 console.error("Erreur sauvegarde:", e);
-                alert("❌ Erreur lors de la sauvegarde: " + e.message);
+                if (e.name === "QuotaExceededError" || e.message.includes("quota")) {
+                    alert("❌ Erreur : la sauvegarde est trop volumineuse.\n\n" +
+                          "💡 Solutions :\n" +
+                          "• Supprimez les photos inutiles\n" +
+                          "• Exportez la sauvegarde en fichier JSON\n" +
+                          "• Videz le cache du navigateur");
+                } else {
+                    alert("❌ Erreur lors de la sauvegarde: " + e.message);
+                }
             }
         }
 
@@ -988,7 +1016,6 @@
             try {
                 const backup = getBackupData();
                 saveBackupToLocalStorage(backup);
-                alert("✅ État sauvegardé");
             } catch (e) {
                 console.error("Erreur saveBackup:", e);
                 alert("❌ Erreur: " + e.message);
@@ -1003,7 +1030,7 @@
                         existing.present = b.present;
                         existing.site = b.site;
                         existing.lastSeen = b.lastSeen;
-                        existing.photo = b.photo;
+                        // existing.photo = b.photo; // Ne pas restaurer les photos depuis la sauvegarde
                         existing.client = b.client || existing.client;
                         existing.marque = b.marque || existing.marque;
                         existing.modele = b.modele || existing.modele;
@@ -1019,7 +1046,8 @@
                             refCommande: b.refCommande || "",
                             typeMaintenance: b.typeMaintenance || "",
                             present: b.present || false, site: b.site || null,
-                            lastSeen: b.lastSeen || null, photo: b.photo || null,
+                            lastSeen: b.lastSeen || null,
+                            photo: null, // Les photos restent en base
                             isCustom: true
                         });
                     }
@@ -1027,6 +1055,7 @@
                 allVehicles = await getAllVehicles();
                 updateSiteFilterOptions();
                 renderAll();
+                alert("✅ Restauration terminée !");
             } catch (e) {
                 console.error("Erreur restore:", e);
                 alert("❌ Erreur lors de la restauration: " + e.message);
@@ -1039,7 +1068,6 @@
             if (!confirm("Restaurer la sauvegarde ?")) return;
             try {
                 await restoreBackupFromData(JSON.parse(backup));
-                alert("✅ Restauration terminée");
             } catch (e) {
                 alert("❌ Erreur: " + e.message);
             }
@@ -1073,6 +1101,7 @@
                 a.download = `sauvegarde_${new Date().toISOString().slice(0,19)}.json`;
                 document.body.appendChild(a); a.click(); document.body.removeChild(a);
                 URL.revokeObjectURL(url);
+                alert("✅ Sauvegarde exportée avec succès !");
             } catch (e) {
                 alert("❌ Erreur: " + e.message);
             }
@@ -1094,7 +1123,6 @@
                         backupInfoSpan.innerHTML = `Importé ${new Date().toLocaleString()}`;
                         if (confirm("Restaurer maintenant ?")) {
                             await restoreBackupFromData(data);
-                            alert("✅ Restauration terminée");
                         }
                     } catch (error) {
                         alert("❌ Erreur: " + error.message);
@@ -1102,6 +1130,24 @@
                 };
                 reader.readAsText(file);
             };
+        }
+
+        // ==================== NETTOYAGE DES PHOTOS ====================
+        function cleanPhotos() {
+            if (!confirm("🗑️ Supprimer toutes les photos des véhicules ?\n\n" +
+                        "Cela libérera de l'espace et accélérera les sauvegardes.\n" +
+                        "Les véhicules et leurs statuts seront conservés.")) return;
+            
+            let count = 0;
+            for (let v of allVehicles) {
+                if (v.photo) {
+                    v.photo = null;
+                    saveVehicle(v);
+                    count++;
+                }
+            }
+            alert(`✅ ${count} photo(s) supprimée(s)`);
+            renderAll();
         }
 
         // ==================== IMPORT EXCEL ====================
@@ -1371,8 +1417,7 @@
                     try {
                         const data = JSON.parse(backup);
                         if (Array.isArray(data) && data.length > 0) {
-                            await restoreBackupFromData(data);
-                            backupInfoSpan.innerHTML = `Restaurée ${new Date().toLocaleString()}`;
+                            backupInfoSpan.innerHTML = `Sauvegarde disponible`;
                         }
                     } catch(e) { backupInfoSpan.innerHTML = "Corrompue"; }
                 } else {
@@ -1663,7 +1708,7 @@
                 
             } catch (error) {
                 console.error("Erreur détaillée:", error);
-                alert("❌ Erreur lors de la génération : " + error.message + "\n\nVérifie la console pour plus de détails (F12).");
+                alert("❌ Erreur lors de la génération : " + error.message);
             }
         };
 
