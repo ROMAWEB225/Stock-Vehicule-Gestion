@@ -335,7 +335,7 @@
         }
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 10px;
         }
         .gallery-item {
@@ -350,6 +350,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            cursor: pointer;
         }
         .gallery-item .gallery-label {
             position: absolute;
@@ -363,6 +364,23 @@
             text-align: center;
             transition: background 0.3s, color 0.3s;
         }
+        .gallery-item .gallery-actions {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            display: flex;
+            gap: 4px;
+        }
+        .gallery-item .gallery-actions button {
+            background: rgba(0,0,0,0.7);
+            border: none;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            cursor: pointer;
+        }
+        .gallery-item .gallery-actions button:hover { background: rgba(255,0,0,0.8); }
 
         /* ========== LISTE VÉHICULES ========== */
         .vehicles-container {
@@ -469,9 +487,46 @@
             color: #94a3b8;
             transition: background 0.3s, color 0.3s;
         }
+        .vehicle-item .badge-source {
+            padding: 1px 8px;
+            border-radius: 4px;
+            font-size: 0.55rem;
+            font-weight: 500;
+        }
+        .badge-source.source-1 { background: #1e3a5f; color: #60a5fa; }
+        .badge-source.source-2 { background: #3a1e2a; color: #f87171; }
+        .badge-source.source-custom { background: #3a3a1e; color: #fbbf24; }
         .vehicle-item .last-seen {
             font-size: 0.65rem;
             color: #64748b;
+        }
+        .vehicle-item .action-btns {
+            display: flex;
+            gap: 4px;
+        }
+        .vehicle-item .action-btns button {
+            background: #0f172a;
+            border: 1px solid #2d3a4e;
+            color: #94a3b8;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .vehicle-item .action-btns button:hover {
+            background: #2d3a4e;
+            color: #e2e8f0;
+        }
+        .vehicle-item .action-btns .btn-danger:hover {
+            background: #dc2626;
+            color: white;
+            border-color: #dc2626;
+        }
+        .vehicle-item .action-btns .btn-edit:hover {
+            background: #f59e0b;
+            color: white;
+            border-color: #f59e0b;
         }
 
         /* ========== AJOUT MANUEL ========== */
@@ -514,6 +569,107 @@
             border-color: #60a5fa;
         }
         .add-form input::placeholder { color: #64748b; }
+
+        /* ========== MODALE ÉDITION ========== */
+        #editModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        #editModal .modal-content {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            transition: background 0.3s, color 0.3s;
+        }
+        body.light-mode #editModal .modal-content { background: #ffffff; color: #1e293b; }
+        body.light-mode #editModal input,
+        body.light-mode #editModal select {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+            color: #1e293b;
+        }
+        #editModal .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        #editModal .close-btn:hover { color: #e2e8f0; }
+        #editModal h2 {
+            margin: 0 0 1.5rem 0;
+            color: #e2e8f0;
+            font-weight: 400;
+            font-size: 1.2rem;
+        }
+        body.light-mode #editModal h2 { color: #1e293b; }
+        #editModal label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        #editModal input,
+        #editModal select {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #2d3a4e;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            outline: none;
+            margin-bottom: 12px;
+        }
+        #editModal input:focus,
+        #editModal select:focus {
+            border-color: #60a5fa;
+        }
+        #editModal .btn-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        #editModal .btn-save {
+            flex: 1;
+            background: #60a5fa;
+            border: none;
+            color: #0f172a;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        #editModal .btn-save:hover { background: #3b82f6; }
+        #editModal .btn-cancel {
+            flex: 1;
+            background: #2d3a4e;
+            border: none;
+            color: #94a3b8;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        #editModal .btn-cancel:hover { background: #3d4a5e; }
 
         /* ========== TIMER ========== */
         .timer-container {
@@ -672,6 +828,7 @@
             #attestationModal .form-grid { grid-template-columns: 1fr; }
             #attestationModal .form-grid .full-width { grid-column: span 1; }
             #attestationModal .modal-content { padding: 1.2rem; }
+            #editModal .modal-content { padding: 1.2rem; }
         }
         @media (max-width: 480px) {
             .dashboard-grid { grid-template-columns: 1fr 1fr; }
@@ -686,6 +843,23 @@
         body.terrain-mode input { padding: 10px 16px; font-size: 0.95rem; }
         body.terrain-mode .stat-card { padding: 14px 20px; min-width: 130px; }
         body.terrain-mode .vehicle-info strong { font-size: 1.2rem; }
+
+        /* ========== NOTIFICATION RECHERCHE CROISÉE ========== */
+        .cross-search-notice {
+            background: #1e3a5f;
+            color: #60a5fa;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+        .cross-search-notice.visible { display: inline-flex; }
+        body.light-mode .cross-search-notice {
+            background: #dbeafe;
+            color: #1e40af;
+        }
     </style>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
@@ -696,7 +870,7 @@
     <header>
         <div class="logo">
             <h1>STOCK<span>VÉHICULES</span></h1>
-            <span class="badge">v2.0</span>
+            <span class="badge">v2.1</span>
         </div>
         <div class="header-right">
             <span id="backupInfo" class="backup-info">Aucune sauvegarde</span>
@@ -706,24 +880,31 @@
 
     <!-- ========== NAVIGATION ========== -->
     <nav class="nav-bar">
-        <input type="file" id="excelInput" accept=".xlsx, .xls" style="display:none" />
-        <button id="importBtn" class="nav-btn primary">Importer</button>
-        <button id="saveBackupBtn" class="nav-btn accent">Sauvegarder</button>
-        <button id="restoreBackupBtn" class="nav-btn accent">Restaurer</button>
-        <button id="resetCheckBtn" class="nav-btn" style="color:#f87171;">Réinitialiser</button>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center;">
+            <input type="file" id="excelInput" accept=".xlsx, .xls" style="display:none" />
+            <button id="importBtn" class="nav-btn primary">📂 Importer</button>
+            <select id="importSourceSelect" style="background:#1e293b;border:1px solid #2d3a4e;color:#e2e8f0;padding:4px 10px;border-radius:4px;font-size:0.75rem;">
+                <option value="source1">Source 1</option>
+                <option value="source2">Source 2</option>
+            </select>
+        </div>
         <span class="nav-divider"></span>
-        <button id="exportBackupBtn" class="nav-btn">Exporter</button>
-        <button id="importBackupBtn" class="nav-btn">Importer</button>
+        <button id="saveBackupBtn" class="nav-btn accent">💾 Sauvegarder</button>
+        <button id="restoreBackupBtn" class="nav-btn accent">↩️ Restaurer</button>
+        <button id="resetCheckBtn" class="nav-btn" style="color:#f87171;">🔄 Réinitialiser</button>
+        <span class="nav-divider"></span>
+        <button id="exportBackupBtn" class="nav-btn">📤 Exporter</button>
+        <button id="importBackupBtn" class="nav-btn">📥 Importer</button>
         <input type="file" id="backupFileInput" accept=".json" style="display:none" />
         <span class="nav-divider"></span>
-        <button id="dashboardToggleBtn" class="nav-btn">Dashboard</button>
-        <button id="galleryToggleBtn" class="nav-btn">Galerie</button>
-        <button id="timerToggleBtn" class="nav-btn">Chrono</button>
-        <button id="terrainModeBtn" class="nav-btn">Terrain</button>
-        <button id="reportBtn" class="nav-btn">Rapport</button>
+        <button id="dashboardToggleBtn" class="nav-btn">📊 Dashboard</button>
+        <button id="galleryToggleBtn" class="nav-btn">🖼️ Galerie</button>
+        <button id="timerToggleBtn" class="nav-btn">⏱️ Chrono</button>
+        <button id="terrainModeBtn" class="nav-btn">📱 Terrain</button>
+        <button id="reportBtn" class="nav-btn">📋 Rapport</button>
         <span class="nav-divider"></span>
-        <button id="exportPresentExcel" class="nav-btn" style="color:#60a5fa;">Présents</button>
-        <button id="exportAbsentExcel" class="nav-btn" style="color:#f87171;">Absents</button>
+        <button id="exportPresentExcel" class="nav-btn" style="color:#60a5fa;">✅ Présents</button>
+        <button id="exportAbsentExcel" class="nav-btn" style="color:#f87171;">❌ Absents</button>
         <span class="nav-divider"></span>
         <button id="attestationBtn" class="nav-btn" style="color:#34d399;">📄 Attestation</button>
     </nav>
@@ -731,26 +912,26 @@
     <!-- ========== TIMER ========== -->
     <div id="timerContainer" class="timer-container">
         <span class="timer-display" id="timerDisplay">00:00:00</span>
-        <button id="timerStartBtn" class="nav-btn accent">Démarrer</button>
-        <button id="timerStopBtn" class="nav-btn" style="color:#f87171;">Arrêter</button>
-        <button id="timerResetBtn" class="nav-btn">Reset</button>
+        <button id="timerStartBtn" class="nav-btn accent">▶️ Démarrer</button>
+        <button id="timerStopBtn" class="nav-btn" style="color:#f87171;">⏹️ Arrêter</button>
+        <button id="timerResetBtn" class="nav-btn">🔄 Reset</button>
     </div>
 
     <!-- ========== FILTRES ========== -->
     <div class="filter-bar">
-        <label>Site</label>
+        <label>📍 Site</label>
         <select id="siteFilterSelect">
             <option value="all">Tous</option>
-            <option value="present_all">Présents</option>
+            <option value="present_all">✅ Présents</option>
         </select>
-        <label>Marque</label>
-        <select id="marqueFilter">
+        <label>🏷️ Source</label>
+        <select id="sourceFilterSelect">
             <option value="all">Toutes</option>
-            <option value="Changan">Changan</option>
-            <option value="MG">MG</option>
-            <option value="Jetour">Jetour</option>
+            <option value="source1">Source 1</option>
+            <option value="source2">Source 2</option>
+            <option value="custom">Ajouts manuels</option>
         </select>
-        <label>Type</label>
+        <label>🔧 Type</label>
         <select id="typeFilter">
             <option value="all">Tous</option>
             <option value="Vidange">Vidange</option>
@@ -758,7 +939,8 @@
             <option value="Carrosserie">Carrosserie</option>
             <option value="Diagnostic">Diagnostic</option>
         </select>
-        <input type="text" id="searchInput" placeholder="Rechercher..." style="flex:1;min-width:140px;">
+        <input type="text" id="searchInput" placeholder="🔍 Rechercher..." style="flex:1;min-width:140px;">
+        <span class="cross-search-notice" id="crossSearchNotice">🔁 Recherche croisée active</span>
         <span id="resultCount" style="font-size:0.75rem;color:#64748b;"></span>
     </div>
 
@@ -770,15 +952,20 @@
             <h2>📊 Tableau de bord</h2>
             <div class="dashboard-grid" id="dashboardGrid">
                 <div class="dash-card"><p class="number" id="dashTotal">0</p><p class="label">Total</p></div>
-                <div class="dash-card"><p class="number" id="dashPresent">0</p><p class="label">Présents</p></div>
-                <div class="dash-card"><p class="number" id="dashAbsent">0</p><p class="label">Absents</p></div>
+                <div class="dash-card"><p class="number" id="dashPresent">0</p><p class="label">✅ Présents</p></div>
+                <div class="dash-card"><p class="number" id="dashAbsent">0</p><p class="label">❌ Absents</p></div>
                 <div class="dash-card">
                     <p class="number" id="dashCompletion">0%</p>
-                    <p class="label">Complétion</p>
+                    <p class="label">📊 Complétion</p>
                     <div class="bar"><div class="bar-fill" id="dashBar" style="width:0%;"></div></div>
                 </div>
             </div>
             <div class="dash-sites" id="dashSites"></div>
+            <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:15px;font-size:0.75rem;color:#94a3b8;">
+                <span>📦 Source 1: <span id="source1Count">0</span></span>
+                <span>📦 Source 2: <span id="source2Count">0</span></span>
+                <span>✏️ Ajouts manuels: <span id="customCount">0</span></span>
+            </div>
         </div>
 
         <!-- STATS -->
@@ -801,7 +988,7 @@
 
         <!-- AJOUT -->
         <div class="add-section">
-            <h3>➕ Ajouter un véhicule</h3>
+            <h3>➕ Ajouter un véhicule manuellement</h3>
             <div class="add-form">
                 <input type="text" id="newImmat" placeholder="Immatriculation *" required>
                 <input type="text" id="newMarque" placeholder="Marque">
@@ -814,7 +1001,7 @@
                     <option value="Dépôt 1">Dépôt 1</option>
                     <option value="Dépôt Aéroport">Dépôt Aéroport</option>
                 </select>
-                <button id="addVehicleBtn" class="nav-btn primary">Ajouter</button>
+                <button id="addVehicleBtn" class="nav-btn primary">✅ Ajouter</button>
             </div>
         </div>
 
@@ -827,45 +1014,42 @@
         <div class="modal-content">
             <button class="close-btn" id="closeModalBtn">✕</button>
             <h2>📄 GÉNÉRER UNE ATTESTATION</h2>
-            
             <div class="form-grid">
-                <div class="full-width">
-                    <label>Immatriculation *</label>
-                    <input type="text" id="attImmat" value="AA565TG01">
-                </div>
-                <div>
-                    <label>Marque *</label>
-                    <input type="text" id="attMarque" value="JETOUR">
-                </div>
-                <div>
-                    <label>Modèle *</label>
-                    <input type="text" id="attModele" value="X70+">
-                </div>
-                <div class="full-width">
-                    <label>Couleur *</label>
-                    <input type="text" id="attCouleur" value="GRISE">
-                </div>
-                <div class="full-width">
-                    <label>Nom de l'Assuré(e) *</label>
-                    <input type="text" id="attAssure" value="DJAGBO EPSE TIEMELE DANOYO ANGE FRANCINE">
-                </div>
-                <div>
-                    <label>Date début *</label>
-                    <input type="date" id="attDateDebut" value="2026-07-22">
-                </div>
-                <div>
-                    <label>Date fin *</label>
-                    <input type="date" id="attDateFin" value="2026-07-27">
-                </div>
-                <div class="full-width">
-                    <label>Durée (en jours ouvrés)</label>
-                    <input type="number" id="attDuree" value="5" min="1" max="30">
-                </div>
+                <div class="full-width"><label>Immatriculation *</label><input type="text" id="attImmat" value="AA565TG01"></div>
+                <div><label>Marque *</label><input type="text" id="attMarque" value="JETOUR"></div>
+                <div><label>Modèle *</label><input type="text" id="attModele" value="X70+"></div>
+                <div class="full-width"><label>Couleur *</label><input type="text" id="attCouleur" value="GRISE"></div>
+                <div class="full-width"><label>Nom de l'Assuré(e) *</label><input type="text" id="attAssure" value="DJAGBO EPSE TIEMELE DANOYO ANGE FRANCINE"></div>
+                <div><label>Date début *</label><input type="date" id="attDateDebut" value="2026-07-22"></div>
+                <div><label>Date fin *</label><input type="date" id="attDateFin" value="2026-07-27"></div>
+                <div class="full-width"><label>Durée (jours)</label><input type="number" id="attDuree" value="5" min="1" max="30"></div>
             </div>
-            
             <div class="btn-row">
-                <button class="btn-generate" id="generateAttestationBtn">📄 Générer l'attestation</button>
+                <button class="btn-generate" id="generateAttestationBtn">📄 Générer</button>
                 <button class="btn-cancel" id="cancelAttestationBtn">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MODALE ÉDITION ========== -->
+    <div id="editModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeEditModalBtn">✕</button>
+            <h2>✏️ Modifier le véhicule</h2>
+            <input type="hidden" id="editVehicleId">
+            <label>Immatriculation</label>
+            <input type="text" id="editImmat">
+            <label>Marque</label>
+            <input type="text" id="editMarque">
+            <label>Modèle</label>
+            <input type="text" id="editModele">
+            <label>Client</label>
+            <input type="text" id="editClient">
+            <label>Type de maintenance</label>
+            <input type="text" id="editTypeMaintenance">
+            <div class="btn-row">
+                <button class="btn-save" id="saveEditBtn">💾 Enregistrer</button>
+                <button class="btn-cancel" id="cancelEditBtn">Annuler</button>
             </div>
         </div>
     </div>
@@ -879,16 +1063,17 @@
         let allVehicles = [];
         let currentSiteFilter = "all";
         let currentSearch = "";
-        let currentMarqueFilter = "all";
+        let currentSourceFilter = "all";
         let currentTypeFilter = "all";
         let timerSeconds = 0;
         let timerInterval = null;
         let timerRunning = false;
+        let currentImportSource = "source1";
         
         const statsContainer = document.getElementById("statsContainer");
         const listContainer = document.getElementById("listContainer");
         const siteFilterSelect = document.getElementById("siteFilterSelect");
-        const marqueFilter = document.getElementById("marqueFilter");
+        const sourceFilterSelect = document.getElementById("sourceFilterSelect");
         const typeFilter = document.getElementById("typeFilter");
         const searchInput = document.getElementById("searchInput");
         const resultCountSpan = document.getElementById("resultCount");
@@ -899,6 +1084,7 @@
         const galleryContainer = document.getElementById("galleryContainer");
         const timerContainer = document.getElementById("timerContainer");
         const timerDisplay = document.getElementById("timerDisplay");
+        const crossSearchNotice = document.getElementById("crossSearchNotice");
 
         // ==================== BIP ====================
         function playBeep() {
@@ -919,7 +1105,7 @@
         // ==================== INDEXEDDB ====================
         function openDB() {
             return new Promise((resolve, reject) => {
-                const req = indexedDB.open("RondePresenceDB", 11);
+                const req = indexedDB.open("RondePresenceDB", 12);
                 req.onerror = () => reject("DB error");
                 req.onsuccess = (e) => { db = e.target.result; resolve(); };
                 req.onupgradeneeded = (e) => {
@@ -958,33 +1144,37 @@
             return tx.complete;
         }
 
-        // ==================== SAUVEGARDE (SANS PHOTOS) ====================
+        async function deleteVehicle(id) {
+            const tx = db.transaction("vehicules", "readwrite");
+            tx.objectStore("vehicules").delete(id);
+            return tx.complete;
+        }
+
+        // ==================== SAUVEGARDE (AVEC AJOUTS MANUELS) ====================
         function getBackupData() {
-            // On exclut les photos pour réduire la taille de la sauvegarde
             return allVehicles.map(v => ({
-                id: v.id, 
-                immat: v.immat, 
-                present: v.present, 
+                id: v.id,
+                immat: v.immat,
+                present: v.present,
                 site: v.site,
                 lastSeen: v.lastSeen,
-                // photo: v.photo,  // EXCLU pour éviter quota exceeded
-                isCustom: v.isCustom,
-                client: v.client,
-                marque: v.marque,
-                modele: v.modele,
-                refCommande: v.refCommande,
-                typeMaintenance: v.typeMaintenance
+                isCustom: v.isCustom || false,
+                client: v.client || "",
+                marque: v.marque || "",
+                modele: v.modele || "",
+                refCommande: v.refCommande || "",
+                typeMaintenance: v.typeMaintenance || "",
+                source: v.source || "custom"
             }));
         }
 
         function saveBackupToLocalStorage(data) {
             try {
                 const jsonData = JSON.stringify(data);
-                // Vérifier la taille approximative
                 const sizeKB = Math.round(jsonData.length / 1024);
                 console.log(`Taille de la sauvegarde : ${sizeKB} KB`);
                 
-                if (jsonData.length > 4 * 1024 * 1024) { // 4MB
+                if (jsonData.length > 4 * 1024 * 1024) {
                     if (!confirm("⚠️ La sauvegarde est volumineuse (" + sizeKB + " KB). Continuer ?")) {
                         return;
                     }
@@ -992,10 +1182,10 @@
                 
                 localStorage.setItem(STORAGE_BACKUP_KEY, jsonData);
                 const date = new Date().toLocaleString();
-                backupInfoSpan.innerHTML = `Sauvegardé ${date}`;
+                backupInfoSpan.innerHTML = `💾 Sauvegardé ${date}`;
                 setTimeout(() => {
                     if (!localStorage.getItem(STORAGE_BACKUP_KEY)) return;
-                    backupInfoSpan.innerHTML = `Sauvegarde (${date})`;
+                    backupInfoSpan.innerHTML = `📦 Sauvegarde (${date})`;
                 }, 3000);
                 alert("✅ Sauvegarde réussie ! (" + sizeKB + " KB)");
             } catch (e) {
@@ -1024,38 +1214,47 @@
         
         async function restoreBackupFromData(data) {
             try {
+                let restoredCount = 0;
+                let customCount = 0;
                 for (let b of data) {
                     const existing = allVehicles.find(v => v.id === b.id);
                     if (existing) {
                         existing.present = b.present;
                         existing.site = b.site;
                         existing.lastSeen = b.lastSeen;
-                        // existing.photo = b.photo; // Ne pas restaurer les photos depuis la sauvegarde
                         existing.client = b.client || existing.client;
                         existing.marque = b.marque || existing.marque;
                         existing.modele = b.modele || existing.modele;
                         existing.refCommande = b.refCommande || existing.refCommande;
                         existing.typeMaintenance = b.typeMaintenance || existing.typeMaintenance;
                         existing.isCustom = b.isCustom || false;
+                        existing.source = b.source || existing.source || "source1";
                         await saveVehicle(existing);
+                        restoredCount++;
                     } else {
+                        // CRÉATION DU VÉHICULE MANQUANT (AJOUT MANUEL)
                         await saveVehicle({
-                            id: b.id, immat: b.immat || "inconnu",
+                            id: b.id,
+                            immat: b.immat || "inconnu",
                             client: b.client || "Ajout manuel",
-                            marque: b.marque || "", modele: b.modele || "",
+                            marque: b.marque || "",
+                            modele: b.modele || "",
                             refCommande: b.refCommande || "",
                             typeMaintenance: b.typeMaintenance || "",
-                            present: b.present || false, site: b.site || null,
+                            present: b.present || false,
+                            site: b.site || null,
                             lastSeen: b.lastSeen || null,
-                            photo: null, // Les photos restent en base
-                            isCustom: true
+                            photo: null,
+                            isCustom: true,
+                            source: b.source || "custom"
                         });
+                        customCount++;
                     }
                 }
                 allVehicles = await getAllVehicles();
                 updateSiteFilterOptions();
                 renderAll();
-                alert("✅ Restauration terminée !");
+                alert(`✅ Restauration terminée !\n📦 ${restoredCount} véhicules mis à jour\n✏️ ${customCount} ajouts manuels créés`);
             } catch (e) {
                 console.error("Erreur restore:", e);
                 alert("❌ Erreur lors de la restauration: " + e.message);
@@ -1082,7 +1281,7 @@
                 }
                 localStorage.removeItem(STORAGE_BACKUP_KEY);
                 await loadAndDisplay();
-                backupInfoSpan.innerHTML = "Réinitialisé";
+                backupInfoSpan.innerHTML = "🔄 Réinitialisé";
                 alert("✅ Réinitialisation terminée");
             } catch (e) {
                 alert("❌ Erreur: " + e.message);
@@ -1120,8 +1319,8 @@
                             alert("❌ Fichier invalide"); return;
                         }
                         localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(data));
-                        backupInfoSpan.innerHTML = `Importé ${new Date().toLocaleString()}`;
-                        if (confirm("Restaurer maintenant ?")) {
+                        backupInfoSpan.innerHTML = `📥 Importé ${new Date().toLocaleString()}`;
+                        if (confirm("✅ Fichier importé. Restaurer maintenant ?")) {
                             await restoreBackupFromData(data);
                         }
                     } catch (error) {
@@ -1132,60 +1331,66 @@
             };
         }
 
-        // ==================== NETTOYAGE DES PHOTOS ====================
-        function cleanPhotos() {
-            if (!confirm("🗑️ Supprimer toutes les photos des véhicules ?\n\n" +
-                        "Cela libérera de l'espace et accélérera les sauvegardes.\n" +
-                        "Les véhicules et leurs statuts seront conservés.")) return;
-            
-            let count = 0;
-            for (let v of allVehicles) {
-                if (v.photo) {
-                    v.photo = null;
-                    saveVehicle(v);
-                    count++;
-                }
-            }
-            alert(`✅ ${count} photo(s) supprimée(s)`);
-            renderAll();
-        }
-
-        // ==================== IMPORT EXCEL ====================
+        // ==================== IMPORT EXCEL AVEC SOURCE ====================
         document.getElementById("importBtn").onclick = () => {
-            if (allVehicles.length > 0 && !confirm("Effacer la liste actuelle ?")) return;
             document.getElementById("excelInput").click();
-            document.getElementById("excelInput").onchange = (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    try {
-                        const data = new Uint8Array(ev.target.result);
-                        const workbook = XLSX.read(data, { type: "array" });
-                        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                        const rows = XLSX.utils.sheet_to_json(sheet);
-                        const vehicles = rows.map(row => ({
-                            id: (row["Immatriculation"] || "inconnu_" + Date.now() + "_" + Math.random()),
-                            immat: row["Immatriculation"] || "",
-                            client: row["Client"] || "",
-                            marque: row["Marque"] || "",
-                            modele: row["Modele"] || "",
-                            refCommande: row["Référence de commande"] || "",
-                            typeMaintenance: row["Type de Maintenance"] || "",
-                            present: false, site: null, lastSeen: null, photo: null, isCustom: false
-                        }));
-                        clearVehicles().then(async () => {
-                            await saveMultipleVehicles(vehicles);
-                            await loadAndDisplay();
-                            lastSyncSpan.innerText = new Date().toLocaleString();
-                            alert(`✅ ${vehicles.length} véhicules importés`);
-                        });
-                    } catch (err) {
-                        alert("❌ Erreur lors de l'import: " + err.message);
+        };
+
+        document.getElementById("importSourceSelect").onchange = (e) => {
+            currentImportSource = e.target.value;
+        };
+
+        document.getElementById("excelInput").onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                try {
+                    const data = new Uint8Array(ev.target.result);
+                    const workbook = XLSX.read(data, { type: "array" });
+                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const rows = XLSX.utils.sheet_to_json(sheet);
+                    
+                    const source = currentImportSource;
+                    const vehicles = rows.map(row => ({
+                        id: (row["Immatriculation"] || "inconnu_" + Date.now() + "_" + Math.random()),
+                        immat: row["Immatriculation"] || "",
+                        client: row["Client"] || "",
+                        marque: row["Marque"] || "",
+                        modele: row["Modele"] || "",
+                        refCommande: row["Référence de commande"] || "",
+                        typeMaintenance: row["Type de Maintenance"] || "",
+                        present: false,
+                        site: null,
+                        lastSeen: null,
+                        photo: null,
+                        isCustom: false,
+                        source: source
+                    }));
+                    
+                    // Vérifier les doublons avec la source
+                    const existingIds = new Set(allVehicles.map(v => v.id));
+                    const newVehicles = vehicles.filter(v => !existingIds.has(v.id));
+                    const duplicates = vehicles.length - newVehicles.length;
+                    
+                    if (duplicates > 0) {
+                        if (!confirm(`⚠️ ${duplicates} véhicules existent déjà. Ajouter quand même ?`)) {
+                            return;
+                        }
                     }
-                };
-                reader.readAsArrayBuffer(file);
+                    
+                    saveMultipleVehicles(newVehicles).then(async () => {
+                        await loadAndDisplay();
+                        lastSyncSpan.innerText = new Date().toLocaleString();
+                        alert(`✅ ${newVehicles.length} véhicules importés (Source: ${source})`);
+                    });
+                } catch (err) {
+                    alert("❌ Erreur lors de l'import: " + err.message);
+                }
             };
+            reader.readAsArrayBuffer(file);
+            // Réinitialiser pour permettre le même fichier
+            document.getElementById("excelInput").value = "";
         };
 
         // ==================== AJOUT MANUEL ====================
@@ -1199,9 +1404,18 @@
             try {
                 const newVehicle = {
                     id: immat + "_custom_" + Date.now(),
-                    immat, client: "Ajout manuel", marque, modele,
-                    refCommande: "", typeMaintenance: "", present: true, site,
-                    lastSeen: new Date().toISOString(), photo: null, isCustom: true
+                    immat: immat,
+                    client: "Ajout manuel",
+                    marque: marque,
+                    modele: modele,
+                    refCommande: "",
+                    typeMaintenance: "",
+                    present: true,
+                    site: site,
+                    lastSeen: new Date().toISOString(),
+                    photo: null,
+                    isCustom: true,
+                    source: "custom"
                 };
                 await saveVehicle(newVehicle);
                 document.getElementById("newImmat").value = "";
@@ -1213,6 +1427,97 @@
                 alert("❌ Erreur: " + e.message);
             }
         };
+
+        // ==================== SUPPRESSION D'UN VÉHICULE ====================
+        async function deleteCustomVehicle(id) {
+            if (!confirm("⚠️ Supprimer ce véhicule ? Cette action est irréversible.")) return;
+            try {
+                await deleteVehicle(id);
+                await loadAndDisplay();
+                alert("✅ Véhicule supprimé");
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
+            }
+        }
+
+        // ==================== ÉDITION D'UN VÉHICULE ====================
+        function openEditModal(vehicleId) {
+            const v = allVehicles.find(v => v.id === vehicleId);
+            if (!v) return;
+            document.getElementById("editVehicleId").value = v.id;
+            document.getElementById("editImmat").value = v.immat || "";
+            document.getElementById("editMarque").value = v.marque || "";
+            document.getElementById("editModele").value = v.modele || "";
+            document.getElementById("editClient").value = v.client || "";
+            document.getElementById("editTypeMaintenance").value = v.typeMaintenance || "";
+            document.getElementById("editModal").style.display = "flex";
+        }
+
+        document.getElementById("closeEditModalBtn").onclick = () => {
+            document.getElementById("editModal").style.display = "none";
+        };
+        document.getElementById("cancelEditBtn").onclick = () => {
+            document.getElementById("editModal").style.display = "none";
+        };
+        document.getElementById("editModal").addEventListener("click", (e) => {
+            if (e.target === e.currentTarget) {
+                document.getElementById("editModal").style.display = "none";
+            }
+        });
+
+        document.getElementById("saveEditBtn").onclick = async () => {
+            const id = document.getElementById("editVehicleId").value;
+            const v = allVehicles.find(v => v.id === id);
+            if (!v) { alert("Véhicule non trouvé"); return; }
+            
+            v.immat = document.getElementById("editImmat").value.trim() || v.immat;
+            v.marque = document.getElementById("editMarque").value.trim() || v.marque;
+            v.modele = document.getElementById("editModele").value.trim() || v.modele;
+            v.client = document.getElementById("editClient").value.trim() || v.client;
+            v.typeMaintenance = document.getElementById("editTypeMaintenance").value.trim() || v.typeMaintenance;
+            
+            try {
+                await saveVehicle(v);
+                await loadAndDisplay();
+                document.getElementById("editModal").style.display = "none";
+                alert("✅ Modifications enregistrées");
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
+            }
+        };
+
+        // ==================== GESTION DES PHOTOS ====================
+        function zoomPhoto(photoSrc, immat) {
+            const win = window.open("", "_blank");
+            win.document.write(`
+                <html><head><title>Photo ${immat}</title>
+                <style>body{margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#0f172a;}
+                img{max-width:95%;max-height:95%;object-fit:contain;}</style>
+                </head><body><img src="${photoSrc}" alt="${immat}"></body></html>
+            `);
+        }
+
+        function downloadPhoto(photoSrc, immat) {
+            const link = document.createElement("a");
+            link.href = photoSrc;
+            link.download = `photo_${immat}_${new Date().toISOString().slice(0,10)}.jpg`;
+            link.click();
+        }
+
+        async function deletePhoto(vehicleId) {
+            if (!confirm("🗑️ Supprimer cette photo ?")) return;
+            try {
+                const v = allVehicles.find(v => v.id === vehicleId);
+                if (v) {
+                    v.photo = null;
+                    await saveVehicle(v);
+                    await loadAndDisplay();
+                    alert("✅ Photo supprimée");
+                }
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
+            }
+        }
 
         // ==================== TIMER ====================
         function updateTimerDisplay() {
@@ -1240,25 +1545,84 @@
         // ==================== RENDU ====================
         function getFilteredVehicles() {
             let filtered = allVehicles;
+            
+            // Recherche textuelle
             if (currentSearch.trim()) {
                 const s = currentSearch.toLowerCase();
-                filtered = filtered.filter(v => v.immat.toLowerCase().includes(s) || v.client.toLowerCase().includes(s) || v.marque.toLowerCase().includes(s) || v.modele.toLowerCase().includes(s));
+                filtered = filtered.filter(v => 
+                    v.immat.toLowerCase().includes(s) || 
+                    v.client.toLowerCase().includes(s) || 
+                    v.marque.toLowerCase().includes(s) || 
+                    v.modele.toLowerCase().includes(s)
+                );
+                
+                // RECHERCHE CROISÉE : si pas de résultat, chercher dans l'autre source
+                if (filtered.length === 0) {
+                    crossSearchNotice.classList.add("visible");
+                    // On cherche dans toutes les sources
+                    filtered = allVehicles.filter(v => 
+                        v.immat.toLowerCase().includes(s) || 
+                        v.client.toLowerCase().includes(s) || 
+                        v.marque.toLowerCase().includes(s) || 
+                        v.modele.toLowerCase().includes(s)
+                    );
+                    if (filtered.length > 0) {
+                        crossSearchNotice.textContent = `🔁 ${filtered.length} résultat(s) trouvé(s) dans d'autres sources`;
+                    } else {
+                        crossSearchNotice.textContent = "🔁 Aucun résultat dans toutes les sources";
+                    }
+                } else {
+                    crossSearchNotice.classList.remove("visible");
+                }
+            } else {
+                crossSearchNotice.classList.remove("visible");
             }
-            if (currentSiteFilter === "present_all") filtered = filtered.filter(v => v.present);
-            else if (currentSiteFilter !== "all") filtered = filtered.filter(v => v.present && v.site === currentSiteFilter);
-            if (currentMarqueFilter !== "all") filtered = filtered.filter(v => v.marque === currentMarqueFilter);
-            if (currentTypeFilter !== "all") filtered = filtered.filter(v => v.typeMaintenance === currentTypeFilter);
+            
+            // Filtre site
+            if (currentSiteFilter === "present_all") {
+                filtered = filtered.filter(v => v.present === true);
+            } else if (currentSiteFilter !== "all") {
+                filtered = filtered.filter(v => v.present === true && v.site === currentSiteFilter);
+            }
+            
+            // Filtre source
+            if (currentSourceFilter !== "all") {
+                if (currentSourceFilter === "custom") {
+                    filtered = filtered.filter(v => v.isCustom === true || v.source === "custom");
+                } else {
+                    filtered = filtered.filter(v => v.source === currentSourceFilter);
+                }
+            }
+            
+            // Filtre type maintenance
+            if (currentTypeFilter !== "all") {
+                filtered = filtered.filter(v => v.typeMaintenance === currentTypeFilter);
+            }
+            
             return filtered;
         }
 
         function renderDashboard() {
-            const total = allVehicles.length, presents = allVehicles.filter(v => v.present).length;
-            const absents = total - presents, completion = total === 0 ? 0 : Math.round((presents / total) * 100);
+            const total = allVehicles.length;
+            const presents = allVehicles.filter(v => v.present).length;
+            const absents = total - presents;
+            const completion = total === 0 ? 0 : Math.round((presents / total) * 100);
+            
             document.getElementById("dashTotal").textContent = total;
             document.getElementById("dashPresent").textContent = presents;
             document.getElementById("dashAbsent").textContent = absents;
             document.getElementById("dashCompletion").textContent = completion + "%";
             document.getElementById("dashBar").style.width = completion + "%";
+            
+            // Stats par source
+            const source1 = allVehicles.filter(v => v.source === "source1").length;
+            const source2 = allVehicles.filter(v => v.source === "source2").length;
+            const custom = allVehicles.filter(v => v.isCustom === true || v.source === "custom").length;
+            document.getElementById("source1Count").textContent = source1;
+            document.getElementById("source2Count").textContent = source2;
+            document.getElementById("customCount").textContent = custom;
+            
+            // Stats par site
             let html = "";
             for (let site of SITE_OPTIONS) {
                 const count = allVehicles.filter(v => v.present && v.site === site).length;
@@ -1271,14 +1635,26 @@
         function renderGallery() {
             const container = document.getElementById("galleryContent");
             const photos = allVehicles.filter(v => v.photo);
-            if (photos.length === 0) { container.innerHTML = "<p style='color:#64748b;font-size:0.8rem;'>Aucune photo</p>"; return; }
+            if (photos.length === 0) { 
+                container.innerHTML = "<p style='color:#64748b;font-size:0.8rem;'>Aucune photo</p>"; 
+                return; 
+            }
             let html = "";
             for (let site of SITE_OPTIONS) {
                 const sitePhotos = photos.filter(v => v.site === site);
                 if (sitePhotos.length === 0) continue;
-                html += `<h4 style="margin:12px 0 6px;font-size:0.75rem;font-weight:400;color:#94a3b8;">${site}</h4><div class="gallery-grid">`;
+                html += `<h4 style="margin:12px 0 6px;font-size:0.75rem;font-weight:400;color:#94a3b8;">📍 ${site}</h4><div class="gallery-grid">`;
                 for (let v of sitePhotos) {
-                    html += `<div class="gallery-item"><img src="${v.photo}" alt="${v.immat}"><div class="gallery-label">${v.immat}</div></div>`;
+                    html += `
+                        <div class="gallery-item">
+                            <img src="${v.photo}" alt="${v.immat}" onclick="zoomPhoto('${v.photo}', '${v.immat}')">
+                            <div class="gallery-label">${v.immat}</div>
+                            <div class="gallery-actions">
+                                <button onclick="downloadPhoto('${v.photo}', '${v.immat}')" title="Télécharger">⬇️</button>
+                                <button onclick="deletePhoto('${v.id}')" title="Supprimer" style="background:rgba(220,38,38,0.8);">🗑️</button>
+                            </div>
+                        </div>
+                    `;
                 }
                 html += `</div>`;
             }
@@ -1306,27 +1682,41 @@
             const filtered = getFilteredVehicles();
             resultCountSpan.textContent = `${filtered.length} véhicule(s)`;
             resultCountBadge.textContent = filtered.length;
+            
             if (filtered.length === 0) {
-                listContainer.innerHTML = "<p style='color:#64748b;padding:20px 0;text-align:center;font-size:0.9rem;'>Aucun véhicule</p>";
+                listContainer.innerHTML = "<p style='color:#64748b;padding:20px 0;text-align:center;font-size:0.9rem;'>Aucun véhicule correspondant</p>";
                 return;
             }
+            
             let html = "";
             for (let v of filtered) {
+                const sourceLabel = v.isCustom ? "✏️ Manuel" : (v.source === "source1" ? "📦 Source 1" : "📦 Source 2");
+                const sourceClass = v.isCustom ? "source-custom" : (v.source === "source1" ? "source-1" : "source-2");
+                
                 html += `
                     <div class="vehicle-item" data-id="${v.id}">
                         <input type="checkbox" class="present-check" data-id="${v.id}" ${v.present ? "checked" : ""}>
                         <div class="vehicle-info">
                             <strong>${v.immat}</strong>
                             <div class="detail-line">${v.marque} ${v.modele} · ${v.client} ${v.typeMaintenance ? '· '+v.typeMaintenance : ''}</div>
-                            ${v.isCustom ? '<span class="badge-custom">Manuel</span>' : ''}
-                            ${v.lastSeen ? `<span class="last-seen">${new Date(v.lastSeen).toLocaleString()}</span>` : ''}
+                            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:2px;">
+                                <span class="badge-source ${sourceClass}">${sourceLabel}</span>
+                                ${v.isCustom ? '<span class="badge-custom">Modifiable</span>' : ''}
+                                ${v.lastSeen ? `<span class="last-seen">🕒 ${new Date(v.lastSeen).toLocaleString()}</span>` : ''}
+                            </div>
                         </div>
                         <select class="site-select" data-id="${v.id}" ${!v.present ? 'disabled' : ''}>
                             <option value="">--</option>
                             ${SITE_OPTIONS.map(site => `<option value="${site}" ${v.site === site ? 'selected' : ''}>${site}</option>`).join('')}
                         </select>
-                        <button class="photo-btn" data-id="${v.id}">Photo</button>
-                        ${v.photo ? `<img src="${v.photo}" class="photo-preview">` : ""}
+                        <button class="photo-btn" data-id="${v.id}">📸 Photo</button>
+                        ${v.photo ? `<img src="${v.photo}" class="photo-preview" onclick="zoomPhoto('${v.photo}', '${v.immat}')">` : ""}
+                        ${v.isCustom ? `
+                            <div class="action-btns">
+                                <button class="btn-edit" onclick="openEditModal('${v.id}')">✏️</button>
+                                <button class="btn-danger" onclick="deleteCustomVehicle('${v.id}')">🗑️</button>
+                            </div>
+                        ` : ''}
                     </div>
                 `;
             }
@@ -1335,6 +1725,7 @@
         }
 
         function attachEvents() {
+            // Checkboxes
             document.querySelectorAll(".present-check").forEach(cb => {
                 cb.replaceWith(cb.cloneNode(true));
             });
@@ -1352,6 +1743,8 @@
                     }
                 });
             });
+            
+            // Sélecteurs de site
             document.querySelectorAll(".site-select").forEach(select => {
                 select.replaceWith(select.cloneNode(true));
             });
@@ -1367,6 +1760,8 @@
                     }
                 });
             });
+            
+            // Boutons photo
             document.querySelectorAll(".photo-btn").forEach(btn => {
                 btn.replaceWith(btn.cloneNode(true));
             });
@@ -1381,7 +1776,12 @@
                             const reader = new FileReader();
                             reader.onload = async (ev2) => {
                                 const v = allVehicles.find(v => v.id === id);
-                                if (v) { v.photo = ev2.target.result; await saveVehicle(v); renderAll(); alert("✅ Photo ajoutée"); }
+                                if (v) { 
+                                    v.photo = ev2.target.result; 
+                                    await saveVehicle(v); 
+                                    renderAll(); 
+                                    alert("✅ Photo ajoutée"); 
+                                }
                             };
                             reader.readAsDataURL(file);
                         }
@@ -1392,10 +1792,10 @@
         }
 
         function updateSiteFilterOptions() {
-            let options = `<option value="all" ${currentSiteFilter === 'all' ? 'selected' : ''}>Tous</option>
-                           <option value="present_all" ${currentSiteFilter === 'present_all' ? 'selected' : ''}>Présents</option>`;
+            let options = `<option value="all" ${currentSiteFilter === 'all' ? 'selected' : ''}>🌍 Tous</option>
+                           <option value="present_all" ${currentSiteFilter === 'present_all' ? 'selected' : ''}>✅ Présents</option>`;
             for (let site of SITE_OPTIONS) {
-                options += `<option value="${site}" ${currentSiteFilter === site ? 'selected' : ''}>${site}</option>`;
+                options += `<option value="${site}" ${currentSiteFilter === site ? 'selected' : ''}>📍 ${site}</option>`;
             }
             siteFilterSelect.innerHTML = options;
         }
@@ -1417,11 +1817,11 @@
                     try {
                         const data = JSON.parse(backup);
                         if (Array.isArray(data) && data.length > 0) {
-                            backupInfoSpan.innerHTML = `Sauvegarde disponible`;
+                            backupInfoSpan.innerHTML = `📦 Sauvegarde disponible`;
                         }
-                    } catch(e) { backupInfoSpan.innerHTML = "Corrompue"; }
+                    } catch(e) { backupInfoSpan.innerHTML = "⚠️ Corrompue"; }
                 } else {
-                    backupInfoSpan.innerHTML = "Aucune sauvegarde";
+                    backupInfoSpan.innerHTML = "📦 Aucune sauvegarde";
                 }
             } catch (e) {
                 console.error("Erreur loadAndDisplay:", e);
@@ -1435,19 +1835,28 @@
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF({ orientation: 'landscape' });
                 doc.setFontSize(16);
-                doc.text("RAPPORT DE RONDE", 14, 15);
+                doc.text("📋 RAPPORT DE RONDE", 14, 15);
                 doc.setFontSize(9);
-                doc.text(new Date().toLocaleString(), 14, 22);
+                doc.text(`Généré le ${new Date().toLocaleString()}`, 14, 22);
+                
                 const total = allVehicles.length, presents = allVehicles.filter(v => v.present).length;
                 const absents = total - presents, completion = total === 0 ? 0 : Math.round((presents / total) * 100);
-                doc.text(`Total: ${total} · Présents: ${presents} · Absents: ${absents} · Taux: ${completion}%`, 14, 30);
+                doc.text(`📊 Total: ${total} · Présents: ${presents} · Absents: ${absents} · Taux: ${completion}%`, 14, 30);
+                
+                // Stats par source
+                const s1 = allVehicles.filter(v => v.source === "source1").length;
+                const s2 = allVehicles.filter(v => v.source === "source2").length;
+                const custom = allVehicles.filter(v => v.isCustom).length;
+                doc.text(`📦 Source 1: ${s1} · Source 2: ${s2} · ✏️ Ajouts: ${custom}`, 14, 37);
+                
                 let siteData = [["Site", "Présents", "Total"]];
                 for (let site of SITE_OPTIONS) {
                     const count = allVehicles.filter(v => v.present && v.site === site).length;
                     const totalSite = allVehicles.filter(v => v.site === site).length;
                     siteData.push([site, count.toString(), totalSite.toString()]);
                 }
-                doc.autoTable({ head: [siteData[0]], body: siteData.slice(1), startY: 35, theme: 'plain' });
+                doc.autoTable({ head: [siteData[0]], body: siteData.slice(1), startY: 42, theme: 'plain' });
+                
                 const pData = allVehicles.filter(v => v.present).map(v => [v.immat, v.client, v.marque, v.modele, v.site || ""]);
                 if (pData.length) {
                     doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle", "Site"]], body: pData, startY: doc.lastAutoTable.finalY + 5, theme: 'plain' });
@@ -1456,45 +1865,48 @@
                 if (aData.length) {
                     doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle"]], body: aData, startY: doc.lastAutoTable.finalY + 5, theme: 'plain' });
                 }
-                doc.save(`rapport_${new Date().toISOString().slice(0,19)}.pdf`);
+                doc.save(`rapport_ronde_${new Date().toISOString().slice(0,19)}.pdf`);
             } catch (e) {
-                alert("❌ Erreur rapport: " + e.message);
+                alert("❌ Erreur: " + e.message);
             }
         }
 
         // ==================== EXPORTS EXCEL ====================
         async function exportPresentExcel() {
             try {
-                const data = allVehicles.filter(v => v.present).map(v => ({ Immatriculation: v.immat, Client: v.client, Marque: v.marque, Modele: v.modele, Site: v.site || "" }));
-                const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Présents");
+                const data = allVehicles.filter(v => v.present).map(v => ({ 
+                    Immatriculation: v.immat, Client: v.client, Marque: v.marque, 
+                    Modele: v.modele, Site: v.site || "", Source: v.source || "inconnu" 
+                }));
+                const ws = XLSX.utils.json_to_sheet(data);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Présents");
                 XLSX.writeFile(wb, `presences_${new Date().toISOString().slice(0,19)}.xlsx`);
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
-            }
+            } catch (e) { alert("❌ Erreur: " + e.message); }
         }
         async function exportAbsentExcel() {
             try {
-                const data = allVehicles.filter(v => !v.present).map(v => ({ Immatriculation: v.immat, Client: v.client, Marque: v.marque, Modele: v.modele }));
-                const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Absents");
+                const data = allVehicles.filter(v => !v.present).map(v => ({ 
+                    Immatriculation: v.immat, Client: v.client, Marque: v.marque, 
+                    Modele: v.modele, Source: v.source || "inconnu" 
+                }));
+                const ws = XLSX.utils.json_to_sheet(data);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Absents");
                 XLSX.writeFile(wb, `absents_${new Date().toISOString().slice(0,19)}.xlsx`);
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
-            }
+            } catch (e) { alert("❌ Erreur: " + e.message); }
         }
 
         // ==================== ATTESTATION ====================
         document.getElementById("attestationBtn").onclick = () => {
             document.getElementById("attestationModal").style.display = "flex";
         };
-
         document.getElementById("closeModalBtn").onclick = () => {
             document.getElementById("attestationModal").style.display = "none";
         };
-
         document.getElementById("cancelAttestationBtn").onclick = () => {
             document.getElementById("attestationModal").style.display = "none";
         };
-
         document.getElementById("attestationModal").addEventListener("click", (e) => {
             if (e.target === e.currentTarget) {
                 document.getElementById("attestationModal").style.display = "none";
@@ -1503,193 +1915,64 @@
 
         document.getElementById("generateAttestationBtn").onclick = async () => {
             if (typeof docx === 'undefined') {
-                alert("❌ La bibliothèque docx n'est pas chargée. Veuillez rafraîchir la page.");
+                alert("❌ La bibliothèque docx n'est pas chargée.");
                 return;
             }
-
-            const immat = document.getElementById("attImmat").value.trim();
-            const marque = document.getElementById("attMarque").value.trim();
-            const modele = document.getElementById("attModele").value.trim();
-            const couleur = document.getElementById("attCouleur").value.trim();
-            const assure = document.getElementById("attAssure").value.trim();
-            const dateDebut = document.getElementById("attDateDebut").value;
-            const dateFin = document.getElementById("attDateFin").value;
-            const duree = document.getElementById("attDuree").value || 5;
-            
-            if (!immat || !marque || !modele || !couleur || !assure || !dateDebut || !dateFin) {
-                alert("❌ Veuillez remplir tous les champs obligatoires.");
-                return;
-            }
-            
-            const formatDate = (dateStr) => {
-                const d = new Date(dateStr + "T00:00:00");
-                const mois = ["JANVIER", "FEVRIER", "MARS", "AVRIL", "MAI", "JUIN", "JUILLET", "AOUT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DECEMBRE"];
-                return `${d.getDate()} ${mois[d.getMonth()]} ${d.getFullYear()}`;
-            };
-            
-            const dateDebutFormatee = formatDate(dateDebut);
-            const dateFinFormatee = formatDate(dateFin);
-            
-            const now = new Date();
-            const mois = ["JANVIER", "FEVRIER", "MARS", "AVRIL", "MAI", "JUIN", "JUILLET", "AOUT", "SEPTEMBRE", "OCTOBRE", "NOVEMBRE", "DECEMBRE"];
-            const numAttestation = `N°${String(Math.floor(Math.random() * 9000) + 1000)}/${mois[now.getMonth()]}/${now.getFullYear()}`;
-            
+            // ... (code attestation existant)
             try {
-                const { Document, Packer, Paragraph, TextRun, AlignmentType, convertInchesToTwip } = docx;
+                const immat = document.getElementById("attImmat").value.trim();
+                const marque = document.getElementById("attMarque").value.trim();
+                const modele = document.getElementById("attModele").value.trim();
+                const couleur = document.getElementById("attCouleur").value.trim();
+                const assure = document.getElementById("attAssure").value.trim();
+                const dateDebut = document.getElementById("attDateDebut").value;
+                const dateFin = document.getElementById("attDateFin").value;
+                const duree = document.getElementById("attDuree").value || 5;
                 
+                if (!immat || !marque || !modele || !couleur || !assure || !dateDebut || !dateFin) {
+                    alert("❌ Veuillez remplir tous les champs."); return;
+                }
+                
+                const formatDate = (d) => {
+                    const date = new Date(d + "T00:00:00");
+                    const mois = ["JANVIER","FEVRIER","MARS","AVRIL","MAI","JUIN","JUILLET","AOUT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DECEMBRE"];
+                    return `${date.getDate()} ${mois[date.getMonth()]} ${date.getFullYear()}`;
+                };
+                
+                const now = new Date();
+                const mois = ["JANVIER","FEVRIER","MARS","AVRIL","MAI","JUIN","JUILLET","AOUT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DECEMBRE"];
+                const numAttestation = `N°${String(Math.floor(Math.random()*9000)+1000)}/${mois[now.getMonth()]}/${now.getFullYear()}`;
+                
+                const { Document, Packer, Paragraph, TextRun, AlignmentType, convertInchesToTwip } = docx;
                 const doc = new Document({
                     sections: [{
-                        properties: {
-                            page: {
-                                margin: {
-                                    top: convertInchesToTwip(0.8),
-                                    bottom: convertInchesToTwip(0.8),
-                                    left: convertInchesToTwip(1.2),
-                                    right: convertInchesToTwip(1.2),
-                                }
-                            }
-                        },
+                        properties: { page: { margin: { top: convertInchesToTwip(0.8), bottom: convertInchesToTwip(0.8), left: convertInchesToTwip(1.2), right: convertInchesToTwip(1.2) } } },
                         children: [
+                            new Paragraph({ children: [new TextRun({ text: "ATTESTATION D'IMMOBILISATION DE VEHICULE", bold: true, size: 28, font: "Arial" })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
+                            new Paragraph({ children: [new TextRun({ text: numAttestation, bold: true, size: 24, font: "Arial" })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
                             new Paragraph({
                                 children: [
-                                    new TextRun({
-                                        text: "ATTESTATION D'IMMOBILISATION DE VEHICULE",
-                                        bold: true,
-                                        size: 28,
-                                        font: "Arial",
-                                    })
-                                ],
-                                alignment: AlignmentType.CENTER,
-                                spacing: { after: 400 },
-                            }),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: numAttestation,
-                                        bold: true,
-                                        size: 24,
-                                        font: "Arial",
-                                    })
-                                ],
-                                alignment: AlignmentType.CENTER,
-                                spacing: { after: 400 },
-                            }),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: "Nous soussignés entreprise UNITED MOTORS, située à Marcory Zone 4 Biétry, Blvrd de Marseille, 30 BP 739 Abidjan 30, numéro de téléphone +225 07 88 88 88 24, attestons que le véhicule immatriculé ",
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: immat,
-                                        bold: true,
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: " de type ",
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: marque + " " + modele,
-                                        bold: true,
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: " de couleur ",
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: couleur,
-                                        bold: true,
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: " appartenant à l'Assuré ",
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: assure,
-                                        bold: true,
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: " est admis dans notre garage pour des travaux suivant LE BON DE PRISE EN CHARGE ET LA FICHE D'EXPERTISE pour une durée de ",
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: "(" + duree + ") Jours ouvrés",
-                                        bold: true,
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: ", soit du ",
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: dateDebutFormatee,
-                                        bold: true,
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: " au ",
-                                        size: 22,
-                                        font: "Arial",
-                                    }),
-                                    new TextRun({
-                                        text: dateFinFormatee + ".",
-                                        bold: true,
-                                        size: 22,
-                                        font: "Arial",
-                                    })
+                                    new TextRun({ text: "Nous soussignés entreprise UNITED MOTORS, située à Marcory Zone 4 Biétry, Blvrd de Marseille, 30 BP 739 Abidjan 30, numéro de téléphone +225 07 88 88 88 24, attestons que le véhicule immatriculé ", size: 22, font: "Arial" }),
+                                    new TextRun({ text: immat, bold: true, size: 22, font: "Arial" }),
+                                    new TextRun({ text: " de type ", size: 22, font: "Arial" }),
+                                    new TextRun({ text: marque + " " + modele, bold: true, size: 22, font: "Arial" }),
+                                    new TextRun({ text: " de couleur ", size: 22, font: "Arial" }),
+                                    new TextRun({ text: couleur, bold: true, size: 22, font: "Arial" }),
+                                    new TextRun({ text: " appartenant à l'Assuré ", size: 22, font: "Arial" }),
+                                    new TextRun({ text: assure, bold: true, size: 22, font: "Arial" }),
+                                    new TextRun({ text: " est admis dans notre garage pour des travaux suivant LE BON DE PRISE EN CHARGE ET LA FICHE D'EXPERTISE pour une durée de ", size: 22, font: "Arial" }),
+                                    new TextRun({ text: "(" + duree + ") Jours ouvrés", bold: true, size: 22, font: "Arial" }),
+                                    new TextRun({ text: ", soit du ", size: 22, font: "Arial" }),
+                                    new TextRun({ text: formatDate(dateDebut), bold: true, size: 22, font: "Arial" }),
+                                    new TextRun({ text: " au ", size: 22, font: "Arial" }),
+                                    new TextRun({ text: formatDate(dateFin) + ".", bold: true, size: 22, font: "Arial" })
                                 ],
                                 alignment: AlignmentType.BOTH,
-                                spacing: { after: 400 },
+                                spacing: { after: 400 }
                             }),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: "En foi de quoi, la présente Attestation lui est établie pour servir et valoir ce que de droit.",
-                                        size: 22,
-                                        font: "Arial",
-                                    })
-                                ],
-                                alignment: AlignmentType.BOTH,
-                                spacing: { after: 600 },
-                            }),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: "Fait à Abidjan le " + formatDate(new Date().toISOString().split('T')[0]),
-                                        size: 22,
-                                        font: "Arial",
-                                    })
-                                ],
-                                alignment: AlignmentType.RIGHT,
-                                spacing: { after: 600 },
-                            }),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: "Le Directeur des Opérations",
-                                        bold: true,
-                                        size: 22,
-                                        font: "Arial",
-                                    })
-                                ],
-                                alignment: AlignmentType.RIGHT,
-                            }),
+                            new Paragraph({ children: [new TextRun({ text: "En foi de quoi, la présente Attestation lui est établie pour servir et valoir ce que de droit.", size: 22, font: "Arial" })], alignment: AlignmentType.BOTH, spacing: { after: 600 } }),
+                            new Paragraph({ children: [new TextRun({ text: "Fait à Abidjan le " + formatDate(new Date().toISOString().split('T')[0]), size: 22, font: "Arial" })], alignment: AlignmentType.RIGHT, spacing: { after: 600 } }),
+                            new Paragraph({ children: [new TextRun({ text: "Le Directeur des Opérations", bold: true, size: 22, font: "Arial" })], alignment: AlignmentType.RIGHT })
                         ]
                     }]
                 });
@@ -1698,17 +1981,12 @@
                 const link = document.createElement("a");
                 link.href = URL.createObjectURL(blob);
                 link.download = `Attestation_${immat}_${new Date().toISOString().slice(0,10)}.docx`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                document.body.appendChild(link); link.click(); document.body.removeChild(link);
                 setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-                
                 document.getElementById("attestationModal").style.display = "none";
-                alert("✅ Attestation générée avec succès !");
-                
-            } catch (error) {
-                console.error("Erreur détaillée:", error);
-                alert("❌ Erreur lors de la génération : " + error.message);
+                alert("✅ Attestation générée !");
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
             }
         };
 
@@ -1720,12 +1998,17 @@
         document.getElementById("exportAbsentExcel").onclick = exportAbsentExcel;
         document.getElementById("terrainModeBtn").onclick = () => {
             document.body.classList.toggle("terrain-mode");
-            document.getElementById("terrainModeBtn").textContent = document.body.classList.contains("terrain-mode") ? "Normal" : "Terrain";
+            document.getElementById("terrainModeBtn").textContent = document.body.classList.contains("terrain-mode") ? "📱 Normal" : "📱 Terrain";
         };
+        
         siteFilterSelect.addEventListener("change", (e) => { currentSiteFilter = e.target.value; renderListOnly(); });
-        marqueFilter.addEventListener("change", (e) => { currentMarqueFilter = e.target.value; renderListOnly(); });
+        sourceFilterSelect.addEventListener("change", (e) => { currentSourceFilter = e.target.value; renderListOnly(); });
         typeFilter.addEventListener("change", (e) => { currentTypeFilter = e.target.value; renderListOnly(); });
-        searchInput.addEventListener("input", (e) => { currentSearch = e.target.value; renderListOnly(); });
+        searchInput.addEventListener("input", (e) => { 
+            currentSearch = e.target.value; 
+            renderListOnly(); 
+        });
+        
         document.getElementById("saveBackupBtn").onclick = saveBackup;
         document.getElementById("restoreBackupBtn").onclick = restoreBackup;
         document.getElementById("resetCheckBtn").onclick = resetOnlyCheckboxes;
@@ -1736,8 +2019,7 @@
         const darkToggle = document.getElementById("darkModeToggle");
         darkToggle.onclick = () => {
             document.body.classList.toggle("light-mode");
-            const isLight = document.body.classList.contains("light-mode");
-            darkToggle.textContent = isLight ? "🌙" : "☀️";
+            darkToggle.textContent = document.body.classList.contains("light-mode") ? "🌙" : "☀️";
         };
 
         // ==================== INIT ====================
