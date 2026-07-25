@@ -93,6 +93,15 @@
         }
         body.light-mode #attestationModal label { color: #64748b; }
         body.light-mode #attestationModal h2 { color: #1e293b; }
+        body.light-mode #editModal .modal-content { background: #ffffff; color: #1e293b; }
+        body.light-mode #editModal input,
+        body.light-mode #editModal select {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+            color: #1e293b;
+        }
+        body.light-mode #editModal h2 { color: #1e293b; }
+        body.light-mode .cross-search-notice { background: #dbeafe; color: #1e40af; }
 
         /* ========== HEADER ========== */
         header {
@@ -860,6 +869,23 @@
             background: #dbeafe;
             color: #1e40af;
         }
+
+        /* ========== INDICATEUR SOURCE ========== */
+        .source-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 500;
+        }
+        .source-indicator.s1 { background: #1e3a5f; color: #60a5fa; }
+        .source-indicator.s2 { background: #3a1e2a; color: #f87171; }
+        .source-indicator.custom { background: #3a3a1e; color: #fbbf24; }
+        body.light-mode .source-indicator.s1 { background: #dbeafe; color: #1e40af; }
+        body.light-mode .source-indicator.s2 { background: #fecaca; color: #dc2626; }
+        body.light-mode .source-indicator.custom { background: #fef3c7; color: #92400e; }
     </style>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
@@ -870,10 +896,10 @@
     <header>
         <div class="logo">
             <h1>STOCK<span>VÉHICULES</span></h1>
-            <span class="badge">v2.1</span>
+            <span class="badge">v2.2</span>
         </div>
         <div class="header-right">
-            <span id="backupInfo" class="backup-info">Aucune sauvegarde</span>
+            <span id="backupInfo" class="backup-info">📦 Aucune sauvegarde</span>
             <button id="darkModeToggle" class="nav-btn" style="font-size:1.1rem;background:transparent;color:#94a3b8;padding:4px 8px;">☀️</button>
         </div>
     </header>
@@ -884,9 +910,10 @@
             <input type="file" id="excelInput" accept=".xlsx, .xls" style="display:none" />
             <button id="importBtn" class="nav-btn primary">📂 Importer</button>
             <select id="importSourceSelect" style="background:#1e293b;border:1px solid #2d3a4e;color:#e2e8f0;padding:4px 10px;border-radius:4px;font-size:0.75rem;">
-                <option value="source1">Source 1</option>
-                <option value="source2">Source 2</option>
+                <option value="source1">📦 Source 1</option>
+                <option value="source2">📦 Source 2</option>
             </select>
+            <span id="importStatus" style="font-size:0.65rem;color:#64748b;margin-left:4px;"></span>
         </div>
         <span class="nav-divider"></span>
         <button id="saveBackupBtn" class="nav-btn accent">💾 Sauvegarder</button>
@@ -921,15 +948,15 @@
     <div class="filter-bar">
         <label>📍 Site</label>
         <select id="siteFilterSelect">
-            <option value="all">Tous</option>
+            <option value="all">🌍 Tous</option>
             <option value="present_all">✅ Présents</option>
         </select>
         <label>🏷️ Source</label>
         <select id="sourceFilterSelect">
-            <option value="all">Toutes</option>
-            <option value="source1">Source 1</option>
-            <option value="source2">Source 2</option>
-            <option value="custom">Ajouts manuels</option>
+            <option value="all">📦 Toutes</option>
+            <option value="source1">📦 Source 1</option>
+            <option value="source2">📦 Source 2</option>
+            <option value="custom">✏️ Ajouts manuels</option>
         </select>
         <label>🔧 Type</label>
         <select id="typeFilter">
@@ -1085,6 +1112,7 @@
         const timerContainer = document.getElementById("timerContainer");
         const timerDisplay = document.getElementById("timerDisplay");
         const crossSearchNotice = document.getElementById("crossSearchNotice");
+        const importStatus = document.getElementById("importStatus");
 
         // ==================== BIP ====================
         function playBeep() {
@@ -1105,7 +1133,7 @@
         // ==================== INDEXEDDB ====================
         function openDB() {
             return new Promise((resolve, reject) => {
-                const req = indexedDB.open("RondePresenceDB", 12);
+                const req = indexedDB.open("RondePresenceDB", 13);
                 req.onerror = () => reject("DB error");
                 req.onsuccess = (e) => { db = e.target.result; resolve(); };
                 req.onupgradeneeded = (e) => {
@@ -1150,7 +1178,16 @@
             return tx.complete;
         }
 
-        // ==================== SAUVEGARDE (AVEC AJOUTS MANUELS) ====================
+        async function deleteVehiclesBySource(source) {
+            const vehicles = await getAllVehicles();
+            const toDelete = vehicles.filter(v => v.source === source);
+            for (let v of toDelete) {
+                await deleteVehicle(v.id);
+            }
+            return toDelete.length;
+        }
+
+        // ==================== SAUVEGARDE ====================
         function getBackupData() {
             return allVehicles.map(v => ({
                 id: v.id,
@@ -1164,7 +1201,7 @@
                 modele: v.modele || "",
                 refCommande: v.refCommande || "",
                 typeMaintenance: v.typeMaintenance || "",
-                source: v.source || "custom"
+                source: v.source || "source1"
             }));
         }
 
@@ -1172,7 +1209,7 @@
             try {
                 const jsonData = JSON.stringify(data);
                 const sizeKB = Math.round(jsonData.length / 1024);
-                console.log(`Taille de la sauvegarde : ${sizeKB} KB`);
+                console.log(`📦 Taille sauvegarde : ${sizeKB} KB`);
                 
                 if (jsonData.length > 4 * 1024 * 1024) {
                     if (!confirm("⚠️ La sauvegarde est volumineuse (" + sizeKB + " KB). Continuer ?")) {
@@ -1191,11 +1228,7 @@
             } catch (e) {
                 console.error("Erreur sauvegarde:", e);
                 if (e.name === "QuotaExceededError" || e.message.includes("quota")) {
-                    alert("❌ Erreur : la sauvegarde est trop volumineuse.\n\n" +
-                          "💡 Solutions :\n" +
-                          "• Supprimez les photos inutiles\n" +
-                          "• Exportez la sauvegarde en fichier JSON\n" +
-                          "• Videz le cache du navigateur");
+                    alert("❌ Erreur : la sauvegarde est trop volumineuse.\n\n💡 Solutions :\n• Supprimez les photos inutiles\n• Exportez la sauvegarde en fichier JSON\n• Videz le cache du navigateur");
                 } else {
                     alert("❌ Erreur lors de la sauvegarde: " + e.message);
                 }
@@ -1232,7 +1265,6 @@
                         await saveVehicle(existing);
                         restoredCount++;
                     } else {
-                        // CRÉATION DU VÉHICULE MANQUANT (AJOUT MANUEL)
                         await saveVehicle({
                             id: b.id,
                             immat: b.immat || "inconnu",
@@ -1331,27 +1363,48 @@
             };
         }
 
-        // ==================== IMPORT EXCEL AVEC SOURCE ====================
+        // ==================== IMPORT EXCEL AVEC REMPLACEMENT ====================
         document.getElementById("importBtn").onclick = () => {
             document.getElementById("excelInput").click();
         };
 
         document.getElementById("importSourceSelect").onchange = (e) => {
             currentImportSource = e.target.value;
+            const sourceLabel = currentImportSource === "source1" ? "Source 1" : "Source 2";
+            importStatus.textContent = `📍 ${sourceLabel} sélectionnée`;
         };
+        // Initialiser le statut
+        importStatus.textContent = "📍 Source 1 sélectionnée";
 
-        document.getElementById("excelInput").onchange = (e) => {
+        document.getElementById("excelInput").onchange = async (e) => {
             const file = e.target.files[0];
             if (!file) return;
+            
+            const source = currentImportSource;
+            const sourceLabel = source === "source1" ? "Source 1" : "Source 2";
+            
+            // Vérifier si des véhicules de cette source existent déjà
+            const existingCount = allVehicles.filter(v => v.source === source).length;
+            if (existingCount > 0) {
+                if (!confirm(`⚠️ ${existingCount} véhicules de ${sourceLabel} existent déjà.\n\nVoulez-vous les remplacer par la nouvelle liste ?`)) {
+                    document.getElementById("excelInput").value = "";
+                    return;
+                }
+            }
+            
             const reader = new FileReader();
-            reader.onload = (ev) => {
+            reader.onload = async (ev) => {
                 try {
                     const data = new Uint8Array(ev.target.result);
                     const workbook = XLSX.read(data, { type: "array" });
                     const sheet = workbook.Sheets[workbook.SheetNames[0]];
                     const rows = XLSX.utils.sheet_to_json(sheet);
                     
-                    const source = currentImportSource;
+                    // Supprimer tous les véhicules de cette source
+                    const deleted = await deleteVehiclesBySource(source);
+                    console.log(`🗑️ ${deleted} véhicules supprimés de ${sourceLabel}`);
+                    
+                    // Créer les nouveaux véhicules
                     const vehicles = rows.map(row => ({
                         id: (row["Immatriculation"] || "inconnu_" + Date.now() + "_" + Math.random()),
                         immat: row["Immatriculation"] || "",
@@ -1368,28 +1421,15 @@
                         source: source
                     }));
                     
-                    // Vérifier les doublons avec la source
-                    const existingIds = new Set(allVehicles.map(v => v.id));
-                    const newVehicles = vehicles.filter(v => !existingIds.has(v.id));
-                    const duplicates = vehicles.length - newVehicles.length;
-                    
-                    if (duplicates > 0) {
-                        if (!confirm(`⚠️ ${duplicates} véhicules existent déjà. Ajouter quand même ?`)) {
-                            return;
-                        }
-                    }
-                    
-                    saveMultipleVehicles(newVehicles).then(async () => {
-                        await loadAndDisplay();
-                        lastSyncSpan.innerText = new Date().toLocaleString();
-                        alert(`✅ ${newVehicles.length} véhicules importés (Source: ${source})`);
-                    });
+                    await saveMultipleVehicles(vehicles);
+                    await loadAndDisplay();
+                    lastSyncSpan.innerText = new Date().toLocaleString();
+                    alert(`✅ ${vehicles.length} véhicules importés (${sourceLabel})\n🗑️ ${deleted} anciens véhicules remplacés`);
                 } catch (err) {
                     alert("❌ Erreur lors de l'import: " + err.message);
                 }
             };
             reader.readAsArrayBuffer(file);
-            // Réinitialiser pour permettre le même fichier
             document.getElementById("excelInput").value = "";
         };
 
@@ -1547,7 +1587,9 @@
             let filtered = allVehicles;
             
             // Recherche textuelle
+            let searchActive = false;
             if (currentSearch.trim()) {
+                searchActive = true;
                 const s = currentSearch.toLowerCase();
                 filtered = filtered.filter(v => 
                     v.immat.toLowerCase().includes(s) || 
@@ -1556,7 +1598,7 @@
                     v.modele.toLowerCase().includes(s)
                 );
                 
-                // RECHERCHE CROISÉE : si pas de résultat, chercher dans l'autre source
+                // RECHERCHE CROISÉE : si pas de résultat, chercher dans toutes les sources
                 if (filtered.length === 0) {
                     crossSearchNotice.classList.add("visible");
                     // On cherche dans toutes les sources
@@ -1567,7 +1609,7 @@
                         v.modele.toLowerCase().includes(s)
                     );
                     if (filtered.length > 0) {
-                        crossSearchNotice.textContent = `🔁 ${filtered.length} résultat(s) trouvé(s) dans d'autres sources`;
+                        crossSearchNotice.textContent = `🔁 ${filtered.length} résultat(s) trouvé(s) dans toutes les sources`;
                     } else {
                         crossSearchNotice.textContent = "🔁 Aucun résultat dans toutes les sources";
                     }
@@ -1843,7 +1885,6 @@
                 const absents = total - presents, completion = total === 0 ? 0 : Math.round((presents / total) * 100);
                 doc.text(`📊 Total: ${total} · Présents: ${presents} · Absents: ${absents} · Taux: ${completion}%`, 14, 30);
                 
-                // Stats par source
                 const s1 = allVehicles.filter(v => v.source === "source1").length;
                 const s2 = allVehicles.filter(v => v.source === "source2").length;
                 const custom = allVehicles.filter(v => v.isCustom).length;
@@ -1918,7 +1959,6 @@
                 alert("❌ La bibliothèque docx n'est pas chargée.");
                 return;
             }
-            // ... (code attestation existant)
             try {
                 const immat = document.getElementById("attImmat").value.trim();
                 const marque = document.getElementById("attMarque").value.trim();
