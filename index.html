@@ -869,23 +869,6 @@
             background: #dbeafe;
             color: #1e40af;
         }
-
-        /* ========== INDICATEUR SOURCE ========== */
-        .source-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 500;
-        }
-        .source-indicator.s1 { background: #1e3a5f; color: #60a5fa; }
-        .source-indicator.s2 { background: #3a1e2a; color: #f87171; }
-        .source-indicator.custom { background: #3a3a1e; color: #fbbf24; }
-        body.light-mode .source-indicator.s1 { background: #dbeafe; color: #1e40af; }
-        body.light-mode .source-indicator.s2 { background: #fecaca; color: #dc2626; }
-        body.light-mode .source-indicator.custom { background: #fef3c7; color: #92400e; }
     </style>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
@@ -896,7 +879,7 @@
     <header>
         <div class="logo">
             <h1>STOCK<span>VÉHICULES</span></h1>
-            <span class="badge">v2.2</span>
+            <span class="badge">v2.3</span>
         </div>
         <div class="header-right">
             <span id="backupInfo" class="backup-info">📦 Aucune sauvegarde</span>
@@ -933,7 +916,11 @@
         <button id="exportPresentExcel" class="nav-btn" style="color:#60a5fa;">✅ Présents</button>
         <button id="exportAbsentExcel" class="nav-btn" style="color:#f87171;">❌ Absents</button>
         <span class="nav-divider"></span>
-        <button id="attestationBtn" class="nav-btn" style="color:#34d399;">📄 Attestation</button>
+        <button id="exportAbsentSource1Word" class="nav-btn" style="color:#60a5fa;">📄 Absents S1</button>
+        <button id="exportAbsentSource2Word" class="nav-btn" style="color:#f87171;">📄 Absents S2</button>
+        <button id="exportPresentSiteWord" class="nav-btn" style="color:#34d399;">📄 Présents par site</button>
+        <span class="nav-divider"></span>
+        <button id="attestationBtn" class="nav-btn" style="color:#fbbf24;">📄 Attestation</button>
     </nav>
 
     <!-- ========== TIMER ========== -->
@@ -1133,7 +1120,7 @@
         // ==================== INDEXEDDB ====================
         function openDB() {
             return new Promise((resolve, reject) => {
-                const req = indexedDB.open("RondePresenceDB", 13);
+                const req = indexedDB.open("RondePresenceDB", 14);
                 req.onerror = () => reject("DB error");
                 req.onsuccess = (e) => { db = e.target.result; resolve(); };
                 req.onupgradeneeded = (e) => {
@@ -1363,7 +1350,7 @@
             };
         }
 
-        // ==================== IMPORT EXCEL AVEC REMPLACEMENT ====================
+        // ==================== IMPORT EXCEL ====================
         document.getElementById("importBtn").onclick = () => {
             document.getElementById("excelInput").click();
         };
@@ -1373,7 +1360,6 @@
             const sourceLabel = currentImportSource === "source1" ? "Source 1" : "Source 2";
             importStatus.textContent = `📍 ${sourceLabel} sélectionnée`;
         };
-        // Initialiser le statut
         importStatus.textContent = "📍 Source 1 sélectionnée";
 
         document.getElementById("excelInput").onchange = async (e) => {
@@ -1383,7 +1369,6 @@
             const source = currentImportSource;
             const sourceLabel = source === "source1" ? "Source 1" : "Source 2";
             
-            // Vérifier si des véhicules de cette source existent déjà
             const existingCount = allVehicles.filter(v => v.source === source).length;
             if (existingCount > 0) {
                 if (!confirm(`⚠️ ${existingCount} véhicules de ${sourceLabel} existent déjà.\n\nVoulez-vous les remplacer par la nouvelle liste ?`)) {
@@ -1400,11 +1385,9 @@
                     const sheet = workbook.Sheets[workbook.SheetNames[0]];
                     const rows = XLSX.utils.sheet_to_json(sheet);
                     
-                    // Supprimer tous les véhicules de cette source
                     const deleted = await deleteVehiclesBySource(source);
                     console.log(`🗑️ ${deleted} véhicules supprimés de ${sourceLabel}`);
                     
-                    // Créer les nouveaux véhicules
                     const vehicles = rows.map(row => ({
                         id: (row["Immatriculation"] || "inconnu_" + Date.now() + "_" + Math.random()),
                         immat: row["Immatriculation"] || "",
@@ -1468,7 +1451,7 @@
             }
         };
 
-        // ==================== SUPPRESSION D'UN VÉHICULE ====================
+        // ==================== SUPPRESSION ====================
         async function deleteCustomVehicle(id) {
             if (!confirm("⚠️ Supprimer ce véhicule ? Cette action est irréversible.")) return;
             try {
@@ -1480,7 +1463,7 @@
             }
         }
 
-        // ==================== ÉDITION D'UN VÉHICULE ====================
+        // ==================== ÉDITION ====================
         function openEditModal(vehicleId) {
             const v = allVehicles.find(v => v.id === vehicleId);
             if (!v) return;
@@ -1586,10 +1569,7 @@
         function getFilteredVehicles() {
             let filtered = allVehicles;
             
-            // Recherche textuelle
-            let searchActive = false;
             if (currentSearch.trim()) {
-                searchActive = true;
                 const s = currentSearch.toLowerCase();
                 filtered = filtered.filter(v => 
                     v.immat.toLowerCase().includes(s) || 
@@ -1598,10 +1578,8 @@
                     v.modele.toLowerCase().includes(s)
                 );
                 
-                // RECHERCHE CROISÉE : si pas de résultat, chercher dans toutes les sources
                 if (filtered.length === 0) {
                     crossSearchNotice.classList.add("visible");
-                    // On cherche dans toutes les sources
                     filtered = allVehicles.filter(v => 
                         v.immat.toLowerCase().includes(s) || 
                         v.client.toLowerCase().includes(s) || 
@@ -1620,14 +1598,12 @@
                 crossSearchNotice.classList.remove("visible");
             }
             
-            // Filtre site
             if (currentSiteFilter === "present_all") {
                 filtered = filtered.filter(v => v.present === true);
             } else if (currentSiteFilter !== "all") {
                 filtered = filtered.filter(v => v.present === true && v.site === currentSiteFilter);
             }
             
-            // Filtre source
             if (currentSourceFilter !== "all") {
                 if (currentSourceFilter === "custom") {
                     filtered = filtered.filter(v => v.isCustom === true || v.source === "custom");
@@ -1636,7 +1612,6 @@
                 }
             }
             
-            // Filtre type maintenance
             if (currentTypeFilter !== "all") {
                 filtered = filtered.filter(v => v.typeMaintenance === currentTypeFilter);
             }
@@ -1656,7 +1631,6 @@
             document.getElementById("dashCompletion").textContent = completion + "%";
             document.getElementById("dashBar").style.width = completion + "%";
             
-            // Stats par source
             const source1 = allVehicles.filter(v => v.source === "source1").length;
             const source2 = allVehicles.filter(v => v.source === "source2").length;
             const custom = allVehicles.filter(v => v.isCustom === true || v.source === "custom").length;
@@ -1664,7 +1638,6 @@
             document.getElementById("source2Count").textContent = source2;
             document.getElementById("customCount").textContent = custom;
             
-            // Stats par site
             let html = "";
             for (let site of SITE_OPTIONS) {
                 const count = allVehicles.filter(v => v.present && v.site === site).length;
@@ -1767,7 +1740,6 @@
         }
 
         function attachEvents() {
-            // Checkboxes
             document.querySelectorAll(".present-check").forEach(cb => {
                 cb.replaceWith(cb.cloneNode(true));
             });
@@ -1786,7 +1758,6 @@
                 });
             });
             
-            // Sélecteurs de site
             document.querySelectorAll(".site-select").forEach(select => {
                 select.replaceWith(select.cloneNode(true));
             });
@@ -1803,7 +1774,6 @@
                 });
             });
             
-            // Boutons photo
             document.querySelectorAll(".photo-btn").forEach(btn => {
                 btn.replaceWith(btn.cloneNode(true));
             });
@@ -1871,44 +1841,262 @@
             }
         }
 
-        // ==================== RAPPORT ====================
+        // ==================== EXPORTS WORD ====================
+        async function exportAbsentsBySource(source) {
+            if (typeof docx === 'undefined') {
+                alert("❌ La bibliothèque docx n'est pas chargée.");
+                return;
+            }
+            
+            const sourceLabel = source === "source1" ? "Source 1" : "Source 2";
+            const vehicles = allVehicles.filter(v => v.present === false && v.source === source);
+            
+            if (vehicles.length === 0) {
+                alert(`✅ Aucun véhicule absent dans ${sourceLabel}`);
+                return;
+            }
+            
+            try {
+                const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, BorderStyle, WidthType, AlignmentType } = docx;
+                
+                const rows = [];
+                // En-tête
+                rows.push(new TableRow({
+                    children: [
+                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "N°", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
+                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Immatriculation", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
+                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Client", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
+                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Marque", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
+                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Modèle", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
+                    ]
+                }));
+                
+                vehicles.forEach((v, i) => {
+                    rows.push(new TableRow({
+                        children: [
+                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: String(i+1), size: 22 })], alignment: AlignmentType.CENTER })] }),
+                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.immat || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
+                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.client || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
+                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.marque || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
+                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.modele || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
+                        ]
+                    }));
+                });
+                
+                const doc = new Document({
+                    sections: [{
+                        properties: {
+                            page: { margin: { top: 720, bottom: 720, left: 720, right: 720 } }
+                        },
+                        children: [
+                            new Paragraph({
+                                children: [new TextRun({ text: `LISTE DES VÉHICULES ABSENTS - ${sourceLabel}`, bold: true, size: 32, font: "Arial" })],
+                                alignment: AlignmentType.CENTER,
+                                spacing: { after: 400 }
+                            }),
+                            new Paragraph({
+                                children: [new TextRun({ text: `Généré le ${new Date().toLocaleString()}`, size: 20, font: "Arial" })],
+                                alignment: AlignmentType.CENTER,
+                                spacing: { after: 400 }
+                            }),
+                            new Paragraph({
+                                children: [new TextRun({ text: `Total : ${vehicles.length} véhicules`, size: 22, font: "Arial" })],
+                                alignment: AlignmentType.LEFT,
+                                spacing: { after: 400 }
+                            }),
+                            new Table({
+                                rows: rows,
+                                width: { size: 100, type: WidthType.PERCENTAGE },
+                            }),
+                        ]
+                    }]
+                });
+                
+                const blob = await Packer.toBlob(doc);
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = `Absents_${sourceLabel}_${new Date().toISOString().slice(0,19)}.docx`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+                alert(`✅ ${vehicles.length} véhicules absents exportés (${sourceLabel})`);
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
+            }
+        }
+
+        async function exportPresentBySite() {
+            if (typeof docx === 'undefined') {
+                alert("❌ La bibliothèque docx n'est pas chargée.");
+                return;
+            }
+            
+            const presentVehicles = allVehicles.filter(v => v.present === true);
+            
+            if (presentVehicles.length === 0) {
+                alert("✅ Aucun véhicule présent");
+                return;
+            }
+            
+            try {
+                const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, BorderStyle, WidthType, AlignmentType } = docx;
+                
+                let allRows = [];
+                // En-tête général
+                allRows.push(new TableRow({
+                    children: [
+                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Site", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
+                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "N°", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
+                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Immatriculation", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
+                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Client", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
+                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Marque", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
+                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Modèle", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
+                    ]
+                }));
+                
+                let index = 0;
+                for (let site of SITE_OPTIONS) {
+                    const siteVehicles = presentVehicles.filter(v => v.site === site);
+                    if (siteVehicles.length === 0) continue;
+                    
+                    // Ligne de séparation pour le site
+                    allRows.push(new TableRow({
+                        children: [
+                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: site, bold: true, size: 22 })], alignment: AlignmentType.CENTER })], columnSpan: 6 }),
+                        ]
+                    }));
+                    
+                    siteVehicles.forEach((v) => {
+                        index++;
+                        allRows.push(new TableRow({
+                            children: [
+                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "", size: 22 })], alignment: AlignmentType.CENTER })] }),
+                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: String(index), size: 22 })], alignment: AlignmentType.CENTER })] }),
+                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.immat || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
+                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.client || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
+                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.marque || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
+                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.modele || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
+                            ]
+                        }));
+                    });
+                }
+                
+                const doc = new Document({
+                    sections: [{
+                        properties: {
+                            page: { margin: { top: 720, bottom: 720, left: 720, right: 720 } }
+                        },
+                        children: [
+                            new Paragraph({
+                                children: [new TextRun({ text: "LISTE DES VÉHICULES PRÉSENTS PAR SITE", bold: true, size: 32, font: "Arial" })],
+                                alignment: AlignmentType.CENTER,
+                                spacing: { after: 400 }
+                            }),
+                            new Paragraph({
+                                children: [new TextRun({ text: `Généré le ${new Date().toLocaleString()}`, size: 20, font: "Arial" })],
+                                alignment: AlignmentType.CENTER,
+                                spacing: { after: 400 }
+                            }),
+                            new Paragraph({
+                                children: [new TextRun({ text: `Total : ${presentVehicles.length} véhicules présents`, size: 22, font: "Arial" })],
+                                alignment: AlignmentType.LEFT,
+                                spacing: { after: 400 }
+                            }),
+                            new Table({
+                                rows: allRows,
+                                width: { size: 100, type: WidthType.PERCENTAGE },
+                            }),
+                        ]
+                    }]
+                });
+                
+                const blob = await Packer.toBlob(doc);
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = `Presences_par_site_${new Date().toISOString().slice(0,19)}.docx`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+                alert(`✅ ${presentVehicles.length} véhicules présents exportés par site`);
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
+            }
+        }
+
+        // ==================== RAPPORT PDF CORRIGÉ ====================
         async function generateReport() {
             try {
                 const { jsPDF } = window.jspdf;
-                const doc = new jsPDF({ orientation: 'landscape' });
+                const doc = new jsPDF({ orientation: 'landscape', unit: 'mm' });
+                
+                // Utiliser une police standard qui supporte les accents
+                doc.setFont("helvetica");
+                
                 doc.setFontSize(16);
-                doc.text("📋 RAPPORT DE RONDE", 14, 15);
-                doc.setFontSize(9);
+                doc.text("RAPPORT DE RONDE", 14, 15);
+                doc.setFontSize(10);
                 doc.text(`Généré le ${new Date().toLocaleString()}`, 14, 22);
                 
-                const total = allVehicles.length, presents = allVehicles.filter(v => v.present).length;
-                const absents = total - presents, completion = total === 0 ? 0 : Math.round((presents / total) * 100);
-                doc.text(`📊 Total: ${total} · Présents: ${presents} · Absents: ${absents} · Taux: ${completion}%`, 14, 30);
+                const total = allVehicles.length;
+                const presents = allVehicles.filter(v => v.present).length;
+                const absents = total - presents;
+                const completion = total === 0 ? 0 : Math.round((presents / total) * 100);
+                
+                doc.setFontSize(11);
+                doc.text(`Total: ${total}  |  Présents: ${presents}  |  Absents: ${absents}  |  Taux: ${completion}%`, 14, 30);
                 
                 const s1 = allVehicles.filter(v => v.source === "source1").length;
                 const s2 = allVehicles.filter(v => v.source === "source2").length;
                 const custom = allVehicles.filter(v => v.isCustom).length;
-                doc.text(`📦 Source 1: ${s1} · Source 2: ${s2} · ✏️ Ajouts: ${custom}`, 14, 37);
+                doc.text(`Source 1: ${s1}  |  Source 2: ${s2}  |  Ajouts manuels: ${custom}`, 14, 37);
                 
+                // Stats par site
                 let siteData = [["Site", "Présents", "Total"]];
                 for (let site of SITE_OPTIONS) {
                     const count = allVehicles.filter(v => v.present && v.site === site).length;
                     const totalSite = allVehicles.filter(v => v.site === site).length;
                     siteData.push([site, count.toString(), totalSite.toString()]);
                 }
-                doc.autoTable({ head: [siteData[0]], body: siteData.slice(1), startY: 42, theme: 'plain' });
+                doc.autoTable({
+                    head: [siteData[0]],
+                    body: siteData.slice(1),
+                    startY: 42,
+                    theme: 'striped',
+                    styles: { font: "helvetica", fontSize: 8 },
+                    headStyles: { fillColor: [15, 23, 42], textColor: [255, 255, 255] }
+                });
                 
+                // Liste des présents
                 const pData = allVehicles.filter(v => v.present).map(v => [v.immat, v.client, v.marque, v.modele, v.site || ""]);
                 if (pData.length) {
-                    doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle", "Site"]], body: pData, startY: doc.lastAutoTable.finalY + 5, theme: 'plain' });
+                    doc.autoTable({
+                        head: [["Immat", "Client", "Marque", "Modèle", "Site"]],
+                        body: pData,
+                        startY: doc.lastAutoTable.finalY + 5,
+                        theme: 'striped',
+                        styles: { font: "helvetica", fontSize: 7 },
+                        headStyles: { fillColor: [15, 23, 42], textColor: [255, 255, 255] }
+                    });
                 }
+                
+                // Liste des absents
                 const aData = allVehicles.filter(v => !v.present).map(v => [v.immat, v.client, v.marque, v.modele]);
                 if (aData.length) {
-                    doc.autoTable({ head: [["Immat", "Client", "Marque", "Modèle"]], body: aData, startY: doc.lastAutoTable.finalY + 5, theme: 'plain' });
+                    doc.autoTable({
+                        head: [["Immat", "Client", "Marque", "Modèle"]],
+                        body: aData,
+                        startY: doc.lastAutoTable.finalY + 5,
+                        theme: 'striped',
+                        styles: { font: "helvetica", fontSize: 7 },
+                        headStyles: { fillColor: [15, 23, 42], textColor: [255, 255, 255] }
+                    });
                 }
+                
                 doc.save(`rapport_ronde_${new Date().toISOString().slice(0,19)}.pdf`);
             } catch (e) {
-                alert("❌ Erreur: " + e.message);
+                alert("❌ Erreur rapport: " + e.message);
             }
         }
 
@@ -1925,6 +2113,7 @@
                 XLSX.writeFile(wb, `presences_${new Date().toISOString().slice(0,19)}.xlsx`);
             } catch (e) { alert("❌ Erreur: " + e.message); }
         }
+        
         async function exportAbsentExcel() {
             try {
                 const data = allVehicles.filter(v => !v.present).map(v => ({ 
@@ -2040,6 +2229,11 @@
             document.body.classList.toggle("terrain-mode");
             document.getElementById("terrainModeBtn").textContent = document.body.classList.contains("terrain-mode") ? "📱 Normal" : "📱 Terrain";
         };
+        
+        // Nouveaux exports Word
+        document.getElementById("exportAbsentSource1Word").onclick = () => exportAbsentsBySource("source1");
+        document.getElementById("exportAbsentSource2Word").onclick = () => exportAbsentsBySource("source2");
+        document.getElementById("exportPresentSiteWord").onclick = exportPresentBySite;
         
         siteFilterSelect.addEventListener("change", (e) => { currentSiteFilter = e.target.value; renderListOnly(); });
         sourceFilterSelect.addEventListener("change", (e) => { currentSourceFilter = e.target.value; renderListOnly(); });
