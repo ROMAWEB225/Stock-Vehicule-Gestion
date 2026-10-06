@@ -55,7 +55,31 @@
         .connection-dot.offline { background: #ef4444; }
         .user-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
             background: #1e293b; border-radius: 20px; font-size: 0.75rem; cursor: pointer; transition: background 0.2s; }
-        .user-badge:hover { background: #2d3a4e; }
+        .user-select {
+    background: #1e293b;
+    border: 1px solid #2d3a4e;
+    color: #e2e8f0;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s;
+    min-width: 150px;
+}
+.user-select:hover {
+    background: #2d3a4e;
+    border-color: #60a5fa;
+}
+.user-select:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+}
+body.light-mode .user-select {
+    background: #f1f5f9;
+    border-color: #e2e8f0;
+    color: #1e293b;
+}
         body.light-mode .user-badge { background: #f1f5f9; color: #475569; }
 
         .nav-bar { background: #0f172a; padding: 0.6rem 2rem; border-bottom: 1px solid #1e293b;
@@ -264,7 +288,10 @@
                 <span id="connectionText">En ligne</span>
             </span>
             <span id="backupInfo" class="backup-info">💾 Sync OK</span>
-            <span class="user-badge" id="userBadge">👤 <span id="userName">Romaric Tanoh</span></span>
+            <select id="userSelect" class="user-select" title="Sélectionnez votre nom">
+    <option value="">👤 Choisir un utilisateur...</option>
+</select>
+<button id="manageUsersBtn" class="nav-btn" style="background:#2563eb;color:white;padding:4px 10px;" title="Gérer les utilisateurs">⚙️</button>
             <button id="installBtn" class="nav-btn" style="background:#10b981;color:white;display:none;">📱 Installer</button>
             <button id="darkModeToggle" class="nav-btn" style="font-size:1.1rem;background:transparent;color:#94a3b8;padding:4px 8px;">☀️</button>
         </div>
@@ -440,19 +467,27 @@
     <footer>NTR Garage · Stock Véhicules v3.0 · Firebase + Cloudinary</footer>
 
     <!-- MODALES -->
-    <div id="userModal" class="modal">
-        <div class="modal-content" style="max-width: 400px;">
-            <button class="close-btn" id="closeUserModalBtn">✕</button>
-            <h2>👤 Utilisateur</h2>
-            <label>Votre nom (affiché sur les rondes)</label>
-            <input type="text" id="userNameInput" placeholder="Ex: Romaric Tanoh">
-            <div class="btn-row">
-                <button class="btn-generate" id="saveUserBtn">💾 Enregistrer</button>
-                <button class="btn-cancel" id="cancelUserBtn">Annuler</button>
-            </div>
+    <!-- MODALE GESTION UTILISATEURS -->
+<div id="userModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <button class="close-btn" id="closeUserModalBtn">✕</button>
+        <h2>👥 Gestion des utilisateurs</h2>
+        <p style="font-size:0.8rem;color:#94a3b8;margin-bottom:15px;">
+            Ajoutez, modifiez ou supprimez les utilisateurs qui font les rondes.
+        </p>
+        
+        <div id="usersList" style="max-height:300px;overflow-y:auto;margin-bottom:15px;"></div>
+        
+        <div style="display:flex;gap:8px;margin-top:10px;">
+            <input type="text" id="newUserName" placeholder="Nom du nouvel utilisateur" style="flex:1;margin-bottom:0;">
+            <button class="btn-generate" id="addUserBtn" style="flex:0 0 auto;padding:10px 20px;">➕ Ajouter</button>
+        </div>
+        
+        <div class="btn-row">
+            <button class="btn-cancel" id="cancelUserBtn" style="flex:1;">Fermer</button>
         </div>
     </div>
-
+</div>
     <div id="attestationModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" id="closeModalBtn">✕</button>
@@ -606,24 +641,133 @@
         const userNameSpan = $("userName");
 
         // ==================== UTILISATEUR ====================
-        function updateUserDisplay() { userNameSpan.textContent = currentUser; }
-        updateUserDisplay();
+      // ==================== GESTION DES UTILISATEURS ====================
+const DEFAULT_USERS = ["Romaric Tanoh", "Joel Kouassi", "Sylvin", "Noel Aka", "Coulibaly", "Mohamed"];
+const STORAGE_USERS_KEY = "stock_usersList";
 
-        $("userBadge").onclick = () => {
-            $("userNameInput").value = currentUser;
-            $("userModal").style.display = "flex";
+function chargerUtilisateurs() {
+    try {
+        const saved = localStorage.getItem(STORAGE_USERS_KEY);
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+    } catch(e) {}
+    return [...DEFAULT_USERS];
+}
+
+function sauvegarderUtilisateurs(users) {
+    localStorage.setItem(STORAGE_USERS_KEY, JSON.stringify(users));
+}
+
+let listeUtilisateurs = chargerUtilisateurs();
+
+function rendreListeUtilisateurs() {
+    const select = $("userSelect");
+    if (!select) return;
+    select.innerHTML = '<option value="">👤 Choisir un utilisateur...</option>';
+    listeUtilisateurs.forEach((nom, idx) => {
+        const opt = document.createElement("option");
+        opt.value = nom;
+        opt.textContent = nom;
+        if (nom === currentUser) opt.selected = true;
+        select.appendChild(opt);
+    });
+}
+
+function rendreModaleUtilisateurs() {
+    const container = $("usersList");
+    if (!container) return;
+    container.innerHTML = "";
+    listeUtilisateurs.forEach((nom, idx) => {
+        const div = document.createElement("div");
+        div.style.cssText = "display:flex;gap:8px;margin-bottom:8px;align-items:center;";
+        div.innerHTML = `
+            <input type="text" value="${nom}" data-idx="${idx}" class="user-edit-input" style="flex:1;margin-bottom:0;padding:6px 10px;font-size:0.85rem;">
+            <button class="btn-danger" data-idx="${idx}" style="background:#dc2626;border:none;color:white;padding:6px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;">🗑️</button>
+        `;
+        container.appendChild(div);
+    });
+    
+    // Boutons supprimer
+    container.querySelectorAll(".btn-danger").forEach(btn => {
+        btn.onclick = () => {
+            const idx = parseInt(btn.getAttribute("data-idx"));
+            if (!confirm(`Supprimer "${listeUtilisateurs[idx]}" ?`)) return;
+            listeUtilisateurs.splice(idx, 1);
+            sauvegarderUtilisateurs(listeUtilisateurs);
+            rendreListeUtilisateurs();
+            rendreModaleUtilisateurs();
         };
-        $("closeUserModalBtn").onclick = () => $("userModal").style.display = "none";
-        $("cancelUserBtn").onclick = () => $("userModal").style.display = "none";
-        $("saveUserBtn").onclick = () => {
-            const name = $("userNameInput").value.trim();
-            if (!name) { alert("Veuillez saisir un nom"); return; }
-            currentUser = name;
-            localStorage.setItem("stock_userName", name);
-            updateUserDisplay();
-            $("userModal").style.display = "none";
-            alert(`✅ Bienvenue ${name} !`);
+    });
+    
+    // Inputs édition (sauvegarde en live)
+    container.querySelectorAll(".user-edit-input").forEach(input => {
+        input.onblur = () => {
+            const idx = parseInt(input.getAttribute("data-idx"));
+            const newName = input.value.trim();
+            if (!newName) {
+                input.value = listeUtilisateurs[idx];
+                return;
+            }
+            if (newName !== listeUtilisateurs[idx]) {
+                listeUtilisateurs[idx] = newName;
+                sauvegarderUtilisateurs(listeUtilisateurs);
+                rendreListeUtilisateurs();
+            }
         };
+    });
+}
+
+// Remplacer l'ancienne fonction updateUserDisplay
+function updateUserDisplay() {
+    rendreListeUtilisateurs();
+}
+
+// Initialiser l'affichage
+if (currentUser && !listeUtilisateurs.includes(currentUser)) {
+    listeUtilisateurs.push(currentUser);
+    sauvegarderUtilisateurs(listeUtilisateurs);
+}
+rendreListeUtilisateurs();
+
+// Événement : changement d'utilisateur
+$("userSelect").onchange = (e) => {
+    const nom = e.target.value;
+    if (!nom) return;
+    currentUser = nom;
+    localStorage.setItem("stock_userName", nom);
+    console.log("👤 Utilisateur changé :", nom);
+};
+
+// Événement : ouvrir la modale de gestion
+$("manageUsersBtn").onclick = () => {
+    rendreModaleUtilisateurs();
+    $("userModal").style.display = "flex";
+};
+
+$("closeUserModalBtn").onclick = () => $("userModal").style.display = "none";
+$("cancelUserBtn").onclick = () => $("userModal").style.display = "none";
+
+// Ajouter un utilisateur
+$("addUserBtn").onclick = () => {
+    const input = $("newUserName");
+    const nom = input.value.trim();
+    if (!nom) { alert("Veuillez saisir un nom"); return; }
+    if (listeUtilisateurs.includes(nom)) { alert("Cet utilisateur existe déjà"); return; }
+    listeUtilisateurs.push(nom);
+    sauvegarderUtilisateurs(listeUtilisateurs);
+    input.value = "";
+    rendreListeUtilisateurs();
+    rendreModaleUtilisateurs();
+    alert(`✅ "${nom}" ajouté`);
+};
+
+// ⚠️ SÉCURITÉ : au démarrage, si aucun user sélectionné, on prend le premier
+if (!currentUser || !listeUtilisateurs.includes(currentUser)) {
+    currentUser = listeUtilisateurs[0] || "Utilisateur";
+    localStorage.setItem("stock_userName", currentUser);
+}
 
         // ==================== BIP ====================
         function playBeep() {
@@ -729,11 +873,21 @@
         $("tabGraphiquesBtn").onclick = () => switchTab("graphiques");
 
         // ==================== RONDES ====================
-        $("startRondeBtn").onclick = async () => {
-            if (rondeEnCours) { alert("⚠️ Une ronde est déjà en cours."); return; }
-            if (allVehicles.length === 0) { alert("⚠️ Aucun véhicule chargé."); return; }
-            if (!confirm(`Démarrer une nouvelle ronde ?\n\nUtilisateur : ${currentUser}\nVéhicules : ${allVehicles.length}`)) return;
-            
+      $("startRondeBtn").onclick = async () => {
+    if (rondeEnCours) { alert("⚠️ Une ronde est déjà en cours."); return; }
+    if (allVehicles.length === 0) { alert("⚠️ Aucun véhicule chargé."); return; }
+    
+    // ⚠️ VÉRIFIER QU'UN UTILISATEUR EST SÉLECTIONNÉ
+    const selectedUser = $("userSelect").value;
+    if (!selectedUser) {
+        alert("⚠️ Veuillez d'abord choisir votre nom dans la liste en haut à droite.");
+        $("userSelect").focus();
+        return;
+    }
+    currentUser = selectedUser;
+    localStorage.setItem("stock_userName", currentUser);
+    
+    if (!confirm(`Démarrer une nouvelle ronde ?\n\nUtilisateur : ${currentUser}\nVéhicules : ${allVehicles.length}`)) return;
             rondeSnapshotDepart = allVehicles.map(v => ({ id: v.id, immat: v.immat, present: v.present, site: v.site }));
             rondeStartTime = new Date();
             rondeEnCours = true;
@@ -1302,9 +1456,80 @@
             });
             
             html += `</tbody></table></div>`;
-            $("historyDetailContent").innerHTML = html;
-            $("historyDetailModal").style.display = "flex";
-            window._currentRondeForExport = r;
+$("historyDetailContent").innerHTML = html;
+
+// 🆕 Ajouter les boutons Modifier / Annuler
+const actionDiv = document.createElement("div");
+actionDiv.style.cssText = "margin-top:15px;padding-top:15px;border-top:1px solid #334155;display:flex;gap:10px;flex-wrap:wrap;";
+actionDiv.innerHTML = `
+    <button id="reopenRondeBtn" style="background:#f59e0b;color:#0f172a;border:none;padding:8px 16px;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;">🔓 Réouvrir cette ronde</button>
+    <button id="deleteRondeBtn" style="background:#dc2626;color:white;border:none;padding:8px 16px;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;">🗑️ Annuler cette ronde</button>
+`;
+$("historyDetailContent").appendChild(actionDiv);
+
+// Événement : réouvrir une ronde
+actionDiv.querySelector("#reopenRondeBtn").onclick = async () => {
+    if (!confirm(`🔓 Réouvrir la ronde du ${new Date(r.heureFin).toLocaleDateString('fr-FR')} ?\n\nLes véhicules seront rechargés avec leurs états au moment de la ronde.`)) return;
+    
+    if (rondeEnCours) {
+        alert("⚠️ Une ronde est déjà en cours. Clôture-la d'abord.");
+        return;
+    }
+    
+    try {
+        // Restaurer les états des véhicules à partir de la ronde
+        const batch = window.writeBatch(db);
+        for (let vSnap of r.vehicules) {
+            const v = allVehicles.find(x => x.immat === vSnap.immat);
+            if (v) {
+                batch.update(window.doc(db, "vehicules", v.id), {
+                    present: vSnap.present || false,
+                    site: vSnap.site || null,
+                    lastSeen: new Date().toISOString()
+                });
+            }
+        }
+        await batch.commit();
+        
+        // Démarrer une nouvelle ronde liée
+        rondeStartTime = new Date();
+        rondeEnCours = true;
+        currentUser = r.effectueePar || currentUser;
+        $("userSelect").value = currentUser;
+        
+        $("rondeBanner").classList.add("visible");
+        $("rondeStartTime").textContent = `Reprise : ${rondeStartTime.toLocaleTimeString()}`;
+        updateRondeCounter();
+        $("startRondeBtn").disabled = true;
+        $("startRondeBtn").style.opacity = "0.5";
+        
+        $("historyDetailModal").style.display = "none";
+        switchTab("vehicules");
+        
+        alert(`✅ Ronde réouverte !\n\nVous pouvez modifier les véhicules puis clôturer à nouveau.`);
+    } catch(e) {
+        console.error("Erreur réouverture:", e);
+        alert("❌ Erreur : " + e.message);
+    }
+};
+
+// Événement : annuler/supprimer une ronde
+actionDiv.querySelector("#deleteRondeBtn").onclick = async () => {
+    if (!confirm(`🗑️ SUPPRIMER cette ronde de l'historique ?\n\nCette action est IRRÉVERSIBLE.\nLa ronde sera définitivement supprimée de Firebase.`)) return;
+    if (!confirm(`🚨 Confirmation finale :\n\nRonde du ${new Date(r.heureFin).toLocaleDateString('fr-FR')}\nPar ${r.effectueePar}\n\nVraiment supprimer ?`)) return;
+    
+    try {
+        await window.deleteDoc(window.doc(db, "rondes", r.id));
+        $("historyDetailModal").style.display = "none";
+        alert("✅ Ronde supprimée de l'historique");
+    } catch(e) {
+        console.error("Erreur suppression ronde:", e);
+        alert("❌ Erreur : " + e.message);
+    }
+};
+
+$("historyDetailModal").style.display = "flex";
+window._currentRondeForExport = r;
         }
 
         $("closeHistoryDetailBtn").onclick = () => $("historyDetailModal").style.display = "none";
