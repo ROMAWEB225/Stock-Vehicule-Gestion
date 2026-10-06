@@ -15,493 +15,219 @@
     
     <style>
         * { box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
-        body {
-            margin: 0;
-            background: #0f172a;
-            color: #e2e8f0;
-            padding-bottom: 20px;
-            transition: background 0.3s, color 0.3s;
-        }
+        body { margin: 0; background: #0f172a; color: #e2e8f0; padding-bottom: 20px; transition: background 0.3s, color 0.3s; }
         body.light-mode { background: #f1f5f9; color: #1e293b; }
-        body.light-mode header,
-        body.light-mode .nav-bar,
-        body.light-mode .filter-bar,
-        body.light-mode .vehicles-container,
-        body.light-mode .add-section,
-        body.light-mode .gallery-container,
-        body.light-mode .dashboard-container,
-        body.light-mode .history-container,
-        body.light-mode .archives-container { background: #ffffff; border-color: #e2e8f0; }
+        body.light-mode header, body.light-mode .nav-bar, body.light-mode .filter-bar,
+        body.light-mode .vehicles-container, body.light-mode .add-section, body.light-mode .gallery-container,
+        body.light-mode .dashboard-container, body.light-mode .history-container, body.light-mode .archives-container {
+            background: #ffffff; border-color: #e2e8f0;
+        }
         body.light-mode header .logo h1 { color: #1e293b; }
         body.light-mode .nav-btn { color: #475569; }
         body.light-mode .nav-btn:hover { background: #f1f5f9; color: #0f172a; }
         body.light-mode .nav-btn.primary { background: #f1f5f9; color: #1e293b; }
-        body.light-mode .filter-bar select,
-        body.light-mode .filter-bar input[type="text"] {
+        body.light-mode .filter-bar select, body.light-mode .filter-bar input[type="text"] {
             background: #f1f5f9; border-color: #e2e8f0; color: #1e293b;
         }
         body.light-mode .vehicle-item { border-color: #f1f5f9; }
-        body.light-mode .vehicle-item .site-select {
+        body.light-mode .vehicle-item .site-select { background: #f1f5f9; border-color: #e2e8f0; color: #1e293b; }
+        body.light-mode .add-form input, body.light-mode .add-form select {
             background: #f1f5f9; border-color: #e2e8f0; color: #1e293b;
         }
-        body.light-mode .add-form input,
-        body.light-mode .add-form select {
-            background: #f1f5f9; border-color: #e2e8f0; color: #1e293b;
-        }
-        body.light-mode .stat-card,
-        body.light-mode .dash-card,
-        body.light-mode .history-card { background: #f1f5f9; }
-        body.light-mode .stat-card .number,
-        body.light-mode .dash-card .number { color: #1e293b; }
+        body.light-mode .stat-card, body.light-mode .dash-card, body.light-mode .history-card { background: #f1f5f9; }
+        body.light-mode .stat-card .number, body.light-mode .dash-card .number { color: #1e293b; }
         body.light-mode .modal .modal-content { background: #ffffff; color: #1e293b; }
-        body.light-mode .modal input,
-        body.light-mode .modal select {
+        body.light-mode .modal input, body.light-mode .modal select {
             background: #f1f5f9; border-color: #e2e8f0; color: #1e293b;
         }
         body.light-mode .modal h2 { color: #1e293b; }
 
-        /* ========== HEADER ========== */
-        header {
-            background: #0f172a;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            border-bottom: 1px solid #1e293b;
-        }
+        header { background: #0f172a; padding: 1rem 2rem; display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid #1e293b; }
         header .logo { display: flex; align-items: center; gap: 10px; }
-        header .logo h1 {
-            margin: 0; font-size: 1.2rem; font-weight: 500;
-            letter-spacing: 1px; color: #e2e8f0;
-        }
+        header .logo h1 { margin: 0; font-size: 1.2rem; font-weight: 500; letter-spacing: 1px; color: #e2e8f0; }
         header .logo span { color: #64748b; font-weight: 300; }
-        header .logo .badge {
-            background: #1e293b; padding: 2px 10px; border-radius: 20px;
-            font-size: 0.6rem; color: #94a3b8; letter-spacing: 0.5px;
-        }
-        .header-right {
-            display: flex; align-items: center; gap: 12px;
-            font-size: 0.8rem; color: #94a3b8;
-        }
-        .connection-dot {
-            display: inline-block; width: 8px; height: 8px;
-            border-radius: 50%; margin-right: 5px;
-        }
+        header .logo .badge { background: #1e293b; padding: 2px 10px; border-radius: 20px;
+            font-size: 0.6rem; color: #94a3b8; letter-spacing: 0.5px; }
+        .header-right { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; color: #94a3b8; }
+        .connection-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
         .connection-dot.online { background: #10b981; }
         .connection-dot.offline { background: #ef4444; }
-        .user-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 4px 12px; background: #1e293b; border-radius: 20px;
-            font-size: 0.75rem; cursor: pointer; transition: background 0.2s;
-        }
+        .user-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
+            background: #1e293b; border-radius: 20px; font-size: 0.75rem; cursor: pointer; transition: background 0.2s; }
         .user-badge:hover { background: #2d3a4e; }
         body.light-mode .user-badge { background: #f1f5f9; color: #475569; }
 
-        /* ========== NAVIGATION ========== */
-        .nav-bar {
-            background: #0f172a; padding: 0.6rem 2rem;
-            border-bottom: 1px solid #1e293b; display: flex;
-            flex-wrap: wrap; gap: 6px; align-items: center;
-        }
-        .nav-btn {
-            background: transparent; border: none; padding: 6px 14px;
-            border-radius: 6px; cursor: pointer; font-size: 0.78rem;
-            font-weight: 400; color: #94a3b8; transition: all 0.2s;
-            display: inline-flex; align-items: center; gap: 5px;
-        }
+        .nav-bar { background: #0f172a; padding: 0.6rem 2rem; border-bottom: 1px solid #1e293b;
+            display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+        .nav-btn { background: transparent; border: none; padding: 6px 14px; border-radius: 6px;
+            cursor: pointer; font-size: 0.78rem; font-weight: 400; color: #94a3b8;
+            transition: all 0.2s; display: inline-flex; align-items: center; gap: 5px; }
         .nav-btn:hover { background: #1e293b; color: #e2e8f0; }
         .nav-btn.primary { background: #1e293b; color: #e2e8f0; }
         .nav-btn.primary:hover { background: #2d3a4e; }
         .nav-btn.active { background: #2563eb; color: white; }
         .nav-btn.ronde-active { background: #10b981; color: white; font-weight: 600; }
         .nav-btn.ronde-active:hover { background: #059669; }
-        .nav-divider {
-            width: 1px; height: 24px; background: #1e293b; margin: 0 6px;
-        }
+        .nav-divider { width: 1px; height: 24px; background: #1e293b; margin: 0 6px; }
 
-        /* ========== BANNIÈRE RONDE ========== */
-        .ronde-banner {
-            display: none;
-            background: linear-gradient(90deg, #f59e0b, #d97706);
-            color: #0f172a; padding: 0.8rem 2rem; font-weight: 600;
-            align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 10px;
-        }
+        .ronde-banner { display: none; background: linear-gradient(90deg, #f59e0b, #d97706);
+            color: #0f172a; padding: 0.8rem 2rem; font-weight: 600; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 10px; }
         .ronde-banner.visible { display: flex; }
-        .ronde-banner .info {
-            display: flex; align-items: center; gap: 12px; font-size: 0.85rem;
-        }
-        .ronde-banner button {
-            background: #0f172a; color: white; border: none;
-            padding: 6px 16px; border-radius: 20px; cursor: pointer;
-            font-size: 0.8rem; font-weight: 600;
-        }
-        .ronde-banner button:hover { background: #1e293b; }
+        .ronde-banner .info { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; }
+        .ronde-banner button { background: #0f172a; color: white; border: none; padding: 6px 16px;
+            border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
 
-        /* ========== FILTRES ========== */
-        .filter-bar {
-            background: #0f172a; padding: 0.6rem 2rem;
-            border-bottom: 1px solid #1e293b; display: flex;
-            flex-wrap: wrap; gap: 10px; align-items: center;
-        }
-        .filter-bar label {
-            font-size: 0.7rem; text-transform: uppercase;
-            letter-spacing: 0.5px; color: #64748b;
-        }
-        .filter-bar select,
-        .filter-bar input[type="text"] {
-            background: #1e293b; border: 1px solid #2d3a4e;
-            color: #e2e8f0; padding: 5px 12px; border-radius: 4px;
-            font-size: 0.8rem; outline: none;
-        }
-        .filter-bar select:focus,
-        .filter-bar input[type="text"]:focus { border-color: #60a5fa; }
-        .filter-bar input[type="text"]::placeholder { color: #64748b; }
+        .filter-bar { background: #0f172a; padding: 0.6rem 2rem; border-bottom: 1px solid #1e293b;
+            display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .filter-bar label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; }
+        .filter-bar select, .filter-bar input[type="text"] { background: #1e293b; border: 1px solid #2d3a4e;
+            color: #e2e8f0; padding: 5px 12px; border-radius: 4px; font-size: 0.8rem; outline: none; }
+        .filter-bar select:focus, .filter-bar input[type="text"]:focus { border-color: #60a5fa; }
 
-        /* ========== CONTENU ========== */
-        .main-content {
-            max-width: 1400px; margin: 0 auto; padding: 1.2rem 2rem;
-        }
+        .main-content { max-width: 1400px; margin: 0 auto; padding: 1.2rem 2rem; }
         .tab-section { display: none; }
         .tab-section.active { display: block; }
 
-        /* ========== DASHBOARD ========== */
-        .dashboard-container {
-            background: #1e293b; border-radius: 8px;
-            padding: 1.2rem 1.5rem; margin-bottom: 1.2rem;
-        }
-        .dashboard-container h2 {
-            margin: 0 0 1rem; font-size: 0.9rem; font-weight: 500;
-            color: #94a3b8; letter-spacing: 0.5px; text-transform: uppercase;
-        }
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px; margin-bottom: 16px;
-        }
-        .dash-card {
-            background: #0f172a; border-radius: 6px;
-            padding: 14px 12px; text-align: center;
-        }
-        .dash-card .number {
-            font-size: 1.8rem; font-weight: 300; margin: 0; color: #e2e8f0;
-        }
-        .dash-card .label {
-            font-size: 0.7rem; color: #64748b; text-transform: uppercase;
-            letter-spacing: 0.5px; margin-top: 2px;
-        }
-        .dash-card .bar {
-            height: 3px; background: #1e293b; border-radius: 4px;
-            margin-top: 8px; overflow: hidden;
-        }
-        .dash-card .bar-fill {
-            height: 100%; border-radius: 4px; transition: width 0.5s;
-            background: #60a5fa;
-        }
-        .dash-sites {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-        }
+        .dashboard-container { background: #1e293b; border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 1.2rem; }
+        .dashboard-container h2 { margin: 0 0 1rem; font-size: 0.9rem; font-weight: 500; color: #94a3b8;
+            letter-spacing: 0.5px; text-transform: uppercase; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
+        .dash-card { background: #0f172a; border-radius: 6px; padding: 14px 12px; text-align: center; }
+        .dash-card .number { font-size: 1.8rem; font-weight: 300; margin: 0; color: #e2e8f0; }
+        .dash-card .label { font-size: 0.7rem; color: #64748b; text-transform: uppercase;
+            letter-spacing: 0.5px; margin-top: 2px; }
+        .dash-card .bar { height: 3px; background: #1e293b; border-radius: 4px; margin-top: 8px; overflow: hidden; }
+        .dash-card .bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s; background: #60a5fa; }
+        .dash-sites { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
         .dash-sites .dash-card { padding: 10px; }
         .dash-sites .dash-card .number { font-size: 1.2rem; }
 
-        /* ========== STATS ========== */
-        .stats {
-            display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.2rem;
-        }
-        .stat-card {
-            background: #1e293b; border-radius: 6px; padding: 10px 18px;
-            min-width: 100px; text-align: center; cursor: pointer;
-            flex: 1; border: 1px solid transparent; transition: all 0.2s;
-        }
+        .stats { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.2rem; }
+        .stat-card { background: #1e293b; border-radius: 6px; padding: 10px 18px; min-width: 100px;
+            text-align: center; cursor: pointer; flex: 1; border: 1px solid transparent; transition: all 0.2s; }
         .stat-card:hover { background: #2d3a4e; border-color: #2d3a4e; }
-        .stat-card h3 {
-            margin: 0; font-size: 0.7rem; font-weight: 400;
-            text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8;
-        }
-        .stat-card .number {
-            font-size: 1.6rem; font-weight: 300; margin: 2px 0 0;
-        }
+        .stat-card h3 { margin: 0; font-size: 0.7rem; font-weight: 400; text-transform: uppercase;
+            letter-spacing: 0.5px; color: #94a3b8; }
+        .stat-card .number { font-size: 1.6rem; font-weight: 300; margin: 2px 0 0; }
 
-        /* ========== GALERIE ========== */
-        .gallery-container {
-            background: #1e293b; border-radius: 8px; padding: 1.2rem 1.5rem;
-            margin-bottom: 1.2rem; display: none;
-        }
+        .gallery-container { background: #1e293b; border-radius: 8px; padding: 1.2rem 1.5rem;
+            margin-bottom: 1.2rem; display: none; }
         .gallery-container.visible { display: block; }
-        .gallery-container h3 {
-            margin: 0 0 1rem; font-size: 0.9rem; font-weight: 500;
-            color: #94a3b8; letter-spacing: 0.5px; text-transform: uppercase;
-        }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 10px;
-        }
-        .gallery-item {
-            border-radius: 6px; overflow: hidden; position: relative;
-            background: #0f172a; aspect-ratio: 1;
-        }
-        .gallery-item img {
-            width: 100%; height: 100%; object-fit: cover; cursor: pointer;
-        }
-        .gallery-item .gallery-label {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: rgba(15, 23, 42, 0.85); color: #e2e8f0;
-            font-size: 0.6rem; padding: 3px 8px; text-align: center;
-        }
-        .gallery-item .gallery-actions {
-            position: absolute; top: 4px; right: 4px;
-            display: flex; gap: 4px;
-        }
-        .gallery-item .gallery-actions button {
-            background: rgba(0,0,0,0.7); border: none; color: white;
-            padding: 2px 6px; border-radius: 4px; font-size: 0.6rem;
-            cursor: pointer;
-        }
+        .gallery-container h3 { margin: 0 0 1rem; font-size: 0.9rem; font-weight: 500; color: #94a3b8;
+            letter-spacing: 0.5px; text-transform: uppercase; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+        .gallery-item { border-radius: 6px; overflow: hidden; position: relative; background: #0f172a; aspect-ratio: 1; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+        .gallery-item .gallery-label { position: absolute; bottom: 0; left: 0; right: 0;
+            background: rgba(15, 23, 42, 0.85); color: #e2e8f0; font-size: 0.6rem; padding: 3px 8px; text-align: center; }
+        .gallery-item .gallery-actions { position: absolute; top: 4px; right: 4px; display: flex; gap: 4px; }
+        .gallery-item .gallery-actions button { background: rgba(0,0,0,0.7); border: none; color: white;
+            padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; cursor: pointer; }
 
-        /* ========== LISTE VÉHICULES ========== */
-        .vehicles-container {
-            background: #1e293b; border-radius: 8px;
-            padding: 1.2rem 1.5rem; margin-bottom: 1.2rem;
-        }
-        .vehicles-container .header-row {
-            display: flex; justify-content: space-between;
-            align-items: center; flex-wrap: wrap; margin-bottom: 1rem;
-        }
-        .vehicles-container .header-row h2 {
-            margin: 0; font-size: 0.9rem; font-weight: 500;
-            color: #94a3b8; letter-spacing: 0.5px; text-transform: uppercase;
-        }
-        .vehicles-container .header-row .badge-count {
-            background: #0f172a; padding: 3px 14px; border-radius: 20px;
-            font-size: 0.7rem; color: #94a3b8;
-        }
-        .vehicle-item {
-            display: flex; flex-wrap: wrap; align-items: center;
-            gap: 12px; padding: 10px 0; border-bottom: 1px solid #0f172a;
-        }
+        .vehicles-container { background: #1e293b; border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 1.2rem; }
+        .vehicles-container .header-row { display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+        .vehicles-container .header-row h2 { margin: 0; font-size: 0.9rem; font-weight: 500;
+            color: #94a3b8; letter-spacing: 0.5px; text-transform: uppercase; }
+        .vehicles-container .header-row .badge-count { background: #0f172a; padding: 3px 14px;
+            border-radius: 20px; font-size: 0.7rem; color: #94a3b8; }
+        .vehicle-item { display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+            padding: 10px 0; border-bottom: 1px solid #0f172a; }
         .vehicle-item:last-child { border-bottom: none; }
-        .vehicle-item .present-check {
-            width: 18px; height: 18px; cursor: pointer;
-            accent-color: #60a5fa; flex-shrink: 0;
-        }
+        .vehicle-item .present-check { width: 18px; height: 18px; cursor: pointer; accent-color: #60a5fa; flex-shrink: 0; }
         .vehicle-item .vehicle-info { flex: 2; min-width: 160px; }
-        .vehicle-item .vehicle-info strong {
-            font-size: 0.95rem; font-weight: 500; display: block;
-        }
-        .vehicle-item .vehicle-info .detail-line {
-            font-size: 0.75rem; color: #94a3b8;
-        }
-        .vehicle-item .site-select {
-            background: #0f172a; border: 1px solid #2d3a4e;
-            color: #e2e8f0; padding: 4px 10px; border-radius: 4px;
-            font-size: 0.75rem; min-width: 130px;
-        }
+        .vehicle-item .vehicle-info strong { font-size: 0.95rem; font-weight: 500; display: block; }
+        .vehicle-item .vehicle-info .detail-line { font-size: 0.75rem; color: #94a3b8; }
+        .vehicle-item .site-select { background: #0f172a; border: 1px solid #2d3a4e; color: #e2e8f0;
+            padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; min-width: 130px; }
         .vehicle-item .site-select:disabled { opacity: 0.4; cursor: not-allowed; }
-        .vehicle-item .photo-btn {
-            background: #0f172a; border: 1px solid #2d3a4e;
-            color: #94a3b8; padding: 4px 10px; border-radius: 4px;
-            font-size: 0.7rem; cursor: pointer;
-        }
+        .vehicle-item .photo-btn { background: #0f172a; border: 1px solid #2d3a4e; color: #94a3b8;
+            padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
         .vehicle-item .photo-btn:hover { background: #2d3a4e; color: #e2e8f0; }
-        .vehicle-item .photo-preview {
-            max-width: 40px; max-height: 40px; border-radius: 4px;
-            object-fit: cover; cursor: pointer;
-        }
-        .vehicle-item .badge-custom {
-            background: #2d3a4e; padding: 1px 8px; border-radius: 4px;
-            font-size: 0.6rem; color: #94a3b8;
-        }
-        .vehicle-item .badge-source {
-            padding: 1px 8px; border-radius: 4px;
-            font-size: 0.55rem; font-weight: 500;
-        }
+        .vehicle-item .photo-preview { max-width: 40px; max-height: 40px; border-radius: 4px; object-fit: cover; cursor: pointer; }
+        .vehicle-item .badge-custom { background: #2d3a4e; padding: 1px 8px; border-radius: 4px;
+            font-size: 0.6rem; color: #94a3b8; }
+        .vehicle-item .badge-source { padding: 1px 8px; border-radius: 4px; font-size: 0.55rem; font-weight: 500; }
         .badge-source.source-1 { background: #1e3a5f; color: #60a5fa; }
         .badge-source.source-2 { background: #3a1e2a; color: #f87171; }
         .badge-source.source-custom { background: #3a3a1e; color: #fbbf24; }
         .vehicle-item .last-seen { font-size: 0.65rem; color: #64748b; }
         .vehicle-item .action-btns { display: flex; gap: 4px; }
-        .vehicle-item .action-btns button {
-            background: #0f172a; border: 1px solid #2d3a4e;
-            color: #94a3b8; padding: 2px 8px; border-radius: 4px;
-            font-size: 0.6rem; cursor: pointer;
-        }
-        .vehicle-item .action-btns button:hover {
-            background: #2d3a4e; color: #e2e8f0;
-        }
+        .vehicle-item .action-btns button { background: #0f172a; border: 1px solid #2d3a4e;
+            color: #94a3b8; padding: 2px 8px; border-radius: 4px; font-size: 0.6rem; cursor: pointer; }
+        .vehicle-item .action-btns button:hover { background: #2d3a4e; color: #e2e8f0; }
 
-        /* ========== HISTORIQUE ========== */
-        .history-container {
-            background: #1e293b; border-radius: 8px;
-            padding: 1.2rem 1.5rem; margin-bottom: 1.2rem;
-        }
-        .history-container h2 {
-            margin: 0 0 1rem; font-size: 0.9rem; font-weight: 500;
-            color: #94a3b8; letter-spacing: 0.5px; text-transform: uppercase;
-        }
-        .history-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
-        }
-        .history-card {
-            background: #0f172a; border-radius: 8px; padding: 14px;
-            cursor: pointer; border: 1px solid #1e293b; transition: all 0.15s;
-        }
+        .history-container { background: #1e293b; border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 1.2rem; }
+        .history-container h2 { margin: 0 0 1rem; font-size: 0.9rem; font-weight: 500; color: #94a3b8;
+            letter-spacing: 0.5px; text-transform: uppercase; }
+        .history-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+        .history-card { background: #0f172a; border-radius: 8px; padding: 14px; cursor: pointer;
+            border: 1px solid #1e293b; transition: all 0.15s; }
         .history-card:hover { transform: translateY(-2px); border-color: #60a5fa; }
-        .history-card .history-date {
-            font-size: 1rem; font-weight: 600;
-            color: #60a5fa; margin-bottom: 4px;
-        }
-        .history-card .history-user {
-            font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px;
-        }
-        .history-card .history-stats {
-            display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.7rem;
-        }
-        .history-card .history-stats span {
-            padding: 2px 8px; background: #1e293b; border-radius: 10px;
-        }
+        .history-card .history-date { font-size: 1rem; font-weight: 600; color: #60a5fa; margin-bottom: 4px; }
+        .history-card .history-user { font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; }
+        .history-card .history-stats { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.7rem; }
+        .history-card .history-stats span { padding: 2px 8px; background: #1e293b; border-radius: 10px; }
         .history-card .history-stats .stat-present { color: #10b981; }
         .history-card .history-stats .stat-absent { color: #ef4444; }
-        .history-card .history-diff {
-            margin-top: 8px; font-size: 0.7rem; padding-top: 8px;
-            border-top: 1px solid #1e293b; color: #94a3b8;
-        }
+        .history-card .history-diff { margin-top: 8px; font-size: 0.7rem; padding-top: 8px;
+            border-top: 1px solid #1e293b; color: #94a3b8; }
 
-        /* ========== ARCHIVES ========== */
-        .archives-container {
-            background: #1e293b; border-radius: 8px;
-            padding: 1.2rem 1.5rem; margin-bottom: 1.2rem;
-        }
-        .archives-container h2 {
-            margin: 0 0 1rem; font-size: 0.9rem; font-weight: 500;
-            color: #94a3b8; letter-spacing: 0.5px; text-transform: uppercase;
-        }
+        .archives-container { background: #1e293b; border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 1.2rem; }
+        .archives-container h2 { margin: 0 0 1rem; font-size: 0.9rem; font-weight: 500; color: #94a3b8;
+            letter-spacing: 0.5px; text-transform: uppercase; }
         .archive-year { margin-bottom: 15px; }
-        .archive-year h3 {
-            margin: 0 0 8px; font-size: 1rem; color: #60a5fa;
-        }
-        .archive-months {
-            display: flex; flex-wrap: wrap; gap: 8px; padding-left: 15px;
-        }
-        .archive-month {
-            background: #0f172a; padding: 6px 14px; border-radius: 20px;
-            font-size: 0.75rem; cursor: pointer; border: 1px solid #1e293b;
-        }
+        .archive-year h3 { margin: 0 0 8px; font-size: 1rem; color: #60a5fa; }
+        .archive-months { display: flex; flex-wrap: wrap; gap: 8px; padding-left: 15px; }
+        .archive-month { background: #0f172a; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem;
+            cursor: pointer; border: 1px solid #1e293b; }
         .archive-month:hover { background: #1e293b; border-color: #60a5fa; }
 
-        /* ========== AJOUT MANUEL ========== */
-        .add-section {
-            background: #1e293b; border-radius: 8px;
-            padding: 1.2rem 1.5rem; margin-bottom: 1.2rem;
-        }
-        .add-section h3 {
-            margin: 0 0 0.8rem; font-size: 0.9rem; font-weight: 500;
-            color: #94a3b8; letter-spacing: 0.5px; text-transform: uppercase;
-        }
-        .add-form {
-            display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-        }
-        .add-form input,
-        .add-form select {
-            background: #0f172a; border: 1px solid #2d3a4e;
-            color: #e2e8f0; padding: 6px 14px; border-radius: 4px;
-            font-size: 0.8rem; flex: 1; min-width: 120px; outline: none;
-        }
-        .add-form input:focus,
-        .add-form select:focus { border-color: #60a5fa; }
+        .add-section { background: #1e293b; border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 1.2rem; }
+        .add-section h3 { margin: 0 0 0.8rem; font-size: 0.9rem; font-weight: 500; color: #94a3b8;
+            letter-spacing: 0.5px; text-transform: uppercase; }
+        .add-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .add-form input, .add-form select { background: #0f172a; border: 1px solid #2d3a4e; color: #e2e8f0;
+            padding: 6px 14px; border-radius: 4px; font-size: 0.8rem; flex: 1; min-width: 120px; outline: none; }
+        .add-form input:focus, .add-form select:focus { border-color: #60a5fa; }
 
-        /* ========== MODALES ========== */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; background: rgba(0,0,0,0.7);
-            z-index: 1000; justify-content: center; align-items: center;
-            padding: 20px;
-        }
-        .modal .modal-content {
-            background: #1e293b; border-radius: 12px; padding: 2rem;
-            max-width: 600px; width: 100%; max-height: 90vh;
-            overflow-y: auto; position: relative;
-        }
-        .modal .close-btn {
-            position: absolute; top: 12px; right: 16px;
-            background: transparent; border: none; color: #94a3b8;
-            font-size: 1.5rem; cursor: pointer;
-        }
-        .modal .close-btn:hover { color: #e2e8f0; }
-        .modal h2 {
-            margin: 0 0 1.5rem 0; color: #e2e8f0;
-            font-weight: 400; font-size: 1.2rem;
-        }
-        .modal label {
-            display: block; font-size: 0.7rem; text-transform: uppercase;
-            color: #94a3b8; letter-spacing: 0.5px; margin-bottom: 4px;
-        }
-        .modal input,
-        .modal select,
-        .modal textarea {
-            width: 100%; padding: 8px 12px; border-radius: 6px;
-            border: 1px solid #2d3a4e; background: #0f172a; color: #e2e8f0;
-            font-size: 0.9rem; outline: none; margin-bottom: 12px;
-        }
-        .modal input:focus,
-        .modal select:focus { border-color: #60a5fa; }
-        .modal .form-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-        }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal .modal-content { background: #1e293b; border-radius: 12px; padding: 2rem; max-width: 600px;
+            width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+        .modal .close-btn { position: absolute; top: 12px; right: 16px; background: transparent;
+            border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; }
+        .modal h2 { margin: 0 0 1.5rem 0; color: #e2e8f0; font-weight: 400; font-size: 1.2rem; }
+        .modal label { display: block; font-size: 0.7rem; text-transform: uppercase; color: #94a3b8;
+            letter-spacing: 0.5px; margin-bottom: 4px; }
+        .modal input, .modal select, .modal textarea { width: 100%; padding: 8px 12px; border-radius: 6px;
+            border: 1px solid #2d3a4e; background: #0f172a; color: #e2e8f0; font-size: 0.9rem;
+            outline: none; margin-bottom: 12px; }
+        .modal .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .modal .form-grid .full-width { grid-column: span 2; }
-        .modal .btn-row {
-            display: flex; gap: 12px; margin-top: 20px;
-        }
-        .modal .btn-generate {
-            flex: 1; background: #34d399; border: none; color: #0f172a;
-            padding: 10px; border-radius: 6px; font-weight: 600;
-            cursor: pointer; font-size: 0.9rem;
-        }
-        .modal .btn-cancel {
-            flex: 1; background: #2d3a4e; border: none; color: #94a3b8;
-            padding: 10px; border-radius: 6px; cursor: pointer; font-size: 0.9rem;
-        }
-        .modal .btn-save {
-            flex: 1; background: #60a5fa; border: none; color: #0f172a;
-            padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer;
-        }
-        .history-detail-table {
-            width: 100%; border-collapse: collapse;
-            font-size: 0.75rem; margin-top: 10px;
-        }
-        .history-detail-table th,
-        .history-detail-table td {
-            padding: 6px 8px; text-align: left;
-            border-bottom: 1px solid #1e293b;
-        }
-        .history-detail-table th {
-            background: #0f172a; color: #94a3b8;
-            font-weight: 500; font-size: 0.7rem; text-transform: uppercase;
-        }
+        .modal .btn-row { display: flex; gap: 12px; margin-top: 20px; }
+        .modal .btn-generate { flex: 1; background: #34d399; border: none; color: #0f172a;
+            padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+        .modal .btn-cancel { flex: 1; background: #2d3a4e; border: none; color: #94a3b8;
+            padding: 10px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; }
+        .modal .btn-save { flex: 1; background: #60a5fa; border: none; color: #0f172a;
+            padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .history-detail-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin-top: 10px; }
+        .history-detail-table th, .history-detail-table td { padding: 6px 8px; text-align: left;
+            border-bottom: 1px solid #1e293b; }
+        .history-detail-table th { background: #0f172a; color: #94a3b8; font-weight: 500;
+            font-size: 0.7rem; text-transform: uppercase; }
 
-        /* ========== FOOTER ========== */
-        footer {
-            text-align: center; font-size: 0.7rem; padding: 1rem;
-            color: #64748b; border-top: 1px solid #1e293b; margin-top: 1rem;
-        }
-        .backup-info {
-            font-size: 0.7rem; padding: 2px 12px;
-            background: #1e293b; border-radius: 4px; color: #94a3b8;
-        }
-        .cross-search-notice {
-            background: #1e3a5f; color: #60a5fa;
-            padding: 6px 14px; border-radius: 6px; font-size: 0.75rem;
-            display: none; align-items: center; gap: 8px;
-        }
+        footer { text-align: center; font-size: 0.7rem; padding: 1rem; color: #64748b;
+            border-top: 1px solid #1e293b; margin-top: 1rem; }
+        .backup-info { font-size: 0.7rem; padding: 2px 12px; background: #1e293b;
+            border-radius: 4px; color: #94a3b8; }
+        .cross-search-notice { background: #1e3a5f; color: #60a5fa; padding: 6px 14px;
+            border-radius: 6px; font-size: 0.75rem; display: none; align-items: center; gap: 8px; }
         .cross-search-notice.visible { display: inline-flex; }
 
-        /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
             header { padding: 1rem; }
             .nav-bar { padding: 0.5rem 1rem; }
@@ -516,19 +242,17 @@
             .history-grid { grid-template-columns: 1fr; }
         }
 
-        /* ========== MODE TERRAIN ========== */
         body.terrain-mode .present-check { width: 32px; height: 32px; }
         body.terrain-mode .vehicle-item { padding: 14px; }
         body.terrain-mode .nav-btn { padding: 10px 20px; font-size: 0.9rem; }
-        body.terrain-mode select,
-        body.terrain-mode input { padding: 10px 16px; font-size: 0.95rem; }
+        body.terrain-mode select, body.terrain-mode input { padding: 10px 16px; font-size: 0.95rem; }
         body.terrain-mode .stat-card { padding: 14px 20px; min-width: 130px; }
         body.terrain-mode .vehicle-info strong { font-size: 1.2rem; }
     </style>
 </head>
 <body>
-<!-- ⚠️ NE PAS FERMER CE FICHIER - La PARTIE B arrive dans le prochain message -->
-        <!-- ========== HEADER ========== -->
+<!-- ⚠️ Continue avec PARTIE 2 -->
+        <!-- HEADER -->
     <header>
         <div class="logo">
             <h1>STOCK<span>VÉHICULES</span></h1>
@@ -546,7 +270,7 @@
         </div>
     </header>
 
-    <!-- ========== BANNIÈRE RONDE ========== -->
+    <!-- BANNIÈRE RONDE -->
     <div class="ronde-banner" id="rondeBanner">
         <div class="info">
             <span>🔵 <strong>Ronde en cours</strong></span>
@@ -556,7 +280,7 @@
         <button id="closeRondeBtn">🔴 Clôturer la ronde</button>
     </div>
 
-    <!-- ========== NAVIGATION ========== -->
+    <!-- NAVIGATION -->
     <nav class="nav-bar">
         <button id="startRondeBtn" class="nav-btn ronde-active">🔵 Démarrer une ronde</button>
         <span class="nav-divider"></span>
@@ -586,9 +310,14 @@
         <button id="exportAbsentPdf" class="nav-btn" style="color:#fb7185;">📄 Absents PDF</button>
         <button id="reportBtn" class="nav-btn">📋 Rapport PDF</button>
         <button id="attestationBtn" class="nav-btn" style="color:#fbbf24;">📄 Attestation</button>
+        
+        <span class="nav-divider"></span>
+        <button id="resetSource1Btn" class="nav-btn" style="color:#f87171;">🗑️ Vider Garage HR</button>
+        <button id="resetSource2Btn" class="nav-btn" style="color:#f87171;">🗑️ Vider Garage UM</button>
+        <button id="resetAllBtn" class="nav-btn" style="color:#dc2626;font-weight:600;">🚨 Vider TOUT</button>
     </nav>
 
-    <!-- ========== FILTRES ========== -->
+    <!-- FILTRES -->
     <div class="filter-bar">
         <label>📍 Site</label>
         <select id="siteFilterSelect">
@@ -615,7 +344,7 @@
         <span id="resultCount" style="font-size:0.75rem;color:#64748b;"></span>
     </div>
 
-    <!-- ========== CONTENU PRINCIPAL ========== -->
+    <!-- CONTENU PRINCIPAL -->
     <div class="main-content">
 
         <!-- ONGLET VÉHICULES -->
@@ -710,7 +439,7 @@
 
     <footer>NTR Garage · Stock Véhicules v3.0 · Firebase + Cloudinary</footer>
 
-    <!-- MODALE UTILISATEUR -->
+    <!-- MODALES -->
     <div id="userModal" class="modal">
         <div class="modal-content" style="max-width: 400px;">
             <button class="close-btn" id="closeUserModalBtn">✕</button>
@@ -724,7 +453,6 @@
         </div>
     </div>
 
-    <!-- MODALE ATTESTATION -->
     <div id="attestationModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" id="closeModalBtn">✕</button>
@@ -746,7 +474,6 @@
         </div>
     </div>
 
-    <!-- MODALE ÉDITION -->
     <div id="editModal" class="modal">
         <div class="modal-content" style="max-width: 500px;">
             <button class="close-btn" id="closeEditModalBtn">✕</button>
@@ -769,7 +496,6 @@
         </div>
     </div>
 
-    <!-- MODALE DÉTAIL RONDE -->
     <div id="historyDetailModal" class="modal">
         <div class="modal-content" style="max-width: 900px;">
             <button class="close-btn" id="closeHistoryDetailBtn">✕</button>
@@ -782,7 +508,7 @@
         </div>
     </div>
 
-    <!-- ==================== SCRIPT FIREBASE (MODULE) ==================== -->
+    <!-- SCRIPT FIREBASE (MODULE) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { 
@@ -808,11 +534,8 @@
             await enableIndexedDbPersistence(db);
             console.log("✅ Mode hors-ligne activé");
         } catch (err) {
-            if (err.code === 'failed-precondition') {
-                console.warn("⚠️ Persistance impossible : plusieurs onglets");
-            } else if (err.code === 'unimplemented') {
-                console.warn("⚠️ Persistance non supportée");
-            }
+            if (err.code === 'failed-precondition') console.warn("⚠️ Persistance : plusieurs onglets");
+            else if (err.code === 'unimplemented') console.warn("⚠️ Persistance non supportée");
         }
 
         window.db = db;
@@ -830,8 +553,8 @@
 
         window.dispatchEvent(new Event('firebaseReady'));
     </script>
-
-    <!-- ==================== SCRIPT APPLICATION ==================== -->
+<!-- ⚠️ Continue avec PARTIE 3 -->
+        <!-- SCRIPT APPLICATION -->
     <script>
         // ==================== CONFIGURATION ====================
         const SITE_OPTIONS = [
@@ -1129,7 +852,13 @@
                     const rows = XLSX.utils.sheet_to_json(sheet);
                     
                     const aSupprimer = allVehicles.filter(v => v.source === source);
-                    for (let v of aSupprimer) await window.deleteDoc(window.doc(db, "vehicules", v.id));
+                    const CHUNK_SIZE = 400;
+                    for (let i = 0; i < aSupprimer.length; i += CHUNK_SIZE) {
+                        const chunk = aSupprimer.slice(i, i + CHUNK_SIZE);
+                        const batch = window.writeBatch(db);
+                        chunk.forEach(v => batch.delete(window.doc(db, "vehicules", v.id)));
+                        await batch.commit();
+                    }
                     
                     const batch = window.writeBatch(db);
                     let count = 0;
@@ -1185,7 +914,7 @@
             } catch (e) { alert("❌ Erreur: " + e.message); }
         };
 
-        // ==================== SUPPRESSION ====================
+        // ==================== SUPPRESSION UNITAIRE ====================
         async function deleteCustomVehicle(id) {
             if (!confirm("⚠️ Supprimer ce véhicule ?")) return;
             try {
@@ -1288,8 +1017,7 @@
             link.click();
         }
 
-        // ⚠️ La suite du JavaScript arrive dans la PARTIE C
-                // ==================== RENDU ====================
+        // ==================== RENDU ====================
         function renderAll() {
             renderDashboard();
             renderStats();
@@ -1463,7 +1191,6 @@
                     const input = document.createElement("input");
                     input.type = "file"; 
                     input.accept = "image/*";
-                    // ⚠️ PAS de capture=environment → choix entre photo et galerie
                     input.onchange = async (ev) => {
                         const file = ev.target.files[0];
                         if (file) await uploadPhoto(id, file);
@@ -1749,9 +1476,7 @@
                 doc.setFont("helvetica");
                 
                 const presents = allVehicles.filter(v => v.present);
-                if (presents.length === 0) {
-                    alert("Aucun véhicule présent à exporter."); return;
-                }
+                if (presents.length === 0) { alert("Aucun véhicule présent à exporter."); return; }
                 
                 doc.setFontSize(16);
                 doc.text("VEHICULES PRESENTS PAR SITE", 105, 15, { align: "center" });
@@ -1797,9 +1522,7 @@
                 doc.setFont("helvetica");
                 
                 const absents = allVehicles.filter(v => !v.present);
-                if (absents.length === 0) {
-                    alert("Aucun véhicule absent à exporter."); return;
-                }
+                if (absents.length === 0) { alert("Aucun véhicule absent à exporter."); return; }
                 
                 doc.setFontSize(16);
                 doc.text("VEHICULES ABSENTS", 105, 15, { align: "center" });
@@ -1969,6 +1692,118 @@
             } catch(e) { alert("❌ Erreur : " + e.message); }
         };
 
+        // ==================== SUPPRESSION : VIDER LES SOURCES ====================
+        async function viderSource(source) {
+            const sourceLabel = SOURCE_LABELS[source];
+            const count = allVehicles.filter(v => v.source === source).length;
+            
+            if (count === 0) {
+                alert(`ℹ️ Aucun véhicule dans ${sourceLabel}`);
+                return;
+            }
+            
+            if (!confirm(`⚠️ SUPPRIMER TOUS les ${count} véhicules de "${sourceLabel}" ?\n\n` +
+                         `Cette action est IRRÉVERSIBLE.\n` +
+                         `Les véhicules seront définitivement supprimés de Firebase.\n\n` +
+                         `💡 Conseil : fais un export Excel avant de continuer.`)) {
+                return;
+            }
+            
+            if (!confirm(`🚨 DERNIÈRE CONFIRMATION\n\n` +
+                         `Voulez-vous vraiment supprimer les ${count} véhicules de ${sourceLabel} ?`)) {
+                return;
+            }
+            
+            try {
+                const aSupprimer = allVehicles.filter(v => v.source === source);
+                const CHUNK_SIZE = 400;
+                for (let i = 0; i < aSupprimer.length; i += CHUNK_SIZE) {
+                    const chunk = aSupprimer.slice(i, i + CHUNK_SIZE);
+                    const batch = window.writeBatch(db);
+                    chunk.forEach(v => batch.delete(window.doc(db, "vehicules", v.id)));
+                    await batch.commit();
+                }
+                alert(`✅ ${aSupprimer.length} véhicules de ${sourceLabel} supprimés !`);
+            } catch (e) {
+                console.error("Erreur suppression:", e);
+                alert("❌ Erreur : " + e.message);
+            }
+        }
+
+        async function viderTout() {
+            const totalVehicules = allVehicles.length;
+            const totalRondes = allRondes.length;
+            
+            if (totalVehicules === 0 && totalRondes === 0) {
+                alert("ℹ️ Rien à supprimer.");
+                return;
+            }
+            
+            const confirm1 = confirm(
+                `🚨 SUPPRESSION TOTALE\n\n` +
+                `Cette action va supprimer DÉFINITIVEMENT :\n` +
+                `• ${totalVehicules} véhicules (toutes sources)\n` +
+                `• ${totalRondes} rondes (historique complet)\n\n` +
+                `⚠️ AUCUNE RÉCUPÉRATION POSSIBLE !\n\n` +
+                `💡 Conseil : fais un export Excel AVANT de continuer.\n\n` +
+                `Continuer ?`
+            );
+            if (!confirm1) return;
+            
+            const confirm2 = confirm(
+                `🚨🚨 DERNIÈRE AVERTISSEMENT\n\n` +
+                `Utilisateur : ${currentUser}\n` +
+                `Date : ${new Date().toLocaleString('fr-FR')}\n\n` +
+                `Tape OK pour accéder à la saisie de confirmation.`
+            );
+            if (!confirm2) return;
+            
+            const saisie = prompt(
+                `Pour confirmer la suppression TOTALE, tape exactement : SUPPRIMER`
+            );
+            if (saisie !== "SUPPRIMER") {
+                alert("❌ Annulé. La saisie ne correspond pas.");
+                return;
+            }
+            
+            try {
+                // Supprimer tous les véhicules par lots de 400
+                if (allVehicles.length > 0) {
+                    const CHUNK_SIZE = 400;
+                    for (let i = 0; i < allVehicles.length; i += CHUNK_SIZE) {
+                        const chunk = allVehicles.slice(i, i + CHUNK_SIZE);
+                        const batch = window.writeBatch(db);
+                        chunk.forEach(v => batch.delete(window.doc(db, "vehicules", v.id)));
+                        await batch.commit();
+                    }
+                }
+                
+                // Supprimer toutes les rondes par lots de 400
+                if (allRondes.length > 0) {
+                    const CHUNK_SIZE = 400;
+                    for (let i = 0; i < allRondes.length; i += CHUNK_SIZE) {
+                        const chunk = allRondes.slice(i, i + CHUNK_SIZE);
+                        const batch = window.writeBatch(db);
+                        chunk.forEach(r => batch.delete(window.doc(db, "rondes", r.id)));
+                        await batch.commit();
+                    }
+                }
+                
+                alert(`✅ SUPPRESSION TOTALE EFFECTUÉE\n\n` +
+                      `• ${totalVehicules} véhicules supprimés\n` +
+                      `• ${totalRondes} rondes supprimées\n\n` +
+                      `Firebase est maintenant vide.`);
+            } catch (e) {
+                console.error("Erreur suppression totale:", e);
+                alert("❌ Erreur : " + e.message);
+            }
+        }
+
+        // Brancher les 3 boutons de suppression
+        $("resetSource1Btn").onclick = () => viderSource("source1");
+        $("resetSource2Btn").onclick = () => viderSource("source2");
+        $("resetAllBtn").onclick = viderTout;
+
         // ==================== UI : GALERIE / TERRAIN / NUIT ====================
         $("galleryToggleBtn").onclick = () => {
             const g = $("galleryContainer");
@@ -2021,11 +1856,8 @@
                 }
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log("✅ Installation acceptée");
-                } else {
-                    console.log("❌ Installation refusée");
-                }
+                if (outcome === 'accepted') console.log("✅ Installation acceptée");
+                else console.log("❌ Installation refusée");
                 deferredPrompt = null;
                 installBtn.style.display = "none";
             };
