@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Stock Véhicules - Gestion de présence</title>
+    <title>Stock Véhicules - NTR Garage</title>
+    <meta name="theme-color" content="#0f172a">
+    
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js"></script>
+    
+    <link rel="manifest" href="manifest.json">
+    
     <style>
         /* ========== BASE ========== */
         * { box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
@@ -18,108 +23,72 @@
             padding-bottom: 20px;
             transition: background 0.3s, color 0.3s;
         }
-        body.light-mode {
-            background: #f1f5f9;
-            color: #1e293b;
-        }
+        body.light-mode { background: #f1f5f9; color: #1e293b; }
+        body.light-mode header,
         body.light-mode .nav-bar,
         body.light-mode .filter-bar,
         body.light-mode .vehicles-container,
         body.light-mode .add-section,
         body.light-mode .gallery-container,
         body.light-mode .dashboard-container,
-        body.light-mode .timer-container {
+        body.light-mode .history-container,
+        body.light-mode .archives-container {
             background: #ffffff;
             border-color: #e2e8f0;
         }
-        body.light-mode header { background: #ffffff; border-color: #e2e8f0; }
         body.light-mode header .logo h1 { color: #1e293b; }
-        body.light-mode header .logo .badge { background: #f1f5f9; color: #64748b; }
         body.light-mode .nav-btn { color: #475569; }
         body.light-mode .nav-btn:hover { background: #f1f5f9; color: #0f172a; }
         body.light-mode .nav-btn.primary { background: #f1f5f9; color: #1e293b; }
-        body.light-mode .nav-btn.primary:hover { background: #e2e8f0; }
-        body.light-mode .nav-btn.accent { color: #2563eb; }
-        body.light-mode .nav-divider { background: #e2e8f0; }
         body.light-mode .filter-bar select,
         body.light-mode .filter-bar input[type="text"] {
             background: #f1f5f9;
             border-color: #e2e8f0;
             color: #1e293b;
         }
-        body.light-mode .dash-card { background: #f1f5f9; }
-        body.light-mode .dash-card .number { color: #1e293b; }
-        body.light-mode .stat-card { background: #ffffff; border-color: #e2e8f0; }
-        body.light-mode .stat-card:hover { background: #f1f5f9; }
         body.light-mode .vehicle-item { border-color: #f1f5f9; }
         body.light-mode .vehicle-item .site-select {
             background: #f1f5f9;
             border-color: #e2e8f0;
             color: #1e293b;
         }
-        body.light-mode .vehicle-item .photo-btn {
-            background: #f1f5f9;
-            border-color: #e2e8f0;
-            color: #475569;
-        }
-        body.light-mode .vehicle-item .photo-btn:hover { background: #e2e8f0; }
-        body.light-mode .backup-info { background: #f1f5f9; color: #475569; }
-        body.light-mode .timer-display { background: #f1f5f9; color: #1e293b; }
-        body.light-mode .gallery-item { background: #f1f5f9; }
         body.light-mode .add-form input,
         body.light-mode .add-form select {
             background: #f1f5f9;
             border-color: #e2e8f0;
             color: #1e293b;
         }
-        body.light-mode .vehicles-container .header-row .badge-count {
+        body.light-mode .stat-card,
+        body.light-mode .dash-card,
+        body.light-mode .history-card {
             background: #f1f5f9;
-            color: #475569;
         }
-        body.light-mode footer { border-color: #e2e8f0; color: #94a3b8; }
-        body.light-mode .stat-card .number { color: #1e293b; }
-        body.light-mode .stat-card h3 { color: #64748b; }
-        body.light-mode .vehicle-item .vehicle-info .detail-line { color: #64748b; }
-        body.light-mode .vehicle-item .badge-custom { background: #fef3c7; color: #92400e; }
-        body.light-mode .gallery-item .gallery-label { background: rgba(255,255,255,0.9); color: #1e293b; }
-        body.light-mode .dash-card .label { color: #64748b; }
-        body.light-mode .header-right { color: #64748b; }
-        body.light-mode #attestationModal .modal-content { background: #ffffff; color: #1e293b; }
-        body.light-mode #attestationModal input,
-        body.light-mode #attestationModal select {
+        body.light-mode .stat-card .number,
+        body.light-mode .dash-card .number { color: #1e293b; }
+        body.light-mode .modal .modal-content {
+            background: #ffffff;
+            color: #1e293b;
+        }
+        body.light-mode .modal input,
+        body.light-mode .modal select {
             background: #f1f5f9;
             border-color: #e2e8f0;
             color: #1e293b;
         }
-        body.light-mode #attestationModal label { color: #64748b; }
-        body.light-mode #attestationModal h2 { color: #1e293b; }
-        body.light-mode #editModal .modal-content { background: #ffffff; color: #1e293b; }
-        body.light-mode #editModal input,
-        body.light-mode #editModal select {
-            background: #f1f5f9;
-            border-color: #e2e8f0;
-            color: #1e293b;
-        }
-        body.light-mode #editModal h2 { color: #1e293b; }
-        body.light-mode .cross-search-notice { background: #dbeafe; color: #1e40af; }
+        body.light-mode .modal h2 { color: #1e293b; }
 
         /* ========== HEADER ========== */
         header {
             background: #0f172a;
-            padding: 1.2rem 2rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
             border-bottom: 1px solid #1e293b;
-            transition: background 0.3s, border-color 0.3s;
         }
-        header .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        header .logo { display: flex; align-items: center; gap: 10px; }
         header .logo h1 {
             margin: 0;
             font-size: 1.2rem;
@@ -143,6 +112,28 @@
             font-size: 0.8rem;
             color: #94a3b8;
         }
+        .connection-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .connection-dot.online { background: #10b981; }
+        .connection-dot.offline { background: #ef4444; }
+        .user-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: #1e293b;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .user-badge:hover { background: #2d3a4e; }
+        body.light-mode .user-badge { background: #f1f5f9; color: #475569; }
 
         /* ========== NAVIGATION ========== */
         .nav-bar {
@@ -153,7 +144,6 @@
             flex-wrap: wrap;
             gap: 6px;
             align-items: center;
-            transition: background 0.3s, border-color 0.3s;
         }
         .nav-btn {
             background: transparent;
@@ -165,7 +155,6 @@
             font-weight: 400;
             color: #94a3b8;
             transition: all 0.2s;
-            letter-spacing: 0.3px;
             display: inline-flex;
             align-items: center;
             gap: 5px;
@@ -173,14 +162,46 @@
         .nav-btn:hover { background: #1e293b; color: #e2e8f0; }
         .nav-btn.primary { background: #1e293b; color: #e2e8f0; }
         .nav-btn.primary:hover { background: #2d3a4e; }
-        .nav-btn.accent { color: #60a5fa; }
-        .nav-btn.accent:hover { background: #1e293b; }
+        .nav-btn.active { background: #2563eb; color: white; }
+        .nav-btn.ronde-active { background: #10b981; color: white; font-weight: 600; }
+        .nav-btn.ronde-active:hover { background: #059669; }
         .nav-divider {
             width: 1px;
             height: 24px;
             background: #1e293b;
             margin: 0 6px;
         }
+
+        /* ========== BANNIÈRE RONDE ========== */
+        .ronde-banner {
+            display: none;
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            color: #0f172a;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .ronde-banner.visible { display: flex; }
+        .ronde-banner .info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+        }
+        .ronde-banner button {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .ronde-banner button:hover { background: #1e293b; }
 
         /* ========== FILTRES ========== */
         .filter-bar {
@@ -191,7 +212,6 @@
             flex-wrap: wrap;
             gap: 10px;
             align-items: center;
-            transition: background 0.3s, border-color 0.3s;
         }
         .filter-bar label {
             font-size: 0.7rem;
@@ -208,12 +228,9 @@
             border-radius: 4px;
             font-size: 0.8rem;
             outline: none;
-            transition: border 0.2s, background 0.3s, color 0.3s;
         }
         .filter-bar select:focus,
-        .filter-bar input[type="text"]:focus {
-            border-color: #60a5fa;
-        }
+        .filter-bar input[type="text"]:focus { border-color: #60a5fa; }
         .filter-bar input[type="text"]::placeholder { color: #64748b; }
 
         /* ========== CONTENU ========== */
@@ -222,6 +239,8 @@
             margin: 0 auto;
             padding: 1.2rem 2rem;
         }
+        .tab-section { display: none; }
+        .tab-section.active { display: block; }
 
         /* ========== DASHBOARD ========== */
         .dashboard-container {
@@ -229,10 +248,7 @@
             border-radius: 8px;
             padding: 1.2rem 1.5rem;
             margin-bottom: 1.2rem;
-            display: none;
-            transition: background 0.3s;
         }
-        .dashboard-container.visible { display: block; }
         .dashboard-container h2 {
             margin: 0 0 1rem;
             font-size: 0.9rem;
@@ -252,7 +268,6 @@
             border-radius: 6px;
             padding: 14px 12px;
             text-align: center;
-            transition: background 0.3s;
         }
         .dash-card .number {
             font-size: 1.8rem;
@@ -303,13 +318,10 @@
             text-align: center;
             cursor: pointer;
             flex: 1;
-            transition: background 0.2s, border-color 0.2s;
             border: 1px solid transparent;
+            transition: all 0.2s;
         }
-        .stat-card:hover {
-            background: #2d3a4e;
-            border-color: #2d3a4e;
-        }
+        .stat-card:hover { background: #2d3a4e; border-color: #2d3a4e; }
         .stat-card h3 {
             margin: 0;
             font-size: 0.7rem;
@@ -331,7 +343,6 @@
             padding: 1.2rem 1.5rem;
             margin-bottom: 1.2rem;
             display: none;
-            transition: background 0.3s;
         }
         .gallery-container.visible { display: block; }
         .gallery-container h3 {
@@ -353,7 +364,6 @@
             position: relative;
             background: #0f172a;
             aspect-ratio: 1;
-            transition: background 0.3s;
         }
         .gallery-item img {
             width: 100%;
@@ -371,7 +381,6 @@
             font-size: 0.6rem;
             padding: 3px 8px;
             text-align: center;
-            transition: background 0.3s, color 0.3s;
         }
         .gallery-item .gallery-actions {
             position: absolute;
@@ -389,7 +398,6 @@
             font-size: 0.6rem;
             cursor: pointer;
         }
-        .gallery-item .gallery-actions button:hover { background: rgba(255,0,0,0.8); }
 
         /* ========== LISTE VÉHICULES ========== */
         .vehicles-container {
@@ -397,7 +405,6 @@
             border-radius: 8px;
             padding: 1.2rem 1.5rem;
             margin-bottom: 1.2rem;
-            transition: background 0.3s;
         }
         .vehicles-container .header-row {
             display: flex;
@@ -420,7 +427,6 @@
             border-radius: 20px;
             font-size: 0.7rem;
             color: #94a3b8;
-            transition: background 0.3s, color 0.3s;
         }
         .vehicle-item {
             display: flex;
@@ -429,7 +435,6 @@
             gap: 12px;
             padding: 10px 0;
             border-bottom: 1px solid #0f172a;
-            transition: border-color 0.3s;
         }
         .vehicle-item:last-child { border-bottom: none; }
         .vehicle-item .present-check {
@@ -451,7 +456,6 @@
         .vehicle-item .vehicle-info .detail-line {
             font-size: 0.75rem;
             color: #94a3b8;
-            transition: color 0.3s;
         }
         .vehicle-item .site-select {
             background: #0f172a;
@@ -460,13 +464,9 @@
             padding: 4px 10px;
             border-radius: 4px;
             font-size: 0.75rem;
-            min-width: 120px;
-            transition: background 0.3s, border-color 0.3s, color 0.3s;
+            min-width: 130px;
         }
-        .vehicle-item .site-select:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
+        .vehicle-item .site-select:disabled { opacity: 0.4; cursor: not-allowed; }
         .vehicle-item .photo-btn {
             background: #0f172a;
             border: 1px solid #2d3a4e;
@@ -475,12 +475,8 @@
             border-radius: 4px;
             font-size: 0.7rem;
             cursor: pointer;
-            transition: all 0.2s;
         }
-        .vehicle-item .photo-btn:hover {
-            background: #2d3a4e;
-            color: #e2e8f0;
-        }
+        .vehicle-item .photo-btn:hover { background: #2d3a4e; color: #e2e8f0; }
         .vehicle-item .photo-preview {
             max-width: 40px;
             max-height: 40px;
@@ -494,7 +490,6 @@
             border-radius: 4px;
             font-size: 0.6rem;
             color: #94a3b8;
-            transition: background 0.3s, color 0.3s;
         }
         .vehicle-item .badge-source {
             padding: 1px 8px;
@@ -505,14 +500,8 @@
         .badge-source.source-1 { background: #1e3a5f; color: #60a5fa; }
         .badge-source.source-2 { background: #3a1e2a; color: #f87171; }
         .badge-source.source-custom { background: #3a3a1e; color: #fbbf24; }
-        .vehicle-item .last-seen {
-            font-size: 0.65rem;
-            color: #64748b;
-        }
-        .vehicle-item .action-btns {
-            display: flex;
-            gap: 4px;
-        }
+        .vehicle-item .last-seen { font-size: 0.65rem; color: #64748b; }
+        .vehicle-item .action-btns { display: flex; gap: 4px; }
         .vehicle-item .action-btns button {
             background: #0f172a;
             border: 1px solid #2d3a4e;
@@ -521,22 +510,106 @@
             border-radius: 4px;
             font-size: 0.6rem;
             cursor: pointer;
-            transition: all 0.2s;
         }
-        .vehicle-item .action-btns button:hover {
-            background: #2d3a4e;
-            color: #e2e8f0;
+        .vehicle-item .action-btns button:hover { background: #2d3a4e; color: #e2e8f0; }
+
+        /* ========== HISTORIQUE ========== */
+        .history-container {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.2rem;
         }
-        .vehicle-item .action-btns .btn-danger:hover {
-            background: #dc2626;
-            color: white;
-            border-color: #dc2626;
+        .history-container h2 {
+            margin: 0 0 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
-        .vehicle-item .action-btns .btn-edit:hover {
-            background: #f59e0b;
-            color: white;
-            border-color: #f59e0b;
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
         }
+        .history-card {
+            background: #0f172a;
+            border-radius: 8px;
+            padding: 14px;
+            cursor: pointer;
+            border: 1px solid #1e293b;
+            transition: all 0.15s;
+        }
+        .history-card:hover { transform: translateY(-2px); border-color: #60a5fa; }
+        .history-card .history-date {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #60a5fa;
+            margin-bottom: 4px;
+        }
+        .history-card .history-user {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+        .history-card .history-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.7rem;
+        }
+        .history-card .history-stats span {
+            padding: 2px 8px;
+            background: #1e293b;
+            border-radius: 10px;
+        }
+        .history-card .history-stats .stat-present { color: #10b981; }
+        .history-card .history-stats .stat-absent { color: #ef4444; }
+        .history-card .history-diff {
+            margin-top: 8px;
+            font-size: 0.7rem;
+            padding-top: 8px;
+            border-top: 1px solid #1e293b;
+            color: #94a3b8;
+        }
+
+        /* ========== ARCHIVES ========== */
+        .archives-container {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .archives-container h2 {
+            margin: 0 0 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .archive-year { margin-bottom: 15px; }
+        .archive-year h3 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            color: #60a5fa;
+        }
+        .archive-months {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-left: 15px;
+        }
+        .archive-month {
+            background: #0f172a;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border: 1px solid #1e293b;
+        }
+        .archive-month:hover { background: #1e293b; border-color: #60a5fa; }
 
         /* ========== AJOUT MANUEL ========== */
         .add-section {
@@ -544,7 +617,6 @@
             border-radius: 8px;
             padding: 1.2rem 1.5rem;
             margin-bottom: 1.2rem;
-            transition: background 0.3s;
         }
         .add-section h3 {
             margin: 0 0 0.8rem;
@@ -571,16 +643,12 @@
             flex: 1;
             min-width: 120px;
             outline: none;
-            transition: background 0.3s, border-color 0.3s, color 0.3s;
         }
         .add-form input:focus,
-        .add-form select:focus {
-            border-color: #60a5fa;
-        }
-        .add-form input::placeholder { color: #64748b; }
+        .add-form select:focus { border-color: #60a5fa; }
 
-        /* ========== MODALE ÉDITION ========== */
-        #editModal {
+        /* ========== MODALES ========== */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -593,23 +661,17 @@
             align-items: center;
             padding: 20px;
         }
-        #editModal .modal-content {
+        .modal .modal-content {
             background: #1e293b;
             border-radius: 12px;
             padding: 2rem;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
             position: relative;
-            transition: background 0.3s, color 0.3s;
         }
-        body.light-mode #editModal .modal-content { background: #ffffff; color: #1e293b; }
-        body.light-mode #editModal input,
-        body.light-mode #editModal select {
-            background: #f1f5f9;
-            border-color: #e2e8f0;
-            color: #1e293b;
-        }
-        #editModal .close-btn {
+        .modal .close-btn {
             position: absolute;
             top: 12px;
             right: 16px;
@@ -619,15 +681,14 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
-        #editModal .close-btn:hover { color: #e2e8f0; }
-        #editModal h2 {
+        .modal .close-btn:hover { color: #e2e8f0; }
+        .modal h2 {
             margin: 0 0 1.5rem 0;
             color: #e2e8f0;
             font-weight: 400;
             font-size: 1.2rem;
         }
-        body.light-mode #editModal h2 { color: #1e293b; }
-        #editModal label {
+        .modal label {
             display: block;
             font-size: 0.7rem;
             text-transform: uppercase;
@@ -635,8 +696,9 @@
             letter-spacing: 0.5px;
             margin-bottom: 4px;
         }
-        #editModal input,
-        #editModal select {
+        .modal input,
+        .modal select,
+        .modal textarea {
             width: 100%;
             padding: 8px 12px;
             border-radius: 6px;
@@ -647,161 +709,20 @@
             outline: none;
             margin-bottom: 12px;
         }
-        #editModal input:focus,
-        #editModal select:focus {
-            border-color: #60a5fa;
-        }
-        #editModal .btn-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 10px;
-        }
-        #editModal .btn-save {
-            flex: 1;
-            background: #60a5fa;
-            border: none;
-            color: #0f172a;
-            padding: 10px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        #editModal .btn-save:hover { background: #3b82f6; }
-        #editModal .btn-cancel {
-            flex: 1;
-            background: #2d3a4e;
-            border: none;
-            color: #94a3b8;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        #editModal .btn-cancel:hover { background: #3d4a5e; }
-
-        /* ========== TIMER ========== */
-        .timer-container {
-            background: #1e293b;
-            padding: 0.6rem 2rem;
-            border-bottom: 1px solid #0f172a;
-            display: none;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            transition: background 0.3s, border-color 0.3s;
-        }
-        .timer-container.visible { display: flex; }
-        .timer-display {
-            font-size: 1.6rem;
-            font-weight: 300;
-            font-family: 'Courier New', monospace;
-            background: #0f172a;
-            padding: 2px 16px;
-            border-radius: 4px;
-            color: #e2e8f0;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        /* ========== FOOTER ========== */
-        footer {
-            text-align: center;
-            font-size: 0.7rem;
-            padding: 1rem;
-            color: #64748b;
-            border-top: 1px solid #1e293b;
-            margin-top: 1rem;
-            transition: border-color 0.3s, color 0.3s;
-        }
-
-        /* ========== BACKUP INFO ========== */
-        .backup-info {
-            font-size: 0.7rem;
-            padding: 2px 12px;
-            background: #1e293b;
-            border-radius: 4px;
-            color: #94a3b8;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        /* ========== MODALE ATTESTATION ========== */
-        #attestationModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        #attestationModal .modal-content {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            transition: background 0.3s, color 0.3s;
-        }
-        #attestationModal .close-btn {
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        #attestationModal .close-btn:hover { color: #e2e8f0; }
-        #attestationModal h2 {
-            margin: 0 0 1.5rem 0;
-            color: #e2e8f0;
-            font-weight: 400;
-            font-size: 1.2rem;
-        }
-        #attestationModal label {
-            display: block;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            color: #94a3b8;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-        #attestationModal input,
-        #attestationModal select {
-            width: 100%;
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid #2d3a4e;
-            background: #0f172a;
-            color: #e2e8f0;
-            font-size: 0.9rem;
-            transition: background 0.3s, border-color 0.3s, color 0.3s;
-            outline: none;
-        }
-        #attestationModal input:focus,
-        #attestationModal select:focus {
-            border-color: #60a5fa;
-        }
-        #attestationModal .form-grid {
+        .modal input:focus,
+        .modal select:focus { border-color: #60a5fa; }
+        .modal .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
-        #attestationModal .form-grid .full-width { grid-column: span 2; }
-        #attestationModal .btn-row {
+        .modal .form-grid .full-width { grid-column: span 2; }
+        .modal .btn-row {
             display: flex;
             gap: 12px;
             margin-top: 20px;
         }
-        #attestationModal .btn-generate {
+        .modal .btn-generate {
             flex: 1;
             background: #34d399;
             border: none;
@@ -812,8 +733,7 @@
             cursor: pointer;
             font-size: 0.9rem;
         }
-        #attestationModal .btn-generate:hover { background: #2dce89; }
-        #attestationModal .btn-cancel {
+        .modal .btn-cancel {
             flex: 1;
             background: #2d3a4e;
             border: none;
@@ -823,37 +743,52 @@
             cursor: pointer;
             font-size: 0.9rem;
         }
-        #attestationModal .btn-cancel:hover { background: #3d4a5e; }
-
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            header { padding: 1rem; }
-            .nav-bar { padding: 0.5rem 1rem; }
-            .filter-bar { padding: 0.5rem 1rem; }
-            .main-content { padding: 0.5rem 1rem; }
-            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
-            .vehicle-item { flex-direction: column; align-items: stretch; }
-            .vehicle-item .site-select { width: 100%; }
-            #attestationModal .form-grid { grid-template-columns: 1fr; }
-            #attestationModal .form-grid .full-width { grid-column: span 1; }
-            #attestationModal .modal-content { padding: 1.2rem; }
-            #editModal .modal-content { padding: 1.2rem; }
+        .modal .btn-save {
+            flex: 1;
+            background: #60a5fa;
+            border: none;
+            color: #0f172a;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
         }
-        @media (max-width: 480px) {
-            .dashboard-grid { grid-template-columns: 1fr 1fr; }
-            .stats .stat-card { min-width: 70px; }
+        .history-detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            margin-top: 10px;
+        }
+        .history-detail-table th,
+        .history-detail-table td {
+            padding: 6px 8px;
+            text-align: left;
+            border-bottom: 1px solid #1e293b;
+        }
+        .history-detail-table th {
+            background: #0f172a;
+            color: #94a3b8;
+            font-weight: 500;
+            font-size: 0.7rem;
+            text-transform: uppercase;
         }
 
-        /* ========== MODE TERRAIN ========== */
-        body.terrain-mode .present-check { width: 32px; height: 32px; }
-        body.terrain-mode .vehicle-item { padding: 14px; }
-        body.terrain-mode .nav-btn { padding: 10px 20px; font-size: 0.9rem; }
-        body.terrain-mode select,
-        body.terrain-mode input { padding: 10px 16px; font-size: 0.95rem; }
-        body.terrain-mode .stat-card { padding: 14px 20px; min-width: 130px; }
-        body.terrain-mode .vehicle-info strong { font-size: 1.2rem; }
-
-        /* ========== NOTIFICATION RECHERCHE CROISÉE ========== */
+        /* ========== FOOTER ========== */
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            padding: 1rem;
+            color: #64748b;
+            border-top: 1px solid #1e293b;
+            margin-top: 1rem;
+        }
+        .backup-info {
+            font-size: 0.7rem;
+            padding: 2px 12px;
+            background: #1e293b;
+            border-radius: 4px;
+            color: #94a3b8;
+        }
         .cross-search-notice {
             background: #1e3a5f;
             color: #60a5fa;
@@ -865,71 +800,90 @@
             gap: 8px;
         }
         .cross-search-notice.visible { display: inline-flex; }
-        body.light-mode .cross-search-notice {
-            background: #dbeafe;
-            color: #1e40af;
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            header { padding: 1rem; }
+            .nav-bar { padding: 0.5rem 1rem; }
+            .filter-bar { padding: 0.5rem 1rem; }
+            .main-content { padding: 0.5rem 1rem; }
+            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+            .vehicle-item { flex-direction: column; align-items: stretch; }
+            .vehicle-item .site-select { width: 100%; }
+            .modal .form-grid { grid-template-columns: 1fr; }
+            .modal .form-grid .full-width { grid-column: span 1; }
+            .modal .modal-content { padding: 1.2rem; }
+            .history-grid { grid-template-columns: 1fr; }
         }
+
+        /* ========== MODE TERRAIN ========== */
+        body.terrain-mode .present-check { width: 32px; height: 32px; }
+        body.terrain-mode .vehicle-item { padding: 14px; }
+        body.terrain-mode .nav-btn { padding: 10px 20px; font-size: 0.9rem; }
+        body.terrain-mode select,
+        body.terrain-mode input { padding: 10px 16px; font-size: 0.95rem; }
+        body.terrain-mode .stat-card { padding: 14px 20px; min-width: 130px; }
+        body.terrain-mode .vehicle-info strong { font-size: 1.2rem; }
     </style>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0f172a">
 </head>
 <body>
-
-    <!-- ========== HEADER ========== -->
+<!-- ⚠️ La suite du HTML viendra dans la partie B -->
+        <!-- ========== HEADER ========== -->
     <header>
         <div class="logo">
             <h1>STOCK<span>VÉHICULES</span></h1>
-            <span class="badge">v2.3</span>
+            <span class="badge">v3.0 · Firebase</span>
         </div>
         <div class="header-right">
-            <span id="backupInfo" class="backup-info">📦 Aucune sauvegarde</span>
+            <span id="connectionStatus">
+                <span class="connection-dot online" id="connectionDot"></span>
+                <span id="connectionText">En ligne</span>
+            </span>
+            <span id="backupInfo" class="backup-info">💾 Sync OK</span>
+            <span class="user-badge" id="userBadge">👤 <span id="userName">Romaric Tanoh</span></span>
             <button id="darkModeToggle" class="nav-btn" style="font-size:1.1rem;background:transparent;color:#94a3b8;padding:4px 8px;">☀️</button>
         </div>
     </header>
 
+    <!-- ========== BANNIÈRE RONDE ========== -->
+    <div class="ronde-banner" id="rondeBanner">
+        <div class="info">
+            <span>🔵 <strong>Ronde en cours</strong></span>
+            <span id="rondeStartTime"></span>
+            <span id="rondeCounter"></span>
+        </div>
+        <button id="closeRondeBtn">🔴 Clôturer la ronde</button>
+    </div>
+
     <!-- ========== NAVIGATION ========== -->
     <nav class="nav-bar">
-        <div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center;">
-            <input type="file" id="excelInput" accept=".xlsx, .xls" style="display:none" />
-            <button id="importBtn" class="nav-btn primary">📂 Importer</button>
-            <select id="importSourceSelect" style="background:#1e293b;border:1px solid #2d3a4e;color:#e2e8f0;padding:4px 10px;border-radius:4px;font-size:0.75rem;">
-                <option value="source1">📦 Source 1</option>
-                <option value="source2">📦 Source 2</option>
-            </select>
-            <span id="importStatus" style="font-size:0.65rem;color:#64748b;margin-left:4px;"></span>
-        </div>
+        <button id="startRondeBtn" class="nav-btn ronde-active">🔵 Démarrer une ronde</button>
         <span class="nav-divider"></span>
-        <button id="saveBackupBtn" class="nav-btn accent">💾 Sauvegarder</button>
-        <button id="restoreBackupBtn" class="nav-btn accent">↩️ Restaurer</button>
-        <button id="resetCheckBtn" class="nav-btn" style="color:#f87171;">🔄 Réinitialiser</button>
+        
+        <input type="file" id="excelInput" accept=".xlsx, .xls" style="display:none" />
+        <button id="importBtn" class="nav-btn primary">📂 Importer</button>
+        <select id="importSourceSelect" style="background:#1e293b;border:1px solid #2d3a4e;color:#e2e8f0;padding:4px 10px;border-radius:4px;font-size:0.75rem;">
+            <option value="source1">📦 Garage HR</option>
+            <option value="source2">📦 Garage UM</option>
+        </select>
+        <span id="importStatus" style="font-size:0.65rem;color:#64748b;margin-left:4px;"></span>
+        
         <span class="nav-divider"></span>
-        <button id="exportBackupBtn" class="nav-btn">📤 Exporter</button>
-        <button id="importBackupBtn" class="nav-btn">📥 Importer</button>
-        <input type="file" id="backupFileInput" accept=".json" style="display:none" />
+        
+        <button id="tabVehiculesBtn" class="nav-btn primary active">🚗 Véhicules</button>
+        <button id="tabHistoriqueBtn" class="nav-btn">📜 Historique</button>
+        <button id="tabArchivesBtn" class="nav-btn">🗂️ Archives</button>
+        <button id="tabGraphiquesBtn" class="nav-btn">📊 Graphiques</button>
+        
         <span class="nav-divider"></span>
-        <button id="dashboardToggleBtn" class="nav-btn">📊 Dashboard</button>
+        
         <button id="galleryToggleBtn" class="nav-btn">🖼️ Galerie</button>
-        <button id="timerToggleBtn" class="nav-btn">⏱️ Chrono</button>
         <button id="terrainModeBtn" class="nav-btn">📱 Terrain</button>
-        <button id="reportBtn" class="nav-btn">📋 Rapport</button>
-        <span class="nav-divider"></span>
-        <button id="exportPresentExcel" class="nav-btn" style="color:#60a5fa;">✅ Présents</button>
-        <button id="exportAbsentExcel" class="nav-btn" style="color:#f87171;">❌ Absents</button>
-        <span class="nav-divider"></span>
-        <button id="exportAbsentSource1Word" class="nav-btn" style="color:#60a5fa;">📄 Absents S1</button>
-        <button id="exportAbsentSource2Word" class="nav-btn" style="color:#f87171;">📄 Absents S2</button>
-        <button id="exportPresentSiteWord" class="nav-btn" style="color:#34d399;">📄 Présents par site</button>
-        <span class="nav-divider"></span>
+        <button id="exportPresentExcel" class="nav-btn" style="color:#60a5fa;">✅ Présents Excel</button>
+        <button id="exportAbsentExcel" class="nav-btn" style="color:#f87171;">❌ Absents Excel</button>
+        <button id="reportBtn" class="nav-btn">📋 Rapport PDF</button>
         <button id="attestationBtn" class="nav-btn" style="color:#fbbf24;">📄 Attestation</button>
     </nav>
-
-    <!-- ========== TIMER ========== -->
-    <div id="timerContainer" class="timer-container">
-        <span class="timer-display" id="timerDisplay">00:00:00</span>
-        <button id="timerStartBtn" class="nav-btn accent">▶️ Démarrer</button>
-        <button id="timerStopBtn" class="nav-btn" style="color:#f87171;">⏹️ Arrêter</button>
-        <button id="timerResetBtn" class="nav-btn">🔄 Reset</button>
-    </div>
 
     <!-- ========== FILTRES ========== -->
     <div class="filter-bar">
@@ -941,8 +895,8 @@
         <label>🏷️ Source</label>
         <select id="sourceFilterSelect">
             <option value="all">📦 Toutes</option>
-            <option value="source1">📦 Source 1</option>
-            <option value="source2">📦 Source 2</option>
+            <option value="source1">📦 Garage HR</option>
+            <option value="source2">📦 Garage UM</option>
             <option value="custom">✏️ Ajouts manuels</option>
         </select>
         <label>🔧 Type</label>
@@ -961,70 +915,114 @@
     <!-- ========== CONTENU PRINCIPAL ========== -->
     <div class="main-content">
 
-        <!-- DASHBOARD -->
-        <div id="dashboardContainer" class="dashboard-container">
-            <h2>📊 Tableau de bord</h2>
-            <div class="dashboard-grid" id="dashboardGrid">
-                <div class="dash-card"><p class="number" id="dashTotal">0</p><p class="label">Total</p></div>
-                <div class="dash-card"><p class="number" id="dashPresent">0</p><p class="label">✅ Présents</p></div>
-                <div class="dash-card"><p class="number" id="dashAbsent">0</p><p class="label">❌ Absents</p></div>
-                <div class="dash-card">
-                    <p class="number" id="dashCompletion">0%</p>
-                    <p class="label">📊 Complétion</p>
-                    <div class="bar"><div class="bar-fill" id="dashBar" style="width:0%;"></div></div>
+        <!-- ONGLET VÉHICULES -->
+        <div id="tabVehicules" class="tab-section active">
+            <div id="dashboardContainer" class="dashboard-container">
+                <h2>📊 Tableau de bord</h2>
+                <div class="dashboard-grid">
+                    <div class="dash-card"><p class="number" id="dashTotal">0</p><p class="label">Total</p></div>
+                    <div class="dash-card"><p class="number" id="dashPresent" style="color:#10b981;">0</p><p class="label">✅ Présents</p></div>
+                    <div class="dash-card"><p class="number" id="dashAbsent" style="color:#ef4444;">0</p><p class="label">❌ Absents</p></div>
+                    <div class="dash-card">
+                        <p class="number" id="dashCompletion">0%</p>
+                        <p class="label">📊 Complétion</p>
+                        <div class="bar"><div class="bar-fill" id="dashBar" style="width:0%;"></div></div>
+                    </div>
+                </div>
+                <div class="dash-sites" id="dashSites"></div>
+                <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:15px;font-size:0.75rem;color:#94a3b8;">
+                    <span>📦 Garage HR: <strong id="source1Count">0</strong></span>
+                    <span>📦 Garage UM: <strong id="source2Count">0</strong></span>
+                    <span>✏️ Ajouts manuels: <strong id="customCount">0</strong></span>
                 </div>
             </div>
-            <div class="dash-sites" id="dashSites"></div>
-            <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:15px;font-size:0.75rem;color:#94a3b8;">
-                <span>📦 Source 1: <span id="source1Count">0</span></span>
-                <span>📦 Source 2: <span id="source2Count">0</span></span>
-                <span>✏️ Ajouts manuels: <span id="customCount">0</span></span>
+
+            <div id="statsContainer" class="stats"></div>
+
+            <div id="galleryContainer" class="gallery-container">
+                <h3>🖼️ Galerie photos</h3>
+                <div id="galleryContent"><p style="color:#64748b;font-size:0.8rem;">Aucune photo</p></div>
+            </div>
+
+            <div class="vehicles-container">
+                <div class="header-row">
+                    <h2>📋 Véhicules</h2>
+                    <span class="badge-count" id="resultCountBadge">0</span>
+                </div>
+                <div id="listContainer">Chargement...</div>
+            </div>
+
+            <div class="add-section">
+                <h3>➕ Ajouter un véhicule manuellement</h3>
+                <div class="add-form">
+                    <input type="text" id="newImmat" placeholder="Immatriculation *" required>
+                    <input type="text" id="newMarque" placeholder="Marque">
+                    <input type="text" id="newModele" placeholder="Modèle">
+                    <select id="newSite">
+                        <option value="Garage HR 1">Garage HR 1</option>
+                        <option value="Garage HR 2">Garage HR 2</option>
+                        <option value="Garage UM">Garage UM</option>
+                        <option value="Garage UNICARS">Garage UNICARS</option>
+                        <option value="Garage A+">Garage A+</option>
+                        <option value="Dépôt 1">Dépôt 1</option>
+                        <option value="Dépôt Aéroport">Dépôt Aéroport</option>
+                    </select>
+                    <button id="addVehicleBtn" class="nav-btn primary">✅ Ajouter</button>
+                </div>
             </div>
         </div>
 
-        <!-- STATS -->
-        <div id="statsContainer" class="stats"></div>
-
-        <!-- GALERIE -->
-        <div id="galleryContainer" class="gallery-container">
-            <h3>🖼️ Galerie photos</h3>
-            <div id="galleryContent"><p style="color:#64748b;font-size:0.8rem;">Aucune photo</p></div>
-        </div>
-
-        <!-- LISTE -->
-        <div class="vehicles-container">
-            <div class="header-row">
-                <h2>📋 Véhicules</h2>
-                <span class="badge-count" id="resultCountBadge">0</span>
+        <!-- ONGLET HISTORIQUE -->
+        <div id="tabHistorique" class="tab-section">
+            <div class="history-container">
+                <h2>📜 Historique des rondes</h2>
+                <div id="historyStats" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;font-size:0.75rem;color:#94a3b8;"></div>
+                <div class="history-grid" id="historyGrid">
+                    <p style="color:#64748b;">Chargement...</p>
+                </div>
             </div>
-            <div id="listContainer">Chargement...</div>
         </div>
 
-        <!-- AJOUT -->
-        <div class="add-section">
-            <h3>➕ Ajouter un véhicule manuellement</h3>
-            <div class="add-form">
-                <input type="text" id="newImmat" placeholder="Immatriculation *" required>
-                <input type="text" id="newMarque" placeholder="Marque">
-                <input type="text" id="newModele" placeholder="Modèle">
-                <select id="newSite">
-                    <option value="Garage 1">Garage 1</option>
-                    <option value="Garage 2">Garage 2</option>
-                    <option value="Garage 3">Garage 3</option>
-                    <option value="Garage A+">Garage A+</option>
-                    <option value="Dépôt 1">Dépôt 1</option>
-                    <option value="Dépôt Aéroport">Dépôt Aéroport</option>
-                </select>
-                <button id="addVehicleBtn" class="nav-btn primary">✅ Ajouter</button>
+        <!-- ONGLET ARCHIVES -->
+        <div id="tabArchives" class="tab-section">
+            <div class="archives-container">
+                <h2>🗂️ Archives par année et mois</h2>
+                <div id="archivesContent">
+                    <p style="color:#64748b;">Chargement...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ONGLET GRAPHIQUES -->
+        <div id="tabGraphiques" class="tab-section">
+            <div class="history-container">
+                <h2>📊 Évolution des rondes</h2>
+                <div id="chartsContent">
+                    <p style="color:#64748b;">Chargement...</p>
+                </div>
             </div>
         </div>
 
     </div>
 
-    <footer>Hors ligne actif · Dernière synchro : <span id="lastSync">jamais</span></footer>
+    <footer>NTR Garage · Stock Véhicules v3.0 · Firebase + Cloudinary</footer>
 
-    <!-- ========== MODALE ATTESTATION ========== -->
-    <div id="attestationModal">
+    <!-- MODALE UTILISATEUR -->
+    <div id="userModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <button class="close-btn" id="closeUserModalBtn">✕</button>
+            <h2>👤 Utilisateur</h2>
+            <label>Votre nom (affiché sur les rondes)</label>
+            <input type="text" id="userNameInput" placeholder="Ex: Romaric Tanoh">
+            <div class="btn-row">
+                <button class="btn-generate" id="saveUserBtn">💾 Enregistrer</button>
+                <button class="btn-cancel" id="cancelUserBtn">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE ATTESTATION -->
+    <div id="attestationModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" id="closeModalBtn">✕</button>
             <h2>📄 GÉNÉRER UNE ATTESTATION</h2>
@@ -1045,9 +1043,9 @@
         </div>
     </div>
 
-    <!-- ========== MODALE ÉDITION ========== -->
-    <div id="editModal">
-        <div class="modal-content">
+    <!-- MODALE ÉDITION -->
+    <div id="editModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
             <button class="close-btn" id="closeEditModalBtn">✕</button>
             <h2>✏️ Modifier le véhicule</h2>
             <input type="hidden" id="editVehicleId">
@@ -1068,38 +1066,136 @@
         </div>
     </div>
 
+    <!-- MODALE DÉTAIL RONDE -->
+    <div id="historyDetailModal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <button class="close-btn" id="closeHistoryDetailBtn">✕</button>
+            <h2 id="historyDetailTitle">📜 Détail de la ronde</h2>
+            <div id="historyDetailContent"></div>
+            <div class="btn-row">
+                <button class="btn-generate" id="exportHistoryPdfBtn">📄 Export PDF</button>
+                <button class="btn-cancel" id="closeHistoryDetailBtn2">Fermer</button>
+            </div>
+        </div>
+    </div>
+        <!-- ==================== SCRIPT FIREBASE ==================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { 
+            getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, 
+            onSnapshot, query, getDocs, writeBatch, serverTimestamp,
+            enableIndexedDbPersistence, getDoc
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAxfEpi-NERVExxVYD2EmH7JppiIQDwWOM",
+            authDomain: "ntr-garage.firebaseapp.com",
+            databaseURL: "https://ntr-garage-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "ntr-garage",
+            storageBucket: "ntr-garage.firebasestorage.app",
+            messagingSenderId: "606167388967",
+            appId: "1:606167388967:web:7ad669fd353cdeeb7a8f02"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        try {
+            await enableIndexedDbPersistence(db);
+            console.log("✅ Mode hors-ligne activé");
+        } catch (err) {
+            if (err.code === 'failed-precondition') {
+                console.warn("⚠️ Persistance impossible : plusieurs onglets");
+            } else if (err.code === 'unimplemented') {
+                console.warn("⚠️ Persistance non supportée");
+            }
+        }
+
+        window.db = db;
+        window.collection = collection;
+        window.addDoc = addDoc;
+        window.updateDoc = updateDoc;
+        window.deleteDoc = deleteDoc;
+        window.doc = doc;
+        window.onSnapshot = onSnapshot;
+        window.query = query;
+        window.getDocs = getDocs;
+        window.writeBatch = writeBatch;
+        window.serverTimestamp = serverTimestamp;
+        window.getDoc = getDoc;
+
+        window.dispatchEvent(new Event('firebaseReady'));
+    </script>
+
     <script>
         // ==================== CONFIGURATION ====================
-        const SITE_OPTIONS = ["Garage 1", "Garage 2", "Garage 3", "Garage A+", "Dépôt 1", "Dépôt Aéroport"];
-        const STORAGE_BACKUP_KEY = "ronde_vehicules_backup";
-        
-        let db;
+        const SITE_OPTIONS = [
+            "Garage HR 1", "Garage HR 2", "Garage UM", 
+            "Garage UNICARS", "Garage A+", "Dépôt 1", "Dépôt Aéroport"
+        ];
+        const SOURCE_LABELS = {
+            source1: "Garage HR",
+            source2: "Garage UM",
+            custom: "Ajout manuel"
+        };
+
+        // ==================== CLOUDINARY ====================
+        const CLOUDINARY_CLOUD_NAME = "u1wzoxod";
+        const CLOUDINARY_UPLOAD_PRESET = "stock_vehicules";
+        const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+
+        // ==================== ÉTAT GLOBAL ====================
+        let firebasePret = false;
         let allVehicles = [];
+        let allRondes = [];
+        let currentUser = localStorage.getItem("stock_userName") || "Romaric Tanoh";
         let currentSiteFilter = "all";
         let currentSearch = "";
         let currentSourceFilter = "all";
         let currentTypeFilter = "all";
-        let timerSeconds = 0;
-        let timerInterval = null;
-        let timerRunning = false;
         let currentImportSource = "source1";
+        let currentTab = "vehicules";
         
-        const statsContainer = document.getElementById("statsContainer");
-        const listContainer = document.getElementById("listContainer");
-        const siteFilterSelect = document.getElementById("siteFilterSelect");
-        const sourceFilterSelect = document.getElementById("sourceFilterSelect");
-        const typeFilter = document.getElementById("typeFilter");
-        const searchInput = document.getElementById("searchInput");
-        const resultCountSpan = document.getElementById("resultCount");
-        const resultCountBadge = document.getElementById("resultCountBadge");
-        const lastSyncSpan = document.getElementById("lastSync");
-        const backupInfoSpan = document.getElementById("backupInfo");
-        const dashboardContainer = document.getElementById("dashboardContainer");
-        const galleryContainer = document.getElementById("galleryContainer");
-        const timerContainer = document.getElementById("timerContainer");
-        const timerDisplay = document.getElementById("timerDisplay");
-        const crossSearchNotice = document.getElementById("crossSearchNotice");
-        const importStatus = document.getElementById("importStatus");
+        let rondeEnCours = null;
+        let rondeStartTime = null;
+        let rondeSnapshotDepart = [];
+
+        let unsubscribeVehicules = null;
+        let unsubscribeRondes = null;
+
+        const $ = (id) => document.getElementById(id);
+        const listContainer = $("listContainer");
+        const statsContainer = $("statsContainer");
+        const siteFilterSelect = $("siteFilterSelect");
+        const sourceFilterSelect = $("sourceFilterSelect");
+        const typeFilter = $("typeFilter");
+        const searchInput = $("searchInput");
+        const resultCountSpan = $("resultCount");
+        const resultCountBadge = $("resultCountBadge");
+        const backupInfoSpan = $("backupInfo");
+        const crossSearchNotice = $("crossSearchNotice");
+        const importStatus = $("importStatus");
+        const userNameSpan = $("userName");
+
+        // ==================== UTILISATEUR ====================
+        function updateUserDisplay() { userNameSpan.textContent = currentUser; }
+        updateUserDisplay();
+
+        $("userBadge").onclick = () => {
+            $("userNameInput").value = currentUser;
+            $("userModal").style.display = "flex";
+        };
+        $("closeUserModalBtn").onclick = () => $("userModal").style.display = "none";
+        $("cancelUserBtn").onclick = () => $("userModal").style.display = "none";
+        $("saveUserBtn").onclick = () => {
+            const name = $("userNameInput").value.trim();
+            if (!name) { alert("Veuillez saisir un nom"); return; }
+            currentUser = name;
+            localStorage.setItem("stock_userName", name);
+            updateUserDisplay();
+            $("userModal").style.display = "none";
+            alert(`✅ Bienvenue ${name} !`);
+        };
 
         // ==================== BIP ====================
         function playBeep() {
@@ -1107,273 +1203,215 @@
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.frequency.value = 880;
-                osc.type = "sine";
-                gain.gain.value = 0.1;
-                osc.start(ctx.currentTime);
-                osc.stop(ctx.currentTime + 0.06);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.frequency.value = 880; osc.type = "sine"; gain.gain.value = 0.1;
+                osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.06);
             } catch(e) {}
         }
 
-        // ==================== INDEXEDDB ====================
-        function openDB() {
-            return new Promise((resolve, reject) => {
-                const req = indexedDB.open("RondePresenceDB", 14);
-                req.onerror = () => reject("DB error");
-                req.onsuccess = (e) => { db = e.target.result; resolve(); };
-                req.onupgradeneeded = (e) => {
-                    const db = e.target.result;
-                    if (!db.objectStoreNames.contains("vehicules")) {
-                        db.createObjectStore("vehicules", { keyPath: "id" });
-                    }
-                };
-            });
-        }
-        
-        async function saveVehicle(v) {
-            const tx = db.transaction("vehicules", "readwrite");
-            tx.objectStore("vehicules").put(v);
-            return tx.complete;
-        }
-        
-        async function saveMultipleVehicles(vehicles) {
-            const tx = db.transaction("vehicules", "readwrite");
-            const store = tx.objectStore("vehicules");
-            for (let v of vehicles) store.put(v);
-            return tx.complete;
-        }
-        
-        async function getAllVehicles() {
-            return new Promise((resolve) => {
-                const tx = db.transaction("vehicules", "readonly");
-                const req = tx.objectStore("vehicules").getAll();
-                req.onsuccess = () => resolve(req.result || []);
-            });
-        }
-        
-        async function clearVehicles() {
-            const tx = db.transaction("vehicules", "readwrite");
-            tx.objectStore("vehicules").clear();
-            return tx.complete;
-        }
-
-        async function deleteVehicle(id) {
-            const tx = db.transaction("vehicules", "readwrite");
-            tx.objectStore("vehicules").delete(id);
-            return tx.complete;
-        }
-
-        async function deleteVehiclesBySource(source) {
-            const vehicles = await getAllVehicles();
-            const toDelete = vehicles.filter(v => v.source === source);
-            for (let v of toDelete) {
-                await deleteVehicle(v.id);
-            }
-            return toDelete.length;
-        }
-
-        // ==================== SAUVEGARDE ====================
-        function getBackupData() {
-            return allVehicles.map(v => ({
-                id: v.id,
-                immat: v.immat,
-                present: v.present,
-                site: v.site,
-                lastSeen: v.lastSeen,
-                isCustom: v.isCustom || false,
-                client: v.client || "",
-                marque: v.marque || "",
-                modele: v.modele || "",
-                refCommande: v.refCommande || "",
-                typeMaintenance: v.typeMaintenance || "",
-                source: v.source || "source1"
-            }));
-        }
-
-        function saveBackupToLocalStorage(data) {
-            try {
-                const jsonData = JSON.stringify(data);
-                const sizeKB = Math.round(jsonData.length / 1024);
-                console.log(`📦 Taille sauvegarde : ${sizeKB} KB`);
-                
-                if (jsonData.length > 4 * 1024 * 1024) {
-                    if (!confirm("⚠️ La sauvegarde est volumineuse (" + sizeKB + " KB). Continuer ?")) {
-                        return;
-                    }
-                }
-                
-                localStorage.setItem(STORAGE_BACKUP_KEY, jsonData);
-                const date = new Date().toLocaleString();
-                backupInfoSpan.innerHTML = `💾 Sauvegardé ${date}`;
-                setTimeout(() => {
-                    if (!localStorage.getItem(STORAGE_BACKUP_KEY)) return;
-                    backupInfoSpan.innerHTML = `📦 Sauvegarde (${date})`;
-                }, 3000);
-                alert("✅ Sauvegarde réussie ! (" + sizeKB + " KB)");
-            } catch (e) {
-                console.error("Erreur sauvegarde:", e);
-                if (e.name === "QuotaExceededError" || e.message.includes("quota")) {
-                    alert("❌ Erreur : la sauvegarde est trop volumineuse.\n\n💡 Solutions :\n• Supprimez les photos inutiles\n• Exportez la sauvegarde en fichier JSON\n• Videz le cache du navigateur");
-                } else {
-                    alert("❌ Erreur lors de la sauvegarde: " + e.message);
-                }
+        // ==================== CONNEXION ====================
+        function updateConnectionStatus() {
+            const dot = $("connectionDot"), text = $("connectionText");
+            if (navigator.onLine) {
+                dot.className = "connection-dot online"; text.textContent = "En ligne";
+            } else {
+                dot.className = "connection-dot offline"; text.textContent = "Hors-ligne";
             }
         }
+        window.addEventListener("online", updateConnectionStatus);
+        window.addEventListener("offline", updateConnectionStatus);
+        updateConnectionStatus();
 
-        function saveBackup() {
-            try {
-                const backup = getBackupData();
-                saveBackupToLocalStorage(backup);
-            } catch (e) {
-                console.error("Erreur saveBackup:", e);
-                alert("❌ Erreur: " + e.message);
+        // ==================== INIT FIREBASE ====================
+        window.addEventListener("firebaseReady", () => {
+            firebasePret = true;
+            console.log("🔥 Firebase prêt");
+            initialiserEcouteFirebase();
+        });
+
+        setTimeout(() => {
+            if (!firebasePret) {
+                console.warn("⚠️ Firebase n'a pas répondu");
+                alert("⚠️ Firebase n'a pas pu se charger. Vérifiez votre connexion.");
             }
-        }
-        
-        async function restoreBackupFromData(data) {
-            try {
-                let restoredCount = 0;
-                let customCount = 0;
-                for (let b of data) {
-                    const existing = allVehicles.find(v => v.id === b.id);
-                    if (existing) {
-                        existing.present = b.present;
-                        existing.site = b.site;
-                        existing.lastSeen = b.lastSeen;
-                        existing.client = b.client || existing.client;
-                        existing.marque = b.marque || existing.marque;
-                        existing.modele = b.modele || existing.modele;
-                        existing.refCommande = b.refCommande || existing.refCommande;
-                        existing.typeMaintenance = b.typeMaintenance || existing.typeMaintenance;
-                        existing.isCustom = b.isCustom || false;
-                        existing.source = b.source || existing.source || "source1";
-                        await saveVehicle(existing);
-                        restoredCount++;
-                    } else {
-                        await saveVehicle({
-                            id: b.id,
-                            immat: b.immat || "inconnu",
-                            client: b.client || "Ajout manuel",
-                            marque: b.marque || "",
-                            modele: b.modele || "",
-                            refCommande: b.refCommande || "",
-                            typeMaintenance: b.typeMaintenance || "",
-                            present: b.present || false,
-                            site: b.site || null,
-                            lastSeen: b.lastSeen || null,
-                            photo: null,
-                            isCustom: true,
-                            source: b.source || "custom"
-                        });
-                        customCount++;
-                    }
-                }
-                allVehicles = await getAllVehicles();
-                updateSiteFilterOptions();
+        }, 5000);
+
+        // ==================== ÉCOUTE FIRESTORE ====================
+        function initialiserEcouteFirebase() {
+            if (unsubscribeVehicules) unsubscribeVehicules();
+            if (unsubscribeRondes) unsubscribeRondes();
+
+            const qVehicules = query(collection(db, "vehicules"));
+            unsubscribeVehicules = onSnapshot(qVehicules, (snapshot) => {
+                allVehicles = [];
+                snapshot.forEach((docSnap) => allVehicles.push({ id: docSnap.id, ...docSnap.data() }));
+                console.log(`📦 ${allVehicles.length} véhicules`);
                 renderAll();
-                alert(`✅ Restauration terminée !\n📦 ${restoredCount} véhicules mis à jour\n✏️ ${customCount} ajouts manuels créés`);
-            } catch (e) {
-                console.error("Erreur restore:", e);
-                alert("❌ Erreur lors de la restauration: " + e.message);
-            }
+                indicateurSync();
+            }, (error) => {
+                console.error("Erreur Firestore:", error);
+                alert("❌ Erreur de chargement : " + error.message);
+            });
+
+            const qRondes = query(collection(db, "rondes"));
+            unsubscribeRondes = onSnapshot(qRondes, (snapshot) => {
+                allRondes = [];
+                snapshot.forEach((docSnap) => allRondes.push({ id: docSnap.id, ...docSnap.data() }));
+                allRondes.sort((a, b) => {
+                    const da = a.heureFin || ""; const db2 = b.heureFin || "";
+                    return db2.localeCompare(da);
+                });
+                console.log(`📜 ${allRondes.length} rondes`);
+                renderHistorique();
+                renderArchives();
+                renderGraphiques();
+            }, (error) => console.error("Erreur rondes:", error));
         }
 
-        async function restoreBackup() {
-            const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
-            if (!backup) { alert("❌ Aucune sauvegarde"); return; }
-            if (!confirm("Restaurer la sauvegarde ?")) return;
-            try {
-                await restoreBackupFromData(JSON.parse(backup));
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
-            }
-        }
-        
-        async function resetOnlyCheckboxes() {
-            if (!confirm("Réinitialiser les cases et effacer la sauvegarde ?")) return;
-            try {
-                for (let v of allVehicles) {
-                    v.present = false; v.site = null; v.lastSeen = null;
-                    await saveVehicle(v);
-                }
-                localStorage.removeItem(STORAGE_BACKUP_KEY);
-                await loadAndDisplay();
-                backupInfoSpan.innerHTML = "🔄 Réinitialisé";
-                alert("✅ Réinitialisation terminée");
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
-            }
+        function indicateurSync() {
+            backupInfoSpan.innerHTML = "💾 Sync OK";
+            clearTimeout(window._syncTimer);
+            window._syncTimer = setTimeout(() => { backupInfoSpan.innerHTML = "💾 Synchronisé"; }, 500);
         }
 
-        // ==================== EXPORT/IMPORT BACKUP ====================
-        function exportBackupFile() {
-            try {
-                const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
-                if (!backup) { alert("❌ Aucune sauvegarde"); return; }
-                const blob = new Blob([backup], { type: "application/json" });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = `sauvegarde_${new Date().toISOString().slice(0,19)}.json`;
-                document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                alert("✅ Sauvegarde exportée avec succès !");
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
-            }
-        }
-
-        function importBackupFile() {
-            document.getElementById("backupFileInput").click();
-            document.getElementById("backupFileInput").onchange = (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = async (ev) => {
-                    try {
-                        const data = JSON.parse(ev.target.result);
-                        if (!Array.isArray(data) || data.length === 0) {
-                            alert("❌ Fichier invalide"); return;
-                        }
-                        localStorage.setItem(STORAGE_BACKUP_KEY, JSON.stringify(data));
-                        backupInfoSpan.innerHTML = `📥 Importé ${new Date().toLocaleString()}`;
-                        if (confirm("✅ Fichier importé. Restaurer maintenant ?")) {
-                            await restoreBackupFromData(data);
-                        }
-                    } catch (error) {
-                        alert("❌ Erreur: " + error.message);
-                    }
-                };
-                reader.readAsText(file);
+        // ==================== ONGLETS ====================
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll(".tab-section").forEach(s => s.classList.remove("active"));
+            document.querySelectorAll("[id^='tab'][id$='Btn']").forEach(b => b.classList.remove("active"));
+            
+            const map = {
+                vehicules: ["tabVehicules", "tabVehiculesBtn"],
+                historique: ["tabHistorique", "tabHistoriqueBtn"],
+                archives: ["tabArchives", "tabArchivesBtn"],
+                graphiques: ["tabGraphiques", "tabGraphiquesBtn"]
             };
+            if (map[tab]) {
+                $(map[tab][0]).classList.add("active");
+                $(map[tab][1]).classList.add("active");
+            }
+            
+            if (tab === "historique") renderHistorique();
+            if (tab === "archives") renderArchives();
+            if (tab === "graphiques") renderGraphiques();
+        }
+        $("tabVehiculesBtn").onclick = () => switchTab("vehicules");
+        $("tabHistoriqueBtn").onclick = () => switchTab("historique");
+        $("tabArchivesBtn").onclick = () => switchTab("archives");
+        $("tabGraphiquesBtn").onclick = () => switchTab("graphiques");
+
+        // ==================== RONDES ====================
+        $("startRondeBtn").onclick = async () => {
+            if (rondeEnCours) { alert("⚠️ Une ronde est déjà en cours."); return; }
+            if (allVehicles.length === 0) { alert("⚠️ Aucun véhicule chargé."); return; }
+            if (!confirm(`Démarrer une nouvelle ronde ?\n\nUtilisateur : ${currentUser}\nVéhicules : ${allVehicles.length}`)) return;
+            
+            rondeSnapshotDepart = allVehicles.map(v => ({ id: v.id, immat: v.immat, present: v.present, site: v.site }));
+            rondeStartTime = new Date();
+            rondeEnCours = true;
+            
+            $("rondeBanner").classList.add("visible");
+            $("rondeStartTime").textContent = `Début : ${rondeStartTime.toLocaleTimeString()}`;
+            updateRondeCounter();
+            $("startRondeBtn").disabled = true;
+            $("startRondeBtn").style.opacity = "0.5";
+            
+            alert("✅ Ronde démarrée ! Cochez les véhicules.");
+        };
+
+        function updateRondeCounter() {
+            if (!rondeEnCours) return;
+            const total = allVehicles.length;
+            const presents = allVehicles.filter(v => v.present).length;
+            $("rondeCounter").textContent = `📍 ${presents} / ${total} présents`;
+        }
+
+        $("closeRondeBtn").onclick = async () => {
+            if (!rondeEnCours) return;
+            const presents = allVehicles.filter(v => v.present).length;
+            const absents = allVehicles.length - presents;
+            
+            if (!confirm(`Clôturer la ronde ?\n\n📊 Total : ${allVehicles.length}\n✅ Présents : ${presents}\n❌ Absents : ${absents}\n\nSauvegardée dans l'historique.`)) return;
+            
+            try {
+                const comparaison = calculerComparaison();
+                const stats = {
+                    total: allVehicles.length,
+                    presents: presents,
+                    absents: absents,
+                    source1: allVehicles.filter(v => v.source === "source1").length,
+                    source2: allVehicles.filter(v => v.source === "source2").length,
+                    custom: allVehicles.filter(v => v.isCustom).length
+                };
+                const vehiculesSnapshot = allVehicles.map(v => ({
+                    immat: v.immat, marque: v.marque || "", modele: v.modele || "",
+                    client: v.client || "", present: v.present || false,
+                    site: v.site || null, source: v.source || "source1"
+                }));
+                
+                await window.addDoc(window.collection(db, "rondes"), {
+                    date: new Date().toISOString().slice(0, 10),
+                    heureDebut: rondeStartTime.toISOString(),
+                    heureFin: new Date().toISOString(),
+                    effectueePar: currentUser,
+                    stats: stats,
+                    vehicules: vehiculesSnapshot,
+                    comparaison: comparaison,
+                    createdAt: window.serverTimestamp()
+                });
+                
+                rondeEnCours = null;
+                rondeStartTime = null;
+                rondeSnapshotDepart = [];
+                $("rondeBanner").classList.remove("visible");
+                $("startRondeBtn").disabled = false;
+                $("startRondeBtn").style.opacity = "1";
+                
+                alert(`✅ Ronde clôturée !\n\nConsultez l'onglet 📜 Historique.`);
+            } catch (e) {
+                alert("❌ Erreur : " + e.message);
+            }
+        };
+
+        function calculerComparaison() {
+            const precedente = allRondes.length > 0 ? allRondes[0] : null;
+            if (!precedente) return { nouveaux: 0, partis: 0, changes: 0, message: "Première ronde" };
+            
+            const presentsAvant = new Set((precedente.vehicules || []).filter(v => v.present).map(v => v.immat));
+            const presentsMaintenant = new Set(allVehicles.filter(v => v.present).map(v => v.immat));
+            
+            const nouveaux = [...presentsMaintenant].filter(i => !presentsAvant.has(i)).length;
+            const partis = [...presentsAvant].filter(i => !presentsMaintenant.has(i)).length;
+            
+            let changes = 0;
+            (precedente.vehicules || []).forEach(vAvant => {
+                if (!vAvant.present) return;
+                const vMaintenant = allVehicles.find(v => v.immat === vAvant.immat);
+                if (vMaintenant && vMaintenant.present && vMaintenant.site !== vAvant.site) changes++;
+            });
+            
+            return { nouveaux, partis, changes, message: `+${nouveaux} nouveaux · -${partis} partis · ${changes} changements` };
         }
 
         // ==================== IMPORT EXCEL ====================
-        document.getElementById("importBtn").onclick = () => {
-            document.getElementById("excelInput").click();
-        };
-
-        document.getElementById("importSourceSelect").onchange = (e) => {
+        $("importBtn").onclick = () => $("excelInput").click();
+        $("importSourceSelect").onchange = (e) => {
             currentImportSource = e.target.value;
-            const sourceLabel = currentImportSource === "source1" ? "Source 1" : "Source 2";
-            importStatus.textContent = `📍 ${sourceLabel} sélectionnée`;
+            importStatus.textContent = `📍 ${SOURCE_LABELS[currentImportSource]} sélectionnée`;
         };
-        importStatus.textContent = "📍 Source 1 sélectionnée";
+        importStatus.textContent = `📍 ${SOURCE_LABELS.source1} sélectionnée`;
 
-        document.getElementById("excelInput").onchange = async (e) => {
+        $("excelInput").onchange = async (e) => {
             const file = e.target.files[0];
             if (!file) return;
             
             const source = currentImportSource;
-            const sourceLabel = source === "source1" ? "Source 1" : "Source 2";
-            
+            const sourceLabel = SOURCE_LABELS[source];
             const existingCount = allVehicles.filter(v => v.source === source).length;
+            
             if (existingCount > 0) {
-                if (!confirm(`⚠️ ${existingCount} véhicules de ${sourceLabel} existent déjà.\n\nVoulez-vous les remplacer par la nouvelle liste ?`)) {
-                    document.getElementById("excelInput").value = "";
-                    return;
+                if (!confirm(`⚠️ ${existingCount} véhicules de "${sourceLabel}" existent.\n\nRemplacer par la nouvelle liste ?`)) {
+                    e.target.value = ""; return;
                 }
             }
             
@@ -1385,237 +1423,208 @@
                     const sheet = workbook.Sheets[workbook.SheetNames[0]];
                     const rows = XLSX.utils.sheet_to_json(sheet);
                     
-                    const deleted = await deleteVehiclesBySource(source);
-                    console.log(`🗑️ ${deleted} véhicules supprimés de ${sourceLabel}`);
+                    const aSupprimer = allVehicles.filter(v => v.source === source);
+                    for (let v of aSupprimer) await window.deleteDoc(window.doc(db, "vehicules", v.id));
                     
-                    const vehicles = rows.map(row => ({
-                        id: (row["Immatriculation"] || "inconnu_" + Date.now() + "_" + Math.random()),
-                        immat: row["Immatriculation"] || "",
-                        client: row["Client"] || "",
-                        marque: row["Marque"] || "",
-                        modele: row["Modele"] || "",
-                        refCommande: row["Référence de commande"] || "",
-                        typeMaintenance: row["Type de Maintenance"] || "",
-                        present: false,
-                        site: null,
-                        lastSeen: null,
-                        photo: null,
-                        isCustom: false,
-                        source: source
-                    }));
-                    
-                    await saveMultipleVehicles(vehicles);
-                    await loadAndDisplay();
-                    lastSyncSpan.innerText = new Date().toLocaleString();
-                    alert(`✅ ${vehicles.length} véhicules importés (${sourceLabel})\n🗑️ ${deleted} anciens véhicules remplacés`);
+                    const batch = window.writeBatch(db);
+                    let count = 0;
+                    rows.forEach((row) => {
+                        const immat = row["Immatriculation"] || "";
+                        if (!immat) return;
+                        const newRef = window.doc(window.collection(db, "vehicules"));
+                        batch.set(newRef, {
+                            immat: immat,
+                            client: row["Client"] || "",
+                            marque: row["Marque"] || "",
+                            modele: row["Modele"] || "",
+                            refCommande: row["Référence de commande"] || "",
+                            typeMaintenance: row["Type de Maintenance"] || "",
+                            present: false, site: null, lastSeen: null, photo: null, photoPath: null,
+                            isCustom: false, source: source,
+                            createdAt: window.serverTimestamp()
+                        });
+                        count++;
+                    });
+                    await batch.commit();
+                    alert(`✅ ${count} véhicules importés (${sourceLabel})\n🗑️ ${aSupprimer.length} remplacés`);
                 } catch (err) {
-                    alert("❌ Erreur lors de l'import: " + err.message);
+                    alert("❌ Erreur import: " + err.message);
                 }
             };
             reader.readAsArrayBuffer(file);
-            document.getElementById("excelInput").value = "";
+            e.target.value = "";
         };
 
         // ==================== AJOUT MANUEL ====================
-        document.getElementById("addVehicleBtn").onclick = async () => {
-            const immat = document.getElementById("newImmat").value.trim();
+        $("addVehicleBtn").onclick = async () => {
+            const immat = $("newImmat").value.trim();
             if (!immat) { alert("Immatriculation requise"); return; }
-            const marque = document.getElementById("newMarque").value.trim();
-            const modele = document.getElementById("newModele").value.trim();
-            const site = document.getElementById("newSite").value;
-            if (allVehicles.some(v => v.immat === immat)) { alert("Existe déjà"); return; }
-            try {
-                const newVehicle = {
-                    id: immat + "_custom_" + Date.now(),
-                    immat: immat,
-                    client: "Ajout manuel",
-                    marque: marque,
-                    modele: modele,
-                    refCommande: "",
-                    typeMaintenance: "",
-                    present: true,
-                    site: site,
-                    lastSeen: new Date().toISOString(),
-                    photo: null,
-                    isCustom: true,
-                    source: "custom"
-                };
-                await saveVehicle(newVehicle);
-                document.getElementById("newImmat").value = "";
-                document.getElementById("newMarque").value = "";
-                document.getElementById("newModele").value = "";
-                await loadAndDisplay();
-                alert(`✅ ${immat} ajouté sur ${site}`);
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
+            const marque = $("newMarque").value.trim();
+            const modele = $("newModele").value.trim();
+            const site = $("newSite").value;
+            
+            if (allVehicles.some(v => v.immat.toUpperCase() === immat.toUpperCase())) {
+                alert("Ce véhicule existe déjà"); return;
             }
+            
+            try {
+                await window.addDoc(window.collection(db, "vehicules"), {
+                    immat: immat, client: "Ajout manuel", marque: marque, modele: modele,
+                    refCommande: "", typeMaintenance: "",
+                    present: true, site: site, lastSeen: new Date().toISOString(),
+                    photo: null, photoPath: null, isCustom: true, source: "custom",
+                    createdAt: window.serverTimestamp()
+                });
+                $("newImmat").value = ""; $("newMarque").value = ""; $("newModele").value = "";
+                alert(`✅ ${immat} ajouté sur ${site}`);
+            } catch (e) { alert("❌ Erreur: " + e.message); }
         };
 
         // ==================== SUPPRESSION ====================
         async function deleteCustomVehicle(id) {
-            if (!confirm("⚠️ Supprimer ce véhicule ? Cette action est irréversible.")) return;
+            if (!confirm("⚠️ Supprimer ce véhicule ?")) return;
             try {
-                await deleteVehicle(id);
-                await loadAndDisplay();
+                await window.deleteDoc(window.doc(db, "vehicules", id));
                 alert("✅ Véhicule supprimé");
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
-            }
+            } catch (e) { alert("❌ Erreur: " + e.message); }
         }
 
         // ==================== ÉDITION ====================
-        function openEditModal(vehicleId) {
-            const v = allVehicles.find(v => v.id === vehicleId);
+        function openEditModal(id) {
+            const v = allVehicles.find(x => x.id === id);
             if (!v) return;
-            document.getElementById("editVehicleId").value = v.id;
-            document.getElementById("editImmat").value = v.immat || "";
-            document.getElementById("editMarque").value = v.marque || "";
-            document.getElementById("editModele").value = v.modele || "";
-            document.getElementById("editClient").value = v.client || "";
-            document.getElementById("editTypeMaintenance").value = v.typeMaintenance || "";
-            document.getElementById("editModal").style.display = "flex";
+            $("editVehicleId").value = v.id;
+            $("editImmat").value = v.immat || "";
+            $("editMarque").value = v.marque || "";
+            $("editModele").value = v.modele || "";
+            $("editClient").value = v.client || "";
+            $("editTypeMaintenance").value = v.typeMaintenance || "";
+            $("editModal").style.display = "flex";
         }
-
-        document.getElementById("closeEditModalBtn").onclick = () => {
-            document.getElementById("editModal").style.display = "none";
-        };
-        document.getElementById("cancelEditBtn").onclick = () => {
-            document.getElementById("editModal").style.display = "none";
-        };
-        document.getElementById("editModal").addEventListener("click", (e) => {
-            if (e.target === e.currentTarget) {
-                document.getElementById("editModal").style.display = "none";
-            }
+        $("closeEditModalBtn").onclick = () => $("editModal").style.display = "none";
+        $("cancelEditBtn").onclick = () => $("editModal").style.display = "none";
+        $("editModal").addEventListener("click", (e) => {
+            if (e.target === e.currentTarget) $("editModal").style.display = "none";
         });
-
-        document.getElementById("saveEditBtn").onclick = async () => {
-            const id = document.getElementById("editVehicleId").value;
-            const v = allVehicles.find(v => v.id === id);
-            if (!v) { alert("Véhicule non trouvé"); return; }
-            
-            v.immat = document.getElementById("editImmat").value.trim() || v.immat;
-            v.marque = document.getElementById("editMarque").value.trim() || v.marque;
-            v.modele = document.getElementById("editModele").value.trim() || v.modele;
-            v.client = document.getElementById("editClient").value.trim() || v.client;
-            v.typeMaintenance = document.getElementById("editTypeMaintenance").value.trim() || v.typeMaintenance;
-            
+        
+        $("saveEditBtn").onclick = async () => {
+            const id = $("editVehicleId").value;
+            const v = allVehicles.find(x => x.id === id);
+            if (!v) return;
             try {
-                await saveVehicle(v);
-                await loadAndDisplay();
-                document.getElementById("editModal").style.display = "none";
+                await window.updateDoc(window.doc(db, "vehicules", id), {
+                    immat: $("editImmat").value.trim() || v.immat,
+                    marque: $("editMarque").value.trim() || v.marque,
+                    modele: $("editModele").value.trim() || v.modele,
+                    client: $("editClient").value.trim() || v.client,
+                    typeMaintenance: $("editTypeMaintenance").value.trim() || v.typeMaintenance,
+                    updatedAt: window.serverTimestamp()
+                });
+                $("editModal").style.display = "none";
                 alert("✅ Modifications enregistrées");
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
-            }
+            } catch (e) { alert("❌ Erreur: " + e.message); }
         };
 
-        // ==================== GESTION DES PHOTOS ====================
-        function zoomPhoto(photoSrc, immat) {
-            const win = window.open("", "_blank");
-            win.document.write(`
-                <html><head><title>Photo ${immat}</title>
-                <style>body{margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#0f172a;}
-                img{max-width:95%;max-height:95%;object-fit:contain;}</style>
-                </head><body><img src="${photoSrc}" alt="${immat}"></body></html>
-            `);
-        }
-
-        function downloadPhoto(photoSrc, immat) {
-            const link = document.createElement("a");
-            link.href = photoSrc;
-            link.download = `photo_${immat}_${new Date().toISOString().slice(0,10)}.jpg`;
-            link.click();
+        // ==================== PHOTOS (CLOUDINARY) ====================
+        async function uploadPhoto(vehicleId, file) {
+            try {
+                const v = allVehicles.find(x => x.id === vehicleId);
+                if (!v) return;
+                
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+                formData.append("folder", "stock_vehicules");
+                formData.append("public_id", `${v.immat.replace(/[^a-zA-Z0-9]/g, "_")}_${Date.now()}`);
+                
+                const response = await fetch(CLOUDINARY_UPLOAD_URL, { method: "POST", body: formData });
+                if (!response.ok) {
+                    const errData = await response.json();
+                    throw new Error(errData.error?.message || "Erreur Cloudinary");
+                }
+                
+                const data = await response.json();
+                await window.updateDoc(window.doc(db, "vehicules", vehicleId), {
+                    photo: data.secure_url,
+                    photoPath: data.public_id,
+                    updatedAt: window.serverTimestamp()
+                });
+                
+                alert("✅ Photo uploadée avec succès");
+            } catch (e) {
+                console.error("Erreur upload:", e);
+                alert("❌ Erreur upload : " + e.message);
+            }
         }
 
         async function deletePhoto(vehicleId) {
-            if (!confirm("🗑️ Supprimer cette photo ?")) return;
+            if (!confirm("🗑️ Retirer cette photo ?")) return;
             try {
-                const v = allVehicles.find(v => v.id === vehicleId);
-                if (v) {
-                    v.photo = null;
-                    await saveVehicle(v);
-                    await loadAndDisplay();
-                    alert("✅ Photo supprimée");
-                }
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
-            }
+                await window.updateDoc(window.doc(db, "vehicules", vehicleId), {
+                    photo: null, photoPath: null, updatedAt: window.serverTimestamp()
+                });
+                alert("✅ Photo retirée");
+            } catch (e) { alert("❌ Erreur: " + e.message); }
         }
 
-        // ==================== TIMER ====================
-        function updateTimerDisplay() {
-            const h = String(Math.floor(timerSeconds / 3600)).padStart(2, '0');
-            const m = String(Math.floor((timerSeconds % 3600) / 60)).padStart(2, '0');
-            const s = String(timerSeconds % 60).padStart(2, '0');
-            timerDisplay.textContent = `${h}:${m}:${s}`;
+        function zoomPhoto(url, immat) {
+            const win = window.open("", "_blank");
+            win.document.write(`<html><head><title>Photo ${immat}</title>
+                <style>body{margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#0f172a;}
+                img{max-width:95%;max-height:95%;object-fit:contain;}</style>
+                </head><body><img src="${url}" alt="${immat}"></body></html>`);
         }
-        document.getElementById("timerStartBtn").onclick = () => {
-            if (timerRunning) return;
-            timerRunning = true;
-            timerInterval = setInterval(() => { timerSeconds++; updateTimerDisplay(); }, 1000);
-        };
-        document.getElementById("timerStopBtn").onclick = () => {
-            timerRunning = false;
-            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-        };
-        document.getElementById("timerResetBtn").onclick = () => {
-            timerRunning = false;
-            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-            timerSeconds = 0; updateTimerDisplay();
-        };
-        document.getElementById("timerToggleBtn").onclick = () => timerContainer.classList.toggle("visible");
 
-        // ==================== RENDU ====================
+        function downloadPhoto(url, immat) {
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `photo_${immat}_${new Date().toISOString().slice(0,10)}.jpg`;
+            link.target = "_blank";
+            link.click();
+        }
+                // ==================== RENDU ====================
+        function renderAll() {
+            renderDashboard();
+            renderStats();
+            renderList();
+            renderGallery();
+            if (rondeEnCours) updateRondeCounter();
+        }
+
         function getFilteredVehicles() {
-            let filtered = allVehicles;
+            let filtered = [...allVehicles];
             
             if (currentSearch.trim()) {
                 const s = currentSearch.toLowerCase();
                 filtered = filtered.filter(v => 
-                    v.immat.toLowerCase().includes(s) || 
-                    v.client.toLowerCase().includes(s) || 
-                    v.marque.toLowerCase().includes(s) || 
-                    v.modele.toLowerCase().includes(s)
+                    (v.immat || "").toLowerCase().includes(s) || 
+                    (v.client || "").toLowerCase().includes(s) || 
+                    (v.marque || "").toLowerCase().includes(s) || 
+                    (v.modele || "").toLowerCase().includes(s)
                 );
-                
                 if (filtered.length === 0) {
                     crossSearchNotice.classList.add("visible");
                     filtered = allVehicles.filter(v => 
-                        v.immat.toLowerCase().includes(s) || 
-                        v.client.toLowerCase().includes(s) || 
-                        v.marque.toLowerCase().includes(s) || 
-                        v.modele.toLowerCase().includes(s)
+                        (v.immat || "").toLowerCase().includes(s) || 
+                        (v.client || "").toLowerCase().includes(s) || 
+                        (v.marque || "").toLowerCase().includes(s) || 
+                        (v.modele || "").toLowerCase().includes(s)
                     );
-                    if (filtered.length > 0) {
-                        crossSearchNotice.textContent = `🔁 ${filtered.length} résultat(s) trouvé(s) dans toutes les sources`;
-                    } else {
-                        crossSearchNotice.textContent = "🔁 Aucun résultat dans toutes les sources";
-                    }
-                } else {
-                    crossSearchNotice.classList.remove("visible");
-                }
-            } else {
-                crossSearchNotice.classList.remove("visible");
-            }
+                    crossSearchNotice.textContent = filtered.length > 0 
+                        ? `🔁 ${filtered.length} résultat(s)` 
+                        : "🔁 Aucun résultat";
+                } else crossSearchNotice.classList.remove("visible");
+            } else crossSearchNotice.classList.remove("visible");
             
-            if (currentSiteFilter === "present_all") {
-                filtered = filtered.filter(v => v.present === true);
-            } else if (currentSiteFilter !== "all") {
-                filtered = filtered.filter(v => v.present === true && v.site === currentSiteFilter);
-            }
+            if (currentSiteFilter === "present_all") filtered = filtered.filter(v => v.present === true);
+            else if (currentSiteFilter !== "all") filtered = filtered.filter(v => v.present && v.site === currentSiteFilter);
             
             if (currentSourceFilter !== "all") {
-                if (currentSourceFilter === "custom") {
-                    filtered = filtered.filter(v => v.isCustom === true || v.source === "custom");
-                } else {
-                    filtered = filtered.filter(v => v.source === currentSourceFilter);
-                }
+                if (currentSourceFilter === "custom") filtered = filtered.filter(v => v.isCustom === true || v.source === "custom");
+                else filtered = filtered.filter(v => v.source === currentSourceFilter);
             }
             
-            if (currentTypeFilter !== "all") {
-                filtered = filtered.filter(v => v.typeMaintenance === currentTypeFilter);
-            }
-            
+            if (currentTypeFilter !== "all") filtered = filtered.filter(v => v.typeMaintenance === currentTypeFilter);
             return filtered;
         }
 
@@ -1625,58 +1634,26 @@
             const absents = total - presents;
             const completion = total === 0 ? 0 : Math.round((presents / total) * 100);
             
-            document.getElementById("dashTotal").textContent = total;
-            document.getElementById("dashPresent").textContent = presents;
-            document.getElementById("dashAbsent").textContent = absents;
-            document.getElementById("dashCompletion").textContent = completion + "%";
-            document.getElementById("dashBar").style.width = completion + "%";
+            $("dashTotal").textContent = total;
+            $("dashPresent").textContent = presents;
+            $("dashAbsent").textContent = absents;
+            $("dashCompletion").textContent = completion + "%";
+            $("dashBar").style.width = completion + "%";
+            $("dashBar").style.background = completion > 80 ? "#10b981" : completion > 50 ? "#f59e0b" : "#ef4444";
             
-            const source1 = allVehicles.filter(v => v.source === "source1").length;
-            const source2 = allVehicles.filter(v => v.source === "source2").length;
-            const custom = allVehicles.filter(v => v.isCustom === true || v.source === "custom").length;
-            document.getElementById("source1Count").textContent = source1;
-            document.getElementById("source2Count").textContent = source2;
-            document.getElementById("customCount").textContent = custom;
+            $("source1Count").textContent = allVehicles.filter(v => v.source === "source1").length;
+            $("source2Count").textContent = allVehicles.filter(v => v.source === "source2").length;
+            $("customCount").textContent = allVehicles.filter(v => v.isCustom).length;
             
             let html = "";
             for (let site of SITE_OPTIONS) {
                 const count = allVehicles.filter(v => v.present && v.site === site).length;
-                const totalSite = allVehicles.filter(v => v.site === site).length;
                 html += `<div class="dash-card"><p class="number">${count}</p><p class="label">${site}</p></div>`;
             }
-            document.getElementById("dashSites").innerHTML = html;
+            $("dashSites").innerHTML = html;
         }
 
-        function renderGallery() {
-            const container = document.getElementById("galleryContent");
-            const photos = allVehicles.filter(v => v.photo);
-            if (photos.length === 0) { 
-                container.innerHTML = "<p style='color:#64748b;font-size:0.8rem;'>Aucune photo</p>"; 
-                return; 
-            }
-            let html = "";
-            for (let site of SITE_OPTIONS) {
-                const sitePhotos = photos.filter(v => v.site === site);
-                if (sitePhotos.length === 0) continue;
-                html += `<h4 style="margin:12px 0 6px;font-size:0.75rem;font-weight:400;color:#94a3b8;">📍 ${site}</h4><div class="gallery-grid">`;
-                for (let v of sitePhotos) {
-                    html += `
-                        <div class="gallery-item">
-                            <img src="${v.photo}" alt="${v.immat}" onclick="zoomPhoto('${v.photo}', '${v.immat}')">
-                            <div class="gallery-label">${v.immat}</div>
-                            <div class="gallery-actions">
-                                <button onclick="downloadPhoto('${v.photo}', '${v.immat}')" title="Télécharger">⬇️</button>
-                                <button onclick="deletePhoto('${v.id}')" title="Supprimer" style="background:rgba(220,38,38,0.8);">🗑️</button>
-                            </div>
-                        </div>
-                    `;
-                }
-                html += `</div>`;
-            }
-            container.innerHTML = html;
-        }
-
-        function renderStatsOnly() {
+        function renderStats() {
             let html = "";
             for (let site of SITE_OPTIONS) {
                 const count = allVehicles.filter(v => v.present && v.site === site).length;
@@ -1686,26 +1663,24 @@
             document.querySelectorAll(".stat-card").forEach(card => {
                 card.addEventListener("click", () => {
                     const site = card.getAttribute("data-site");
-                    siteFilterSelect.value = site;
-                    currentSiteFilter = site;
-                    renderListOnly();
+                    siteFilterSelect.value = site; currentSiteFilter = site; renderList();
                 });
             });
         }
 
-        function renderListOnly() {
+        function renderList() {
             const filtered = getFilteredVehicles();
             resultCountSpan.textContent = `${filtered.length} véhicule(s)`;
             resultCountBadge.textContent = filtered.length;
             
             if (filtered.length === 0) {
-                listContainer.innerHTML = "<p style='color:#64748b;padding:20px 0;text-align:center;font-size:0.9rem;'>Aucun véhicule correspondant</p>";
+                listContainer.innerHTML = "<p style='color:#64748b;padding:20px 0;text-align:center;'>Aucun véhicule</p>";
                 return;
             }
             
             let html = "";
             for (let v of filtered) {
-                const sourceLabel = v.isCustom ? "✏️ Manuel" : (v.source === "source1" ? "📦 Source 1" : "📦 Source 2");
+                const sourceLabel = v.isCustom ? "✏️ Manuel" : SOURCE_LABELS[v.source] || "?";
                 const sourceClass = v.isCustom ? "source-custom" : (v.source === "source1" ? "source-1" : "source-2");
                 
                 html += `
@@ -1713,7 +1688,7 @@
                         <input type="checkbox" class="present-check" data-id="${v.id}" ${v.present ? "checked" : ""}>
                         <div class="vehicle-info">
                             <strong>${v.immat}</strong>
-                            <div class="detail-line">${v.marque} ${v.modele} · ${v.client} ${v.typeMaintenance ? '· '+v.typeMaintenance : ''}</div>
+                            <div class="detail-line">${v.marque || ""} ${v.modele || ""} · ${v.client || ""} ${v.typeMaintenance ? '· '+v.typeMaintenance : ''}</div>
                             <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:2px;">
                                 <span class="badge-source ${sourceClass}">${sourceLabel}</span>
                                 ${v.isCustom ? '<span class="badge-custom">Modifiable</span>' : ''}
@@ -1736,323 +1711,345 @@
                 `;
             }
             listContainer.innerHTML = html;
-            attachEvents();
+            attachListEvents();
         }
 
-        function attachEvents() {
-            document.querySelectorAll(".present-check").forEach(cb => {
-                cb.replaceWith(cb.cloneNode(true));
-            });
+        function attachListEvents() {
+            document.querySelectorAll(".present-check").forEach(cb => cb.replaceWith(cb.cloneNode(true)));
             document.querySelectorAll(".present-check").forEach(cb => {
                 cb.addEventListener("change", async (e) => {
                     const id = cb.getAttribute("data-id");
-                    const v = allVehicles.find(v => v.id === id);
+                    const v = allVehicles.find(x => x.id === id);
                     if (v) {
-                        v.present = cb.checked;
-                        if (!v.present) v.site = null;
-                        v.lastSeen = new Date().toISOString();
-                        await saveVehicle(v);
-                        playBeep();
-                        renderAll();
+                        try {
+                            await window.updateDoc(window.doc(db, "vehicules", id), {
+                                present: cb.checked,
+                                site: cb.checked ? v.site : null,
+                                lastSeen: cb.checked ? new Date().toISOString() : v.lastSeen
+                            });
+                            playBeep();
+                        } catch(e) { alert("Erreur: " + e.message); }
                     }
                 });
             });
             
-            document.querySelectorAll(".site-select").forEach(select => {
-                select.replaceWith(select.cloneNode(true));
-            });
+            document.querySelectorAll(".site-select").forEach(select => select.replaceWith(select.cloneNode(true)));
             document.querySelectorAll(".site-select").forEach(select => {
                 select.addEventListener("change", async (e) => {
                     const id = select.getAttribute("data-id");
-                    const v = allVehicles.find(v => v.id === id);
+                    const v = allVehicles.find(x => x.id === id);
                     if (v && v.present) {
-                        v.site = e.target.value || null;
-                        v.lastSeen = new Date().toISOString();
-                        await saveVehicle(v);
-                        renderAll();
+                        try {
+                            await window.updateDoc(window.doc(db, "vehicules", id), {
+                                site: e.target.value || null,
+                                lastSeen: new Date().toISOString()
+                            });
+                        } catch(e) { alert("Erreur: " + e.message); }
                     }
                 });
             });
             
+            document.querySelectorAll(".photo-btn").forEach(btn => btn.replaceWith(btn.cloneNode(true)));
             document.querySelectorAll(".photo-btn").forEach(btn => {
-                btn.replaceWith(btn.cloneNode(true));
-            });
-            document.querySelectorAll(".photo-btn").forEach(btn => {
-                btn.addEventListener("click", (e) => {
+                btn.addEventListener("click", () => {
                     const id = btn.getAttribute("data-id");
                     const input = document.createElement("input");
                     input.type = "file"; input.accept = "image/*"; input.capture = "environment";
                     input.onchange = async (ev) => {
                         const file = ev.target.files[0];
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = async (ev2) => {
-                                const v = allVehicles.find(v => v.id === id);
-                                if (v) { 
-                                    v.photo = ev2.target.result; 
-                                    await saveVehicle(v); 
-                                    renderAll(); 
-                                    alert("✅ Photo ajoutée"); 
-                                }
-                            };
-                            reader.readAsDataURL(file);
-                        }
+                        if (file) await uploadPhoto(id, file);
                     };
                     input.click();
                 });
             });
         }
 
-        function updateSiteFilterOptions() {
-            let options = `<option value="all" ${currentSiteFilter === 'all' ? 'selected' : ''}>🌍 Tous</option>
-                           <option value="present_all" ${currentSiteFilter === 'present_all' ? 'selected' : ''}>✅ Présents</option>`;
+        function renderGallery() {
+            const container = $("galleryContent");
+            const photos = allVehicles.filter(v => v.photo);
+            if (photos.length === 0) {
+                container.innerHTML = "<p style='color:#64748b;font-size:0.8rem;'>Aucune photo</p>";
+                return;
+            }
+            let html = "";
             for (let site of SITE_OPTIONS) {
-                options += `<option value="${site}" ${currentSiteFilter === site ? 'selected' : ''}>📍 ${site}</option>`;
-            }
-            siteFilterSelect.innerHTML = options;
-        }
-
-        function renderAll() {
-            renderDashboard();
-            renderStatsOnly();
-            renderListOnly();
-            renderGallery();
-        }
-
-        async function loadAndDisplay() {
-            try {
-                allVehicles = await getAllVehicles();
-                updateSiteFilterOptions();
-                renderAll();
-                const backup = localStorage.getItem(STORAGE_BACKUP_KEY);
-                if (backup) {
-                    try {
-                        const data = JSON.parse(backup);
-                        if (Array.isArray(data) && data.length > 0) {
-                            backupInfoSpan.innerHTML = `📦 Sauvegarde disponible`;
-                        }
-                    } catch(e) { backupInfoSpan.innerHTML = "⚠️ Corrompue"; }
-                } else {
-                    backupInfoSpan.innerHTML = "📦 Aucune sauvegarde";
+                const sitePhotos = photos.filter(v => v.site === site);
+                if (sitePhotos.length === 0) continue;
+                html += `<h4 style="margin:12px 0 6px;font-size:0.75rem;color:#94a3b8;">📍 ${site}</h4><div class="gallery-grid">`;
+                for (let v of sitePhotos) {
+                    html += `
+                        <div class="gallery-item">
+                            <img src="${v.photo}" onclick="zoomPhoto('${v.photo}', '${v.immat}')">
+                            <div class="gallery-label">${v.immat}</div>
+                            <div class="gallery-actions">
+                                <button onclick="downloadPhoto('${v.photo}', '${v.immat}')">⬇️</button>
+                                <button onclick="deletePhoto('${v.id}')" style="background:rgba(220,38,38,0.8);">🗑️</button>
+                            </div>
+                        </div>`;
                 }
-            } catch (e) {
-                console.error("Erreur loadAndDisplay:", e);
-                alert("❌ Erreur au chargement: " + e.message);
+                html += `</div>`;
             }
+            container.innerHTML = html;
         }
 
-        // ==================== EXPORTS WORD ====================
-        async function exportAbsentsBySource(source) {
-            if (typeof docx === 'undefined') {
-                alert("❌ La bibliothèque docx n'est pas chargée.");
-                return;
+        // ==================== HISTORIQUE ====================
+        function renderHistorique() {
+            const grid = $("historyGrid");
+            const statsDiv = $("historyStats");
+            
+            if (allRondes.length === 0) {
+                grid.innerHTML = "<p style='color:#64748b;'>Aucune ronde enregistrée.</p>";
+                statsDiv.innerHTML = ""; return;
             }
             
-            const sourceLabel = source === "source1" ? "Source 1" : "Source 2";
-            const vehicles = allVehicles.filter(v => v.present === false && v.source === source);
+            const totalRondes = allRondes.length;
+            const totalVehicules = allRondes.reduce((a, r) => a + (r.stats?.total || 0), 0);
+            const totalPresents = allRondes.reduce((a, r) => a + (r.stats?.presents || 0), 0);
+            statsDiv.innerHTML = `
+                <span>📜 ${totalRondes} ronde(s)</span>
+                <span>🚗 ${totalVehicules} véhicules pointés</span>
+                <span>✅ ${totalPresents} présences</span>`;
             
-            if (vehicles.length === 0) {
-                alert(`✅ Aucun véhicule absent dans ${sourceLabel}`);
-                return;
-            }
-            
-            try {
-                const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, BorderStyle, WidthType, AlignmentType } = docx;
+            let html = "";
+            allRondes.forEach(r => {
+                const date = new Date(r.heureFin || r.date);
+                const dateStr = date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                const heureStr = date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+                const comp = r.comparaison || {};
+                const diffHtml = comp.message && comp.message !== "Première ronde"
+                    ? `<div class="history-diff">${comp.message}</div>` 
+                    : (comp.message === "Première ronde" ? `<div class="history-diff">✨ Première ronde</div>` : '');
                 
-                const rows = [];
-                // En-tête
-                rows.push(new TableRow({
-                    children: [
-                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "N°", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
-                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Immatriculation", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
-                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Client", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
-                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Marque", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
-                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Modèle", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
-                    ]
-                }));
-                
-                vehicles.forEach((v, i) => {
-                    rows.push(new TableRow({
-                        children: [
-                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: String(i+1), size: 22 })], alignment: AlignmentType.CENTER })] }),
-                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.immat || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
-                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.client || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
-                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.marque || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
-                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.modele || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
-                        ]
-                    }));
-                });
-                
-                const doc = new Document({
-                    sections: [{
-                        properties: {
-                            page: { margin: { top: 720, bottom: 720, left: 720, right: 720 } }
-                        },
-                        children: [
-                            new Paragraph({
-                                children: [new TextRun({ text: `LISTE DES VÉHICULES ABSENTS - ${sourceLabel}`, bold: true, size: 32, font: "Arial" })],
-                                alignment: AlignmentType.CENTER,
-                                spacing: { after: 400 }
-                            }),
-                            new Paragraph({
-                                children: [new TextRun({ text: `Généré le ${new Date().toLocaleString()}`, size: 20, font: "Arial" })],
-                                alignment: AlignmentType.CENTER,
-                                spacing: { after: 400 }
-                            }),
-                            new Paragraph({
-                                children: [new TextRun({ text: `Total : ${vehicles.length} véhicules`, size: 22, font: "Arial" })],
-                                alignment: AlignmentType.LEFT,
-                                spacing: { after: 400 }
-                            }),
-                            new Table({
-                                rows: rows,
-                                width: { size: 100, type: WidthType.PERCENTAGE },
-                            }),
-                        ]
-                    }]
-                });
-                
-                const blob = await Packer.toBlob(doc);
-                const link = document.createElement("a");
-                link.href = URL.createObjectURL(blob);
-                link.download = `Absents_${sourceLabel}_${new Date().toISOString().slice(0,19)}.docx`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-                alert(`✅ ${vehicles.length} véhicules absents exportés (${sourceLabel})`);
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
-            }
+                html += `
+                    <div class="history-card" onclick="openHistoryDetail('${r.id}')">
+                        <div class="history-date">${dateStr}</div>
+                        <div class="history-user">👤 ${r.effectueePar || "?"} · 🕒 ${heureStr}</div>
+                        <div class="history-stats">
+                            <span>📦 ${r.stats?.total || 0}</span>
+                            <span class="stat-present">✅ ${r.stats?.presents || 0}</span>
+                            <span class="stat-absent">❌ ${r.stats?.absents || 0}</span>
+                        </div>
+                        ${diffHtml}
+                    </div>`;
+            });
+            grid.innerHTML = html;
         }
 
-        async function exportPresentBySite() {
-            if (typeof docx === 'undefined') {
-                alert("❌ La bibliothèque docx n'est pas chargée.");
-                return;
-            }
+        function openHistoryDetail(rondeId) {
+            const r = allRondes.find(x => x.id === rondeId);
+            if (!r) return;
             
-            const presentVehicles = allVehicles.filter(v => v.present === true);
+            const date = new Date(r.heureFin || r.date);
+            $("historyDetailTitle").textContent = `📜 Ronde du ${date.toLocaleDateString('fr-FR')}`;
             
-            if (presentVehicles.length === 0) {
-                alert("✅ Aucun véhicule présent");
-                return;
-            }
+            let html = `
+                <div style="font-size:0.85rem;margin-bottom:15px;color:#94a3b8;">
+                    <p style="margin:4px 0;">👤 Par : <strong style="color:#e2e8f0;">${r.effectueePar}</strong></p>
+                    <p style="margin:4px 0;">🕒 Début : ${new Date(r.heureDebut).toLocaleString('fr-FR')}</p>
+                    <p style="margin:4px 0;">🕒 Fin : ${new Date(r.heureFin).toLocaleString('fr-FR')}</p>
+                    <p style="margin:4px 0;">📊 ${r.stats?.total} · ✅ ${r.stats?.presents} · ❌ ${r.stats?.absents}</p>
+                </div>
+                <div style="max-height:400px;overflow-y:auto;">
+                <table class="history-detail-table">
+                    <thead><tr><th>Immat</th><th>Marque</th><th>Modèle</th><th>Client</th><th>Statut</th><th>Site</th></tr></thead>
+                    <tbody>`;
             
-            try {
-                const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, BorderStyle, WidthType, AlignmentType } = docx;
-                
-                let allRows = [];
-                // En-tête général
-                allRows.push(new TableRow({
-                    children: [
-                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Site", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
-                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "N°", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
-                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Immatriculation", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
-                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Client", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
-                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Marque", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
-                        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Modèle", bold: true, size: 22 })], alignment: AlignmentType.CENTER })] }),
-                    ]
-                }));
-                
-                let index = 0;
-                for (let site of SITE_OPTIONS) {
-                    const siteVehicles = presentVehicles.filter(v => v.site === site);
-                    if (siteVehicles.length === 0) continue;
-                    
-                    // Ligne de séparation pour le site
-                    allRows.push(new TableRow({
-                        children: [
-                            new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: site, bold: true, size: 22 })], alignment: AlignmentType.CENTER })], columnSpan: 6 }),
-                        ]
-                    }));
-                    
-                    siteVehicles.forEach((v) => {
-                        index++;
-                        allRows.push(new TableRow({
-                            children: [
-                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "", size: 22 })], alignment: AlignmentType.CENTER })] }),
-                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: String(index), size: 22 })], alignment: AlignmentType.CENTER })] }),
-                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.immat || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
-                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.client || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
-                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.marque || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
-                                new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: v.modele || "", size: 22 })], alignment: AlignmentType.CENTER })] }),
-                            ]
-                        }));
-                    });
-                }
-                
-                const doc = new Document({
-                    sections: [{
-                        properties: {
-                            page: { margin: { top: 720, bottom: 720, left: 720, right: 720 } }
-                        },
-                        children: [
-                            new Paragraph({
-                                children: [new TextRun({ text: "LISTE DES VÉHICULES PRÉSENTS PAR SITE", bold: true, size: 32, font: "Arial" })],
-                                alignment: AlignmentType.CENTER,
-                                spacing: { after: 400 }
-                            }),
-                            new Paragraph({
-                                children: [new TextRun({ text: `Généré le ${new Date().toLocaleString()}`, size: 20, font: "Arial" })],
-                                alignment: AlignmentType.CENTER,
-                                spacing: { after: 400 }
-                            }),
-                            new Paragraph({
-                                children: [new TextRun({ text: `Total : ${presentVehicles.length} véhicules présents`, size: 22, font: "Arial" })],
-                                alignment: AlignmentType.LEFT,
-                                spacing: { after: 400 }
-                            }),
-                            new Table({
-                                rows: allRows,
-                                width: { size: 100, type: WidthType.PERCENTAGE },
-                            }),
-                        ]
-                    }]
-                });
-                
-                const blob = await Packer.toBlob(doc);
-                const link = document.createElement("a");
-                link.href = URL.createObjectURL(blob);
-                link.download = `Presences_par_site_${new Date().toISOString().slice(0,19)}.docx`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-                alert(`✅ ${presentVehicles.length} véhicules présents exportés par site`);
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
-            }
+            (r.vehicules || []).forEach(v => {
+                html += `<tr>
+                    <td><strong>${v.immat}</strong></td>
+                    <td>${v.marque || "-"}</td>
+                    <td>${v.modele || "-"}</td>
+                    <td>${v.client || "-"}</td>
+                    <td>${v.present ? '✅' : '❌'}</td>
+                    <td>${v.site || "-"}</td>
+                </tr>`;
+            });
+            
+            html += `</tbody></table></div>`;
+            $("historyDetailContent").innerHTML = html;
+            $("historyDetailModal").style.display = "flex";
+            window._currentRondeForExport = r;
         }
 
-        // ==================== RAPPORT PDF CORRIGÉ ====================
-        async function generateReport() {
+        $("closeHistoryDetailBtn").onclick = () => $("historyDetailModal").style.display = "none";
+        $("closeHistoryDetailBtn2").onclick = () => $("historyDetailModal").style.display = "none";
+        $("historyDetailModal").addEventListener("click", (e) => {
+            if (e.target === e.currentTarget) $("historyDetailModal").style.display = "none";
+        });
+
+        $("exportHistoryPdfBtn").onclick = async () => {
+            const r = window._currentRondeForExport;
+            if (!r) return;
             try {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF({ orientation: 'landscape', unit: 'mm' });
-                
-                // Utiliser une police standard qui supporte les accents
                 doc.setFont("helvetica");
-                
                 doc.setFontSize(16);
                 doc.text("RAPPORT DE RONDE", 14, 15);
                 doc.setFontSize(10);
-                doc.text(`Généré le ${new Date().toLocaleString()}`, 14, 22);
+                doc.text(`Date : ${new Date(r.heureFin).toLocaleString('fr-FR')}`, 14, 22);
+                doc.text(`Effectuée par : ${r.effectueePar}`, 14, 28);
+                doc.text(`Total : ${r.stats?.total} | Présents : ${r.stats?.presents} | Absents : ${r.stats?.absents}`, 14, 35);
+                
+                const rows = (r.vehicules || []).map(v => [
+                    v.immat, v.marque || "", v.modele || "", v.client || "",
+                    v.present ? "Présent" : "Absent", v.site || ""
+                ]);
+                doc.autoTable({
+                    head: [["Immat", "Marque", "Modèle", "Client", "Statut", "Site"]],
+                    body: rows, startY: 42, theme: 'striped',
+                    styles: { font: "helvetica", fontSize: 8 },
+                    headStyles: { fillColor: [15, 23, 42], textColor: [255, 255, 255] }
+                });
+                doc.save(`ronde_${r.date}_${r.effectueePar.replace(/\s/g, "_")}.pdf`);
+            } catch(e) { alert("❌ Erreur: " + e.message); }
+        };
+
+        // ==================== ARCHIVES ====================
+        function renderArchives() {
+            const container = $("archivesContent");
+            if (allRondes.length === 0) {
+                container.innerHTML = "<p style='color:#64748b;'>Aucune archive.</p>"; return;
+            }
+            
+            const grouped = {};
+            allRondes.forEach(r => {
+                const d = new Date(r.heureFin || r.date);
+                const year = d.getFullYear(); const month = d.getMonth();
+                if (!grouped[year]) grouped[year] = {};
+                if (!grouped[year][month]) grouped[year][month] = [];
+                grouped[year][month].push(r);
+            });
+            
+            const monthNames = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+            let html = "";
+            Object.keys(grouped).sort((a,b) => b - a).forEach(year => {
+                const totalYear = Object.values(grouped[year]).flat().length;
+                html += `<div class="archive-year">
+                    <h3>📅 ${year} <span style="font-size:0.75rem;color:#64748b;">(${totalYear} rondes)</span></h3>
+                    <div class="archive-months">`;
+                Object.keys(grouped[year]).sort((a,b) => b - a).forEach(month => {
+                    const count = grouped[year][month].length;
+                    html += `<div class="archive-month" onclick="filterHistoriqueByMonth(${year}, ${month})">
+                        ${monthNames[month]} (${count})</div>`;
+                });
+                html += `</div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function filterHistoriqueByMonth(year, month) {
+            switchTab("historique");
+            const filtered = allRondes.filter(r => {
+                const d = new Date(r.heureFin || r.date);
+                return d.getFullYear() === year && d.getMonth() === month;
+            });
+            const grid = $("historyGrid");
+            if (filtered.length === 0) { grid.innerHTML = "<p style='color:#64748b;'>Aucune ronde ce mois.</p>"; return; }
+            
+            let html = "";
+            filtered.forEach(r => {
+                const date = new Date(r.heureFin || r.date);
+                const dateStr = date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                html += `<div class="history-card" onclick="openHistoryDetail('${r.id}')">
+                    <div class="history-date">${dateStr}</div>
+                    <div class="history-user">👤 ${r.effectueePar}</div>
+                    <div class="history-stats">
+                        <span>📦 ${r.stats?.total}</span>
+                        <span class="stat-present">✅ ${r.stats?.presents}</span>
+                        <span class="stat-absent">❌ ${r.stats?.absents}</span>
+                    </div></div>`;
+            });
+            grid.innerHTML = html;
+            
+            const back = document.createElement("button");
+            back.textContent = "← Retour à toutes les rondes";
+            back.className = "nav-btn primary";
+            back.style.marginBottom = "15px";
+            back.onclick = () => renderHistorique();
+            const container = grid.parentNode;
+            container.insertBefore(back, grid);
+        }
+
+        // ==================== GRAPHIQUES ====================
+        function renderGraphiques() {
+            const container = $("chartsContent");
+            if (allRondes.length === 0) {
+                container.innerHTML = "<p style='color:#64748b;'>Aucune donnée.</p>"; return;
+            }
+            
+            const last12 = allRondes.slice(0, 12).reverse();
+            let html = `
+                <div style="margin-bottom:20px;">
+                    <h3 style="font-size:0.9rem;color:#94a3b8;margin-bottom:10px;">Évolution des présences (12 dernières rondes)</h3>
+                    <div style="display:flex;align-items:flex-end;gap:8px;height:200px;padding:10px;background:#0f172a;border-radius:8px;overflow-x:auto;">`;
+            
+            const maxTotal = Math.max(...last12.map(r => r.stats?.total || 0), 1);
+            last12.forEach(r => {
+                const d = new Date(r.heureFin || r.date);
+                const presents = r.stats?.presents || 0;
+                const absents = r.stats?.absents || 0;
+                const heightPresents = (presents / maxTotal) * 160;
+                const heightAbsents = (absents / maxTotal) * 160;
+                html += `
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:40px;" title="${d.toLocaleDateString('fr-FR')}">
+                        <div style="display:flex;flex-direction:column;justify-content:flex-end;height:170px;">
+                            <div style="width:30px;background:#10b981;height:${heightPresents}px;border-radius:4px 4px 0 0;"></div>
+                            <div style="width:30px;background:#ef4444;height:${heightAbsents}px;border-radius:0 0 4px 4px;"></div>
+                        </div>
+                        <span style="font-size:0.6rem;color:#64748b;">${d.getDate()}/${d.getMonth()+1}</span>
+                    </div>`;
+            });
+            html += `</div>
+                <div style="display:flex;gap:15px;margin-top:10px;font-size:0.75rem;color:#94a3b8;">
+                    <span><span style="display:inline-block;width:12px;height:12px;background:#10b981;border-radius:2px;"></span> Présents</span>
+                    <span><span style="display:inline-block;width:12px;height:12px;background:#ef4444;border-radius:2px;"></span> Absents</span>
+                </div></div>`;
+            
+            container.innerHTML = html;
+        }
+
+        // ==================== EXPORTS EXCEL ====================
+        $("exportPresentExcel").onclick = () => {
+            const data = allVehicles.filter(v => v.present).map(v => ({
+                Immatriculation: v.immat, Client: v.client || "", Marque: v.marque || "",
+                Modele: v.modele || "", Site: v.site || "", Source: SOURCE_LABELS[v.source] || v.source
+            }));
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Présents");
+            XLSX.writeFile(wb, `presences_${new Date().toISOString().slice(0,10)}.xlsx`);
+        };
+
+        $("exportAbsentExcel").onclick = () => {
+            const data = allVehicles.filter(v => !v.present).map(v => ({
+                Immatriculation: v.immat, Client: v.client || "", Marque: v.marque || "",
+                Modele: v.modele || "", Source: SOURCE_LABELS[v.source] || v.source
+            }));
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Absents");
+            XLSX.writeFile(wb, `absents_${new Date().toISOString().slice(0,10)}.xlsx`);
+        };
+
+        // ==================== RAPPORT PDF ====================
+        $("reportBtn").onclick = async () => {
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({ orientation: 'landscape', unit: 'mm' });
+                doc.setFont("helvetica");
+                doc.setFontSize(16);
+                doc.text("RAPPORT DE STOCK VÉHICULES", 14, 15);
+                doc.setFontSize(10);
+                doc.text(`Généré le ${new Date().toLocaleString('fr-FR')}`, 14, 22);
+                doc.text(`Par : ${currentUser}`, 14, 28);
                 
                 const total = allVehicles.length;
                 const presents = allVehicles.filter(v => v.present).length;
                 const absents = total - presents;
                 const completion = total === 0 ? 0 : Math.round((presents / total) * 100);
+                doc.text(`Total: ${total} | Présents: ${presents} | Absents: ${absents} | Taux: ${completion}%`, 14, 35);
                 
-                doc.setFontSize(11);
-                doc.text(`Total: ${total}  |  Présents: ${presents}  |  Absents: ${absents}  |  Taux: ${completion}%`, 14, 30);
-                
-                const s1 = allVehicles.filter(v => v.source === "source1").length;
-                const s2 = allVehicles.filter(v => v.source === "source2").length;
-                const custom = allVehicles.filter(v => v.isCustom).length;
-                doc.text(`Source 1: ${s1}  |  Source 2: ${s2}  |  Ajouts manuels: ${custom}`, 14, 37);
-                
-                // Stats par site
                 let siteData = [["Site", "Présents", "Total"]];
                 for (let site of SITE_OPTIONS) {
                     const count = allVehicles.filter(v => v.present && v.site === site).length;
@@ -2060,106 +2057,56 @@
                     siteData.push([site, count.toString(), totalSite.toString()]);
                 }
                 doc.autoTable({
-                    head: [siteData[0]],
-                    body: siteData.slice(1),
-                    startY: 42,
-                    theme: 'striped',
+                    head: [siteData[0]], body: siteData.slice(1), startY: 42, theme: 'striped',
                     styles: { font: "helvetica", fontSize: 8 },
                     headStyles: { fillColor: [15, 23, 42], textColor: [255, 255, 255] }
                 });
                 
-                // Liste des présents
                 const pData = allVehicles.filter(v => v.present).map(v => [v.immat, v.client, v.marque, v.modele, v.site || ""]);
                 if (pData.length) {
                     doc.autoTable({
                         head: [["Immat", "Client", "Marque", "Modèle", "Site"]],
-                        body: pData,
-                        startY: doc.lastAutoTable.finalY + 5,
-                        theme: 'striped',
+                        body: pData, startY: doc.lastAutoTable.finalY + 5, theme: 'striped',
                         styles: { font: "helvetica", fontSize: 7 },
                         headStyles: { fillColor: [15, 23, 42], textColor: [255, 255, 255] }
                     });
                 }
                 
-                // Liste des absents
                 const aData = allVehicles.filter(v => !v.present).map(v => [v.immat, v.client, v.marque, v.modele]);
                 if (aData.length) {
                     doc.autoTable({
                         head: [["Immat", "Client", "Marque", "Modèle"]],
-                        body: aData,
-                        startY: doc.lastAutoTable.finalY + 5,
-                        theme: 'striped',
+                        body: aData, startY: doc.lastAutoTable.finalY + 5, theme: 'striped',
                         styles: { font: "helvetica", fontSize: 7 },
                         headStyles: { fillColor: [15, 23, 42], textColor: [255, 255, 255] }
                     });
                 }
-                
-                doc.save(`rapport_ronde_${new Date().toISOString().slice(0,19)}.pdf`);
-            } catch (e) {
-                alert("❌ Erreur rapport: " + e.message);
-            }
-        }
-
-        // ==================== EXPORTS EXCEL ====================
-        async function exportPresentExcel() {
-            try {
-                const data = allVehicles.filter(v => v.present).map(v => ({ 
-                    Immatriculation: v.immat, Client: v.client, Marque: v.marque, 
-                    Modele: v.modele, Site: v.site || "", Source: v.source || "inconnu" 
-                }));
-                const ws = XLSX.utils.json_to_sheet(data);
-                const wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "Présents");
-                XLSX.writeFile(wb, `presences_${new Date().toISOString().slice(0,19)}.xlsx`);
-            } catch (e) { alert("❌ Erreur: " + e.message); }
-        }
-        
-        async function exportAbsentExcel() {
-            try {
-                const data = allVehicles.filter(v => !v.present).map(v => ({ 
-                    Immatriculation: v.immat, Client: v.client, Marque: v.marque, 
-                    Modele: v.modele, Source: v.source || "inconnu" 
-                }));
-                const ws = XLSX.utils.json_to_sheet(data);
-                const wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "Absents");
-                XLSX.writeFile(wb, `absents_${new Date().toISOString().slice(0,19)}.xlsx`);
-            } catch (e) { alert("❌ Erreur: " + e.message); }
-        }
+                doc.save(`rapport_stock_${new Date().toISOString().slice(0,10)}.pdf`);
+            } catch(e) { alert("❌ Erreur : " + e.message); }
+        };
 
         // ==================== ATTESTATION ====================
-        document.getElementById("attestationBtn").onclick = () => {
-            document.getElementById("attestationModal").style.display = "flex";
-        };
-        document.getElementById("closeModalBtn").onclick = () => {
-            document.getElementById("attestationModal").style.display = "none";
-        };
-        document.getElementById("cancelAttestationBtn").onclick = () => {
-            document.getElementById("attestationModal").style.display = "none";
-        };
-        document.getElementById("attestationModal").addEventListener("click", (e) => {
-            if (e.target === e.currentTarget) {
-                document.getElementById("attestationModal").style.display = "none";
-            }
+        $("attestationBtn").onclick = () => $("attestationModal").style.display = "flex";
+        $("closeModalBtn").onclick = () => $("attestationModal").style.display = "none";
+        $("cancelAttestationBtn").onclick = () => $("attestationModal").style.display = "none";
+        $("attestationModal").addEventListener("click", (e) => {
+            if (e.target === e.currentTarget) $("attestationModal").style.display = "none";
         });
 
-        document.getElementById("generateAttestationBtn").onclick = async () => {
-            if (typeof docx === 'undefined') {
-                alert("❌ La bibliothèque docx n'est pas chargée.");
-                return;
-            }
+        $("generateAttestationBtn").onclick = async () => {
+            if (typeof docx === 'undefined') { alert("❌ docx non chargé"); return; }
             try {
-                const immat = document.getElementById("attImmat").value.trim();
-                const marque = document.getElementById("attMarque").value.trim();
-                const modele = document.getElementById("attModele").value.trim();
-                const couleur = document.getElementById("attCouleur").value.trim();
-                const assure = document.getElementById("attAssure").value.trim();
-                const dateDebut = document.getElementById("attDateDebut").value;
-                const dateFin = document.getElementById("attDateFin").value;
-                const duree = document.getElementById("attDuree").value || 5;
+                const immat = $("attImmat").value.trim();
+                const marque = $("attMarque").value.trim();
+                const modele = $("attModele").value.trim();
+                const couleur = $("attCouleur").value.trim();
+                const assure = $("attAssure").value.trim();
+                const dateDebut = $("attDateDebut").value;
+                const dateFin = $("attDateFin").value;
+                const duree = $("attDuree").value || 5;
                 
                 if (!immat || !marque || !modele || !couleur || !assure || !dateDebut || !dateFin) {
-                    alert("❌ Veuillez remplir tous les champs."); return;
+                    alert("❌ Remplir tous les champs"); return;
                 }
                 
                 const formatDate = (d) => {
@@ -2196,8 +2143,7 @@
                                     new TextRun({ text: " au ", size: 22, font: "Arial" }),
                                     new TextRun({ text: formatDate(dateFin) + ".", bold: true, size: 22, font: "Arial" })
                                 ],
-                                alignment: AlignmentType.BOTH,
-                                spacing: { after: 400 }
+                                alignment: AlignmentType.BOTH, spacing: { after: 400 }
                             }),
                             new Paragraph({ children: [new TextRun({ text: "En foi de quoi, la présente Attestation lui est établie pour servir et valoir ce que de droit.", size: 22, font: "Arial" })], alignment: AlignmentType.BOTH, spacing: { after: 600 } }),
                             new Paragraph({ children: [new TextRun({ text: "Fait à Abidjan le " + formatDate(new Date().toISOString().split('T')[0]), size: 22, font: "Arial" })], alignment: AlignmentType.RIGHT, spacing: { after: 600 } }),
@@ -2210,65 +2156,42 @@
                 const link = document.createElement("a");
                 link.href = URL.createObjectURL(blob);
                 link.download = `Attestation_${immat}_${new Date().toISOString().slice(0,10)}.docx`;
-                document.body.appendChild(link); link.click(); document.body.removeChild(link);
-                setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-                document.getElementById("attestationModal").style.display = "none";
-                alert("✅ Attestation générée !");
-            } catch (e) {
-                alert("❌ Erreur: " + e.message);
-            }
+                link.click();
+                $("attestationModal").style.display = "none";
+                alert("✅ Attestation générée");
+            } catch(e) { alert("❌ Erreur : " + e.message); }
         };
 
-        // ==================== ÉVÉNEMENTS ====================
-        document.getElementById("dashboardToggleBtn").onclick = () => { dashboardContainer.classList.toggle("visible"); renderDashboard(); };
-        document.getElementById("galleryToggleBtn").onclick = () => { galleryContainer.classList.toggle("visible"); renderGallery(); };
-        document.getElementById("reportBtn").onclick = generateReport;
-        document.getElementById("exportPresentExcel").onclick = exportPresentExcel;
-        document.getElementById("exportAbsentExcel").onclick = exportAbsentExcel;
-        document.getElementById("terrainModeBtn").onclick = () => {
+        // ==================== ÉVÉNEMENTS UI ====================
+        $("galleryToggleBtn").onclick = () => {
+            const g = $("galleryContainer");
+            g.classList.toggle("visible");
+            if (g.classList.contains("visible")) renderGallery();
+        };
+        $("terrainModeBtn").onclick = () => {
             document.body.classList.toggle("terrain-mode");
-            document.getElementById("terrainModeBtn").textContent = document.body.classList.contains("terrain-mode") ? "📱 Normal" : "📱 Terrain";
+            $("terrainModeBtn").textContent = document.body.classList.contains("terrain-mode") ? "📱 Normal" : "📱 Terrain";
         };
-        
-        // Nouveaux exports Word
-        document.getElementById("exportAbsentSource1Word").onclick = () => exportAbsentsBySource("source1");
-        document.getElementById("exportAbsentSource2Word").onclick = () => exportAbsentsBySource("source2");
-        document.getElementById("exportPresentSiteWord").onclick = exportPresentBySite;
-        
-        siteFilterSelect.addEventListener("change", (e) => { currentSiteFilter = e.target.value; renderListOnly(); });
-        sourceFilterSelect.addEventListener("change", (e) => { currentSourceFilter = e.target.value; renderListOnly(); });
-        typeFilter.addEventListener("change", (e) => { currentTypeFilter = e.target.value; renderListOnly(); });
-        searchInput.addEventListener("input", (e) => { 
-            currentSearch = e.target.value; 
-            renderListOnly(); 
-        });
-        
-        document.getElementById("saveBackupBtn").onclick = saveBackup;
-        document.getElementById("restoreBackupBtn").onclick = restoreBackup;
-        document.getElementById("resetCheckBtn").onclick = resetOnlyCheckboxes;
-        document.getElementById("exportBackupBtn").onclick = exportBackupFile;
-        document.getElementById("importBackupBtn").onclick = importBackupFile;
-
-        // ==================== MODE NUIT/JOUR ====================
-        const darkToggle = document.getElementById("darkModeToggle");
+        const darkToggle = $("darkModeToggle");
         darkToggle.onclick = () => {
             document.body.classList.toggle("light-mode");
             darkToggle.textContent = document.body.classList.contains("light-mode") ? "🌙" : "☀️";
         };
 
+        siteFilterSelect.addEventListener("change", (e) => { currentSiteFilter = e.target.value; renderList(); });
+        sourceFilterSelect.addEventListener("change", (e) => { currentSourceFilter = e.target.value; renderList(); });
+        typeFilter.addEventListener("change", (e) => { currentTypeFilter = e.target.value; renderList(); });
+        searchInput.addEventListener("input", (e) => { currentSearch = e.target.value; renderList(); });
+
+        // ==================== PWA ====================
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("sw.js").catch(err => console.warn("SW:", err));
+        }
+
         // ==================== INIT ====================
-        window.addEventListener("load", async () => {
-            try {
-                await openDB();
-                await loadAndDisplay();
-                if ("serviceWorker" in navigator) {
-                    navigator.serviceWorker.register("/sw.js").catch(console.error);
-                }
-            } catch (e) {
-                console.error("Erreur init:", e);
-                alert("❌ Erreur au démarrage: " + e.message);
-            }
-        });
+        console.log("🚀 Stock Véhicules v3.0 initialisé");
+        console.log("👤 Utilisateur :", currentUser);
+        console.log("☁️ Cloudinary :", CLOUDINARY_CLOUD_NAME);
     </script>
 </body>
 </html>
