@@ -41,6 +41,8 @@
             background: #f1f5f9; border-color: #e2e8f0; color: #1e293b;
         }
         body.light-mode .modal h2 { color: #1e293b; }
+        body.light-mode .user-select { background: #f1f5f9; border-color: #e2e8f0; color: #1e293b; }
+        body.light-mode .history-card .history-site { background: #dbeafe; color: #1e40af; }
 
         header { background: #0f172a; padding: 1rem 2rem; display: flex; justify-content: space-between;
             align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid #1e293b; }
@@ -49,38 +51,25 @@
         header .logo span { color: #64748b; font-weight: 300; }
         header .logo .badge { background: #1e293b; padding: 2px 10px; border-radius: 20px;
             font-size: 0.6rem; color: #94a3b8; letter-spacing: 0.5px; }
-        .header-right { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; color: #94a3b8; }
+        .header-right { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: #94a3b8; flex-wrap: wrap; }
         .connection-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
         .connection-dot.online { background: #10b981; }
         .connection-dot.offline { background: #ef4444; }
-        .user-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
-            background: #1e293b; border-radius: 20px; font-size: 0.75rem; cursor: pointer; transition: background 0.2s; }
+
         .user-select {
-    background: #1e293b;
-    border: 1px solid #2d3a4e;
-    color: #e2e8f0;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    cursor: pointer;
-    outline: none;
-    transition: all 0.2s;
-    min-width: 150px;
-}
-.user-select:hover {
-    background: #2d3a4e;
-    border-color: #60a5fa;
-}
-.user-select:focus {
-    border-color: #60a5fa;
-    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
-}
-body.light-mode .user-select {
-    background: #f1f5f9;
-    border-color: #e2e8f0;
-    color: #1e293b;
-}
-        body.light-mode .user-badge { background: #f1f5f9; color: #475569; }
+            background: #1e293b;
+            border: 1px solid #2d3a4e;
+            color: #e2e8f0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s;
+            min-width: 150px;
+        }
+        .user-select:hover { background: #2d3a4e; border-color: #60a5fa; }
+        .user-select:focus { border-color: #60a5fa; box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2); }
 
         .nav-bar { background: #0f172a; padding: 0.6rem 2rem; border-bottom: 1px solid #1e293b;
             display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
@@ -99,7 +88,7 @@ body.light-mode .user-select {
             color: #0f172a; padding: 0.8rem 2rem; font-weight: 600; align-items: center;
             justify-content: space-between; flex-wrap: wrap; gap: 10px; }
         .ronde-banner.visible { display: flex; }
-        .ronde-banner .info { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; }
+        .ronde-banner .info { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; flex-wrap: wrap; }
         .ronde-banner button { background: #0f172a; color: white; border: none; padding: 6px 16px;
             border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
 
@@ -191,25 +180,13 @@ body.light-mode .user-select {
             border: 1px solid #1e293b; transition: all 0.15s; }
         .history-card:hover { transform: translateY(-2px); border-color: #60a5fa; }
         .history-card .history-date { font-size: 1rem; font-weight: 600; color: #60a5fa; margin-bottom: 4px; }
-        .history-card .history-user { font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; }
-        .history-card .history-stats { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.7rem; }
+        .history-card .history-user { font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px; }
+        .history-card .history-site { display: inline-block; background: #1e3a5f; color: #60a5fa;
+            padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 500; margin: 4px 0; }
+        .history-card .history-stats { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.7rem; margin-top: 6px; }
         .history-card .history-stats span { padding: 2px 8px; background: #1e293b; border-radius: 10px; }
         .history-card .history-stats .stat-present { color: #10b981; }
         .history-card .history-stats .stat-absent { color: #ef4444; }
-        .history-card .history-site {
-    display: inline-block;
-    background: #1e3a5f;
-    color: #60a5fa;
-    padding: 2px 10px;
-    border-radius: 12px;
-    font-size: 0.7rem;
-    font-weight: 500;
-    margin: 4px 0;
-}
-body.light-mode .history-card .history-site {
-    background: #dbeafe;
-    color: #1e40af;
-}
         .history-card .history-diff { margin-top: 8px; font-size: 0.7rem; padding-top: 8px;
             border-top: 1px solid #1e293b; color: #94a3b8; }
 
@@ -290,11 +267,11 @@ body.light-mode .history-card .history-site {
 </head>
 <body>
 <!-- ⚠️ Continue avec PARTIE 2 -->
-        <!-- HEADER -->
+        <!-- ========== HEADER ========== -->
     <header>
         <div class="logo">
             <h1>STOCK<span>VÉHICULES</span></h1>
-            <span class="badge">v3.0 · Firebase</span>
+            <span class="badge">v3.1 · Multi-users</span>
         </div>
         <div class="header-right">
             <span id="connectionStatus">
@@ -302,16 +279,19 @@ body.light-mode .history-card .history-site {
                 <span id="connectionText">En ligne</span>
             </span>
             <span id="backupInfo" class="backup-info">💾 Sync OK</span>
+            
+            <!-- SÉLECTEUR UTILISATEUR -->
             <select id="userSelect" class="user-select" title="Sélectionnez votre nom">
-    <option value="">👤 Choisir un utilisateur...</option>
-</select>
-<button id="manageUsersBtn" class="nav-btn" style="background:#2563eb;color:white;padding:4px 10px;" title="Gérer les utilisateurs">⚙️</button>
+                <option value="">👤 Choisir...</option>
+            </select>
+            <button id="manageUsersBtn" class="nav-btn" style="background:#2563eb;color:white;padding:4px 10px;" title="Gérer les utilisateurs">⚙️</button>
+            
             <button id="installBtn" class="nav-btn" style="background:#10b981;color:white;display:none;">📱 Installer</button>
             <button id="darkModeToggle" class="nav-btn" style="font-size:1.1rem;background:transparent;color:#94a3b8;padding:4px 8px;">☀️</button>
         </div>
     </header>
 
-    <!-- BANNIÈRE RONDE -->
+    <!-- ========== BANNIÈRE RONDE ========== -->
     <div class="ronde-banner" id="rondeBanner">
         <div class="info">
             <span>🔵 <strong>Ronde en cours</strong></span>
@@ -321,7 +301,7 @@ body.light-mode .history-card .history-site {
         <button id="closeRondeBtn">🔴 Clôturer la ronde</button>
     </div>
 
-    <!-- NAVIGATION -->
+    <!-- ========== NAVIGATION ========== -->
     <nav class="nav-bar">
         <button id="startRondeBtn" class="nav-btn ronde-active">🔵 Démarrer une ronde</button>
         <span class="nav-divider"></span>
@@ -358,7 +338,7 @@ body.light-mode .history-card .history-site {
         <button id="resetAllBtn" class="nav-btn" style="color:#dc2626;font-weight:600;">🚨 Vider TOUT</button>
     </nav>
 
-    <!-- FILTRES -->
+    <!-- ========== FILTRES ========== -->
     <div class="filter-bar">
         <label>📍 Site</label>
         <select id="siteFilterSelect">
@@ -385,7 +365,7 @@ body.light-mode .history-card .history-site {
         <span id="resultCount" style="font-size:0.75rem;color:#64748b;"></span>
     </div>
 
-    <!-- CONTENU PRINCIPAL -->
+    <!-- ========== CONTENU PRINCIPAL ========== -->
     <div class="main-content">
 
         <!-- ONGLET VÉHICULES -->
@@ -450,16 +430,19 @@ body.light-mode .history-card .history-site {
             <div class="history-container">
                 <h2>📜 Historique des rondes</h2>
                 <div id="historyStats" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;font-size:0.75rem;color:#94a3b8;"></div>
+                
+                <!-- Filtres historique -->
                 <div style="margin-bottom:15px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-    <label style="font-size:0.75rem;color:#94a3b8;">🔍 Filtrer par site :</label>
-    <select id="historySiteFilter" style="background:#1e293b;border:1px solid #2d3a4e;color:#e2e8f0;padding:5px 12px;border-radius:4px;font-size:0.8rem;">
-        <option value="all">Tous les sites</option>
-    </select>
-    <label style="font-size:0.75rem;color:#94a3b8;margin-left:10px;">👤 Filtrer par utilisateur :</label>
-    <select id="historyUserFilter" style="background:#1e293b;border:1px solid #2d3a4e;color:#e2e8f0;padding:5px 12px;border-radius:4px;font-size:0.8rem;">
-        <option value="all">Tous</option>
-    </select>
-</div>
+                    <label style="font-size:0.75rem;color:#94a3b8;">🔍 Filtrer par site :</label>
+                    <select id="historySiteFilter" style="background:#1e293b;border:1px solid #2d3a4e;color:#e2e8f0;padding:5px 12px;border-radius:4px;font-size:0.8rem;">
+                        <option value="all">Tous les sites</option>
+                    </select>
+                    <label style="font-size:0.75rem;color:#94a3b8;margin-left:10px;">👤 Filtrer par utilisateur :</label>
+                    <select id="historyUserFilter" style="background:#1e293b;border:1px solid #2d3a4e;color:#e2e8f0;padding:5px 12px;border-radius:4px;font-size:0.8rem;">
+                        <option value="all">Tous</option>
+                    </select>
+                </div>
+                
                 <div class="history-grid" id="historyGrid">
                     <p style="color:#64748b;">Chargement...</p>
                 </div>
@@ -488,61 +471,63 @@ body.light-mode .history-card .history-site {
 
     </div>
 
-    <footer>NTR Garage · Stock Véhicules v3.0 · Firebase + Cloudinary</footer>
+    <footer>NTR Garage · Stock Véhicules v3.1 · Firebase + Cloudinary</footer>
 
-    <!-- MODALES -->
-    <!-- MODALE GESTION UTILISATEURS -->
-<div id="userModal" class="modal">
-    <div class="modal-content" style="max-width: 500px;">
-        <button class="close-btn" id="closeUserModalBtn">✕</button>
-        <h2>👥 Gestion des utilisateurs</h2>
-        <p style="font-size:0.8rem;color:#94a3b8;margin-bottom:15px;">
-            Ajoutez, modifiez ou supprimez les utilisateurs qui font les rondes.
-        </p>
-        
-        <div id="usersList" style="max-height:300px;overflow-y:auto;margin-bottom:15px;"></div>
-        
-        <div style="display:flex;gap:8px;margin-top:10px;">
-            <input type="text" id="newUserName" placeholder="Nom du nouvel utilisateur" style="flex:1;margin-bottom:0;">
-            <button class="btn-generate" id="addUserBtn" style="flex:0 0 auto;padding:10px 20px;">➕ Ajouter</button>
-        </div>
-        
-        <div class="btn-row">
-            <button class="btn-cancel" id="cancelUserBtn" style="flex:1;">Fermer</button>
-        </div>
-    </div>
-</div>
-    <!-- MODALE DÉMARRER RONDE -->
-<div id="startRondeModal" class="modal">
-    <div class="modal-content" style="max-width: 500px;">
-        <button class="close-btn" id="closeStartRondeModalBtn">✕</button>
-        <h2>🔵 Démarrer une nouvelle ronde</h2>
-        <p style="font-size:0.85rem;color:#94a3b8;margin-bottom:20px;">
-            Sélectionnez votre nom et le site où vous allez faire la ronde.
-        </p>
-        
-        <label>👤 Votre nom</label>
-        <select id="rondeUserSelect" style="margin-bottom:15px;"></select>
-        
-        <label>📍 Site de la ronde</label>
-        <select id="rondeSiteSelect" style="margin-bottom:15px;">
-            <option value="">-- Sélectionner un site --</option>
-        </select>
-        
-        <label>📝 Note (optionnel)</label>
-        <input type="text" id="rondeNote" placeholder="Ex: Ronde du matin, urgence, etc." style="margin-bottom:15px;">
-        
-        <div style="background:#0f172a;padding:10px 15px;border-radius:6px;margin-bottom:15px;font-size:0.8rem;color:#94a3b8;">
-            <div>📦 <strong id="rondeTotalVehicules">0</strong> véhicules au total</div>
-            <div id="rondeVehiculesSite" style="margin-top:4px;"></div>
-        </div>
-        
-        <div class="btn-row">
-            <button class="btn-generate" id="confirmStartRondeBtn">✅ Démarrer la ronde</button>
-            <button class="btn-cancel" id="cancelStartRondeBtn">Annuler</button>
+    <!-- ========== MODALE GESTION UTILISATEURS ========== -->
+    <div id="userModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="close-btn" id="closeUserModalBtn">✕</button>
+            <h2>👥 Gestion des utilisateurs</h2>
+            <p style="font-size:0.8rem;color:#94a3b8;margin-bottom:15px;">
+                Ajoutez, modifiez ou supprimez les utilisateurs qui font les rondes.
+            </p>
+            
+            <div id="usersList" style="max-height:300px;overflow-y:auto;margin-bottom:15px;"></div>
+            
+            <div style="display:flex;gap:8px;margin-top:10px;">
+                <input type="text" id="newUserName" placeholder="Nom du nouvel utilisateur" style="flex:1;margin-bottom:0;">
+                <button class="btn-generate" id="addUserBtn" style="flex:0 0 auto;padding:10px 20px;">➕ Ajouter</button>
+            </div>
+            
+            <div class="btn-row">
+                <button class="btn-cancel" id="cancelUserBtn" style="flex:1;">Fermer</button>
+            </div>
         </div>
     </div>
-</div>
+
+    <!-- ========== MODALE DÉMARRER RONDE ========== -->
+    <div id="startRondeModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="close-btn" id="closeStartRondeModalBtn">✕</button>
+            <h2>🔵 Démarrer une nouvelle ronde</h2>
+            <p style="font-size:0.85rem;color:#94a3b8;margin-bottom:20px;">
+                Sélectionnez votre nom et le site où vous allez faire la ronde.
+            </p>
+            
+            <label>👤 Votre nom</label>
+            <select id="rondeUserSelect" style="margin-bottom:15px;"></select>
+            
+            <label>📍 Site de la ronde</label>
+            <select id="rondeSiteSelect" style="margin-bottom:15px;">
+                <option value="">-- Sélectionner un site --</option>
+            </select>
+            
+            <label>📝 Note (optionnel)</label>
+            <input type="text" id="rondeNote" placeholder="Ex: Ronde du matin, urgence, etc." style="margin-bottom:15px;">
+            
+            <div style="background:#0f172a;padding:10px 15px;border-radius:6px;margin-bottom:15px;font-size:0.8rem;color:#94a3b8;">
+                <div>📦 <strong id="rondeTotalVehicules">0</strong> véhicules au total</div>
+                <div id="rondeVehiculesSite" style="margin-top:4px;"></div>
+            </div>
+            
+            <div class="btn-row">
+                <button class="btn-generate" id="confirmStartRondeBtn">✅ Démarrer la ronde</button>
+                <button class="btn-cancel" id="cancelStartRondeBtn">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MODALE ATTESTATION ========== -->
     <div id="attestationModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" id="closeModalBtn">✕</button>
@@ -564,6 +549,7 @@ body.light-mode .history-card .history-site {
         </div>
     </div>
 
+    <!-- ========== MODALE ÉDITION VÉHICULE ========== -->
     <div id="editModal" class="modal">
         <div class="modal-content" style="max-width: 500px;">
             <button class="close-btn" id="closeEditModalBtn">✕</button>
@@ -586,6 +572,7 @@ body.light-mode .history-card .history-site {
         </div>
     </div>
 
+    <!-- ========== MODALE DÉTAIL RONDE ========== -->
     <div id="historyDetailModal" class="modal">
         <div class="modal-content" style="max-width: 900px;">
             <button class="close-btn" id="closeHistoryDetailBtn">✕</button>
@@ -598,7 +585,7 @@ body.light-mode .history-card .history-site {
         </div>
     </div>
 
-    <!-- SCRIPT FIREBASE (MODULE) -->
+    <!-- ==================== SCRIPT FIREBASE (MODULE) ==================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { 
@@ -644,7 +631,7 @@ body.light-mode .history-card .history-site {
         window.dispatchEvent(new Event('firebaseReady'));
     </script>
 <!-- ⚠️ Continue avec PARTIE 3 -->
-        <!-- SCRIPT APPLICATION -->
+        <!-- ==================== SCRIPT APPLICATION ==================== -->
     <script>
         // ==================== CONFIGURATION ====================
         const SITE_OPTIONS = [
@@ -656,6 +643,7 @@ body.light-mode .history-card .history-site {
             source2: "Garage UM",
             custom: "Ajout manuel"
         };
+        const DEFAULT_USERS = ["Romaric Tanoh", "Joel Kouassi", "Sylvin", "Noel Aka", "Coulibaly", "Mohamed"];
 
         // ==================== CLOUDINARY ====================
         const CLOUDINARY_CLOUD_NAME = "u1wzoxod";
@@ -673,9 +661,13 @@ body.light-mode .history-card .history-site {
         let currentTypeFilter = "all";
         let currentImportSource = "source1";
         let currentTab = "vehicules";
+        let historySiteFilter = "all";
+        let historyUserFilter = "all";
         
         let rondeEnCours = null;
         let rondeStartTime = null;
+        let rondeSite = null;
+        let rondeNote = null;
         let rondeSnapshotDepart = [];
 
         let unsubscribeVehicules = null;
@@ -693,136 +685,128 @@ body.light-mode .history-card .history-site {
         const backupInfoSpan = $("backupInfo");
         const crossSearchNotice = $("crossSearchNotice");
         const importStatus = $("importStatus");
-        const userNameSpan = $("userName");
 
-        // ==================== UTILISATEUR ====================
-      // ==================== GESTION DES UTILISATEURS ====================
-const DEFAULT_USERS = ["Romaric Tanoh", "Joel Kouassi", "Sylvin", "Noel Aka", "Coulibaly", "Mohamed"];
-const STORAGE_USERS_KEY = "stock_usersList";
+        // ==================== GESTION DES UTILISATEURS ====================
+        const STORAGE_USERS_KEY = "stock_usersList";
 
-function chargerUtilisateurs() {
-    try {
-        const saved = localStorage.getItem(STORAGE_USERS_KEY);
-        if (saved) {
-            const parsed = JSON.parse(saved);
-            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        function chargerUtilisateurs() {
+            try {
+                const saved = localStorage.getItem(STORAGE_USERS_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                }
+            } catch(e) {}
+            return [...DEFAULT_USERS];
         }
-    } catch(e) {}
-    return [...DEFAULT_USERS];
-}
 
-function sauvegarderUtilisateurs(users) {
-    localStorage.setItem(STORAGE_USERS_KEY, JSON.stringify(users));
-}
+        function sauvegarderUtilisateurs(users) {
+            localStorage.setItem(STORAGE_USERS_KEY, JSON.stringify(users));
+        }
 
-let listeUtilisateurs = chargerUtilisateurs();
+        let listeUtilisateurs = chargerUtilisateurs();
 
-function rendreListeUtilisateurs() {
-    const select = $("userSelect");
-    if (!select) return;
-    select.innerHTML = '<option value="">👤 Choisir un utilisateur...</option>';
-    listeUtilisateurs.forEach((nom, idx) => {
-        const opt = document.createElement("option");
-        opt.value = nom;
-        opt.textContent = nom;
-        if (nom === currentUser) opt.selected = true;
-        select.appendChild(opt);
-    });
-}
+        function rendreListeUtilisateurs() {
+            const select = $("userSelect");
+            if (!select) return;
+            select.innerHTML = '<option value="">👤 Choisir...</option>';
+            listeUtilisateurs.forEach((nom) => {
+                const opt = document.createElement("option");
+                opt.value = nom;
+                opt.textContent = nom;
+                if (nom === currentUser) opt.selected = true;
+                select.appendChild(opt);
+            });
+        }
 
-function rendreModaleUtilisateurs() {
-    const container = $("usersList");
-    if (!container) return;
-    container.innerHTML = "";
-    listeUtilisateurs.forEach((nom, idx) => {
-        const div = document.createElement("div");
-        div.style.cssText = "display:flex;gap:8px;margin-bottom:8px;align-items:center;";
-        div.innerHTML = `
-            <input type="text" value="${nom}" data-idx="${idx}" class="user-edit-input" style="flex:1;margin-bottom:0;padding:6px 10px;font-size:0.85rem;">
-            <button class="btn-danger" data-idx="${idx}" style="background:#dc2626;border:none;color:white;padding:6px 10px;border-radius:4px;cursor:pointer;font-size:0.75rem;">🗑️</button>
-        `;
-        container.appendChild(div);
-    });
-    
-    // Boutons supprimer
-    container.querySelectorAll(".btn-danger").forEach(btn => {
-        btn.onclick = () => {
-            const idx = parseInt(btn.getAttribute("data-idx"));
-            if (!confirm(`Supprimer "${listeUtilisateurs[idx]}" ?`)) return;
-            listeUtilisateurs.splice(idx, 1);
+        function rendreModaleUtilisateurs() {
+            const container = $("usersList");
+            if (!container) return;
+            container.innerHTML = "";
+            
+            if (listeUtilisateurs.length === 0) {
+                container.innerHTML = '<p style="color:#94a3b8;text-align:center;padding:20px;">Aucun utilisateur</p>';
+                return;
+            }
+            
+            listeUtilisateurs.forEach((nom, idx) => {
+                const div = document.createElement("div");
+                div.style.cssText = "display:flex;gap:8px;margin-bottom:8px;align-items:center;";
+                div.innerHTML = `
+                    <input type="text" value="${nom}" data-idx="${idx}" class="user-edit-input" style="flex:1;margin-bottom:0;padding:8px 12px;font-size:0.85rem;">
+                    <button class="btn-danger-user" data-idx="${idx}" style="background:#dc2626;border:none;color:white;padding:8px 12px;border-radius:4px;cursor:pointer;font-size:0.85rem;">🗑️</button>
+                `;
+                container.appendChild(div);
+            });
+            
+            container.querySelectorAll(".btn-danger-user").forEach(btn => {
+                btn.onclick = () => {
+                    const idx = parseInt(btn.getAttribute("data-idx"));
+                    if (!confirm(`Supprimer "${listeUtilisateurs[idx]}" ?`)) return;
+                    listeUtilisateurs.splice(idx, 1);
+                    sauvegarderUtilisateurs(listeUtilisateurs);
+                    rendreListeUtilisateurs();
+                    rendreModaleUtilisateurs();
+                };
+            });
+            
+            container.querySelectorAll(".user-edit-input").forEach(input => {
+                input.onblur = () => {
+                    const idx = parseInt(input.getAttribute("data-idx"));
+                    const newName = input.value.trim();
+                    if (!newName) {
+                        input.value = listeUtilisateurs[idx];
+                        return;
+                    }
+                    if (newName !== listeUtilisateurs[idx]) {
+                        listeUtilisateurs[idx] = newName;
+                        sauvegarderUtilisateurs(listeUtilisateurs);
+                        rendreListeUtilisateurs();
+                    }
+                };
+            });
+        }
+
+        // Initialiser : si currentUser n'est pas dans la liste, l'ajouter
+        if (currentUser && !listeUtilisateurs.includes(currentUser)) {
+            listeUtilisateurs.push(currentUser);
             sauvegarderUtilisateurs(listeUtilisateurs);
+        }
+        rendreListeUtilisateurs();
+
+        // Changement d'utilisateur
+        $("userSelect").onchange = (e) => {
+            const nom = e.target.value;
+            if (!nom) return;
+            currentUser = nom;
+            localStorage.setItem("stock_userName", nom);
+            console.log("👤 Utilisateur :", nom);
+        };
+
+        // Ouvrir la modale de gestion
+        $("manageUsersBtn").onclick = () => {
+            rendreModaleUtilisateurs();
+            $("userModal").style.display = "flex";
+        };
+
+        $("closeUserModalBtn").onclick = () => $("userModal").style.display = "none";
+        $("cancelUserBtn").onclick = () => $("userModal").style.display = "none";
+        $("userModal").addEventListener("click", (e) => {
+            if (e.target === e.currentTarget) $("userModal").style.display = "none";
+        });
+
+        // Ajouter un utilisateur
+        $("addUserBtn").onclick = () => {
+            const input = $("newUserName");
+            const nom = input.value.trim();
+            if (!nom) { alert("Veuillez saisir un nom"); return; }
+            if (listeUtilisateurs.includes(nom)) { alert("Cet utilisateur existe déjà"); return; }
+            listeUtilisateurs.push(nom);
+            sauvegarderUtilisateurs(listeUtilisateurs);
+            input.value = "";
             rendreListeUtilisateurs();
             rendreModaleUtilisateurs();
         };
-    });
-    
-    // Inputs édition (sauvegarde en live)
-    container.querySelectorAll(".user-edit-input").forEach(input => {
-        input.onblur = () => {
-            const idx = parseInt(input.getAttribute("data-idx"));
-            const newName = input.value.trim();
-            if (!newName) {
-                input.value = listeUtilisateurs[idx];
-                return;
-            }
-            if (newName !== listeUtilisateurs[idx]) {
-                listeUtilisateurs[idx] = newName;
-                sauvegarderUtilisateurs(listeUtilisateurs);
-                rendreListeUtilisateurs();
-            }
-        };
-    });
-}
-
-// Remplacer l'ancienne fonction updateUserDisplay
-function updateUserDisplay() {
-    rendreListeUtilisateurs();
-}
-
-// Initialiser l'affichage
-if (currentUser && !listeUtilisateurs.includes(currentUser)) {
-    listeUtilisateurs.push(currentUser);
-    sauvegarderUtilisateurs(listeUtilisateurs);
-}
-rendreListeUtilisateurs();
-
-// Événement : changement d'utilisateur
-$("userSelect").onchange = (e) => {
-    const nom = e.target.value;
-    if (!nom) return;
-    currentUser = nom;
-    localStorage.setItem("stock_userName", nom);
-    console.log("👤 Utilisateur changé :", nom);
-};
-
-// Événement : ouvrir la modale de gestion
-$("manageUsersBtn").onclick = () => {
-    rendreModaleUtilisateurs();
-    $("userModal").style.display = "flex";
-};
-
-$("closeUserModalBtn").onclick = () => $("userModal").style.display = "none";
-$("cancelUserBtn").onclick = () => $("userModal").style.display = "none";
-
-// Ajouter un utilisateur
-$("addUserBtn").onclick = () => {
-    const input = $("newUserName");
-    const nom = input.value.trim();
-    if (!nom) { alert("Veuillez saisir un nom"); return; }
-    if (listeUtilisateurs.includes(nom)) { alert("Cet utilisateur existe déjà"); return; }
-    listeUtilisateurs.push(nom);
-    sauvegarderUtilisateurs(listeUtilisateurs);
-    input.value = "";
-    rendreListeUtilisateurs();
-    rendreModaleUtilisateurs();
-    alert(`✅ "${nom}" ajouté`);
-};
-
-// ⚠️ SÉCURITÉ : au démarrage, si aucun user sélectionné, on prend le premier
-if (!currentUser || !listeUtilisateurs.includes(currentUser)) {
-    currentUser = listeUtilisateurs[0] || "Utilisateur";
-    localStorage.setItem("stock_userName", currentUser);
-}
 
         // ==================== BIP ====================
         function playBeep() {
@@ -859,7 +843,6 @@ if (!currentUser || !listeUtilisateurs.includes(currentUser)) {
         setTimeout(() => {
             if (!firebasePret) {
                 console.warn("⚠️ Firebase n'a pas répondu");
-                alert("⚠️ Firebase n'a pas pu se charger. Vérifiez votre connexion.");
             }
         }, 5000);
 
@@ -877,7 +860,6 @@ if (!currentUser || !listeUtilisateurs.includes(currentUser)) {
                 indicateurSync();
             }, (error) => {
                 console.error("Erreur Firestore:", error);
-                alert("❌ Erreur de chargement : " + error.message);
             });
 
             const qRondes = query(collection(db, "rondes"));
@@ -927,119 +909,103 @@ if (!currentUser || !listeUtilisateurs.includes(currentUser)) {
         $("tabArchivesBtn").onclick = () => switchTab("archives");
         $("tabGraphiquesBtn").onclick = () => switchTab("graphiques");
 
-        // ==================== RONDES ====================
-    // ==================== DÉMARRER UNE RONDE (avec choix site) ====================
-let rondeSite = null;      // 🆕 Site de la ronde en cours
-let rondeNote = null;       // 🆕 Note optionnelle
+        // ==================== DÉMARRER RONDE ====================
+        $("startRondeBtn").onclick = () => {
+            if (rondeEnCours) { alert("⚠️ Une ronde est déjà en cours."); return; }
+            if (allVehicles.length === 0) { alert("⚠️ Aucun véhicule chargé."); return; }
+            
+            // Remplir la liste des utilisateurs
+            const userSelect = $("rondeUserSelect");
+            userSelect.innerHTML = '<option value="">-- Choisir --</option>';
+            listeUtilisateurs.forEach(nom => {
+                const opt = document.createElement("option");
+                opt.value = nom;
+                opt.textContent = nom;
+                if (nom === currentUser) opt.selected = true;
+                userSelect.appendChild(opt);
+            });
+            
+            // Remplir la liste des sites
+            const siteSelect = $("rondeSiteSelect");
+            siteSelect.innerHTML = '<option value="">-- Choisir --</option>';
+            SITE_OPTIONS.forEach(site => {
+                const opt = document.createElement("option");
+                opt.value = site;
+                opt.textContent = site;
+                siteSelect.appendChild(opt);
+            });
+            
+            $("rondeTotalVehicules").textContent = allVehicles.length;
+            $("rondeVehiculesSite").textContent = "";
+            $("rondeNote").value = "";
+            
+            $("startRondeModal").style.display = "flex";
+        };
 
-$("startRondeBtn").onclick = () => {
-    if (rondeEnCours) { alert("⚠️ Une ronde est déjà en cours."); return; }
-    if (allVehicles.length === 0) { alert("⚠️ Aucun véhicule chargé. Importez d'abord une liste."); return; }
-    
-    // Remplir la liste des utilisateurs
-    const userSelect = $("rondeUserSelect");
-    userSelect.innerHTML = '<option value="">-- Choisir --</option>';
-    listeUtilisateurs.forEach(nom => {
-        const opt = document.createElement("option");
-        opt.value = nom;
-        opt.textContent = nom;
-        if (nom === currentUser) opt.selected = true;
-        userSelect.appendChild(opt);
-    });
-    
-    // Remplir la liste des sites
-    const siteSelect = $("rondeSiteSelect");
-    siteSelect.innerHTML = '<option value="">-- Choisir --</option>';
-    SITE_OPTIONS.forEach(site => {
-        const opt = document.createElement("option");
-        opt.value = site;
-        opt.textContent = site;
-        siteSelect.appendChild(opt);
-    });
-    
-    // Afficher le total
-    $("rondeTotalVehicules").textContent = allVehicles.length;
-    $("rondeVehiculesSite").textContent = "";
-    $("rondeNote").value = "";
-    
-    // Ouvrir la modale
-    $("startRondeModal").style.display = "flex";
-};
+        $("rondeSiteSelect").onchange = () => {
+            const site = $("rondeSiteSelect").value;
+            if (!site) {
+                $("rondeVehiculesSite").textContent = "";
+                return;
+            }
+            const totalSite = allVehicles.filter(v => v.site === site).length;
+            $("rondeVehiculesSite").innerHTML = `📍 <strong>${totalSite}</strong> véhicules déjà assignés à <strong>${site}</strong>`;
+        };
 
-// Mettre à jour le compteur quand on change de site
-$("rondeSiteSelect").onchange = () => {
-    const site = $("rondeSiteSelect").value;
-    if (!site) {
-        $("rondeVehiculesSite").textContent = "";
-        return;
-    }
-    const count = allVehicles.filter(v => v.site === site || (!v.present && !v.site)).length;
-    const totalSite = allVehicles.filter(v => v.site === site).length;
-    $("rondeVehiculesSite").innerHTML = `📍 <strong>${totalSite}</strong> véhicules déjà assignés à <strong>${site}</strong>`;
-};
+        $("confirmStartRondeBtn").onclick = () => {
+            const user = $("rondeUserSelect").value;
+            const site = $("rondeSiteSelect").value;
+            const note = $("rondeNote").value.trim();
+            
+            if (!user) { alert("⚠️ Veuillez choisir votre nom"); return; }
+            if (!site) { alert("⚠️ Veuillez choisir un site"); return; }
+            
+            currentUser = user;
+            localStorage.setItem("stock_userName", currentUser);
+            $("userSelect").value = currentUser;
+            
+            rondeSite = site;
+            rondeNote = note;
+            rondeSnapshotDepart = allVehicles.map(v => ({ id: v.id, immat: v.immat, present: v.present, site: v.site }));
+            rondeStartTime = new Date();
+            rondeEnCours = true;
+            
+            $("startRondeModal").style.display = "none";
+            $("rondeBanner").classList.add("visible");
+            $("rondeStartTime").textContent = `Début : ${rondeStartTime.toLocaleTimeString()}`;
+            updateRondeCounter();
+            
+            $("startRondeBtn").disabled = true;
+            $("startRondeBtn").style.opacity = "0.5";
+            
+            currentSiteFilter = site;
+            siteFilterSelect.value = site;
+            renderList();
+            
+            alert(`✅ Ronde démarrée !\n\n👤 ${currentUser}\n📍 ${site}${note ? '\n📝 ' + note : ''}`);
+        };
 
-// Confirmer le démarrage
-$("confirmStartRondeBtn").onclick = () => {
-    const user = $("rondeUserSelect").value;
-    const site = $("rondeSiteSelect").value;
-    const note = $("rondeNote").value.trim();
-    
-    if (!user) { alert("⚠️ Veuillez choisir votre nom"); return; }
-    if (!site) { alert("⚠️ Veuillez choisir un site"); return; }
-    
-    // Mettre à jour l'utilisateur global
-    currentUser = user;
-    localStorage.setItem("stock_userName", currentUser);
-    if ($("userSelect")) $("userSelect").value = currentUser;
-    
-    // Sauvegarder le site de la ronde
-    rondeSite = site;
-    rondeNote = note;
-    rondeSnapshotDepart = allVehicles.map(v => ({ id: v.id, immat: v.immat, present: v.present, site: v.site }));
-    rondeStartTime = new Date();
-    rondeEnCours = true;
-    
-    // Fermer la modale
-    $("startRondeModal").style.display = "none";
-    
-    // Afficher la bannière
-    $("rondeBanner").classList.add("visible");
-    $("rondeStartTime").textContent = `Début : ${rondeStartTime.toLocaleTimeString()}`;
-    $("rondeCounter").textContent = `📍 ${site} · 0 / ${allVehicles.length} présents`;
-    updateRondeCounter();
-    
-    $("startRondeBtn").disabled = true;
-    $("startRondeBtn").style.opacity = "0.5";
-    
-    // 🆕 Filtrer l'affichage sur le site de la ronde (optionnel, configurable)
-    currentSiteFilter = site;
-    siteFilterSelect.value = site;
-    renderList();
-    
-    alert(`✅ Ronde démarrée !\n\n👤 ${currentUser}\n📍 ${site}${note ? '\n📝 ' + note : ''}`);
-};
+        $("closeStartRondeModalBtn").onclick = () => $("startRondeModal").style.display = "none";
+        $("cancelStartRondeBtn").onclick = () => $("startRondeModal").style.display = "none";
+        $("startRondeModal").addEventListener("click", (e) => {
+            if (e.target === e.currentTarget) $("startRondeModal").style.display = "none";
+        });
 
-// Annuler
-$("closeStartRondeModalBtn").onclick = () => $("startRondeModal").style.display = "none";
-$("cancelStartRondeBtn").onclick = () => $("startRondeModal").style.display = "none";
-$("startRondeModal").addEventListener("click", (e) => {
-    if (e.target === e.currentTarget) $("startRondeModal").style.display = "none";
-};
+        function updateRondeCounter() {
+            if (!rondeEnCours) return;
+            const total = allVehicles.length;
+            const presents = allVehicles.filter(v => v.present).length;
+            const siteInfo = rondeSite ? `📍 ${rondeSite} · ` : '';
+            $("rondeCounter").textContent = `${siteInfo}${presents} / ${total} présents`;
+        }
 
-       function updateRondeCounter() {
-    if (!rondeEnCours) return;
-    const total = allVehicles.length;
-    const presents = allVehicles.filter(v => v.present).length;
-    const siteInfo = rondeSite ? `📍 ${rondeSite} · ` : '';
-    $("rondeCounter").textContent = `${siteInfo}${presents} / ${total} présents`;
-}
-
+        // ==================== CLÔTURER RONDE ====================
         $("closeRondeBtn").onclick = async () => {
             if (!rondeEnCours) return;
             const presents = allVehicles.filter(v => v.present).length;
             const absents = allVehicles.length - presents;
             
-            if (!confirm(`Clôturer la ronde ?\n\n📊 Total : ${allVehicles.length}\n✅ Présents : ${presents}\n❌ Absents : ${absents}\n\nSauvegardée dans l'historique.`)) return;
+            if (!confirm(`Clôturer la ronde ?\n\n👤 ${currentUser}\n📍 ${rondeSite || 'Non défini'}\n\n📊 Total : ${allVehicles.length}\n✅ Présents : ${presents}\n❌ Absents : ${absents}`)) return;
             
             try {
                 const comparaison = calculerComparaison();
@@ -1057,25 +1023,25 @@ $("startRondeModal").addEventListener("click", (e) => {
                     site: v.site || null, source: v.source || "source1"
                 }));
                 
-              await window.addDoc(window.collection(db, "rondes"), {
-    date: new Date().toISOString().slice(0, 10),
-    heureDebut: rondeStartTime.toISOString(),
-    heureFin: new Date().toISOString(),
-    effectueePar: currentUser,
-    site: rondeSite || null,           // 🆕 Site de la ronde
-    note: rondeNote || "",             // 🆕 Note optionnelle
-    stats: stats,
-    vehicules: vehiculesSnapshot,
-    comparaison: comparaison,
-    createdAt: window.serverTimestamp()
-});
+                await window.addDoc(window.collection(db, "rondes"), {
+                    date: new Date().toISOString().slice(0, 10),
+                    heureDebut: rondeStartTime.toISOString(),
+                    heureFin: new Date().toISOString(),
+                    effectueePar: currentUser,
+                    site: rondeSite || null,
+                    note: rondeNote || "",
+                    stats: stats,
+                    vehicules: vehiculesSnapshot,
+                    comparaison: comparaison,
+                    createdAt: window.serverTimestamp()
+                });
                 
-                 rondeEnCours = null;
-rondeStartTime = null;
-rondeSite = null;           // 🆕 Réinitialiser le site
-rondeNote = null;           // 🆕 Réinitialiser la note
-rondeSnapshotDepart = [];
-$("rondeBanner").classList.remove("visible");
+                rondeEnCours = null;
+                rondeStartTime = null;
+                rondeSite = null;
+                rondeNote = null;
+                rondeSnapshotDepart = [];
+                $("rondeBanner").classList.remove("visible");
                 $("startRondeBtn").disabled = false;
                 $("startRondeBtn").style.opacity = "1";
                 
@@ -1243,7 +1209,7 @@ $("rondeBanner").classList.remove("visible");
             } catch (e) { alert("❌ Erreur: " + e.message); }
         };
 
-        // ==================== PHOTOS (CLOUDINARY) ====================
+        // ==================== PHOTOS CLOUDINARY ====================
         async function uploadPhoto(vehicleId, file) {
             try {
                 const v = allVehicles.find(x => x.id === vehicleId);
@@ -1513,40 +1479,37 @@ $("rondeBanner").classList.remove("visible");
         }
 
         // ==================== HISTORIQUE ====================
-        // Filtres historique
-let historySiteFilter = "all";
-let historyUserFilter = "all";
-
-function initHistoryFilters() {
-    const siteSel = $("historySiteFilter");
-    const userSel = $("historyUserFilter");
-    if (!siteSel || !userSel) return;
-    
-    // Sites
-    siteSel.innerHTML = '<option value="all">Tous les sites</option>';
-    SITE_OPTIONS.forEach(s => {
-        const opt = document.createElement("option");
-        opt.value = s;
-        opt.textContent = s;
-        siteSel.appendChild(opt);
-    });
-    
-    // Utilisateurs (à partir des rondes existantes)
-    const users = [...new Set(allRondes.map(r => r.effectueePar).filter(Boolean))];
-    userSel.innerHTML = '<option value="all">Tous</option>';
-    users.forEach(u => {
-        const opt = document.createElement("option");
-        opt.value = u;
-        opt.textContent = u;
-        userSel.appendChild(opt);
-    });
-    
-    siteSel.value = historySiteFilter;
-    userSel.value = historyUserFilter;
-    
-    siteSel.onchange = () => { historySiteFilter = siteSel.value; renderHistorique(); };
-    userSel.onchange = () => { historyUserFilter = userSel.value; renderHistorique(); };
-}
+        function initHistoryFilters() {
+            const siteSel = $("historySiteFilter");
+            const userSel = $("historyUserFilter");
+            if (!siteSel || !userSel) return;
+            
+            // Sites
+            siteSel.innerHTML = '<option value="all">Tous les sites</option>';
+            SITE_OPTIONS.forEach(s => {
+                const opt = document.createElement("option");
+                opt.value = s;
+                opt.textContent = s;
+                siteSel.appendChild(opt);
+            });
+            
+            // Utilisateurs (à partir des rondes existantes + liste actuelle)
+            const usersInRondes = [...new Set(allRondes.map(r => r.effectueePar).filter(Boolean))];
+            const allUsers = [...new Set([...usersInRondes, ...listeUtilisateurs])];
+            userSel.innerHTML = '<option value="all">Tous</option>';
+            allUsers.forEach(u => {
+                const opt = document.createElement("option");
+                opt.value = u;
+                opt.textContent = u;
+                userSel.appendChild(opt);
+            });
+            
+            siteSel.value = historySiteFilter;
+            userSel.value = historyUserFilter;
+            
+            siteSel.onchange = () => { historySiteFilter = siteSel.value; renderHistorique(); };
+            userSel.onchange = () => { historyUserFilter = userSel.value; renderHistorique(); };
+        }
 
         function renderHistorique() {
             const grid = $("historyGrid");
@@ -1554,8 +1517,13 @@ function initHistoryFilters() {
             
             if (allRondes.length === 0) {
                 grid.innerHTML = "<p style='color:#64748b;'>Aucune ronde enregistrée.</p>";
-                statsDiv.innerHTML = ""; return;
+                statsDiv.innerHTML = ""; 
+                initHistoryFilters();
+                return;
             }
+            
+            // Initialiser les filtres
+            initHistoryFilters();
             
             const totalRondes = allRondes.length;
             const totalVehicules = allRondes.reduce((a, r) => a + (r.stats?.total || 0), 0);
@@ -1565,22 +1533,22 @@ function initHistoryFilters() {
                 <span>🚗 ${totalVehicules} véhicules pointés</span>
                 <span>✅ ${totalPresents} présences</span>`;
             
-           // Initialiser les filtres si pas encore fait
-if ($("historySiteFilter") && $("historySiteFilter").options.length <= 1) {
-    initHistoryFilters();
-}
-
-// Appliquer les filtres
-let rondesFiltrees = [...allRondes];
-if (historySiteFilter !== "all") {
-    rondesFiltrees = rondesFiltrees.filter(r => r.site === historySiteFilter);
-}
-if (historyUserFilter !== "all") {
-    rondesFiltrees = rondesFiltrees.filter(r => r.effectueePar === historyUserFilter);
-}
-
-let html = "";
-rondesFiltrees.forEach(r => {
+            // Appliquer les filtres
+            let rondesFiltrees = [...allRondes];
+            if (historySiteFilter !== "all") {
+                rondesFiltrees = rondesFiltrees.filter(r => r.site === historySiteFilter);
+            }
+            if (historyUserFilter !== "all") {
+                rondesFiltrees = rondesFiltrees.filter(r => r.effectueePar === historyUserFilter);
+            }
+            
+            if (rondesFiltrees.length === 0) {
+                grid.innerHTML = "<p style='color:#64748b;'>Aucune ronde ne correspond aux filtres.</p>";
+                return;
+            }
+            
+            let html = "";
+            rondesFiltrees.forEach(r => {
                 const date = new Date(r.heureFin || r.date);
                 const dateStr = date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
                 const heureStr = date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
@@ -1590,20 +1558,21 @@ rondesFiltrees.forEach(r => {
                     : (comp.message === "Première ronde" ? `<div class="history-diff">✨ Première ronde</div>` : '');
                 
                 const siteBadge = r.site ? `<div class="history-site">📍 ${r.site}</div>` : '';
-const noteBadge = r.note ? `<div style="font-size:0.7rem;color:#64748b;margin-top:4px;font-style:italic;">📝 ${r.note}</div>` : '';
-html += `
-    <div class="history-card" onclick="openHistoryDetail('${r.id}')">
-        <div class="history-date">${dateStr}</div>
-        <div class="history-user">👤 ${r.effectueePar || "?"} · 🕒 ${heureStr}</div>
-        ${siteBadge}
-        <div class="history-stats">
-            <span>📦 ${r.stats?.total || 0}</span>
-            <span class="stat-present">✅ ${r.stats?.presents || 0}</span>
-            <span class="stat-absent">❌ ${r.stats?.absents || 0}</span>
-        </div>
-        ${diffHtml}
-        ${noteBadge}
-    </div>`;
+                const noteBadge = r.note ? `<div style="font-size:0.7rem;color:#64748b;margin-top:4px;font-style:italic;">📝 ${r.note}</div>` : '';
+                
+                html += `
+                    <div class="history-card" onclick="openHistoryDetail('${r.id}')">
+                        <div class="history-date">${dateStr}</div>
+                        <div class="history-user">👤 ${r.effectueePar || "?"} · 🕒 ${heureStr}</div>
+                        ${siteBadge}
+                        <div class="history-stats">
+                            <span>📦 ${r.stats?.total || 0}</span>
+                            <span class="stat-present">✅ ${r.stats?.presents || 0}</span>
+                            <span class="stat-absent">❌ ${r.stats?.absents || 0}</span>
+                        </div>
+                        ${diffHtml}
+                        ${noteBadge}
+                    </div>`;
             });
             grid.innerHTML = html;
         }
@@ -1615,17 +1584,18 @@ html += `
             const date = new Date(r.heureFin || r.date);
             $("historyDetailTitle").textContent = `📜 Ronde du ${date.toLocaleDateString('fr-FR')}`;
             
-          const siteInfo = r.site ? `<p style="margin:4px 0;">📍 Site : <strong style="color:#60a5fa;">${r.site}</strong></p>` : '';
-const noteInfo = r.note ? `<p style="margin:4px 0;">📝 Note : <em style="color:#94a3b8;">${r.note}</em></p>` : '';
-let html = `
-    <div style="font-size:0.85rem;margin-bottom:15px;color:#94a3b8;">
-        <p style="margin:4px 0;">👤 Par : <strong style="color:#e2e8f0;">${r.effectueePar}</strong></p>
-        ${siteInfo}
-        ${noteInfo}
-        <p style="margin:4px 0;">🕒 Début : ${new Date(r.heureDebut).toLocaleString('fr-FR')}</p>
-        <p style="margin:4px 0;">🕒 Fin : ${new Date(r.heureFin).toLocaleString('fr-FR')}</p>
-        <p style="margin:4px 0;">📊 ${r.stats?.total} · ✅ ${r.stats?.presents} · ❌ ${r.stats?.absents}</p>
-    </div>
+            const siteInfo = r.site ? `<p style="margin:4px 0;">📍 Site : <strong style="color:#60a5fa;">${r.site}</strong></p>` : '';
+            const noteInfo = r.note ? `<p style="margin:4px 0;">📝 Note : <em style="color:#94a3b8;">${r.note}</em></p>` : '';
+            
+            let html = `
+                <div style="font-size:0.85rem;margin-bottom:15px;color:#94a3b8;">
+                    <p style="margin:4px 0;">👤 Par : <strong style="color:#e2e8f0;">${r.effectueePar}</strong></p>
+                    ${siteInfo}
+                    ${noteInfo}
+                    <p style="margin:4px 0;">🕒 Début : ${new Date(r.heureDebut).toLocaleString('fr-FR')}</p>
+                    <p style="margin:4px 0;">🕒 Fin : ${new Date(r.heureFin).toLocaleString('fr-FR')}</p>
+                    <p style="margin:4px 0;">📊 ${r.stats?.total} · ✅ ${r.stats?.presents} · ❌ ${r.stats?.absents}</p>
+                </div>
                 <div style="max-height:400px;overflow-y:auto;">
                 <table class="history-detail-table">
                     <thead><tr><th>Immat</th><th>Marque</th><th>Modèle</th><th>Client</th><th>Statut</th><th>Site</th></tr></thead>
@@ -1643,80 +1613,78 @@ let html = `
             });
             
             html += `</tbody></table></div>`;
-$("historyDetailContent").innerHTML = html;
-
-// 🆕 Ajouter les boutons Modifier / Annuler
-const actionDiv = document.createElement("div");
-actionDiv.style.cssText = "margin-top:15px;padding-top:15px;border-top:1px solid #334155;display:flex;gap:10px;flex-wrap:wrap;";
-actionDiv.innerHTML = `
-    <button id="reopenRondeBtn" style="background:#f59e0b;color:#0f172a;border:none;padding:8px 16px;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;">🔓 Réouvrir cette ronde</button>
-    <button id="deleteRondeBtn" style="background:#dc2626;color:white;border:none;padding:8px 16px;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;">🗑️ Annuler cette ronde</button>
-`;
-$("historyDetailContent").appendChild(actionDiv);
-
-// Événement : réouvrir une ronde
-actionDiv.querySelector("#reopenRondeBtn").onclick = async () => {
-    if (!confirm(`🔓 Réouvrir la ronde du ${new Date(r.heureFin).toLocaleDateString('fr-FR')} ?\n\nLes véhicules seront rechargés avec leurs états au moment de la ronde.`)) return;
-    
-    if (rondeEnCours) {
-        alert("⚠️ Une ronde est déjà en cours. Clôture-la d'abord.");
-        return;
-    }
-    
-    try {
-        // Restaurer les états des véhicules à partir de la ronde
-        const batch = window.writeBatch(db);
-        for (let vSnap of r.vehicules) {
-            const v = allVehicles.find(x => x.immat === vSnap.immat);
-            if (v) {
-                batch.update(window.doc(db, "vehicules", v.id), {
-                    present: vSnap.present || false,
-                    site: vSnap.site || null,
-                    lastSeen: new Date().toISOString()
-                });
-            }
-        }
-        await batch.commit();
-        
-        // Démarrer une nouvelle ronde liée
-        rondeStartTime = new Date();
-        rondeEnCours = true;
-        currentUser = r.effectueePar || currentUser;
-        $("userSelect").value = currentUser;
-        
-        $("rondeBanner").classList.add("visible");
-        $("rondeStartTime").textContent = `Reprise : ${rondeStartTime.toLocaleTimeString()}`;
-        updateRondeCounter();
-        $("startRondeBtn").disabled = true;
-        $("startRondeBtn").style.opacity = "0.5";
-        
-        $("historyDetailModal").style.display = "none";
-        switchTab("vehicules");
-        
-        alert(`✅ Ronde réouverte !\n\nVous pouvez modifier les véhicules puis clôturer à nouveau.`);
-    } catch(e) {
-        console.error("Erreur réouverture:", e);
-        alert("❌ Erreur : " + e.message);
-    }
-};
-
-// Événement : annuler/supprimer une ronde
-actionDiv.querySelector("#deleteRondeBtn").onclick = async () => {
-    if (!confirm(`🗑️ SUPPRIMER cette ronde de l'historique ?\n\nCette action est IRRÉVERSIBLE.\nLa ronde sera définitivement supprimée de Firebase.`)) return;
-    if (!confirm(`🚨 Confirmation finale :\n\nRonde du ${new Date(r.heureFin).toLocaleDateString('fr-FR')}\nPar ${r.effectueePar}\n\nVraiment supprimer ?`)) return;
-    
-    try {
-        await window.deleteDoc(window.doc(db, "rondes", r.id));
-        $("historyDetailModal").style.display = "none";
-        alert("✅ Ronde supprimée de l'historique");
-    } catch(e) {
-        console.error("Erreur suppression ronde:", e);
-        alert("❌ Erreur : " + e.message);
-    }
-};
-
-$("historyDetailModal").style.display = "flex";
-window._currentRondeForExport = r;
+            $("historyDetailContent").innerHTML = html;
+            
+            // Boutons réouvrir / supprimer
+            const actionDiv = document.createElement("div");
+            actionDiv.style.cssText = "margin-top:15px;padding-top:15px;border-top:1px solid #334155;display:flex;gap:10px;flex-wrap:wrap;";
+            actionDiv.innerHTML = `
+                <button id="reopenRondeBtn" style="background:#f59e0b;color:#0f172a;border:none;padding:8px 16px;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;">🔓 Réouvrir cette ronde</button>
+                <button id="deleteRondeBtn" style="background:#dc2626;color:white;border:none;padding:8px 16px;border-radius:6px;font-weight:600;cursor:pointer;font-size:0.85rem;">🗑️ Annuler cette ronde</button>
+            `;
+            $("historyDetailContent").appendChild(actionDiv);
+            
+            actionDiv.querySelector("#reopenRondeBtn").onclick = async () => {
+                if (!confirm(`🔓 Réouvrir la ronde du ${new Date(r.heureFin).toLocaleDateString('fr-FR')} ?\n\nLes véhicules seront rechargés avec leurs états au moment de la ronde.`)) return;
+                
+                if (rondeEnCours) {
+                    alert("⚠️ Une ronde est déjà en cours. Clôture-la d'abord.");
+                    return;
+                }
+                
+                try {
+                    const batch = window.writeBatch(db);
+                    for (let vSnap of r.vehicules) {
+                        const v = allVehicles.find(x => x.immat === vSnap.immat);
+                        if (v) {
+                            batch.update(window.doc(db, "vehicules", v.id), {
+                                present: vSnap.present || false,
+                                site: vSnap.site || null,
+                                lastSeen: new Date().toISOString()
+                            });
+                        }
+                    }
+                    await batch.commit();
+                    
+                    rondeStartTime = new Date();
+                    rondeEnCours = true;
+                    rondeSite = r.site || null;
+                    rondeNote = `Réouverture de la ronde du ${new Date(r.heureFin).toLocaleDateString('fr-FR')}`;
+                    currentUser = r.effectueePar || currentUser;
+                    $("userSelect").value = currentUser;
+                    
+                    $("rondeBanner").classList.add("visible");
+                    $("rondeStartTime").textContent = `Reprise : ${rondeStartTime.toLocaleTimeString()}`;
+                    updateRondeCounter();
+                    $("startRondeBtn").disabled = true;
+                    $("startRondeBtn").style.opacity = "0.5";
+                    
+                    $("historyDetailModal").style.display = "none";
+                    switchTab("vehicules");
+                    
+                    alert(`✅ Ronde réouverte !\n\nVous pouvez modifier les véhicules puis clôturer à nouveau.`);
+                } catch(e) {
+                    console.error("Erreur réouverture:", e);
+                    alert("❌ Erreur : " + e.message);
+                }
+            };
+            
+            actionDiv.querySelector("#deleteRondeBtn").onclick = async () => {
+                if (!confirm(`🗑️ SUPPRIMER cette ronde de l'historique ?\n\nCette action est IRRÉVERSIBLE.`)) return;
+                if (!confirm(`🚨 Confirmation finale :\n\nRonde du ${new Date(r.heureFin).toLocaleDateString('fr-FR')}\nPar ${r.effectueePar}\n\nVraiment supprimer ?`)) return;
+                
+                try {
+                    await window.deleteDoc(window.doc(db, "rondes", r.id));
+                    $("historyDetailModal").style.display = "none";
+                    alert("✅ Ronde supprimée");
+                } catch(e) {
+                    console.error("Erreur suppression ronde:", e);
+                    alert("❌ Erreur : " + e.message);
+                }
+            };
+            
+            $("historyDetailModal").style.display = "flex";
+            window._currentRondeForExport = r;
         }
 
         $("closeHistoryDetailBtn").onclick = () => $("historyDetailModal").style.display = "none";
@@ -1737,7 +1705,8 @@ window._currentRondeForExport = r;
                 doc.setFontSize(10);
                 doc.text(`Date : ${new Date(r.heureFin).toLocaleString('fr-FR')}`, 14, 22);
                 doc.text(`Effectuée par : ${r.effectueePar}`, 14, 28);
-                doc.text(`Total : ${r.stats?.total} | Présents : ${r.stats?.presents} | Absents : ${r.stats?.absents}`, 14, 35);
+                if (r.site) doc.text(`Site : ${r.site}`, 14, 34);
+                doc.text(`Total : ${r.stats?.total} | Présents : ${r.stats?.presents} | Absents : ${r.stats?.absents}`, 14, r.site ? 40 : 34);
                 
                 const rows = (r.vehicules || []).map(v => [
                     v.immat, v.marque || "", v.modele || "", v.client || "",
@@ -1745,7 +1714,7 @@ window._currentRondeForExport = r;
                 ]);
                 doc.autoTable({
                     head: [["Immat", "Marque", "Modèle", "Client", "Statut", "Site"]],
-                    body: rows, startY: 42, theme: 'striped',
+                    body: rows, startY: r.site ? 46 : 40, theme: 'striped',
                     styles: { font: "helvetica", fontSize: 8 },
                     headStyles: { fillColor: [15, 23, 42], textColor: [255, 255, 255] }
                 });
@@ -1799,9 +1768,11 @@ window._currentRondeForExport = r;
             filtered.forEach(r => {
                 const date = new Date(r.heureFin || r.date);
                 const dateStr = date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                const siteBadge = r.site ? `<div class="history-site">📍 ${r.site}</div>` : '';
                 html += `<div class="history-card" onclick="openHistoryDetail('${r.id}')">
                     <div class="history-date">${dateStr}</div>
                     <div class="history-user">👤 ${r.effectueePar}</div>
+                    ${siteBadge}
                     <div class="history-stats">
                         <span>📦 ${r.stats?.total}</span>
                         <span class="stat-present">✅ ${r.stats?.presents}</span>
@@ -1840,7 +1811,7 @@ window._currentRondeForExport = r;
                 const heightPresents = (presents / maxTotal) * 160;
                 const heightAbsents = (absents / maxTotal) * 160;
                 html += `
-                    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:40px;" title="${d.toLocaleDateString('fr-FR')}">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:40px;" title="${d.toLocaleDateString('fr-FR')} - ${r.site || ''}">
                         <div style="display:flex;flex-direction:column;justify-content:flex-end;height:170px;">
                             <div style="width:30px;background:#10b981;height:${heightPresents}px;border-radius:4px 4px 0 0;"></div>
                             <div style="width:30px;background:#ef4444;height:${heightAbsents}px;border-radius:0 0 4px 4px;"></div>
@@ -2062,7 +2033,7 @@ window._currentRondeForExport = r;
                 const numAttestation = `N°${String(Math.floor(Math.random()*9000)+1000)}/${mois[now.getMonth()]}/${now.getFullYear()}`;
                 
                 const { Document, Packer, Paragraph, TextRun, AlignmentType, convertInchesToTwip } = docx;
-                const doc = new Document({
+                const doc = new docx.Document({
                     sections: [{
                         properties: { page: { margin: { top: convertInchesToTwip(0.8), bottom: convertInchesToTwip(0.8), left: convertInchesToTwip(1.2), right: convertInchesToTwip(1.2) } } },
                         children: [
@@ -2109,22 +2080,10 @@ window._currentRondeForExport = r;
             const sourceLabel = SOURCE_LABELS[source];
             const count = allVehicles.filter(v => v.source === source).length;
             
-            if (count === 0) {
-                alert(`ℹ️ Aucun véhicule dans ${sourceLabel}`);
-                return;
-            }
+            if (count === 0) { alert(`ℹ️ Aucun véhicule dans ${sourceLabel}`); return; }
             
-            if (!confirm(`⚠️ SUPPRIMER TOUS les ${count} véhicules de "${sourceLabel}" ?\n\n` +
-                         `Cette action est IRRÉVERSIBLE.\n` +
-                         `Les véhicules seront définitivement supprimés de Firebase.\n\n` +
-                         `💡 Conseil : fais un export Excel avant de continuer.`)) {
-                return;
-            }
-            
-            if (!confirm(`🚨 DERNIÈRE CONFIRMATION\n\n` +
-                         `Voulez-vous vraiment supprimer les ${count} véhicules de ${sourceLabel} ?`)) {
-                return;
-            }
+            if (!confirm(`⚠️ SUPPRIMER TOUS les ${count} véhicules de "${sourceLabel}" ?\n\nCette action est IRRÉVERSIBLE.`)) return;
+            if (!confirm(`🚨 Confirmation : supprimer les ${count} véhicules de ${sourceLabel} ?`)) return;
             
             try {
                 const aSupprimer = allVehicles.filter(v => v.source === source);
@@ -2135,51 +2094,23 @@ window._currentRondeForExport = r;
                     chunk.forEach(v => batch.delete(window.doc(db, "vehicules", v.id)));
                     await batch.commit();
                 }
-                alert(`✅ ${aSupprimer.length} véhicules de ${sourceLabel} supprimés !`);
-            } catch (e) {
-                console.error("Erreur suppression:", e);
-                alert("❌ Erreur : " + e.message);
-            }
+                alert(`✅ ${aSupprimer.length} véhicules de ${sourceLabel} supprimés`);
+            } catch (e) { alert("❌ Erreur : " + e.message); }
         }
 
         async function viderTout() {
             const totalVehicules = allVehicles.length;
             const totalRondes = allRondes.length;
             
-            if (totalVehicules === 0 && totalRondes === 0) {
-                alert("ℹ️ Rien à supprimer.");
-                return;
-            }
+            if (totalVehicules === 0 && totalRondes === 0) { alert("ℹ️ Rien à supprimer."); return; }
             
-            const confirm1 = confirm(
-                `🚨 SUPPRESSION TOTALE\n\n` +
-                `Cette action va supprimer DÉFINITIVEMENT :\n` +
-                `• ${totalVehicules} véhicules (toutes sources)\n` +
-                `• ${totalRondes} rondes (historique complet)\n\n` +
-                `⚠️ AUCUNE RÉCUPÉRATION POSSIBLE !\n\n` +
-                `💡 Conseil : fais un export Excel AVANT de continuer.\n\n` +
-                `Continuer ?`
-            );
-            if (!confirm1) return;
+            if (!confirm(`🚨 SUPPRESSION TOTALE\n\n• ${totalVehicules} véhicules\n• ${totalRondes} rondes\n\n⚠️ IRRÉVERSIBLE !`)) return;
+            if (!confirm(`🚨 DERNIÈRE AVERTISSEMENT\n\nTape OK pour accéder à la saisie.`)) return;
             
-            const confirm2 = confirm(
-                `🚨🚨 DERNIÈRE AVERTISSEMENT\n\n` +
-                `Utilisateur : ${currentUser}\n` +
-                `Date : ${new Date().toLocaleString('fr-FR')}\n\n` +
-                `Tape OK pour accéder à la saisie de confirmation.`
-            );
-            if (!confirm2) return;
-            
-            const saisie = prompt(
-                `Pour confirmer la suppression TOTALE, tape exactement : SUPPRIMER`
-            );
-            if (saisie !== "SUPPRIMER") {
-                alert("❌ Annulé. La saisie ne correspond pas.");
-                return;
-            }
+            const saisie = prompt(`Tape exactement : SUPPRIMER`);
+            if (saisie !== "SUPPRIMER") { alert("❌ Annulé."); return; }
             
             try {
-                // Supprimer tous les véhicules par lots de 400
                 if (allVehicles.length > 0) {
                     const CHUNK_SIZE = 400;
                     for (let i = 0; i < allVehicles.length; i += CHUNK_SIZE) {
@@ -2189,8 +2120,6 @@ window._currentRondeForExport = r;
                         await batch.commit();
                     }
                 }
-                
-                // Supprimer toutes les rondes par lots de 400
                 if (allRondes.length > 0) {
                     const CHUNK_SIZE = 400;
                     for (let i = 0; i < allRondes.length; i += CHUNK_SIZE) {
@@ -2200,23 +2129,15 @@ window._currentRondeForExport = r;
                         await batch.commit();
                     }
                 }
-                
-                alert(`✅ SUPPRESSION TOTALE EFFECTUÉE\n\n` +
-                      `• ${totalVehicules} véhicules supprimés\n` +
-                      `• ${totalRondes} rondes supprimées\n\n` +
-                      `Firebase est maintenant vide.`);
-            } catch (e) {
-                console.error("Erreur suppression totale:", e);
-                alert("❌ Erreur : " + e.message);
-            }
+                alert(`✅ Suppression totale effectuée`);
+            } catch (e) { alert("❌ Erreur : " + e.message); }
         }
 
-        // Brancher les 3 boutons de suppression
         $("resetSource1Btn").onclick = () => viderSource("source1");
         $("resetSource2Btn").onclick = () => viderSource("source2");
         $("resetAllBtn").onclick = viderTout;
 
-        // ==================== UI : GALERIE / TERRAIN / NUIT ====================
+        // ==================== UI ====================
         $("galleryToggleBtn").onclick = () => {
             const g = $("galleryContainer");
             g.classList.toggle("visible");
@@ -2237,53 +2158,38 @@ window._currentRondeForExport = r;
         typeFilter.addEventListener("change", (e) => { currentTypeFilter = e.target.value; renderList(); });
         searchInput.addEventListener("input", (e) => { currentSearch = e.target.value; renderList(); });
 
-        // ==================== PWA INSTALLATION ====================
+        // ==================== PWA ====================
         let deferredPrompt = null;
-
         window.addEventListener("beforeinstallprompt", (e) => {
-            console.log("📱 PWA installable détectée");
             e.preventDefault();
             deferredPrompt = e;
-            const installBtn = document.getElementById("installBtn");
-            if (installBtn) installBtn.style.display = "inline-flex";
+            const btn = document.getElementById("installBtn");
+            if (btn) btn.style.display = "inline-flex";
         });
-
         window.addEventListener("appinstalled", () => {
-            console.log("✅ PWA installée !");
             deferredPrompt = null;
-            const installBtn = document.getElementById("installBtn");
-            if (installBtn) installBtn.style.display = "none";
+            const btn = document.getElementById("installBtn");
+            if (btn) btn.style.display = "none";
         });
-
         const installBtn = document.getElementById("installBtn");
         if (installBtn) {
             installBtn.onclick = async () => {
                 if (!deferredPrompt) {
-                    alert("Pour installer l'application :\n\n" +
-                          "📱 Sur Android (Chrome) :\n" +
-                          "Menu ⋮ → 'Ajouter à l'écran d'accueil'\n\n" +
-                          "📱 Sur iOS (Safari) :\n" +
-                          "Bouton Partager → 'Sur l'écran d'accueil'");
+                    alert("Pour installer :\n\n📱 Android : Menu ⋮ → Ajouter à l'écran d'accueil\n📱 iOS : Partager → Sur l'écran d'accueil");
                     return;
                 }
                 deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') console.log("✅ Installation acceptée");
-                else console.log("❌ Installation refusée");
+                await deferredPrompt.userChoice;
                 deferredPrompt = null;
                 installBtn.style.display = "none";
             };
         }
-
-        // Enregistrement du Service Worker
         if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("sw.js").then(() => {
-                console.log("✅ Service Worker enregistré");
-            }).catch(err => console.warn("⚠️ SW:", err));
+            navigator.serviceWorker.register("sw.js").catch(err => console.warn("SW:", err));
         }
 
         // ==================== INIT ====================
-        console.log("🚀 Stock Véhicules v3.0 initialisé");
+        console.log("🚀 Stock Véhicules v3.1 initialisé");
         console.log("👤 Utilisateur :", currentUser);
         console.log("☁️ Cloudinary :", CLOUDINARY_CLOUD_NAME);
     </script>
