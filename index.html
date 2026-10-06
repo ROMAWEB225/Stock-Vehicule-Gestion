@@ -196,6 +196,20 @@ body.light-mode .user-select {
         .history-card .history-stats span { padding: 2px 8px; background: #1e293b; border-radius: 10px; }
         .history-card .history-stats .stat-present { color: #10b981; }
         .history-card .history-stats .stat-absent { color: #ef4444; }
+        .history-card .history-site {
+    display: inline-block;
+    background: #1e3a5f;
+    color: #60a5fa;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    margin: 4px 0;
+}
+body.light-mode .history-card .history-site {
+    background: #dbeafe;
+    color: #1e40af;
+}
         .history-card .history-diff { margin-top: 8px; font-size: 0.7rem; padding-top: 8px;
             border-top: 1px solid #1e293b; color: #94a3b8; }
 
@@ -436,6 +450,16 @@ body.light-mode .user-select {
             <div class="history-container">
                 <h2>📜 Historique des rondes</h2>
                 <div id="historyStats" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;font-size:0.75rem;color:#94a3b8;"></div>
+                <div style="margin-bottom:15px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+    <label style="font-size:0.75rem;color:#94a3b8;">🔍 Filtrer par site :</label>
+    <select id="historySiteFilter" style="background:#1e293b;border:1px solid #2d3a4e;color:#e2e8f0;padding:5px 12px;border-radius:4px;font-size:0.8rem;">
+        <option value="all">Tous les sites</option>
+    </select>
+    <label style="font-size:0.75rem;color:#94a3b8;margin-left:10px;">👤 Filtrer par utilisateur :</label>
+    <select id="historyUserFilter" style="background:#1e293b;border:1px solid #2d3a4e;color:#e2e8f0;padding:5px 12px;border-radius:4px;font-size:0.8rem;">
+        <option value="all">Tous</option>
+    </select>
+</div>
                 <div class="history-grid" id="historyGrid">
                     <p style="color:#64748b;">Chargement...</p>
                 </div>
@@ -485,6 +509,37 @@ body.light-mode .user-select {
         
         <div class="btn-row">
             <button class="btn-cancel" id="cancelUserBtn" style="flex:1;">Fermer</button>
+        </div>
+    </div>
+</div>
+    <!-- MODALE DÉMARRER RONDE -->
+<div id="startRondeModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <button class="close-btn" id="closeStartRondeModalBtn">✕</button>
+        <h2>🔵 Démarrer une nouvelle ronde</h2>
+        <p style="font-size:0.85rem;color:#94a3b8;margin-bottom:20px;">
+            Sélectionnez votre nom et le site où vous allez faire la ronde.
+        </p>
+        
+        <label>👤 Votre nom</label>
+        <select id="rondeUserSelect" style="margin-bottom:15px;"></select>
+        
+        <label>📍 Site de la ronde</label>
+        <select id="rondeSiteSelect" style="margin-bottom:15px;">
+            <option value="">-- Sélectionner un site --</option>
+        </select>
+        
+        <label>📝 Note (optionnel)</label>
+        <input type="text" id="rondeNote" placeholder="Ex: Ronde du matin, urgence, etc." style="margin-bottom:15px;">
+        
+        <div style="background:#0f172a;padding:10px 15px;border-radius:6px;margin-bottom:15px;font-size:0.8rem;color:#94a3b8;">
+            <div>📦 <strong id="rondeTotalVehicules">0</strong> véhicules au total</div>
+            <div id="rondeVehiculesSite" style="margin-top:4px;"></div>
+        </div>
+        
+        <div class="btn-row">
+            <button class="btn-generate" id="confirmStartRondeBtn">✅ Démarrer la ronde</button>
+            <button class="btn-cancel" id="cancelStartRondeBtn">Annuler</button>
         </div>
     </div>
 </div>
@@ -873,40 +928,111 @@ if (!currentUser || !listeUtilisateurs.includes(currentUser)) {
         $("tabGraphiquesBtn").onclick = () => switchTab("graphiques");
 
         // ==================== RONDES ====================
-      $("startRondeBtn").onclick = async () => {
+    // ==================== DÉMARRER UNE RONDE (avec choix site) ====================
+let rondeSite = null;      // 🆕 Site de la ronde en cours
+let rondeNote = null;       // 🆕 Note optionnelle
+
+$("startRondeBtn").onclick = () => {
     if (rondeEnCours) { alert("⚠️ Une ronde est déjà en cours."); return; }
-    if (allVehicles.length === 0) { alert("⚠️ Aucun véhicule chargé."); return; }
+    if (allVehicles.length === 0) { alert("⚠️ Aucun véhicule chargé. Importez d'abord une liste."); return; }
     
-    // ⚠️ VÉRIFIER QU'UN UTILISATEUR EST SÉLECTIONNÉ
-    const selectedUser = $("userSelect").value;
-    if (!selectedUser) {
-        alert("⚠️ Veuillez d'abord choisir votre nom dans la liste en haut à droite.");
-        $("userSelect").focus();
+    // Remplir la liste des utilisateurs
+    const userSelect = $("rondeUserSelect");
+    userSelect.innerHTML = '<option value="">-- Choisir --</option>';
+    listeUtilisateurs.forEach(nom => {
+        const opt = document.createElement("option");
+        opt.value = nom;
+        opt.textContent = nom;
+        if (nom === currentUser) opt.selected = true;
+        userSelect.appendChild(opt);
+    });
+    
+    // Remplir la liste des sites
+    const siteSelect = $("rondeSiteSelect");
+    siteSelect.innerHTML = '<option value="">-- Choisir --</option>';
+    SITE_OPTIONS.forEach(site => {
+        const opt = document.createElement("option");
+        opt.value = site;
+        opt.textContent = site;
+        siteSelect.appendChild(opt);
+    });
+    
+    // Afficher le total
+    $("rondeTotalVehicules").textContent = allVehicles.length;
+    $("rondeVehiculesSite").textContent = "";
+    $("rondeNote").value = "";
+    
+    // Ouvrir la modale
+    $("startRondeModal").style.display = "flex";
+};
+
+// Mettre à jour le compteur quand on change de site
+$("rondeSiteSelect").onchange = () => {
+    const site = $("rondeSiteSelect").value;
+    if (!site) {
+        $("rondeVehiculesSite").textContent = "";
         return;
     }
-    currentUser = selectedUser;
-    localStorage.setItem("stock_userName", currentUser);
-    
-    if (!confirm(`Démarrer une nouvelle ronde ?\n\nUtilisateur : ${currentUser}\nVéhicules : ${allVehicles.length}`)) return;
-            rondeSnapshotDepart = allVehicles.map(v => ({ id: v.id, immat: v.immat, present: v.present, site: v.site }));
-            rondeStartTime = new Date();
-            rondeEnCours = true;
-            
-            $("rondeBanner").classList.add("visible");
-            $("rondeStartTime").textContent = `Début : ${rondeStartTime.toLocaleTimeString()}`;
-            updateRondeCounter();
-            $("startRondeBtn").disabled = true;
-            $("startRondeBtn").style.opacity = "0.5";
-            
-            alert("✅ Ronde démarrée ! Cochez les véhicules.");
-        };
+    const count = allVehicles.filter(v => v.site === site || (!v.present && !v.site)).length;
+    const totalSite = allVehicles.filter(v => v.site === site).length;
+    $("rondeVehiculesSite").innerHTML = `📍 <strong>${totalSite}</strong> véhicules déjà assignés à <strong>${site}</strong>`;
+};
 
-        function updateRondeCounter() {
-            if (!rondeEnCours) return;
-            const total = allVehicles.length;
-            const presents = allVehicles.filter(v => v.present).length;
-            $("rondeCounter").textContent = `📍 ${presents} / ${total} présents`;
-        }
+// Confirmer le démarrage
+$("confirmStartRondeBtn").onclick = () => {
+    const user = $("rondeUserSelect").value;
+    const site = $("rondeSiteSelect").value;
+    const note = $("rondeNote").value.trim();
+    
+    if (!user) { alert("⚠️ Veuillez choisir votre nom"); return; }
+    if (!site) { alert("⚠️ Veuillez choisir un site"); return; }
+    
+    // Mettre à jour l'utilisateur global
+    currentUser = user;
+    localStorage.setItem("stock_userName", currentUser);
+    if ($("userSelect")) $("userSelect").value = currentUser;
+    
+    // Sauvegarder le site de la ronde
+    rondeSite = site;
+    rondeNote = note;
+    rondeSnapshotDepart = allVehicles.map(v => ({ id: v.id, immat: v.immat, present: v.present, site: v.site }));
+    rondeStartTime = new Date();
+    rondeEnCours = true;
+    
+    // Fermer la modale
+    $("startRondeModal").style.display = "none";
+    
+    // Afficher la bannière
+    $("rondeBanner").classList.add("visible");
+    $("rondeStartTime").textContent = `Début : ${rondeStartTime.toLocaleTimeString()}`;
+    $("rondeCounter").textContent = `📍 ${site} · 0 / ${allVehicles.length} présents`;
+    updateRondeCounter();
+    
+    $("startRondeBtn").disabled = true;
+    $("startRondeBtn").style.opacity = "0.5";
+    
+    // 🆕 Filtrer l'affichage sur le site de la ronde (optionnel, configurable)
+    currentSiteFilter = site;
+    siteFilterSelect.value = site;
+    renderList();
+    
+    alert(`✅ Ronde démarrée !\n\n👤 ${currentUser}\n📍 ${site}${note ? '\n📝 ' + note : ''}`);
+};
+
+// Annuler
+$("closeStartRondeModalBtn").onclick = () => $("startRondeModal").style.display = "none";
+$("cancelStartRondeBtn").onclick = () => $("startRondeModal").style.display = "none";
+$("startRondeModal").addEventListener("click", (e) => {
+    if (e.target === e.currentTarget) $("startRondeModal").style.display = "none";
+};
+
+       function updateRondeCounter() {
+    if (!rondeEnCours) return;
+    const total = allVehicles.length;
+    const presents = allVehicles.filter(v => v.present).length;
+    const siteInfo = rondeSite ? `📍 ${rondeSite} · ` : '';
+    $("rondeCounter").textContent = `${siteInfo}${presents} / ${total} présents`;
+}
 
         $("closeRondeBtn").onclick = async () => {
             if (!rondeEnCours) return;
@@ -931,21 +1057,25 @@ if (!currentUser || !listeUtilisateurs.includes(currentUser)) {
                     site: v.site || null, source: v.source || "source1"
                 }));
                 
-                await window.addDoc(window.collection(db, "rondes"), {
-                    date: new Date().toISOString().slice(0, 10),
-                    heureDebut: rondeStartTime.toISOString(),
-                    heureFin: new Date().toISOString(),
-                    effectueePar: currentUser,
-                    stats: stats,
-                    vehicules: vehiculesSnapshot,
-                    comparaison: comparaison,
-                    createdAt: window.serverTimestamp()
-                });
+              await window.addDoc(window.collection(db, "rondes"), {
+    date: new Date().toISOString().slice(0, 10),
+    heureDebut: rondeStartTime.toISOString(),
+    heureFin: new Date().toISOString(),
+    effectueePar: currentUser,
+    site: rondeSite || null,           // 🆕 Site de la ronde
+    note: rondeNote || "",             // 🆕 Note optionnelle
+    stats: stats,
+    vehicules: vehiculesSnapshot,
+    comparaison: comparaison,
+    createdAt: window.serverTimestamp()
+});
                 
-                rondeEnCours = null;
-                rondeStartTime = null;
-                rondeSnapshotDepart = [];
-                $("rondeBanner").classList.remove("visible");
+                 rondeEnCours = null;
+rondeStartTime = null;
+rondeSite = null;           // 🆕 Réinitialiser le site
+rondeNote = null;           // 🆕 Réinitialiser la note
+rondeSnapshotDepart = [];
+$("rondeBanner").classList.remove("visible");
                 $("startRondeBtn").disabled = false;
                 $("startRondeBtn").style.opacity = "1";
                 
@@ -1383,6 +1513,41 @@ if (!currentUser || !listeUtilisateurs.includes(currentUser)) {
         }
 
         // ==================== HISTORIQUE ====================
+        // Filtres historique
+let historySiteFilter = "all";
+let historyUserFilter = "all";
+
+function initHistoryFilters() {
+    const siteSel = $("historySiteFilter");
+    const userSel = $("historyUserFilter");
+    if (!siteSel || !userSel) return;
+    
+    // Sites
+    siteSel.innerHTML = '<option value="all">Tous les sites</option>';
+    SITE_OPTIONS.forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s;
+        opt.textContent = s;
+        siteSel.appendChild(opt);
+    });
+    
+    // Utilisateurs (à partir des rondes existantes)
+    const users = [...new Set(allRondes.map(r => r.effectueePar).filter(Boolean))];
+    userSel.innerHTML = '<option value="all">Tous</option>';
+    users.forEach(u => {
+        const opt = document.createElement("option");
+        opt.value = u;
+        opt.textContent = u;
+        userSel.appendChild(opt);
+    });
+    
+    siteSel.value = historySiteFilter;
+    userSel.value = historyUserFilter;
+    
+    siteSel.onchange = () => { historySiteFilter = siteSel.value; renderHistorique(); };
+    userSel.onchange = () => { historyUserFilter = userSel.value; renderHistorique(); };
+}
+
         function renderHistorique() {
             const grid = $("historyGrid");
             const statsDiv = $("historyStats");
@@ -1400,8 +1565,22 @@ if (!currentUser || !listeUtilisateurs.includes(currentUser)) {
                 <span>🚗 ${totalVehicules} véhicules pointés</span>
                 <span>✅ ${totalPresents} présences</span>`;
             
-            let html = "";
-            allRondes.forEach(r => {
+           // Initialiser les filtres si pas encore fait
+if ($("historySiteFilter") && $("historySiteFilter").options.length <= 1) {
+    initHistoryFilters();
+}
+
+// Appliquer les filtres
+let rondesFiltrees = [...allRondes];
+if (historySiteFilter !== "all") {
+    rondesFiltrees = rondesFiltrees.filter(r => r.site === historySiteFilter);
+}
+if (historyUserFilter !== "all") {
+    rondesFiltrees = rondesFiltrees.filter(r => r.effectueePar === historyUserFilter);
+}
+
+let html = "";
+rondesFiltrees.forEach(r => {
                 const date = new Date(r.heureFin || r.date);
                 const dateStr = date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
                 const heureStr = date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
@@ -1410,17 +1589,21 @@ if (!currentUser || !listeUtilisateurs.includes(currentUser)) {
                     ? `<div class="history-diff">${comp.message}</div>` 
                     : (comp.message === "Première ronde" ? `<div class="history-diff">✨ Première ronde</div>` : '');
                 
-                html += `
-                    <div class="history-card" onclick="openHistoryDetail('${r.id}')">
-                        <div class="history-date">${dateStr}</div>
-                        <div class="history-user">👤 ${r.effectueePar || "?"} · 🕒 ${heureStr}</div>
-                        <div class="history-stats">
-                            <span>📦 ${r.stats?.total || 0}</span>
-                            <span class="stat-present">✅ ${r.stats?.presents || 0}</span>
-                            <span class="stat-absent">❌ ${r.stats?.absents || 0}</span>
-                        </div>
-                        ${diffHtml}
-                    </div>`;
+                const siteBadge = r.site ? `<div class="history-site">📍 ${r.site}</div>` : '';
+const noteBadge = r.note ? `<div style="font-size:0.7rem;color:#64748b;margin-top:4px;font-style:italic;">📝 ${r.note}</div>` : '';
+html += `
+    <div class="history-card" onclick="openHistoryDetail('${r.id}')">
+        <div class="history-date">${dateStr}</div>
+        <div class="history-user">👤 ${r.effectueePar || "?"} · 🕒 ${heureStr}</div>
+        ${siteBadge}
+        <div class="history-stats">
+            <span>📦 ${r.stats?.total || 0}</span>
+            <span class="stat-present">✅ ${r.stats?.presents || 0}</span>
+            <span class="stat-absent">❌ ${r.stats?.absents || 0}</span>
+        </div>
+        ${diffHtml}
+        ${noteBadge}
+    </div>`;
             });
             grid.innerHTML = html;
         }
@@ -1432,13 +1615,17 @@ if (!currentUser || !listeUtilisateurs.includes(currentUser)) {
             const date = new Date(r.heureFin || r.date);
             $("historyDetailTitle").textContent = `📜 Ronde du ${date.toLocaleDateString('fr-FR')}`;
             
-            let html = `
-                <div style="font-size:0.85rem;margin-bottom:15px;color:#94a3b8;">
-                    <p style="margin:4px 0;">👤 Par : <strong style="color:#e2e8f0;">${r.effectueePar}</strong></p>
-                    <p style="margin:4px 0;">🕒 Début : ${new Date(r.heureDebut).toLocaleString('fr-FR')}</p>
-                    <p style="margin:4px 0;">🕒 Fin : ${new Date(r.heureFin).toLocaleString('fr-FR')}</p>
-                    <p style="margin:4px 0;">📊 ${r.stats?.total} · ✅ ${r.stats?.presents} · ❌ ${r.stats?.absents}</p>
-                </div>
+          const siteInfo = r.site ? `<p style="margin:4px 0;">📍 Site : <strong style="color:#60a5fa;">${r.site}</strong></p>` : '';
+const noteInfo = r.note ? `<p style="margin:4px 0;">📝 Note : <em style="color:#94a3b8;">${r.note}</em></p>` : '';
+let html = `
+    <div style="font-size:0.85rem;margin-bottom:15px;color:#94a3b8;">
+        <p style="margin:4px 0;">👤 Par : <strong style="color:#e2e8f0;">${r.effectueePar}</strong></p>
+        ${siteInfo}
+        ${noteInfo}
+        <p style="margin:4px 0;">🕒 Début : ${new Date(r.heureDebut).toLocaleString('fr-FR')}</p>
+        <p style="margin:4px 0;">🕒 Fin : ${new Date(r.heureFin).toLocaleString('fr-FR')}</p>
+        <p style="margin:4px 0;">📊 ${r.stats?.total} · ✅ ${r.stats?.presents} · ❌ ${r.stats?.absents}</p>
+    </div>
                 <div style="max-height:400px;overflow-y:auto;">
                 <table class="history-detail-table">
                     <thead><tr><th>Immat</th><th>Marque</th><th>Modèle</th><th>Client</th><th>Statut</th><th>Site</th></tr></thead>
