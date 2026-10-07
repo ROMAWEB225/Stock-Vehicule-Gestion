@@ -1,24 +1,25 @@
 /* ============================================================
-   NTR GARAGE — Service Worker
-   Cache PWA + mode hors-ligne
+   NTR STOCK VÉHICULES — Service Worker v3.4
    ============================================================ */
 
-const CACHE_STATIC = 'ntr-static-v1';
-const CACHE_DYNAMIC = 'ntr-dynamic-v1';
+const CACHE_STATIC = 'ntr-static-v3.4';
+const CACHE_DYNAMIC = 'ntr-dynamic-v3.4';
 
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
   'https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js',
   'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js',
   'https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js',
+  'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js',
   'https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js'
 ];
 
-// Domaines a NE JAMAIS mettre en cache (temps reel + uploads)
 const NO_CACHE_HOSTS = [
   'firestore.googleapis.com',
   'firebaseio.com',
@@ -27,6 +28,7 @@ const NO_CACHE_HOSTS = [
 ];
 
 self.addEventListener('install', (event) => {
+  console.log('[SW] Install v3.4');
   event.waitUntil(
     caches.open(CACHE_STATIC).then((cache) =>
       Promise.allSettled(
@@ -39,6 +41,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
+  console.log('[SW] Activate v3.4');
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(
