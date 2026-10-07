@@ -12,153 +12,62 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjM2IiBmaWxsPSIjMGYxNzJhIi8+PHBhdGggZD0iTTQ4IDgwbDEyLTM2aDcybDEyIDM2aDE2djQ0SDU2VjgwSDE4djQ0aDE2VjE0MGgxMjR2LTE2aDE2VjgwSDE0OHoiIGZpbGw9IiM2MGE1ZmEiLz48Y2lyY2xlIGN4PSI2OCIgY3k9IjEyNCIgcj0iMTAiIGZpbGw9IiMwZjE3MmEiLz48Y2lyY2xlIGN4PSIxMjQiIGN5PSIxMjQiIHI9IjEwIiBmaWxsPSIjMGYxNzJhIi8+PC9zdmc+">
 
 <style>
-/* ============================================================
-   NTR STOCK VÉHICULES - Version 3.1
-   Design professionnel + Pointage simplifié
-   ============================================================ */
-
 :root {
-  --bg: #0f172a;
-  --bg-2: #1e293b;
-  --bg-3: #2d3a4e;
-  --bg-hover: #3d4a5e;
-  --border: #1e293b;
-  --border-light: #2d3a4e;
-  --text: #e2e8f0;
-  --text-dim: #94a3b8;
-  --text-mute: #64748b;
-  --primary: #60a5fa;
-  --primary-dark: #3b82f6;
-  --success: #34d399;
-  --success-dark: #10b981;
-  --danger: #f87171;
-  --danger-dark: #dc2626;
-  --warning: #fbbf24;
-  --info: #818cf8;
-  --radius-sm: 4px;
-  --radius: 6px;
-  --radius-lg: 8px;
+  --bg: #0f172a; --bg-2: #1e293b; --bg-3: #2d3a4e; --bg-hover: #3d4a5e;
+  --border: #1e293b; --border-light: #2d3a4e;
+  --text: #e2e8f0; --text-dim: #94a3b8; --text-mute: #64748b;
+  --primary: #60a5fa; --primary-dark: #3b82f6;
+  --success: #34d399; --success-dark: #10b981;
+  --danger: #f87171; --danger-dark: #dc2626;
+  --warning: #fbbf24; --info: #818cf8;
+  --radius-sm: 4px; --radius: 6px; --radius-lg: 8px;
   --header-h: 56px;
   --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --mono: 'Courier New', monospace;
   --transition: 0.2s ease;
 }
-
 [data-theme="light"] {
-  --bg: #f1f5f9;
-  --bg-2: #ffffff;
-  --bg-3: #f1f5f9;
-  --bg-hover: #e2e8f0;
-  --border: #e2e8f0;
-  --border-light: #cbd5e1;
-  --text: #1e293b;
-  --text-dim: #475569;
-  --text-mute: #94a3b8;
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --success: #059669;
-  --danger: #dc2626;
-  --warning: #d97706;
+  --bg: #f1f5f9; --bg-2: #ffffff; --bg-3: #f1f5f9; --bg-hover: #e2e8f0;
+  --border: #e2e8f0; --border-light: #cbd5e1;
+  --text: #1e293b; --text-dim: #475569; --text-mute: #94a3b8;
+  --primary: #2563eb; --primary-dark: #1d4ed8;
+  --success: #059669; --danger: #dc2626; --warning: #d97706;
 }
-
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; min-height: 100%; }
 body {
-  font-family: var(--font);
-  font-size: 15px;
-  line-height: 1.5;
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--font); font-size: 15px; line-height: 1.5;
+  background: var(--bg); color: var(--text);
   transition: background var(--transition), color var(--transition);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; -webkit-font-smoothing: antialiased;
 }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; border: none; background: none; }
 a { color: var(--primary); text-decoration: none; }
 img { max-width: 100%; display: block; }
-
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-2); }
 ::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 4px; }
-
 .hidden { display: none !important; }
-.mono { font-family: var(--mono); }
 
 /* HEADER */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
+.header { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .header-logo { display: flex; align-items: center; gap: 10px; font-weight: 500; letter-spacing: 0.5px; flex-shrink: 0; }
 .header-logo .title { font-size: 1rem; color: var(--text); }
 .header-logo .title span { color: var(--text-mute); font-weight: 300; }
 .header-logo .version { background: var(--bg-2); padding: 2px 8px; border-radius: 10px; font-size: 0.62rem; color: var(--text-dim); font-weight: 400; }
 .header-spacer { flex: 1; }
-.header-user {
-  height: 32px;
-  padding: 0 10px;
-  background: var(--bg-2);
-  color: var(--text);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  font-size: 0.78rem;
-  min-width: 160px;
-  max-width: 200px;
-}
+.header-user { height: 32px; padding: 0 10px; background: var(--bg-2); color: var(--text); border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.78rem; min-width: 160px; max-width: 200px; }
 .header-user:focus { outline: none; border-color: var(--primary); }
 .header-actions { display: flex; gap: 4px; align-items: center; }
-.header-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--text-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  transition: all var(--transition);
-  position: relative;
-}
+.header-btn { width: 32px; height: 32px; border-radius: var(--radius-sm); background: transparent; color: var(--text-dim); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all var(--transition); position: relative; }
 .header-btn:hover { background: var(--bg-2); color: var(--text); }
 .header-btn.online::after { content: ''; position: absolute; top: 5px; right: 5px; width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
 .header-btn.offline::after { content: ''; position: absolute; top: 5px; right: 5px; width: 6px; height: 6px; border-radius: 50%; background: var(--danger); }
 
 /* NAV */
-.nav {
-  position: sticky;
-  top: var(--header-h);
-  z-index: 99;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  padding: 6px 12px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px;
-}
-.nav-btn {
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  color: var(--text-dim);
-  font-size: 0.78rem;
-  font-weight: 400;
-  letter-spacing: 0.3px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all var(--transition);
-  white-space: nowrap;
-}
+.nav { position: sticky; top: var(--header-h); z-index: 99; background: var(--bg); border-bottom: 1px solid var(--border); padding: 6px 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.nav-btn { padding: 6px 12px; border-radius: var(--radius-sm); color: var(--text-dim); font-size: 0.78rem; font-weight: 400; letter-spacing: 0.3px; display: inline-flex; align-items: center; gap: 6px; transition: all var(--transition); white-space: nowrap; }
 .nav-btn:hover { background: var(--bg-2); color: var(--text); }
 .nav-btn.active { background: var(--bg-2); color: var(--primary); font-weight: 500; }
 .nav-btn.primary { background: var(--bg-2); color: var(--text); }
@@ -169,21 +78,7 @@ img { max-width: 100%; display: block; }
 .nav-divider { width: 1px; height: 20px; background: var(--border-light); margin: 0 4px; }
 
 /* BOUTONS */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-2);
-  color: var(--text);
-  font-size: 0.78rem;
-  font-weight: 400;
-  border: 1px solid transparent;
-  transition: all var(--transition);
-  white-space: nowrap;
-}
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 6px 12px; border-radius: var(--radius-sm); background: var(--bg-2); color: var(--text); font-size: 0.78rem; font-weight: 400; border: 1px solid transparent; transition: all var(--transition); white-space: nowrap; }
 .btn:hover { background: var(--bg-3); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn-primary { background: var(--primary); color: #0f172a; font-weight: 500; }
@@ -199,20 +94,10 @@ img { max-width: 100%; display: block; }
 .btn-lg { padding: 10px 20px; font-size: 0.9rem; }
 .btn-block { width: 100%; }
 
-/* CARTES */
+/* CARDS */
 .container { max-width: 1400px; margin: 0 auto; padding: 16px; }
 .card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 12px; }
-.card-title {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  margin: 0 0 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.card-title { font-size: 0.8rem; font-weight: 500; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.6px; margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 12px; }
 .stat-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
 .stat-label { font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.6px; }
@@ -226,35 +111,15 @@ img { max-width: 100%; display: block; }
 .form-group { margin-bottom: 10px; }
 .form-label { display: block; font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
 .form-label .req { color: var(--danger); margin-left: 2px; }
-.input, .select, .textarea {
-  width: 100%;
-  padding: 8px 12px;
-  background: var(--bg-3);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  color: var(--text);
-  font-size: 0.85rem;
-  -webkit-appearance: none;
-  appearance: none;
-  transition: border-color var(--transition);
-}
+.input, .select, .textarea { width: 100%; padding: 8px 12px; background: var(--bg-3); border: 1px solid var(--border-light); border-radius: var(--radius-sm); color: var(--text); font-size: 0.85rem; -webkit-appearance: none; appearance: none; transition: border-color var(--transition); }
 .input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--primary); }
 .textarea { resize: vertical; min-height: 60px; font-family: inherit; }
-.select {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 14px;
-  padding-right: 30px;
-}
+.select { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>"); background-repeat: no-repeat; background-position: right 8px center; background-size: 14px; padding-right: 30px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
 
 /* ANTI-AUTOFILL */
-.anti-autofill {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'/>") !important;
-  background-repeat: no-repeat !important;
-}
+.anti-autofill { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'/>") !important; background-repeat: no-repeat !important; }
 .anti-autofill:-webkit-autofill,
 .anti-autofill:-webkit-autofill:hover,
 .anti-autofill:-webkit-autofill:focus {
@@ -268,63 +133,16 @@ img { max-width: 100%; display: block; }
 .search-bar { position: relative; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 .search-input-wrap { position: relative; flex: 1; }
 .search-input-wrap .search-ico { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-mute); pointer-events: none; font-size: 0.85rem; }
-.search-input {
-  width: 100%;
-  padding: 9px 36px 9px 32px;
-  background: var(--bg-2);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  color: var(--text);
-  font-size: 0.85rem;
-}
+.search-input { width: 100%; padding: 9px 36px 9px 32px; background: var(--bg-2); border: 1px solid var(--border-light); border-radius: var(--radius-sm); color: var(--text); font-size: 0.85rem; }
 .search-input:focus { outline: none; border-color: var(--primary); }
-.search-clear {
-  position: absolute;
-  right: 6px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--bg-3);
-  color: var(--text-dim);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-}
+.search-clear { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; background: var(--bg-3); color: var(--text-dim); display: none; align-items: center; justify-content: center; font-size: 0.7rem; }
 .search-clear.show { display: flex; }
-.mic-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-2);
-  border: 1px solid var(--border-light);
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  flex-shrink: 0;
-}
+.mic-btn { width: 38px; height: 38px; border-radius: var(--radius-sm); background: var(--bg-2); border: 1px solid var(--border-light); color: var(--text); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
 .mic-btn:hover { background: var(--bg-3); }
 .mic-btn.listening { background: var(--danger); color: #fff; border-color: var(--danger); animation: pulse-mic 1.4s ease-in-out infinite; }
 @keyframes pulse-mic { 0%, 100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.6); } 50% { box-shadow: 0 0 0 10px rgba(248, 113, 113, 0); } }
 
-.autocomplete-list {
-  position: absolute;
-  top: calc(100% + 3px);
-  left: 0;
-  right: 0;
-  background: var(--bg-2);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  max-height: 300px;
-  overflow-y: auto;
-  z-index: 300;
-  display: none;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-}
+.autocomplete-list { position: absolute; top: calc(100% + 3px); left: 0; right: 0; background: var(--bg-2); border: 1px solid var(--border-light); border-radius: var(--radius-sm); max-height: 300px; overflow-y: auto; z-index: 300; display: none; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); }
 .autocomplete-list.show { display: block; }
 .autocomplete-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--border); cursor: pointer; font-size: 0.8rem; transition: background var(--transition); }
 .autocomplete-item:last-child { border-bottom: none; }
@@ -359,17 +177,7 @@ img { max-width: 100%; display: block; }
 .list-item-actions { display: flex; gap: 4px; flex-shrink: 0; }
 
 /* VEHICLE CARD */
-.vehicle-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--text-mute);
-  border-radius: var(--radius);
-  transition: all var(--transition);
-}
+.vehicle-card { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--text-mute); border-radius: var(--radius); transition: all var(--transition); }
 .vehicle-card.present { border-left-color: var(--success); }
 .vehicle-card.absent  { border-left-color: var(--danger); }
 .vehicle-card-main { flex: 1; min-width: 0; }
@@ -377,18 +185,7 @@ img { max-width: 100%; display: block; }
 .vehicle-card-info { font-size: 0.72rem; color: var(--text-dim); margin-top: 3px; display: flex; flex-wrap: wrap; gap: 10px; }
 
 /* POINTAGE */
-.pointage-bar {
-  position: sticky;
-  top: 0;
-  z-index: 90;
-  background: var(--bg-2);
-  border-bottom: 1px solid var(--border);
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
+.pointage-bar { position: sticky; top: 0; z-index: 90; background: var(--bg-2); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .pointage-bar .pb-info { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; color: var(--text-dim); }
 .pointage-bar .pb-site { font-weight: 600; color: var(--text); }
 .pointage-bar .pb-counter { background: var(--bg-3); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; color: var(--text); }
@@ -397,66 +194,62 @@ img { max-width: 100%; display: block; }
 .pointage-bar .btn-terminer { padding: 8px 16px; background: var(--success); color: #0f172a; font-weight: 500; font-size: 0.78rem; border-radius: var(--radius-sm); display: none; }
 .pointage-bar .btn-terminer.show { display: inline-flex; }
 
-.pointage-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--text-mute);
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
+.pointage-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--text-mute); border-radius: var(--radius); cursor: pointer; transition: all 0.15s ease; user-select: none; -webkit-tap-highlight-color: transparent; }
 .pointage-item:hover { border-color: var(--border-light); background: var(--bg-3); }
-.pointage-item.pointed {
-  border-left-color: var(--success);
-  background: linear-gradient(90deg, rgba(52, 211, 153, 0.08), var(--bg-2) 30%);
-}
+.pointage-item.pointed { border-left-color: var(--success); background: linear-gradient(90deg, rgba(52, 211, 153, 0.08), var(--bg-2) 30%); }
 .pointage-item.recent { animation: flash-point 0.6s ease; }
-@keyframes flash-point {
-  0% { background: rgba(52, 211, 153, 0.25); }
-  100% { background: linear-gradient(90deg, rgba(52, 211, 153, 0.08), var(--bg-2) 30%); }
-}
-.pointage-item .pi-check {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: 2px solid var(--border-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 0.9rem;
-  color: transparent;
-  transition: all 0.15s ease;
-}
+@keyframes flash-point { 0% { background: rgba(52, 211, 153, 0.25); } 100% { background: linear-gradient(90deg, rgba(52, 211, 153, 0.08), var(--bg-2) 30%); } }
+.pointage-item .pi-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; color: transparent; transition: all 0.15s ease; }
 .pointage-item.pointed .pi-check { background: var(--success); border-color: var(--success); color: #0f172a; font-weight: 700; }
 .pointage-item .pi-main { flex: 1; min-width: 0; }
 .pointage-item .pi-immat { font-family: var(--mono); font-weight: 700; font-size: 1rem; color: var(--primary); letter-spacing: 0.5px; }
 .pointage-item .pi-info { font-size: 0.72rem; color: var(--text-dim); margin-top: 2px; display: flex; flex-wrap: wrap; gap: 8px; }
-.pointage-item .pi-time { font-size: 0.68rem; color: var(--success); font-weight: 500; flex-shrink: 0; }
+.pointage-item .pi-site { font-size: 0.7rem; padding: 2px 8px; border-radius: var(--radius-sm); background: rgba(52, 211, 153, 0.15); color: var(--success); font-weight: 500; }
 
 body.terrain-mode .pointage-item { padding: 18px 16px; }
 body.terrain-mode .pointage-item .pi-immat { font-size: 1.15rem; }
 body.terrain-mode .pointage-item .pi-check { width: 34px; height: 34px; font-size: 1.2rem; }
 body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 
-.pointage-hint {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 12px 14px;
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  line-height: 1.6;
-  margin-bottom: 12px;
-}
+.pointage-hint { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; font-size: 0.75rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 12px; }
 .pointage-hint strong { color: var(--text); }
 .pointage-hint kbd { background: var(--bg-3); padding: 2px 6px; border-radius: 3px; font-family: var(--mono); font-size: 0.7rem; border: 1px solid var(--border-light); }
+
+/* RÉCAP DE RONDE */
+.recap-hero { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: #0f172a; border-radius: var(--radius); padding: 20px; text-align: center; margin-bottom: 16px; }
+.recap-hero .rh-number { font-size: 3rem; font-weight: 300; line-height: 1; margin: 0; }
+.recap-hero .rh-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; margin-top: 6px; }
+.recap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+@media (max-width: 480px) { .recap-grid { grid-template-columns: 1fr; } }
+.recap-card { background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--primary); border-radius: var(--radius); padding: 12px 14px; }
+.recap-card.success { border-left-color: var(--success); }
+.recap-card.danger  { border-left-color: var(--danger); }
+.recap-card .rc-num { font-size: 1.8rem; font-weight: 300; line-height: 1.1; }
+.recap-card.success .rc-num { color: var(--success); }
+.recap-card.danger  .rc-num { color: var(--danger); }
+.recap-card .rc-label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+.recap-sources { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 12px; }
+.recap-sources .rs-tag { background: rgba(15,23,42,0.15); padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 500; }
+
+.bilan-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.bilan-table th { padding: 8px 10px; text-align: left; font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dim); border-bottom: 1px solid var(--border); background: var(--bg-3); }
+.bilan-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.bilan-table tr:last-child td { border-bottom: none; }
+.bilan-table tr:hover { background: var(--bg-3); }
+.bilan-table .bilan-bar { height: 6px; background: var(--bg-3); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+.bilan-table .bilan-bar-fill { height: 100%; background: var(--success); border-radius: 3px; transition: width 0.4s; }
+.bilan-table .bilan-bar-fill.low { background: var(--warning); }
+.bilan-table .bilan-bar-fill.critical { background: var(--danger); }
+
+/* MANQUANTS */
+.manquant-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--danger); border-radius: var(--radius); }
+.manquant-item .mi-main { flex: 1; min-width: 0; }
+.manquant-item .mi-immat { font-family: var(--mono); font-weight: 700; font-size: 0.9rem; color: var(--text); }
+.manquant-item .mi-info { font-size: 0.72rem; color: var(--text-dim); margin-top: 2px; display: flex; flex-wrap: wrap; gap: 8px; }
+.manquant-item .mi-source { font-size: 0.65rem; padding: 2px 8px; border-radius: var(--radius-sm); font-weight: 500; white-space: nowrap; }
+.manquant-item .mi-source.hr { background: rgba(96,165,250,0.15); color: var(--primary); }
+.manquant-item .mi-source.um { background: rgba(248,113,113,0.15); color: var(--danger); }
+.manquant-item .mi-source.custom { background: rgba(251,191,36,0.15); color: var(--warning); }
 
 /* MODALES */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 16px; }
@@ -473,20 +266,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 
 /* TOASTS */
 .toast-container { position: fixed; top: 16px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 6px; max-width: 340px; pointer-events: none; }
-.toast {
-  background: var(--bg-2);
-  border: 1px solid var(--border-light);
-  border-left: 3px solid var(--primary);
-  border-radius: var(--radius);
-  padding: 10px 14px;
-  font-size: 0.8rem;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  pointer-events: auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  animation: slide-in 0.25s ease;
-}
+.toast { background: var(--bg-2); border: 1px solid var(--border-light); border-left: 3px solid var(--primary); border-radius: var(--radius); padding: 10px 14px; font-size: 0.8rem; display: flex; gap: 10px; align-items: flex-start; pointer-events: auto; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); animation: slide-in 0.25s ease; }
 @keyframes slide-in { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 .toast.success { border-left-color: var(--success); }
 .toast.error   { border-left-color: var(--danger); }
@@ -581,7 +361,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 <header class="header">
   <div class="header-logo">
     <div class="title">STOCK<span>VÉHICULES</span></div>
-    <span class="version">v3.1</span>
+    <span class="version">v3.2</span>
   </div>
   <div class="header-spacer"></div>
   <select id="headerUser" class="header-user" title="Utilisateur actuel">
@@ -600,6 +380,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 <nav class="nav" id="mainNav">
   <button class="nav-btn primary active" data-tab="pointage">Pointage</button>
   <span class="nav-divider"></span>
+  <button class="nav-btn" data-tab="manquants">Manquants</button>
   <button class="nav-btn" data-tab="vehicules">Véhicules</button>
   <button class="nav-btn" data-tab="historique">Historique</button>
   <button class="nav-btn" data-tab="archives">Archives</button>
@@ -627,16 +408,16 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
     <select class="select" id="pointageSite" style="max-width:180px;padding:6px 30px 6px 12px;font-size:0.78rem;width:auto">
       <option value="">— Site —</option>
     </select>
-    <button class="btn btn-terminer" id="btnTerminer">Terminer la session</button>
+    <button class="btn btn-terminer" id="btnTerminer">Terminer la ronde</button>
   </div>
 
   <div class="container">
     <div class="pointage-hint">
       <strong>Comment pointer :</strong><br>
-      Tapez sur un véhicule dans la liste pour le marquer présent<br>
-      Ou utilisez la barre de recherche ci-dessous pour taper une immatriculation<br>
-      Utilisez le micro <kbd>◉</kbd> pour dicter l'immatriculation<br>
-      Chaque pointage est enregistré en temps réel
+      Sélectionnez un site en haut à droite<br>
+      Tapez sur un véhicule dans la liste pour le marquer trouvé à ce site<br>
+      Changez de site pour pointer d'autres véhicules (une même ronde peut couvrir plusieurs sites)<br>
+      À la fin, cliquez sur "Terminer la ronde" pour voir le récapitulatif
     </div>
 
     <div class="search-bar">
@@ -652,13 +433,46 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
     <div class="chips" id="pointageStatusChips">
       <button class="chip active" data-pstatus="all">Tous</button>
       <button class="chip" data-pstatus="pending">À pointer</button>
-      <button class="chip" data-pstatus="pointed">Pointés</button>
+      <button class="chip" data-pstatus="pointed">Trouvés</button>
     </div>
 
     <div class="list" id="pointageList"></div>
     <div class="empty-state hidden" id="pointageEmpty">
       <div class="es-title">Sélectionnez un site pour commencer</div>
       <div class="es-sub">Choisissez un site dans le menu ci-dessus</div>
+    </div>
+  </div>
+</section>
+
+<!-- ONGLET MANQUANTS -->
+<section class="tab-content" id="tab-manquants">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Véhicules manquants <span class="badge badge-danger" id="manquantsCount">0</span></h2>
+      <div class="section-actions">
+        <button class="btn btn-ghost btn-sm" id="btnManquantsExportXls">Export Excel</button>
+      </div>
+    </div>
+
+    <div class="pointage-hint">
+      <strong>Véhicules non pointés</strong><br>
+      Ces véhicules font partie de la liste importée (Odoo) mais n'ont pas encore été trouvés sur le terrain.
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Filtrer par source</label>
+      <select class="select" id="manquantsSourceFilter">
+        <option value="">Toutes les sources</option>
+        <option value="source1">Source HR</option>
+        <option value="source2">Source UM</option>
+        <option value="custom">Ajout manuel</option>
+      </select>
+    </div>
+
+    <div class="list" id="manquantsList"></div>
+    <div class="empty-state hidden" id="manquantsEmpty">
+      <div class="es-title">Aucun véhicule manquant</div>
+      <div class="es-sub">Tous les véhicules ont été pointés</div>
     </div>
   </div>
 </section>
@@ -708,16 +522,12 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 <section class="tab-content" id="tab-historique">
   <div class="container">
     <div class="section-header">
-      <h2 class="section-title">Historique des sessions</h2>
+      <h2 class="section-title">Historique des rondes</h2>
       <div class="section-actions">
         <button class="btn btn-ghost btn-sm" id="btnHistRefresh">Rafraîchir</button>
       </div>
     </div>
     <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Site</label>
-        <select class="select" id="histSiteFilter"><option value="">Tous les sites</option></select>
-      </div>
       <div class="form-group">
         <label class="form-label">Utilisateur</label>
         <select class="select" id="histUserFilter"><option value="">Tous</option></select>
@@ -725,8 +535,8 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
     </div>
     <div class="list" id="histList"></div>
     <div class="empty-state hidden" id="histEmpty">
-      <div class="es-title">Aucune session enregistrée</div>
-      <div class="es-sub">Terminez une session de pointage pour commencer</div>
+      <div class="es-title">Aucune ronde enregistrée</div>
+      <div class="es-sub">Terminez une ronde pour la voir apparaître ici</div>
     </div>
   </div>
 </section>
@@ -744,12 +554,9 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
   <div class="container">
     <div class="section-header">
       <h2 class="section-title">Évolution des présences</h2>
-      <div class="section-actions">
-        <select class="select" id="graphSiteFilter" style="width:auto"><option value="">Tous les sites</option></select>
-      </div>
     </div>
     <div class="card">
-      <div class="card-title">12 dernières sessions (présents / absents)</div>
+      <div class="card-title">12 dernières rondes (présents / absents)</div>
       <div class="chart-wrap"><canvas id="chartPresence"></canvas></div>
     </div>
     <div class="card">
@@ -790,7 +597,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
     <div id="mouvList"></div>
     <div class="empty-state hidden" id="mouvEmpty">
       <div class="es-title">Aucun mouvement</div>
-      <div class="es-sub">Les mouvements apparaissent après plusieurs sessions</div>
+      <div class="es-sub">Les mouvements apparaissent après plusieurs rondes</div>
     </div>
   </div>
 </section>
@@ -833,7 +640,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
       </div>
       <div class="stats-grid">
         <div class="stat-card">
-          <span class="stat-label">Sessions aujourd'hui</span>
+          <span class="stat-label">Rondes aujourd'hui</span>
           <span class="stat-value primary" id="chefToday">0</span>
         </div>
         <div class="stat-card">
@@ -850,21 +657,13 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
         </div>
       </div>
       <div class="card">
-        <div class="card-title">Sessions en cours</div>
-        <div class="list" id="chefOngoing"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Sites sans pointage depuis 3 jours</div>
-        <div class="list" id="chefMissingList"></div>
-      </div>
-      <div class="card">
         <div class="card-title">Statistiques 7 jours par site</div>
         <div style="overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)">
           <table style="width:100%;border-collapse:collapse;font-size:0.8rem">
             <thead style="background:var(--bg-3)">
               <tr>
                 <th style="padding:8px 12px;text-align:left;font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-dim)">Site</th>
-                <th style="padding:8px 12px;text-align:left;font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-dim)">Sessions</th>
+                <th style="padding:8px 12px;text-align:left;font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-dim)">Rondes</th>
                 <th style="padding:8px 12px;text-align:left;font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-dim)">Taux</th>
               </tr>
             </thead>
@@ -930,7 +729,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
       <div class="card-title">Excel</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px">
         <button class="btn btn-success btn-sm" data-export="xls-presents">Présents</button>
-        <button class="btn btn-danger btn-sm" data-export="xls-absents">Absents</button>
+        <button class="btn btn-danger btn-sm" data-export="xls-absents">Manquants</button>
         <button class="btn btn-primary btn-sm" data-export="xls-sites">Présents par site</button>
       </div>
     </div>
@@ -938,15 +737,15 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
       <div class="card-title">PDF</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px">
         <button class="btn btn-primary btn-sm" data-export="pdf-sites">Présents par site</button>
-        <button class="btn btn-danger btn-sm" data-export="pdf-absents">Absents</button>
+        <button class="btn btn-danger btn-sm" data-export="pdf-absents">Manquants</button>
         <button class="btn btn-warning btn-sm" data-export="pdf-global">Rapport global</button>
       </div>
     </div>
     <div class="card">
       <div class="card-title">Word</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px">
-        <button class="btn btn-primary btn-sm" data-export="word-absent-s1">Absents Source HR</button>
-        <button class="btn btn-danger btn-sm" data-export="word-absent-s2">Absents Source UM</button>
+        <button class="btn btn-primary btn-sm" data-export="word-absent-s1">Manquants Source HR</button>
+        <button class="btn btn-danger btn-sm" data-export="word-absent-s2">Manquants Source UM</button>
         <button class="btn btn-success btn-sm" data-export="word-present-site">Présents par site</button>
       </div>
     </div>
@@ -1013,7 +812,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
       <div style="display:flex;flex-direction:column;gap:8px">
         <button class="btn btn-warning btn-block" id="btnWipeHR">Vider Source HR</button>
         <button class="btn btn-warning btn-block" id="btnWipeUM">Vider Source UM</button>
-        <button class="btn btn-danger btn-block" id="btnWipeAll">Vider tout (véhicules + sessions)</button>
+        <button class="btn btn-danger btn-block" id="btnWipeAll">Vider tout (véhicules + rondes)</button>
       </div>
     </div>
     <div class="card">
@@ -1024,7 +823,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
         <div>Utilisateurs : <span id="adminUserCount">—</span></div>
         <div>Clients : <span id="adminSocCount">—</span></div>
         <div>Véhicules : <span id="adminVehCount">—</span></div>
-        <div>Sessions : <span id="adminRondeCount">—</span></div>
+        <div>Rondes : <span id="adminRondeCount">—</span></div>
       </div>
     </div>
   </div>
@@ -1204,11 +1003,28 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
   </div>
 </div>
 
-<!-- MODALE DÉTAIL SESSION -->
+<!-- MODALE RÉCAP DE RONDE -->
+<div class="modal-overlay" id="modalRecap">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title">Récapitulatif de la ronde</h3>
+      <button class="modal-close" data-close="modalRecap">✕</button>
+    </div>
+    <div class="modal-body" id="recapBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-close="modalRecap">Fermer</button>
+      <button class="btn btn-danger" id="recapShowManquants">Voir les manquants</button>
+      <button class="btn btn-primary" id="recapExportPdf">Export PDF</button>
+      <button class="btn btn-success" id="recapTerminer">Terminer et enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODALE DÉTAIL RONDE -->
 <div class="modal-overlay" id="modalRondeDetail">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <h3 class="modal-title" id="rdTitle">Détail de la session</h3>
+      <h3 class="modal-title" id="rdTitle">Détail de la ronde</h3>
       <button class="modal-close" data-close="modalRondeDetail">✕</button>
     </div>
     <div class="modal-body" id="rdBody"></div>
@@ -1242,7 +1058,6 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 </div>
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- SCRIPTS CDN -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
@@ -1252,10 +1067,6 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 <script src="https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js"></script>
 
 <script>
-/* ============================================================
-   NTR STOCK VÉHICULES - JavaScript principal
-   ============================================================ */
-
 const firebaseConfig = {
   apiKey: "AIzaSyAxfEpi-NERVExxVYD2EmH7JppiIQDwWOM",
   authDomain: "ntr-garage.firebaseapp.com",
@@ -1265,13 +1076,7 @@ const firebaseConfig = {
   messagingSenderId: "606167388967",
   appId: "1:606167388967:web:7ad669fd353cdeeb7a8f02"
 };
-
-const CLOUDINARY = {
-  cloudName: 'u1wzoxod',
-  preset: 'stock_vehicules',
-  uploadUrl: 'https://api.cloudinary.com/v1_1/u1wzoxod/image/upload'
-};
-
+const CLOUDINARY = { cloudName: 'u1wzoxod', preset: 'stock_vehicules', uploadUrl: 'https://api.cloudinary.com/v1_1/u1wzoxod/image/upload' };
 const SITES = ['Garage HR 1', 'Garage HR 2', 'Garage UM', 'Garage UNICARS', 'Garage A+', 'Dépôt 1', 'Dépôt Aéroport'];
 const DEFAULT_USERS = ['Romaric Tanoh', 'Joel Kouassi', 'Sylvin', 'Noel Aka', 'Coulibaly', 'Mohamed'];
 const DEFAULT_CLIENTS = ['BNETD'];
@@ -1280,24 +1085,15 @@ const MOUVEMENT_CLIENTS = ['BNETD', 'Port Autonome'];
 
 const state = {
   db: null,
-  vehicules: [],
-  vehiculesFiltered: [],
-  rondes: [],
-  utilisateurs: [],
-  clients: [],
+  vehicules: [], vehiculesFiltered: [], rondes: [], utilisateurs: [], clients: [],
   currentUser: localStorage.getItem('ntr_user') || '',
-  chefUnlocked: false,
-  pinBuffer: '',
-  pointageSite: '',
-  pointageStatus: 'all',
-  pointageRecent: {},
-  histFilterSite: '',
-  histFilterUser: '',
-  histFilterMonth: '',
+  chefUnlocked: false, pinBuffer: '',
+  pointageSite: '', pointageStatus: 'all', pointageRecent: {},
+  manquantsFilterSource: '',
+  histFilterUser: '', histFilterMonth: '',
   socFilter: '',
   vehFilters: { site: '', source: '', type: '', search: '' },
-  currentRondeDetail: null,
-  unsubscribers: []
+  currentRondeDetail: null, unsubscribers: []
 };
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -1332,7 +1128,6 @@ function toast(msg, type = 'info', title = '') {
   c.appendChild(el);
   setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity 0.2s'; setTimeout(() => el.remove(), 220); }, 3600);
 }
-
 function showLoading(text = 'Chargement...') { $('#loadingText').textContent = text; $('#loadingOverlay').classList.add('show'); }
 function hideLoading() { $('#loadingOverlay').classList.remove('show'); }
 function openModal(id) { $('#' + id).classList.add('show'); }
@@ -1374,7 +1169,6 @@ try {
   try { state.db.settings({ cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED, merge: true }); } catch (e) {}
 } catch (e) { console.error('[Firebase]', e); }
 
-/* Anti-autofill */
 setTimeout(() => {
   ['#pointageSearch', '#vehSearch', '#terrainSearch', '#mouvSearch', '#attImmat', '#vehImmat'].forEach((sel) => {
     const el = document.querySelector(sel);
@@ -1389,7 +1183,6 @@ setTimeout(() => {
   });
 }, 200);
 
-/* NAV */
 $$('.nav-btn[data-tab]').forEach((btn) => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
 function switchTab(name) {
   $$('.nav-btn[data-tab]').forEach((b) => b.classList.toggle('active', b.dataset.tab === name));
@@ -1397,8 +1190,8 @@ function switchTab(name) {
   const section = $('#tab-' + name);
   if (section) section.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
-
   if (name === 'pointage') renderPointage();
+  if (name === 'manquants') renderManquants();
   if (name === 'vehicules') renderVehiculesList();
   if (name === 'historique') renderHistorique();
   if (name === 'archives') renderArchives();
@@ -1411,27 +1204,16 @@ function switchTab(name) {
   if (name === 'admin') renderAdminInfo();
 }
 
-/* VOICE */
 function setupVoiceSearch(micId, inputId, cb) {
   const btn = $('#' + micId);
   const input = $('#' + inputId);
   if (!btn || !input) return;
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) {
-    btn.addEventListener('click', () => toast('Recherche vocale non supportée', 'warning'));
-    btn.style.opacity = '0.4';
-    return;
-  }
+  if (!SR) { btn.addEventListener('click', () => toast('Recherche vocale non supportée', 'warning')); btn.style.opacity = '0.4'; return; }
   const r = new SR();
-  r.lang = 'fr-FR';
-  r.interimResults = false;
-  r.maxAlternatives = 1;
-  r.continuous = false;
+  r.lang = 'fr-FR'; r.interimResults = false; r.maxAlternatives = 1; r.continuous = false;
   let listening = false;
-  btn.addEventListener('click', () => {
-    if (listening) { r.stop(); return; }
-    try { r.start(); } catch (e) {}
-  });
+  btn.addEventListener('click', () => { if (listening) { r.stop(); return; } try { r.start(); } catch (e) {} });
   r.onstart = () => { listening = true; btn.classList.add('listening'); toast('Parlez maintenant...', 'info'); };
   r.onend = () => { listening = false; btn.classList.remove('listening'); };
   r.onerror = (e) => { listening = false; btn.classList.remove('listening'); if (e.error === 'not-allowed') toast('Micro refusé', 'error'); };
@@ -1444,19 +1226,14 @@ function setupVoiceSearch(micId, inputId, cb) {
   };
 }
 
-/* BEEP */
 function playBeep() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.frequency.value = 880;
-    osc.type = 'sine';
-    gain.gain.value = 0.08;
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.06);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = 880; osc.type = 'sine'; gain.gain.value = 0.08;
+    osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.06);
   } catch (e) {}
 }
 
@@ -1476,9 +1253,7 @@ function listenUsers() {
   const ref = state.db.collection('utilisateurs').orderBy('nom');
   const unsub = ref.onSnapshot((snap) => {
     state.utilisateurs = snap.docs.map((d) => ({ id: d.id, ...d.data() })).filter((u) => u.actif !== false);
-    renderUserSelectors();
-    renderUsersModal();
-    renderAdminInfo();
+    renderUserSelectors(); renderUsersModal(); renderAdminInfo();
   }, (err) => console.warn('[users]', err));
   state.unsubscribers.push(unsub);
 }
@@ -1530,16 +1305,14 @@ function listenClients() {
   const ref = state.db.collection('societes').orderBy('nom');
   const unsub = ref.onSnapshot((snap) => {
     state.clients = snap.docs.map((d) => ({ id: d.id, ...d.data() })).filter((s) => s.actif !== false);
-    renderClientSelectors();
-    renderClientsManageList();
-    renderAdminInfo();
+    renderClientSelectors(); renderClientsManageList(); renderAdminInfo();
   }, (err) => console.warn('[clients]', err));
   state.unsubscribers.push(unsub);
 }
 function renderClientSelectors() {
   const opts = state.clients.map((s) => `<option value="${escapeHtml(s.nom)}">${escapeHtml(s.nom)}</option>`).join('');
-  const v = $('#vehClient'); v.innerHTML = `<option value="">— Client —</option>${opts}`;
-  const f = $('#socFilter'); f.innerHTML = `<option value="">Tous les clients</option>${opts}`;
+  const v = $('#vehClient'); if (v) v.innerHTML = `<option value="">— Client —</option>${opts}`;
+  const f = $('#socFilter'); if (f) f.innerHTML = `<option value="">Tous les clients</option>${opts}`;
 }
 function renderClientsManageList() {
   const list = $('#socManageList');
@@ -1621,6 +1394,7 @@ function listenVehicules() {
     applyVehFilters();
     renderAdminInfo();
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
+    if ($('#tab-manquants').classList.contains('active')) renderManquants();
     if ($('#tab-terrain').classList.contains('active')) renderTerrain();
     if ($('#tab-galerie').classList.contains('active')) renderGalerie();
   }, (err) => { console.error('[vehicules]', err); toast('Erreur de chargement', 'error'); });
@@ -1671,7 +1445,7 @@ function showAutocomplete(query) {
   }
   vehAutoList.innerHTML = matches.map((v) => {
     const p = v.present !== false;
-    return `<div class="autocomplete-item" data-id="${v.id}"><span class="ac-immat">${escapeHtml(v.immat)}</span><span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')} · ${escapeHtml(v.site || '—')}</span><span class="ac-status ${p ? 'present' : 'absent'}">${p ? 'Présent' : 'Absent'}</span></div>`;
+    return `<div class="autocomplete-item" data-id="${v.id}"><span class="ac-immat">${escapeHtml(v.immat)}</span><span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')} · ${escapeHtml(v.site || '—')}</span><span class="ac-status ${p ? 'present' : 'absent'}">${p ? 'Présent' : 'Manquant'}</span></div>`;
   }).join('');
   vehAutoList.classList.add('show');
   $$('.autocomplete-item', vehAutoList).forEach((item) => item.addEventListener('click', () => {
@@ -1735,9 +1509,7 @@ function fillSiteSelects() {
   const vehSite = $('#vehSite'); if (vehSite) vehSite.innerHTML = `<option value="">— Site —</option>${opts}`;
   const terrainSite = $('#terrainSite'); if (terrainSite) terrainSite.innerHTML = `<option value="">— Choisir un site —</option>${opts}`;
   const pointageSite = $('#pointageSite'); if (pointageSite) pointageSite.innerHTML = `<option value="">— Site —</option>${opts}`;
-  ['#histSiteFilter', '#graphSiteFilter', '#galSiteFilter'].forEach((sel) => {
-    const el = $(sel); if (el) el.innerHTML = `<option value="">Tous les sites</option>${opts}`;
-  });
+  const galSite = $('#galSiteFilter'); if (galSite) galSite.innerHTML = `<option value="">Tous les sites</option>${opts}`;
 }
 function openVehiculeModal(id = null) {
   const v = id ? state.vehicules.find((x) => x.id === id) : null;
@@ -1760,50 +1532,28 @@ $('#vehSave').addEventListener('click', async () => {
   if (!immat) { toast('Immatriculation obligatoire', 'warning'); return; }
   const id = $('#vehId').value;
   if (!id && state.vehicules.find((v) => normalizeImmat(v.immat) === immat)) { toast('Cette immatriculation existe déjà', 'warning'); return; }
-  const data = {
-    immat,
-    marque: $('#vehMarque').value.trim(),
-    modele: $('#vehModele').value.trim(),
-    site: $('#vehSite').value,
-    client: $('#vehClient').value,
-    refCommande: $('#vehRef').value.trim(),
-    typeMaintenance: $('#vehType').value.trim(),
-    present: false
-  };
+  const data = { immat, marque: $('#vehMarque').value.trim(), modele: $('#vehModele').value.trim(), site: $('#vehSite').value, client: $('#vehClient').value, refCommande: $('#vehRef').value.trim(), typeMaintenance: $('#vehType').value.trim(), present: false };
   showLoading('Enregistrement...');
   try {
     const f = $('#vehPhoto');
     if (f.files && f.files[0]) { const url = await uploadToCloudinary(f.files[0]); if (url) data.photo = url; }
-    if (id) {
-      await state.db.collection('vehicules').doc(id).update({ ...data, updatedAt: nowIso() });
-      toast('Véhicule modifié', 'success');
-    } else {
-      await state.db.collection('vehicules').add({ ...data, source: 'custom', isCustom: true, lastSeen: null, createdAt: nowIso() });
-      toast('Véhicule ajouté', 'success');
-    }
+    if (id) { await state.db.collection('vehicules').doc(id).update({ ...data, updatedAt: nowIso() }); toast('Véhicule modifié', 'success'); }
+    else { await state.db.collection('vehicules').add({ ...data, source: 'custom', isCustom: true, lastSeen: null, createdAt: nowIso() }); toast('Véhicule ajouté', 'success'); }
     closeModal('modalVehicule');
   } catch (err) { console.error(err); toast('Erreur : ' + err.message, 'error'); }
   finally { hideLoading(); }
 });
 async function uploadToCloudinary(file) {
   const fd = new FormData();
-  fd.append('file', file);
-  fd.append('upload_preset', CLOUDINARY.preset);
-  fd.append('folder', 'ntr-garage');
+  fd.append('file', file); fd.append('upload_preset', CLOUDINARY.preset); fd.append('folder', 'ntr-garage');
   const res = await fetch(CLOUDINARY.uploadUrl, { method: 'POST', body: fd });
   if (!res.ok) throw new Error('Upload Cloudinary échoué');
   return (await res.json()).secure_url;
 }
 
 /* POINTAGE */
-function getVehiculesBySite(site) {
-  if (!site) return [];
-  return state.vehicules.filter((v) => v.site === site).sort((a, b) => a.immat.localeCompare(b.immat));
-}
-function getPointageStats(site) {
-  const list = getVehiculesBySite(site);
-  const pointed = list.filter((v) => v.present === true).length;
-  return { total: list.length, pointed };
+function getVehiculesForPointage() {
+  return state.vehicules.slice().sort((a, b) => a.immat.localeCompare(b.immat));
 }
 function renderPointage() {
   const siteSel = $('#pointageSite');
@@ -1819,25 +1569,21 @@ function renderPointage() {
   const empty = $('#pointageEmpty');
   const btnTerminer = $('#btnTerminer');
 
-  if (!site) {
-    label.textContent = '— Choisir un site —';
-    counter.textContent = '0 / 0 pointés';
-    counter.classList.remove('done');
-    list.innerHTML = '';
-    empty.classList.remove('hidden');
-    empty.querySelector('.es-title').textContent = 'Sélectionnez un site pour commencer';
-    empty.querySelector('.es-sub').textContent = 'Choisissez un site dans le menu ci-dessus';
-    btnTerminer.classList.remove('show');
-    return;
-  }
-  label.textContent = site;
-  const stats = getPointageStats(site);
-  counter.textContent = `${stats.pointed} / ${stats.total} pointés`;
-  counter.classList.toggle('done', stats.total > 0 && stats.pointed === stats.total);
-  btnTerminer.classList.toggle('show', stats.pointed > 0);
+  // Compteur global (pas par site)
+  const total = state.vehicules.length;
+  const pointed = state.vehicules.filter((v) => v.present === true).length;
+  counter.textContent = `${pointed} / ${total} pointés`;
+  counter.classList.toggle('done', total > 0 && pointed === total);
+
+  // Bouton terminer visible dès qu'au moins 1 pointage
+  btnTerminer.classList.toggle('show', pointed > 0);
+
+  // Si pas de site, on affiche tous les véhicules quand même
+  // mais avec un message d'aide
+  label.textContent = site || '— Choisir un site —';
 
   const search = normalizeImmat($('#pointageSearch').value);
-  let items = getVehiculesBySite(site);
+  let items = getVehiculesForPointage();
   if (search) items = items.filter((v) => normalizeImmat(v.immat).includes(search));
   if (state.pointageStatus === 'pending') items = items.filter((v) => v.present !== true);
   if (state.pointageStatus === 'pointed') items = items.filter((v) => v.present === true);
@@ -1850,13 +1596,13 @@ function renderPointage() {
       empty.querySelector('.es-sub').textContent = `Aucune immatriculation ne contient "${search}"`;
     } else if (state.pointageStatus === 'pending') {
       empty.querySelector('.es-title').textContent = 'Tout est pointé';
-      empty.querySelector('.es-sub').textContent = `Tous les véhicules de ${site} sont pointés`;
+      empty.querySelector('.es-sub').textContent = 'Tous les véhicules ont été trouvés';
     } else if (state.pointageStatus === 'pointed') {
       empty.querySelector('.es-title').textContent = 'Aucun pointage';
       empty.querySelector('.es-sub').textContent = 'Tapez sur un véhicule pour le pointer';
     } else {
-      empty.querySelector('.es-title').textContent = 'Aucun véhicule sur ce site';
-      empty.querySelector('.es-sub').textContent = 'Importez une liste ou ajoutez des véhicules';
+      empty.querySelector('.es-title').textContent = 'Aucun véhicule';
+      empty.querySelector('.es-sub').textContent = 'Importez une liste';
     }
     return;
   }
@@ -1875,7 +1621,7 @@ function renderPointage() {
           ${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}
         </div>
       </div>
-      ${isP && v.lastSeen ? `<span class="pi-time">${new Date(v.lastSeen).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</span>` : ''}
+      ${isP && v.site ? `<span class="pi-site">${escapeHtml(v.site)}</span>` : ''}
     </div>`;
   }).join('');
 
@@ -1886,7 +1632,7 @@ function renderPointage() {
 
 async function handlePointage(vehId) {
   if (!state.currentUser) { toast('Sélectionnez un utilisateur dans le header', 'warning'); return; }
-  if (!state.pointageSite) { toast('Sélectionnez un site', 'warning'); return; }
+  if (!state.pointageSite) { toast('Sélectionnez un site avant de pointer', 'warning'); return; }
   const v = state.vehicules.find((x) => x.id === vehId);
   if (!v) return;
   const wasPresent = v.present === true;
@@ -1896,10 +1642,10 @@ async function handlePointage(vehId) {
     await state.db.collection('vehicules').doc(vehId).update({
       present: newState,
       lastSeen: newState ? nowIso() : (v.lastSeen || null),
-      site: state.pointageSite
+      site: newState ? state.pointageSite : null
     });
-    if (newState) { toast(`${v.immat} pointé`, 'success'); try { playBeep(); } catch (e) {} }
-    else { toast(`${v.immat} dé-pointé`, 'info'); }
+    if (newState) { toast(`${v.immat} trouvé à ${state.pointageSite}`, 'success'); try { playBeep(); } catch (e) {} }
+    else { toast(`${v.immat} démarqué`, 'info'); }
     setTimeout(() => { delete state.pointageRecent[vehId]; }, 2000);
   } catch (err) { console.error('[pointage]', err); toast('Erreur : ' + err.message, 'error'); }
 }
@@ -1931,15 +1677,15 @@ $('#pointageClear').addEventListener('click', () => {
 function showPointageAutocomplete(query) {
   const q = normalizeImmat(query);
   const l = $('#pointageAutocomplete');
-  if (!q || !state.pointageSite) { l.classList.remove('show'); return; }
-  const matches = getVehiculesBySite(state.pointageSite).filter((v) => normalizeImmat(v.immat).includes(q)).slice(0, 12);
+  if (!q) { l.classList.remove('show'); return; }
+  const matches = state.vehicules.filter((v) => normalizeImmat(v.immat).includes(q)).slice(0, 12);
   if (!matches.length) { l.classList.remove('show'); return; }
   l.innerHTML = matches.map((v) => {
     const p = v.present === true;
     return `<div class="autocomplete-item" data-id="${v.id}">
       <span class="ac-immat">${escapeHtml(v.immat)}</span>
       <span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}</span>
-      <span class="ac-status ${p ? 'present' : 'absent'}">${p ? 'Pointé' : 'À pointer'}</span>
+      <span class="ac-status ${p ? 'present' : 'absent'}">${p ? 'Trouvé' : 'À pointer'}</span>
     </div>`;
   }).join('');
   l.classList.add('show');
@@ -1956,33 +1702,238 @@ document.addEventListener('click', (e) => {
     $('#pointageAutocomplete').classList.remove('show');
   }
 });
-$('#btnTerminer').addEventListener('click', async () => {
-  const site = state.pointageSite;
-  if (!site) return;
-  const stats = getPointageStats(site);
-  const ok = await confirmDialog(
-    'Terminer la session ?',
-    `Site : <strong>${escapeHtml(site)}</strong><br>Utilisateur : <strong>${escapeHtml(state.currentUser)}</strong><br>Pointés : <strong>${stats.pointed}</strong> sur ${stats.total}<br><br>Un récapitulatif sera enregistré dans l'historique.`
-  );
+
+/* RÉCAP DE RONDE */
+$('#btnTerminer').addEventListener('click', () => { renderRecapModal(); openModal('modalRecap'); });
+
+function computeRondeStats() {
+  const all = state.vehicules;
+  const total = all.length;
+  const found = all.filter((v) => v.present === true);
+  const manquants = all.filter((v) => v.present !== true);
+
+  const bySource = {};
+  ['source1', 'source2', 'custom'].forEach((src) => {
+    const allSrc = all.filter((v) => v.source === src);
+    const foundSrc = found.filter((v) => v.source === src);
+    const missSrc = manquants.filter((v) => v.source === src);
+    if (allSrc.length > 0) {
+      bySource[src] = {
+        total: allSrc.length,
+        found: foundSrc.length,
+        manquants: missSrc.length,
+        taux: allSrc.length ? Math.round((foundSrc.length / allSrc.length) * 100) : 0
+      };
+    }
+  });
+
+  const bySite = {};
+  found.forEach((v) => {
+    const s = v.site || '— Sans site —';
+    if (!bySite[s]) bySite[s] = 0;
+    bySite[s]++;
+  });
+
+  return {
+    total, found: found.length, manquants: manquants.length,
+    tauxGlobal: total ? Math.round((found.length / total) * 100) : 0,
+    bySource, bySite,
+    sitesVisited: Object.keys(bySite).filter((s) => s !== '— Sans site —')
+  };
+}
+
+function renderRecapModal() {
+  const s = computeRondeStats();
+  const now = new Date();
+  const heure = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  const date = now.toLocaleDateString('fr-FR');
+
+  const sourcesTags = Object.entries(s.bySource).map(([src, data]) => {
+    const label = SOURCES[src] || src;
+    return `<span class="rs-tag">${escapeHtml(label)} : ${data.found}/${data.total}</span>`;
+  }).join('');
+
+  const sourceRows = Object.entries(s.bySource).map(([src, data]) => {
+    const label = SOURCES[src] || src;
+    const cls = data.taux >= 80 ? '' : data.taux >= 50 ? 'low' : 'critical';
+    return `<tr><td><strong>${escapeHtml(label)}</strong></td><td>${data.total}</td><td style="color:var(--success)">${data.found}</td><td style="color:var(--danger)">${data.manquants}</td><td>${data.taux}%<div class="bilan-bar"><div class="bilan-bar-fill ${cls}" style="width:${data.taux}%"></div></div></td></tr>`;
+  }).join('');
+
+  const siteRows = Object.entries(s.bySite).sort((a, b) => b[1] - a[1]).map(([site, count]) => {
+    const pct = s.found ? Math.round((count / s.found) * 100) : 0;
+    return `<tr><td><strong>${escapeHtml(site)}</strong></td><td style="color:var(--success)">${count}</td><td>${pct}%</td></tr>`;
+  }).join('') || '<tr><td colspan="3" style="text-align:center;color:var(--text-mute);padding:14px">Aucun véhicule pointé</td></tr>';
+
+  $('#recapBody').innerHTML = `
+    <div class="recap-hero">
+      <p class="rh-number">${s.found} / ${s.total}</p>
+      <p class="rh-label">Véhicules trouvés</p>
+      <div class="recap-sources">${sourcesTags}</div>
+    </div>
+    <div class="recap-grid">
+      <div class="recap-card"><div class="rc-num">${s.total}</div><div class="rc-label">Total attendus</div></div>
+      <div class="recap-card success"><div class="rc-num">${s.found}</div><div class="rc-label">Trouvés (${s.tauxGlobal}%)</div></div>
+      <div class="recap-card danger"><div class="rc-num">${s.manquants}</div><div class="rc-label">Manquants</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Bilan par source</div>
+      <table class="bilan-table"><thead><tr><th>Source</th><th>Total</th><th>Trouvés</th><th>Manquants</th><th>Taux</th></tr></thead><tbody>${sourceRows || '<tr><td colspan="5" style="text-align:center;color:var(--text-mute);padding:14px">Aucune donnée</td></tr>'}</tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-title">Répartition par site (${s.sitesVisited.length} site(s) visité(s))</div>
+      <table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules trouvés</th><th>Part</th></tr></thead><tbody>${siteRows}</tbody></table>
+    </div>
+    <div class="card" style="background:var(--bg-3)">
+      <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.7">
+        <div>Ronde effectuée par : <strong style="color:var(--text)">${escapeHtml(state.currentUser || '—')}</strong></div>
+        <div>Date : ${date} à ${heure}</div>
+        <div>Sites visités : ${s.sitesVisited.length ? escapeHtml(s.sitesVisited.join(', ')) : 'Aucun'}</div>
+      </div>
+    </div>
+  `;
+}
+
+$('#recapShowManquants').addEventListener('click', () => {
+  closeModal('modalRecap');
+  switchTab('manquants');
+  state.manquantsFilterSource = '';
+  $('#manquantsSourceFilter').value = '';
+  renderManquants();
+});
+$('#recapExportPdf').addEventListener('click', () => exportRecapPDF(computeRondeStats()));
+$('#recapTerminer').addEventListener('click', async () => {
+  const s = computeRondeStats();
+  const ok = await confirmDialog('Terminer la ronde ?', `La ronde sera enregistrée avec :<br><strong>${s.found}</strong> trouvés sur <strong>${s.total}</strong><br><strong>${s.manquants}</strong> manquants`);
   if (!ok) return;
   showLoading('Enregistrement...');
   try {
-    const list = getVehiculesBySite(site);
-    const pointed = list.filter((v) => v.present === true);
-    const absents = list.filter((v) => v.present !== true);
-    const snapshot = pointed.map((v) => ({ id: v.id, immat: v.immat, marque: v.marque || '', modele: v.modele || '', client: v.client || '', site: v.site || '', present: true }));
+    const now = nowIso();
+    const found = state.vehicules.filter((v) => v.present === true);
+    const snapshot = found.map((v) => ({ id: v.id, immat: v.immat, marque: v.marque || '', modele: v.modele || '', client: v.client || '', site: v.site || '', present: true }));
     await state.db.collection('rondes').add({
-      date: todayKey(), heureDebut: nowIso(), heureFin: nowIso(),
-      effectueePar: state.currentUser, site, note: 'Session de pointage', statut: 'terminee', mode: 'pointage_direct',
-      vehicules: pointed.map((v) => v.id), vehiculesSnapshot: snapshot, dureeSecondes: null,
-      stats: { total: list.length, presents: pointed.length, absents: absents.length, taux: list.length ? Math.round((pointed.length / list.length) * 100) : 0 },
-      comparaison: null, createdAt: nowIso()
+      date: todayKey(), heureDebut: now, heureFin: now,
+      effectueePar: state.currentUser || '—',
+      site: s.sitesVisited.join(', ') || '—',
+      note: `Ronde multi-sites · ${s.sitesVisited.length} site(s)`,
+      statut: 'terminee', mode: 'ronde_multi_sites',
+      vehicules: found.map((v) => v.id), vehiculesSnapshot: snapshot,
+      dureeSecondes: null,
+      stats: { total: s.total, presents: s.found, absents: s.manquants, taux: s.tauxGlobal, sitesVisites: s.sitesVisited.length, repartitionSites: s.bySite },
+      comparaison: null, createdAt: now
     });
     hideLoading();
-    toast(`Récapitulatif enregistré : ${pointed.length} pointés sur ${list.length}`, 'success');
+    closeModal('modalRecap');
+    toast(`Ronde enregistrée · ${s.found}/${s.total}`, 'success');
     renderPointage();
   } catch (err) { hideLoading(); toast('Erreur : ' + err.message, 'error'); }
 });
+
+/* ONGLET MANQUANTS */
+function renderManquants() {
+  const filter = state.manquantsFilterSource || '';
+  let list = state.vehicules.filter((v) => v.present !== true);
+  if (filter) list = list.filter((v) => v.source === filter);
+
+  $('#manquantsCount').textContent = list.length;
+  const c = $('#manquantsList');
+  const e = $('#manquantsEmpty');
+
+  if (!list.length) { c.innerHTML = ''; e.classList.remove('hidden'); return; }
+  e.classList.add('hidden');
+
+  const groups = {};
+  list.forEach((v) => { if (!groups[v.source]) groups[v.source] = []; groups[v.source].push(v); });
+
+  c.innerHTML = Object.keys(groups).sort().map((src) => {
+    const items = groups[src].sort((a, b) => a.immat.localeCompare(b.immat));
+    const label = SOURCES[src] || src;
+    const cls = src === 'source1' ? 'hr' : src === 'source2' ? 'um' : 'custom';
+    return `<div class="card">
+      <div class="card-title">${escapeHtml(label)} <span class="badge badge-danger" style="margin-left:6px">${items.length}</span></div>
+      <div class="list">
+        ${items.map((v) => `<div class="manquant-item">
+          <div class="mi-main">
+            <div class="mi-immat">${escapeHtml(v.immat)}</div>
+            <div class="mi-info">
+              ${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
+              ${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}
+              ${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}
+            </div>
+          </div>
+          <span class="mi-source ${cls}">${escapeHtml(label)}</span>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+$('#manquantsSourceFilter').addEventListener('change', (e) => { state.manquantsFilterSource = e.target.value; renderManquants(); });
+$('#btnManquantsExportXls').addEventListener('click', () => {
+  let list = state.vehicules.filter((v) => v.present !== true);
+  if (state.manquantsFilterSource) list = list.filter((v) => v.source === state.manquantsFilterSource);
+  if (!list.length) { toast('Aucun véhicule manquant', 'warning'); return; }
+  const rows = list.map((v) => ({ 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '', 'Reference commande': v.refCommande || '', 'Type maintenance': v.typeMaintenance || '', 'Source': SOURCES[v.source] || v.source || '' }));
+  exportExcel(rows, `NTR_Manquants_${todayKey()}.xlsx`, 'Manquants');
+});
+
+/* EXPORT PDF DU RÉCAP */
+function exportRecapPDF(s) {
+  if (!s) return;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const now = new Date();
+  doc.setFillColor(15, 23, 42); doc.rect(0, 0, 210, 26, 'F');
+  doc.setTextColor(255, 255, 255); doc.setFontSize(15); doc.setFont(undefined, 'bold');
+  doc.text('NTR GARAGE - RAPPORT DE RONDE', 14, 12);
+  doc.setFontSize(9); doc.setFont(undefined, 'normal');
+  doc.text(`Genere le ${now.toLocaleString('fr-FR')}`, 14, 20);
+  doc.text(`Par : ${state.currentUser || '—'}`, 196, 20, { align: 'right' });
+  doc.setTextColor(0, 0, 0);
+  doc.setFontSize(11); doc.setFont(undefined, 'bold');
+  doc.text('Synthese globale', 14, 36);
+  doc.setFont(undefined, 'normal'); doc.setFontSize(10);
+  doc.text(`Total attendus : ${s.total}`, 14, 44);
+  doc.text(`Trouves : ${s.found} (${s.tauxGlobal}%)`, 14, 50);
+  doc.text(`Manquants : ${s.manquants}`, 14, 56);
+  doc.text(`Sites visites : ${s.sitesVisited.length}`, 14, 62);
+
+  let y = 72;
+  doc.setFontSize(11); doc.setFont(undefined, 'bold');
+  doc.text('Bilan par source', 14, y); y += 4;
+  const sourceData = Object.entries(s.bySource).map(([src, d]) => [SOURCES[src] || src, String(d.total), String(d.found), String(d.manquants), d.taux + '%']);
+  doc.autoTable({ startY: y, head: [['Source', 'Total', 'Trouves', 'Manquants', 'Taux']], body: sourceData.length ? sourceData : [['-', '-', '-', '-', '-']], theme: 'grid', headStyles: { fillColor: [15, 23, 42], textColor: 255, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
+  y = doc.lastAutoTable.finalY + 10;
+
+  doc.setFontSize(11); doc.setFont(undefined, 'bold');
+  doc.text('Repartition par site', 14, y); y += 4;
+  const siteData = Object.entries(s.bySite).sort((a, b) => b[1] - a[1]).map(([site, count]) => [site, String(count), s.found ? Math.round((count / s.found) * 100) + '%' : '0%']);
+  doc.autoTable({ startY: y, head: [['Site', 'Trouves', 'Part']], body: siteData.length ? siteData : [['-', '-', '-']], theme: 'grid', headStyles: { fillColor: [52, 211, 153], textColor: 0, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
+  y = doc.lastAutoTable.finalY + 10;
+
+  const manquants = state.vehicules.filter((v) => v.present !== true);
+  if (manquants.length) {
+    if (y > 240) { doc.addPage(); y = 20; }
+    doc.setFontSize(11); doc.setFont(undefined, 'bold');
+    doc.setTextColor(220, 38, 38);
+    doc.text(`Vehicules manquants (${manquants.length})`, 14, y); y += 4;
+    doc.setTextColor(0, 0, 0);
+    doc.autoTable({
+      startY: y,
+      head: [['Immatriculation', 'Marque', 'Modele', 'Client', 'Source']],
+      body: manquants.map((v) => [v.immat || '', v.marque || '', v.modele || '', v.client || '', SOURCES[v.source] || v.source || '']),
+      theme: 'striped', headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 9 },
+      styles: { fontSize: 8, cellPadding: 2 }, alternateRowStyles: { fillColor: [254, 242, 242] },
+      margin: { left: 14, right: 14 }
+    });
+  }
+  const pageCount = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i); doc.setFontSize(8); doc.setTextColor(120, 120, 120);
+    doc.text('NTR Garage - Stock Vehicules', 14, 290);
+    doc.text(`Page ${i} / ${pageCount}`, 196, 290, { align: 'right' });
+  }
+  doc.save(`NTR_Rapport_Ronde_${todayKey()}.pdf`);
+  toast('Rapport PDF téléchargé', 'success');
+}
 
 /* IMPORT EXCEL */
 function openImportForSource(source) {
@@ -1994,7 +1945,6 @@ function openImportForSource(source) {
 }
 $('#btnImportHR').addEventListener('click', () => openImportForSource('source1'));
 $('#btnImportUM').addEventListener('click', () => openImportForSource('source2'));
-
 $('#importRun').addEventListener('click', async () => {
   const source = $('#importSource').value;
   const file = $('#importFile').files[0];
@@ -2021,20 +1971,9 @@ $('#importRun').addEventListener('click', async () => {
       const immatBrut = mapField(row, ['immatriculation', 'immat']);
       const immat = normalizeImmat(immatBrut);
       if (!immat) return;
-      parsed.push({
-        immat,
-        client: mapField(row, ['client', 'societe', 'society', 'company']),
-        marque: mapField(row, ['marque']),
-        modele: mapField(row, ['modele', 'model']),
-        refCommande: mapField(row, ['reference', 'refcommande', 'ref']),
-        typeMaintenance: mapField(row, ['typemaintenance', 'maintenance', 'type'])
-      });
+      parsed.push({ immat, client: mapField(row, ['client', 'societe', 'society', 'company']), marque: mapField(row, ['marque']), modele: mapField(row, ['modele', 'model']), refCommande: mapField(row, ['reference', 'refcommande', 'ref']), typeMaintenance: mapField(row, ['typemaintenance', 'maintenance', 'type']) });
     });
-    if (!parsed.length) {
-      cleanup();
-      await confirmDialog('Aucune immatriculation détectée', 'Il faut une colonne <strong>"Immatriculation"</strong> ou <strong>"Immat"</strong>.', false);
-      return;
-    }
+    if (!parsed.length) { cleanup(); await confirmDialog('Aucune immatriculation détectée', 'Il faut une colonne <strong>"Immatriculation"</strong> ou <strong>"Immat"</strong>.', false); return; }
     const srcLabel = SOURCES[source];
     const existing = state.vehicules.filter((v) => v.source === source);
     cleanup();
@@ -2076,14 +2015,8 @@ $('#importRun').addEventListener('click', async () => {
 });
 
 /* TERRAIN */
-$('#terrainToggle').addEventListener('change', (e) => {
-  document.body.classList.toggle('terrain-mode', e.target.checked);
-  localStorage.setItem('ntr_terrain', e.target.checked ? '1' : '0');
-});
-if (localStorage.getItem('ntr_terrain') === '1') {
-  document.body.classList.add('terrain-mode');
-  $('#terrainToggle').checked = true;
-}
+$('#terrainToggle').addEventListener('change', (e) => { document.body.classList.toggle('terrain-mode', e.target.checked); localStorage.setItem('ntr_terrain', e.target.checked ? '1' : '0'); });
+if (localStorage.getItem('ntr_terrain') === '1') { document.body.classList.add('terrain-mode'); $('#terrainToggle').checked = true; }
 $('#terrainSite').addEventListener('change', renderTerrain);
 function renderTerrain() {
   const site = $('#terrainSite').value;
@@ -2099,15 +2032,8 @@ function renderTerrain() {
 /* SYNC */
 $('#btnSync').addEventListener('click', async () => {
   showLoading('Synchronisation...');
-  try {
-    await Promise.all([
-      state.db.collection('vehicules').get(),
-      state.db.collection('rondes').get(),
-      state.db.collection('utilisateurs').get(),
-      state.db.collection('societes').get()
-    ]);
-    toast('Synchronisé', 'success');
-  } catch (err) { toast('Erreur : ' + err.message, 'error'); }
+  try { await Promise.all([state.db.collection('vehicules').get(), state.db.collection('rondes').get(), state.db.collection('utilisateurs').get(), state.db.collection('societes').get()]); toast('Synchronisé', 'success'); }
+  catch (err) { toast('Erreur : ' + err.message, 'error'); }
   finally { hideLoading(); }
 });
 function renderAdminInfo() {
@@ -2134,7 +2060,6 @@ function renderHistorique() {
   const list = $('#histList');
   const empty = $('#histEmpty');
   let rondes = state.rondes.filter((r) => r.statut !== 'en_cours');
-  if (state.histFilterSite) rondes = rondes.filter((r) => r.site === state.histFilterSite);
   if (state.histFilterUser) rondes = rondes.filter((r) => r.effectueePar === state.histFilterUser);
   if (state.histFilterMonth) rondes = rondes.filter((r) => (r.heureDebut || '').startsWith(state.histFilterMonth));
   if (!rondes.length) { list.innerHTML = ''; empty.classList.remove('hidden'); return; }
@@ -2143,41 +2068,43 @@ function renderHistorique() {
     const s = r.stats || {};
     const taux = s.taux ?? 0;
     const bc = taux >= 80 ? 'success' : taux >= 50 ? 'warning' : 'danger';
-    return `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${formatDateFR(r.heureDebut)}<span class="badge badge-primary">${escapeHtml(r.site)}</span><span class="badge badge-${bc}">${taux}%</span></div><div class="list-item-sub"><span>Par ${escapeHtml(r.effectueePar)}</span><span>${s.presents ?? 0} présents sur ${s.total ?? 0}</span></div></div><div class="list-item-actions"><button class="btn btn-sm btn-ghost" data-hist-open="${r.id}">Voir</button></div></div>`;
+    return `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${formatDateFR(r.heureDebut)}<span class="badge badge-primary">${escapeHtml(r.site || '—')}</span><span class="badge badge-${bc}">${taux}%</span></div><div class="list-item-sub"><span>Par ${escapeHtml(r.effectueePar)}</span><span>${s.presents ?? 0} trouvés sur ${s.total ?? 0}</span><span>${s.absents ?? 0} manquants</span></div></div><div class="list-item-actions"><button class="btn btn-sm btn-ghost" data-hist-open="${r.id}">Voir</button></div></div>`;
   }).join('');
   $$('[data-hist-open]', list).forEach((b) => b.addEventListener('click', () => openRondeDetail(b.dataset.histOpen)));
 }
-$('#histSiteFilter').addEventListener('change', (e) => { state.histFilterSite = e.target.value; renderHistorique(); });
 $('#histUserFilter').addEventListener('change', (e) => { state.histFilterUser = e.target.value; renderHistorique(); });
 $('#btnHistRefresh').addEventListener('click', () => { renderHistorique(); toast('Rafraîchi', 'success'); });
 function openRondeDetail(id) {
   const r = state.rondes.find((x) => x.id === id);
   if (!r) return;
   state.currentRondeDetail = r;
-  $('#rdTitle').textContent = `Session du ${formatDateFR(r.heureDebut)} — ${r.site}`;
+  $('#rdTitle').textContent = `Ronde du ${formatDateFR(r.heureDebut)} — ${r.site}`;
   const s = r.stats || {};
   const presents = r.vehiculesSnapshot || [];
-  const presentsIds = new Set(r.vehicules || []);
-  const absents = state.vehicules.filter((v) => v.site === r.site && !presentsIds.has(v.id));
+  const repartition = s.repartitionSites || {};
+  let repartitionHtml = '';
+  if (Object.keys(repartition).length) {
+    repartitionHtml = `<div class="card"><div class="card-title">Répartition par site</div><table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules</th></tr></thead><tbody>${Object.entries(repartition).sort((a, b) => b[1] - a[1]).map(([site, count]) => `<tr><td>${escapeHtml(site)}</td><td>${count}</td></tr>`).join('')}</tbody></table></div>`;
+  }
   $('#rdBody').innerHTML = `
     <div class="stats-grid">
       <div class="stat-card"><span class="stat-label">Total</span><span class="stat-value">${s.total ?? '—'}</span></div>
-      <div class="stat-card"><span class="stat-label">Présents</span><span class="stat-value success">${s.presents ?? presents.length}</span></div>
-      <div class="stat-card"><span class="stat-label">Absents</span><span class="stat-value danger">${s.absents ?? absents.length}</span></div>
+      <div class="stat-card"><span class="stat-label">Trouvés</span><span class="stat-value success">${s.presents ?? presents.length}</span></div>
+      <div class="stat-card"><span class="stat-label">Manquants</span><span class="stat-value danger">${s.absents ?? 0}</span></div>
       <div class="stat-card"><span class="stat-label">Taux</span><span class="stat-value primary">${s.taux ?? 0}%</span></div>
     </div>
-    <div class="card"><div class="card-title">Informations</div><div style="font-size:0.8rem;line-height:1.7"><div>Site : <strong>${escapeHtml(r.site)}</strong></div><div>Effectuée par : <strong>${escapeHtml(r.effectueePar)}</strong></div><div>Début : ${formatDateTimeFR(r.heureDebut)}</div><div>Fin : ${formatDateTimeFR(r.heureFin)}</div></div></div>
-    <div class="card"><div class="card-title">Véhicules présents (${presents.length})</div>${presents.length ? `<div class="list">${presents.map((v) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}${v.client ? ' · ' + escapeHtml(v.client) : ''}</div></div></div>`).join('')}</div>` : '<div class="es-sub" style="color:var(--text-mute);padding:8px">Aucun</div>'}</div>
-    <div class="card"><div class="card-title">Véhicules absents (${absents.length})</div>${absents.length ? `<div class="list">${absents.map((v) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--text-mute)">${escapeHtml(v.immat)}</div></div></div>`).join('')}</div>` : '<div class="es-sub" style="color:var(--text-mute);padding:8px">Aucun</div>'}</div>`;
+    <div class="card"><div class="card-title">Informations</div><div style="font-size:0.8rem;line-height:1.7"><div>Par : <strong>${escapeHtml(r.effectueePar)}</strong></div><div>Date : ${formatDateTimeFR(r.heureDebut)}</div><div>Sites visités : ${escapeHtml(r.site || '—')}</div></div></div>
+    ${repartitionHtml}
+    <div class="card"><div class="card-title">Véhicules trouvés (${presents.length})</div>${presents.length ? `<div class="list">${presents.map((v) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}${v.site ? ' · ' + escapeHtml(v.site) : ''}</div></div></div>`).join('')}</div>` : '<div class="es-sub" style="color:var(--text-mute);padding:8px">Aucun</div>'}</div>`;
   openModal('modalRondeDetail');
 }
 $('#rdDelete').addEventListener('click', async () => {
   if (!state.currentRondeDetail) return;
-  const ok = await confirmDialog('Supprimer la session ?', 'Cette action est irréversible.');
+  const ok = await confirmDialog('Supprimer la ronde ?', 'Cette action est irréversible.');
   if (!ok) return;
   await state.db.collection('rondes').doc(state.currentRondeDetail.id).delete();
   closeModal('modalRondeDetail');
-  toast('Session supprimée', 'success');
+  toast('Ronde supprimée', 'success');
 });
 $('#rdPdf').addEventListener('click', () => exportRondePDF(state.currentRondeDetail));
 
@@ -2187,64 +2114,43 @@ function renderArchives() {
   const rondes = state.rondes.filter((r) => r.statut !== 'en_cours');
   if (!rondes.length) { c.innerHTML = `<div class="empty-state"><div class="es-title">Aucune archive</div></div>`; return; }
   const byYM = {};
-  rondes.forEach((r) => {
-    const d = new Date(r.heureDebut);
-    const y = d.getFullYear();
-    const m = d.getMonth();
-    if (!byYM[y]) byYM[y] = {};
-    if (!byYM[y][m]) byYM[y][m] = 0;
-    byYM[y][m]++;
-  });
+  rondes.forEach((r) => { const d = new Date(r.heureDebut); const y = d.getFullYear(); const m = d.getMonth(); if (!byYM[y]) byYM[y] = {}; if (!byYM[y][m]) byYM[y][m] = 0; byYM[y][m]++; });
   const moisNoms = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
   const years = Object.keys(byYM).sort((a, b) => b - a);
   c.innerHTML = years.map((y, i) => {
     const months = Object.keys(byYM[y]).sort((a, b) => b - a);
     const totalY = months.reduce((s, m) => s + byYM[y][m], 0);
-    return `<div class="archive-year ${i === 0 ? 'open' : ''}"><div class="archive-year-header"><span>Année ${y}</span><span class="count">${totalY} session(s)</span></div><div class="archive-months">${months.map((m) => `<div class="archive-month" data-ym="${y}-${String(parseInt(m) + 1).padStart(2, '0')}"><div class="am-name">${moisNoms[parseInt(m)]}</div><div class="am-count">${byYM[y][m]} session(s)</div></div>`).join('')}</div></div>`;
+    return `<div class="archive-year ${i === 0 ? 'open' : ''}"><div class="archive-year-header"><span>Année ${y}</span><span class="count">${totalY} ronde(s)</span></div><div class="archive-months">${months.map((m) => `<div class="archive-month" data-ym="${y}-${String(parseInt(m) + 1).padStart(2, '0')}"><div class="am-name">${moisNoms[parseInt(m)]}</div><div class="am-count">${byYM[y][m]} ronde(s)</div></div>`).join('')}</div></div>`;
   }).join('');
   $$('.archive-year-header', c).forEach((h) => h.addEventListener('click', () => h.parentElement.classList.toggle('open')));
   $$('.archive-month', c).forEach((m) => m.addEventListener('click', () => {
-    state.histFilterMonth = m.dataset.ym;
-    state.histFilterSite = ''; state.histFilterUser = '';
-    $('#histSiteFilter').value = ''; $('#histUserFilter').value = '';
-    switchTab('historique');
-    renderHistorique();
+    state.histFilterMonth = m.dataset.ym; state.histFilterUser = '';
+    $('#histUserFilter').value = '';
+    switchTab('historique'); renderHistorique();
     toast(`Filtré sur ${m.querySelector('.am-name').textContent}`, 'info');
   }));
 }
 
 /* GRAPHIQUES */
-let chartPresence = null;
-let chartSites = null;
+let chartPresence = null, chartSites = null;
 function renderGraphiques() {
-  const site = $('#graphSiteFilter').value;
   let rondes = state.rondes.filter((r) => r.statut !== 'en_cours').sort((a, b) => (a.heureDebut || '').localeCompare(b.heureDebut || ''));
-  if (site) rondes = rondes.filter((r) => r.site === site);
   const last12 = rondes.slice(-12);
   const labels = last12.map((r) => new Date(r.heureDebut).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }));
   const p = last12.map((r) => r.stats?.presents ?? 0);
   const a = last12.map((r) => r.stats?.absents ?? 0);
   const txtColor = getComputedStyle(document.body).color;
   if (chartPresence) chartPresence.destroy();
-  chartPresence = new Chart($('#chartPresence'), {
-    type: 'bar',
-    data: { labels, datasets: [{ label: 'Présents', data: p, backgroundColor: '#34d399' }, { label: 'Absents', data: a, backgroundColor: '#f87171' }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { stacked: true, ticks: { color: txtColor } }, y: { stacked: true, beginAtZero: true, ticks: { color: txtColor } } } }
-  });
+  chartPresence = new Chart($('#chartPresence'), { type: 'bar', data: { labels, datasets: [{ label: 'Trouvés', data: p, backgroundColor: '#34d399' }, { label: 'Manquants', data: a, backgroundColor: '#f87171' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { stacked: true, ticks: { color: txtColor } }, y: { stacked: true, beginAtZero: true, ticks: { color: txtColor } } } } });
   const since = Date.now() - 7 * 86400000;
   const r7 = state.rondes.filter((r) => r.statut !== 'en_cours' && new Date(r.heureDebut).getTime() >= since);
   const bySite = {};
-  r7.forEach((r) => { if (!bySite[r.site]) bySite[r.site] = { p: 0, t: 0 }; bySite[r.site].p += r.stats?.presents ?? 0; bySite[r.site].t += r.stats?.total ?? 0; });
+  r7.forEach((r) => { const rep = r.stats?.repartitionSites || {}; Object.entries(rep).forEach(([s, c]) => { if (!bySite[s]) bySite[s] = 0; bySite[s] += c; }); });
   const siteLabels = Object.keys(bySite);
-  const siteRates = siteLabels.map((s) => bySite[s].t ? Math.round((bySite[s].p / bySite[s].t) * 100) : 0);
+  const siteCounts = siteLabels.map((s) => bySite[s]);
   if (chartSites) chartSites.destroy();
-  chartSites = new Chart($('#chartSites'), {
-    type: 'bar',
-    data: { labels: siteLabels.length ? siteLabels : ['Aucune donnée'], datasets: [{ label: 'Taux %', data: siteRates.length ? siteRates : [0], backgroundColor: '#60a5fa' }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { ticks: { color: txtColor } }, y: { beginAtZero: true, max: 100, ticks: { color: txtColor } } } }
-  });
+  chartSites = new Chart($('#chartSites'), { type: 'bar', data: { labels: siteLabels.length ? siteLabels : ['Aucune donnée'], datasets: [{ label: 'Véhicules trouvés', data: siteCounts.length ? siteCounts : [0], backgroundColor: '#60a5fa' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { ticks: { color: txtColor } }, y: { beginAtZero: true, ticks: { color: txtColor } } } } });
 }
-$('#graphSiteFilter').addEventListener('change', renderGraphiques);
 
 /* MOUVEMENTS */
 function renderMouvements() {
@@ -2253,17 +2159,15 @@ function renderMouvements() {
   const map = {};
   state.rondes.filter((r) => r.statut !== 'en_cours' && new Date(r.heureDebut).getTime() >= since).forEach((r) => {
     const snap = r.vehiculesSnapshot || [];
-    const pIds = new Set(r.vehicules || []);
     snap.forEach((v) => {
       const cli = v.client || '';
       if (!MOUVEMENT_CLIENTS.includes(cli)) return;
       if (q && !normalizeImmat(v.immat).includes(q)) return;
       if (!map[v.immat]) map[v.immat] = [];
-      map[v.immat].push({ date: r.heureFin || r.heureDebut, site: r.site, effectueePar: r.effectueePar, presence: pIds.has(v.id) });
+      map[v.immat].push({ date: r.heureFin || r.heureDebut, site: v.site || r.site || '—', effectueePar: r.effectueePar });
     });
   });
-  const c = $('#mouvList');
-  const e = $('#mouvEmpty');
+  const c = $('#mouvList'), e = $('#mouvEmpty');
   const imm = Object.keys(map);
   if (!imm.length) { c.innerHTML = ''; e.classList.remove('hidden'); return; }
   e.classList.add('hidden');
@@ -2271,23 +2175,15 @@ function renderMouvements() {
     const events = map[i].sort((x, y) => (y.date || '').localeCompare(x.date || ''));
     const v = state.vehicules.find((x) => normalizeImmat(x.immat) === i);
     const cli = v ? (v.client || '') : '';
-    return `<div class="card"><div class="card-title" style="color:var(--primary);font-family:var(--mono);font-size:0.9rem">${escapeHtml(i)}${cli ? `<span class="badge badge-muted" style="margin-left:6px;font-family:var(--font)">${escapeHtml(cli)}</span>` : ''}</div><div class="timeline">${events.slice(0, 20).map((ev) => `<div class="timeline-item"><div class="timeline-date">${formatDateTimeFR(ev.date)}</div><div class="timeline-content"><strong>${escapeHtml(ev.site)}</strong> · Par ${escapeHtml(ev.effectueePar)} · ${ev.presence ? '<span style="color:var(--success)">Présent</span>' : '<span style="color:var(--danger)">Absent</span>'}</div></div>`).join('')}</div></div>`;
+    return `<div class="card"><div class="card-title" style="color:var(--primary);font-family:var(--mono);font-size:0.9rem">${escapeHtml(i)}${cli ? `<span class="badge badge-muted" style="margin-left:6px;font-family:var(--font)">${escapeHtml(cli)}</span>` : ''}</div><div class="timeline">${events.slice(0, 20).map((ev) => `<div class="timeline-item"><div class="timeline-date">${formatDateTimeFR(ev.date)}</div><div class="timeline-content"><strong>${escapeHtml(ev.site)}</strong> · Par ${escapeHtml(ev.effectueePar)}</div></div>`).join('')}</div></div>`;
   }).join('');
 }
 $('#mouvSearch').addEventListener('input', renderMouvements);
 
 /* CHEF */
 function renderChef() {
-  if (state.chefUnlocked) {
-    $('#chefPinScreen').classList.add('hidden');
-    $('#chefDashboard').classList.remove('hidden');
-    renderChefDashboard();
-  } else {
-    $('#chefPinScreen').classList.remove('hidden');
-    $('#chefDashboard').classList.add('hidden');
-    state.pinBuffer = '';
-    renderPinDots();
-  }
+  if (state.chefUnlocked) { $('#chefPinScreen').classList.add('hidden'); $('#chefDashboard').classList.remove('hidden'); renderChefDashboard(); }
+  else { $('#chefPinScreen').classList.remove('hidden'); $('#chefDashboard').classList.add('hidden'); state.pinBuffer = ''; renderPinDots(); }
 }
 function renderChefDashboard() {
   if (!state.chefUnlocked) return;
@@ -2299,25 +2195,10 @@ function renderChefDashboard() {
   const p = r7.reduce((s, r) => s + (r.stats?.presents ?? 0), 0);
   const t = r7.reduce((s, r) => s + (r.stats?.total ?? 0), 0);
   $('#chef7Rate').textContent = (t ? Math.round((p / t) * 100) : 0) + '%';
-  const ongoing = state.rondes.filter((r) => r.statut === 'en_cours');
-  $('#chefOngoing').innerHTML = ongoing.length ? ongoing.map((r) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${escapeHtml(r.site)}</div><div class="list-item-sub">Par ${escapeHtml(r.effectueePar)}</div></div><span class="badge badge-success">En cours</span></div>`).join('') : '<div class="es-sub" style="color:var(--text-mute);padding:8px">Aucune session en cours</div>';
-  const since3 = Date.now() - 3 * 86400000;
-  const last = {};
-  state.rondes.filter((r) => r.statut !== 'en_cours').forEach((r) => { const d = new Date(r.heureDebut).getTime(); if (!last[r.site] || d > last[r.site]) last[r.site] = d; });
-  const missing = SITES.filter((s) => !last[s] || last[s] < since3);
-  $('#chefMissing').textContent = missing.length;
-  $('#chefMissingList').innerHTML = missing.length ? missing.map((s) => {
-    const l = last[s];
-    const j = l ? Math.floor((Date.now() - l) / 86400000) : null;
-    return `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${escapeHtml(s)}</div><div class="list-item-sub">${l ? `Dernière session il y a ${j} jour(s)` : 'Aucune session'}</div></div><span class="badge badge-danger">Alerte</span></div>`;
-  }).join('') : '<div class="es-sub" style="color:var(--text-mute);padding:8px">Tous les sites visités récemment</div>';
+  $('#chefMissing').textContent = state.vehicules.filter((v) => v.present !== true).length;
   const bySite = {};
-  r7.forEach((r) => { if (!bySite[r.site]) bySite[r.site] = { r: 0, p: 0, t: 0 }; bySite[r.site].r++; bySite[r.site].p += r.stats?.presents ?? 0; bySite[r.site].t += r.stats?.total ?? 0; });
-  const rows = Object.entries(bySite).map(([s, d]) => {
-    const tt = d.t ? Math.round((d.p / d.t) * 100) : 0;
-    const b = tt >= 80 ? 'success' : tt >= 50 ? 'warning' : 'danger';
-    return `<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border)">${escapeHtml(s)}</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)">${d.r}</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)"><span class="badge badge-${b}">${tt}%</span></td></tr>`;
-  });
+  r7.forEach((r) => { const rep = r.stats?.repartitionSites || {}; Object.entries(rep).forEach(([s, c]) => { if (!bySite[s]) bySite[s] = { r: 0, c: 0 }; bySite[s].r++; bySite[s].c += c; }); });
+  const rows = Object.entries(bySite).map(([s, d]) => `<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border)">${escapeHtml(s)}</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)">${d.r}</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)"><span class="badge badge-primary">${d.c} véhicules</span></td></tr>`);
   $('#chefSiteStats').innerHTML = rows.length ? rows.join('') : `<tr><td colspan="3" style="text-align:center;color:var(--text-mute);padding:14px">Aucune donnée</td></tr>`;
 }
 
@@ -2326,8 +2207,7 @@ function renderGalerie() {
   const site = $('#galSiteFilter').value;
   let vs = state.vehicules.filter((v) => v.photo);
   if (site) vs = vs.filter((v) => v.site === site);
-  const g = $('#galGrid');
-  const e = $('#galEmpty');
+  const g = $('#galGrid'), e = $('#galEmpty');
   if (!vs.length) { g.innerHTML = ''; e.classList.remove('hidden'); return; }
   e.classList.add('hidden');
   g.innerHTML = vs.map((v) => `<div class="gallery-item" data-photo="${v.id}"><img src="${escapeHtml(v.photo)}" loading="lazy" alt=""><div class="gallery-overlay"><div class="gi-immat">${escapeHtml(v.immat)}</div><div>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</div></div></div>`).join('');
@@ -2356,7 +2236,7 @@ $('#lightboxDelete').addEventListener('click', async () => {
   toast('Photo supprimée', 'success');
 });
 
-/* CLIENTS */
+/* CLIENTS view */
 function renderSocietes() {
   const filter = state.socFilter || '';
   const c = $('#socList');
@@ -2379,18 +2259,12 @@ function renderSocietes() {
 
 /* VOICE SEARCH */
 setupVoiceSearch('pointageMic', 'pointageSearch', (text) => {
-  if (!state.pointageSite) { toast('Sélectionnez un site d\'abord', 'warning'); return; }
-  const exact = getVehiculesBySite(state.pointageSite).find((v) => normalizeImmat(v.immat) === text);
+  const exact = state.vehicules.find((v) => normalizeImmat(v.immat) === text);
   if (exact) { handlePointage(exact.id); $('#pointageSearch').value = ''; $('#pointageClear').classList.remove('show'); }
-  else { toast(`Aucun véhicule "${text}" sur ${state.pointageSite}`, 'warning'); }
+  else { toast(`Aucun véhicule "${text}"`, 'warning'); }
 });
-setupVoiceSearch('vehMic', 'vehSearch', (t) => {
-  state.vehFilters.search = t;
-  $('#vehSearchClear').classList.add('show');
-  applyVehFilters();
-});
+setupVoiceSearch('vehMic', 'vehSearch', (t) => { state.vehFilters.search = t; $('#vehSearchClear').classList.add('show'); applyVehFilters(); });
 setupVoiceSearch('terrainMic', 'terrainSearch', (t) => { renderTerrain(); });
-
 $('#terrainSearch').addEventListener('input', (e) => { $('#terrainClear').classList.toggle('show', e.target.value.length > 0); renderTerrain(); });
 $('#terrainClear').addEventListener('click', () => { $('#terrainSearch').value = ''; $('#terrainClear').classList.remove('show'); renderTerrain(); });
 
@@ -2404,7 +2278,7 @@ function exportExcel(rows, filename, sheet) {
   toast('Fichier Excel téléchargé', 'success');
 }
 function vehToRow(v) {
-  return { 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '', 'Reference commande': v.refCommande || '', 'Type de maintenance': v.typeMaintenance || '', 'Site': v.site || '', 'Source': SOURCES[v.source] || v.source || '', 'Derniere vue': v.lastSeen ? formatDateFR(v.lastSeen) : '' };
+  return { 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '', 'Reference commande': v.refCommande || '', 'Type de maintenance': v.typeMaintenance || '', 'Site': v.site || '', 'Source': SOURCES[v.source] || v.source || '', 'Trouve': v.present === true ? 'Oui' : 'Non', 'Derniere vue': v.lastSeen ? formatDateFR(v.lastSeen) : '' };
 }
 $('#btnExportVehXls').addEventListener('click', () => {
   const rows = (state.vehiculesFiltered.length ? state.vehiculesFiltered : state.vehicules).map(vehToRow);
@@ -2414,8 +2288,8 @@ document.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-export]');
   if (!btn) return;
   const type = btn.dataset.export;
-  if (type === 'xls-presents') { const p = state.vehicules.filter((v) => v.present === true); exportExcel(p.map(vehToRow), `NTR_Presents_${todayKey()}.xlsx`, 'Presents'); }
-  if (type === 'xls-absents') { const a = state.vehicules.filter((v) => v.present !== true); exportExcel(a.map(vehToRow), `NTR_Absents_${todayKey()}.xlsx`, 'Absents'); }
+  if (type === 'xls-presents') { const p = state.vehicules.filter((v) => v.present === true); exportExcel(p.map(vehToRow), `NTR_Trouves_${todayKey()}.xlsx`, 'Trouves'); }
+  if (type === 'xls-absents') { const a = state.vehicules.filter((v) => v.present !== true); exportExcel(a.map(vehToRow), `NTR_Manquants_${todayKey()}.xlsx`, 'Manquants'); }
   if (type === 'xls-sites') {
     const rows = [];
     SITES.forEach((site) => {
@@ -2425,7 +2299,7 @@ document.addEventListener('click', (e) => {
       vs.forEach((v) => rows.push({ 'SITE': '', 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '' }));
       rows.push({});
     });
-    exportExcel(rows, `NTR_Presents_Par_Site_${todayKey()}.xlsx`, 'Par site');
+    exportExcel(rows, `NTR_Trouves_Par_Site_${todayKey()}.xlsx`, 'Par site');
   }
   if (type === 'pdf-sites') exportPDFSites();
   if (type === 'pdf-absents') exportPDFAbsents();
@@ -2440,12 +2314,11 @@ function exportPDFSites() {
   const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
   doc.setFillColor(15, 23, 42); doc.rect(0, 0, 297, 20, 'F');
   doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
-  doc.text('NTR GARAGE - STOCK VEHICULES', 14, 10);
+  doc.text('NTR GARAGE - VEHICULES TROUVES PAR SITE', 14, 10);
   doc.setFontSize(9); doc.setFont(undefined, 'normal');
-  doc.text('Presents par site', 14, 16);
   doc.text(`Genere le ${new Date().toLocaleString('fr-FR')}`, 283, 13, { align: 'right' });
   doc.setTextColor(0, 0, 0);
-  let y = 28; let hasData = false;
+  let y = 28, hasData = false;
   const presents = state.vehicules.filter((v) => v.present === true);
   SITES.forEach((site) => {
     const vs = presents.filter((v) => v.site === site);
@@ -2456,40 +2329,27 @@ function exportPDFSites() {
     doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'bold');
     doc.text(`${site} - ${vs.length} vehicule(s)`, 16, y);
     doc.setTextColor(0, 0, 0); y += 4;
-    doc.autoTable({
-      startY: y,
-      head: [['N°', 'Immatriculation', 'Client', 'Marque', 'Modele', 'Vue le']],
-      body: vs.map((v, i) => [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || '', v.lastSeen ? formatDateFR(v.lastSeen) : '-']),
-      theme: 'striped', headStyles: { fillColor: [15, 23, 42], textColor: 255, fontSize: 9 },
-      styles: { fontSize: 8.5, cellPadding: 2 }, columnStyles: { 0: { cellWidth: 12, halign: 'center' } }, margin: { left: 14, right: 14 }
-    });
+    doc.autoTable({ startY: y, head: [['N°', 'Immatriculation', 'Client', 'Marque', 'Modele', 'Vue le']], body: vs.map((v, i) => [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || '', v.lastSeen ? formatDateFR(v.lastSeen) : '-']), theme: 'striped', headStyles: { fillColor: [15, 23, 42], textColor: 255, fontSize: 9 }, styles: { fontSize: 8.5, cellPadding: 2 }, columnStyles: { 0: { cellWidth: 12, halign: 'center' } }, margin: { left: 14, right: 14 } });
     y = doc.lastAutoTable.finalY + 8;
   });
-  if (!hasData) { toast('Aucun véhicule présent', 'warning'); return; }
-  doc.save(`NTR_Presents_Par_Site_${todayKey()}.pdf`);
+  if (!hasData) { toast('Aucun véhicule trouvé', 'warning'); return; }
+  doc.save(`NTR_Trouves_Par_Site_${todayKey()}.pdf`);
   toast('PDF téléchargé', 'success');
 }
 function exportPDFAbsents() {
   const { jsPDF } = window.jspdf;
   const absents = state.vehicules.filter((v) => v.present !== true);
-  if (!absents.length) { toast('Aucun véhicule absent', 'warning'); return; }
+  if (!absents.length) { toast('Aucun véhicule manquant', 'warning'); return; }
   const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
   doc.setFillColor(220, 38, 38); doc.rect(0, 0, 297, 20, 'F');
   doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
-  doc.text('NTR GARAGE - VEHICULES ABSENTS', 14, 10);
+  doc.text('NTR GARAGE - VEHICULES MANQUANTS', 14, 10);
   doc.setFontSize(9); doc.setFont(undefined, 'normal');
   doc.text(`${absents.length} vehicule(s)`, 14, 16);
   doc.text(`Genere le ${new Date().toLocaleString('fr-FR')}`, 283, 13, { align: 'right' });
   doc.setTextColor(0, 0, 0);
-  doc.autoTable({
-    startY: 28,
-    head: [['N°', 'Immatriculation', 'Client', 'Marque', 'Modele', 'Site', 'Derniere vue']],
-    body: absents.map((v, i) => [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || '', v.site || '-', v.lastSeen ? formatDateFR(v.lastSeen) : 'Jamais']),
-    theme: 'striped', headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 9 },
-    styles: { fontSize: 8.5, cellPadding: 2 }, alternateRowStyles: { fillColor: [254, 242, 242] },
-    columnStyles: { 0: { cellWidth: 12, halign: 'center' } }, margin: { left: 14, right: 14 }
-  });
-  doc.save(`NTR_Absents_${todayKey()}.pdf`);
+  doc.autoTable({ startY: 28, head: [['N°', 'Immatriculation', 'Client', 'Marque', 'Modele', 'Source']], body: absents.map((v, i) => [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || '', SOURCES[v.source] || v.source || '']), theme: 'striped', headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 9 }, styles: { fontSize: 8.5, cellPadding: 2 }, alternateRowStyles: { fillColor: [254, 242, 242] }, columnStyles: { 0: { cellWidth: 12, halign: 'center' } }, margin: { left: 14, right: 14 } });
+  doc.save(`NTR_Manquants_${todayKey()}.pdf`);
   toast('PDF téléchargé', 'success');
 }
 function exportPDFGlobal() {
@@ -2502,19 +2362,14 @@ function exportPDFGlobal() {
   doc.text('Rapport global', 14, 16);
   doc.setTextColor(0, 0, 0);
   const p = state.vehicules.filter((v) => v.present === true).length;
-  const t = state.vehicules.length;
-  const a = t - p;
+  const t = state.vehicules.length; const a = t - p;
   const taux = t ? Math.round((p / t) * 100) : 0;
   doc.setFontSize(11); doc.setFont(undefined, 'bold'); doc.text('Synthese', 14, 32);
   doc.setFont(undefined, 'normal'); doc.setFontSize(10);
-  doc.text(`Total : ${t}`, 14, 40); doc.text(`Presents : ${p}`, 14, 46);
-  doc.text(`Absents : ${a}`, 14, 52); doc.text(`Taux : ${taux}%`, 14, 58);
-  const rows = SITES.map((site) => {
-    const vs = state.vehicules.filter((v) => v.site === site);
-    const pp = vs.filter((v) => v.present === true).length;
-    return [site, vs.length, pp, vs.length - pp, vs.length ? Math.round((pp / vs.length) * 100) + '%' : '-'];
-  }).filter((r) => r[1] > 0);
-  doc.autoTable({ startY: 68, head: [['Site', 'Total', 'Presents', 'Absents', 'Taux']], body: rows, theme: 'grid', headStyles: { fillColor: [15, 23, 42], textColor: 255, fontSize: 10 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
+  doc.text(`Total : ${t}`, 14, 40); doc.text(`Trouves : ${p}`, 14, 46);
+  doc.text(`Manquants : ${a}`, 14, 52); doc.text(`Taux : ${taux}%`, 14, 58);
+  const rows = SITES.map((site) => { const vs = state.vehicules.filter((v) => v.site === site); const pp = vs.filter((v) => v.present === true).length; return [site, vs.length, pp, vs.length - pp, vs.length ? Math.round((pp / vs.length) * 100) + '%' : '-']; }).filter((r) => r[1] > 0);
+  doc.autoTable({ startY: 68, head: [['Site', 'Total', 'Trouves', 'Manquants', 'Taux']], body: rows, theme: 'grid', headStyles: { fillColor: [15, 23, 42], textColor: 255, fontSize: 10 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
   doc.save(`NTR_Rapport_${todayKey()}.pdf`);
   toast('Rapport PDF téléchargé', 'success');
 }
@@ -2526,41 +2381,31 @@ function exportRondePDF(r) {
   doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
   doc.text('NTR GARAGE', 14, 10);
   doc.setFontSize(9); doc.setFont(undefined, 'normal');
-  doc.text(`Session du ${formatDateFR(r.heureDebut)}`, 14, 16);
+  doc.text(`Ronde du ${formatDateFR(r.heureDebut)}`, 14, 16);
   doc.setTextColor(0, 0, 0); doc.setFontSize(10);
-  doc.text(`Site : ${r.site}`, 14, 32);
-  doc.text(`Par : ${r.effectueePar}`, 14, 38);
-  doc.text(`Debut : ${formatDateTimeFR(r.heureDebut)}`, 14, 44);
-  doc.text(`Fin : ${formatDateTimeFR(r.heureFin)}`, 14, 50);
+  doc.text(`Par : ${r.effectueePar}`, 14, 32);
+  doc.text(`Date : ${formatDateTimeFR(r.heureDebut)}`, 14, 38);
+  doc.text(`Sites : ${r.site || '—'}`, 14, 44);
   const s = r.stats || {};
   doc.setFont(undefined, 'bold');
-  doc.text(`Presents : ${s.presents ?? 0}   Absents : ${s.absents ?? 0}   Taux : ${s.taux ?? 0}%`, 14, 60);
+  doc.text(`Trouves : ${s.presents ?? 0}   Manquants : ${s.absents ?? 0}   Taux : ${s.taux ?? 0}%`, 14, 54);
   doc.setFont(undefined, 'normal');
   const presents = r.vehiculesSnapshot || [];
-  doc.autoTable({
-    startY: 66,
-    head: [['Immatriculation', 'Marque', 'Modele', 'Client']],
-    body: presents.map((v) => [v.immat || '', v.marque || '', v.modele || '', v.client || '']),
-    theme: 'striped', headStyles: { fillColor: [52, 211, 153], textColor: 0, fontSize: 9 },
-    styles: { fontSize: 8.5, cellPadding: 2 }, margin: { left: 14, right: 14 }
-  });
-  doc.save(`NTR_Session_${r.site.replace(/\s/g, '_')}_${todayKey()}.pdf`);
+  doc.autoTable({ startY: 60, head: [['Immatriculation', 'Marque', 'Modele', 'Client', 'Site']], body: presents.map((v) => [v.immat || '', v.marque || '', v.modele || '', v.client || '', v.site || '']), theme: 'striped', headStyles: { fillColor: [52, 211, 153], textColor: 0, fontSize: 9 }, styles: { fontSize: 8.5, cellPadding: 2 }, margin: { left: 14, right: 14 } });
+  doc.save(`NTR_Ronde_${todayKey()}.pdf`);
   toast('PDF téléchargé', 'success');
 }
-
 async function exportAbsentsWord(source) {
   if (typeof docx === 'undefined') { toast('Bibliotheque Word non chargee', 'error'); return; }
   const srcLabel = source === 'source1' ? 'Source HR' : 'Source UM';
-  const vehicles = state.vehicules.filter((v) => v.present === false && v.source === source);
-  if (!vehicles.length) { toast(`Aucun absent dans ${srcLabel}`, 'warning'); return; }
+  const vehicles = state.vehicules.filter((v) => v.present !== true && v.source === source);
+  if (!vehicles.length) { toast(`Aucun manquant dans ${srcLabel}`, 'warning'); return; }
   try {
     const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType } = docx;
     const rows = [new TableRow({ children: ['N°', 'Immatriculation', 'Client', 'Marque', 'Modele'].map((h) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: h, bold: true, size: 22 })], alignment: AlignmentType.CENTER })] })) })];
-    vehicles.forEach((v, i) => {
-      rows.push(new TableRow({ children: [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || ''].map((txt) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: txt, size: 22 })], alignment: AlignmentType.CENTER })] })) }));
-    });
+    vehicles.forEach((v, i) => { rows.push(new TableRow({ children: [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || ''].map((txt) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: txt, size: 22 })], alignment: AlignmentType.CENTER })] })) })); });
     const doc = new Document({ sections: [{ children: [
-      new Paragraph({ children: [new TextRun({ text: `LISTE DES VEHICULES ABSENTS - ${srcLabel}`, bold: true, size: 32, font: 'Arial' })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
+      new Paragraph({ children: [new TextRun({ text: `LISTE DES VEHICULES MANQUANTS - ${srcLabel}`, bold: true, size: 32, font: 'Arial' })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
       new Paragraph({ children: [new TextRun({ text: `Genere le ${new Date().toLocaleString()}`, size: 20, font: 'Arial' })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
       new Paragraph({ children: [new TextRun({ text: `Total : ${vehicles.length} vehicule(s)`, size: 22, font: 'Arial' })], spacing: { after: 400 } }),
       new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } })
@@ -2568,9 +2413,9 @@ async function exportAbsentsWord(source) {
     const blob = await Packer.toBlob(doc);
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `Absents_${srcLabel.replace(/\s/g, '_')}_${todayKey()}.docx`;
+    a.download = `Manquants_${srcLabel.replace(/\s/g, '_')}_${todayKey()}.docx`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    toast(`${vehicles.length} absents exportes`, 'success');
+    toast(`${vehicles.length} manquants exportes`, 'success');
   } catch (e) { toast('Erreur : ' + e.message, 'error'); }
 }
 async function exportPresentsWord() {
@@ -2585,13 +2430,10 @@ async function exportPresentsWord() {
       const vs = vehicles.filter((v) => v.site === site);
       if (!vs.length) return;
       rows.push(new TableRow({ children: [new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: site, bold: true, size: 22 })], alignment: AlignmentType.CENTER })], columnSpan: 6 })] }));
-      vs.forEach((v) => {
-        idx++;
-        rows.push(new TableRow({ children: ['', String(idx), v.immat || '', v.client || '', v.marque || '', v.modele || ''].map((txt) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: txt, size: 22 })], alignment: AlignmentType.CENTER })] })) }));
-      });
+      vs.forEach((v) => { idx++; rows.push(new TableRow({ children: ['', String(idx), v.immat || '', v.client || '', v.marque || '', v.modele || ''].map((txt) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: txt, size: 22 })], alignment: AlignmentType.CENTER })] })) })); });
     });
     const doc = new Document({ sections: [{ children: [
-      new Paragraph({ children: [new TextRun({ text: 'LISTE DES VEHICULES PRESENTS PAR SITE', bold: true, size: 32, font: 'Arial' })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
+      new Paragraph({ children: [new TextRun({ text: 'LISTE DES VEHICULES TROUVES PAR SITE', bold: true, size: 32, font: 'Arial' })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
       new Paragraph({ children: [new TextRun({ text: `Genere le ${new Date().toLocaleString()}`, size: 20, font: 'Arial' })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
       new Paragraph({ children: [new TextRun({ text: `Total : ${vehicles.length} vehicule(s)`, size: 22, font: 'Arial' })], spacing: { after: 400 } }),
       new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } })
@@ -2599,7 +2441,7 @@ async function exportPresentsWord() {
     const blob = await Packer.toBlob(doc);
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `Presents_Par_Site_${todayKey()}.docx`;
+    a.download = `Trouves_Par_Site_${todayKey()}.docx`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     toast(`${vehicles.length} presents exportes`, 'success');
   } catch (e) { toast('Erreur : ' + e.message, 'error'); }
@@ -2660,7 +2502,7 @@ async function wipeBySource(source) {
 $('#btnWipeHR').addEventListener('click', () => wipeBySource('source1'));
 $('#btnWipeUM').addEventListener('click', () => wipeBySource('source2'));
 $('#btnWipeAll').addEventListener('click', async () => {
-  const ok1 = await confirmDialog('Vider TOUT ? (1/2)', `Suppression de <strong>${state.vehicules.length}</strong> véhicules et <strong>${state.rondes.length}</strong> sessions.<br>Utilisateurs et clients conservés.`);
+  const ok1 = await confirmDialog('Vider TOUT ? (1/2)', `Suppression de <strong>${state.vehicules.length}</strong> véhicules et <strong>${state.rondes.length}</strong> rondes.<br>Utilisateurs et clients conservés.`);
   if (!ok1) return;
   const ok2 = await confirmDialog('CONFIRMATION (2/2)', 'Cette action est <strong style="color:var(--danger)">IRREVERSIBLE</strong>.');
   if (!ok2) return;
@@ -2685,7 +2527,7 @@ $('#btnWipeAll').addEventListener('click', async () => {
   finally { hideLoading(); }
 });
 
-/* PWA / SW / ONLINE */
+/* PWA */
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; $('#btnInstall').classList.remove('hidden'); });
 $('#btnInstall').addEventListener('click', async () => {
@@ -2696,14 +2538,8 @@ $('#btnInstall').addEventListener('click', async () => {
   deferredPrompt = null;
   $('#btnInstall').classList.add('hidden');
 });
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch((err) => console.warn('[SW]', err)); });
-}
-function updateOnlineStatus() {
-  const b = $('#btnSync');
-  if (navigator.onLine) { b.classList.remove('offline'); b.classList.add('online'); }
-  else { b.classList.remove('online'); b.classList.add('offline'); }
-}
+if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch((err) => console.warn('[SW]', err)); }); }
+function updateOnlineStatus() { const b = $('#btnSync'); if (navigator.onLine) { b.classList.remove('offline'); b.classList.add('online'); } else { b.classList.remove('online'); b.classList.add('offline'); } }
 window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', () => { updateOnlineStatus(); toast('Mode hors ligne', 'warning'); });
 updateOnlineStatus();
@@ -2714,17 +2550,14 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { $$('.modal-overlay.show').forEach((m) => m.classList.remove('show')); $('#lightbox').classList.remove('show'); }
 });
 
-/* MIGRATION societe -> client */
+/* MIGRATION */
 async function migrateSocieteToClient() {
   if (!state.db) return;
   try {
     const snap = await state.db.collection('vehicules').get();
     const batch = state.db.batch();
     let count = 0;
-    snap.docs.forEach((doc) => {
-      const v = doc.data();
-      if (v.societe && !v.client) { batch.update(doc.ref, { client: v.societe }); count++; }
-    });
+    snap.docs.forEach((doc) => { const v = doc.data(); if (v.societe && !v.client) { batch.update(doc.ref, { client: v.societe }); count++; } });
     if (count > 0) { await batch.commit(); console.log(`[Migration] ${count} migres`); }
   } catch (e) { console.warn('[Migration]', e); }
 }
@@ -2743,10 +2576,7 @@ async function init() {
   hideLoading();
   if (!state.db) { toast('Firebase indisponible', 'error'); return; }
   try {
-    listenUsers();
-    listenClients();
-    listenVehicules();
-    listenRondes();
+    listenUsers(); listenClients(); listenVehicules(); listenRondes();
     const withTimeout = (promise, ms = 10000) => Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej(new Error('Timeout')), ms))]);
     await withTimeout(Promise.all([ensureUsers(), ensureClients()]), 10000);
     await withTimeout(getChefPin(), 6000);
