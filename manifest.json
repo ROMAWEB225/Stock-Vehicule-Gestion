@@ -1,7 +1,7 @@
 {
-  "name": "NTR Garage - Gestion Stock Véhicules",
+  "name": "NTR Stock Véhicules",
   "short_name": "NTR Stock",
-  "description": "Application de gestion de stock et rondes de véhicules - NTR Garage Côte d'Ivoire",
+  "description": "Gestion de stock et rondes de véhicules — NTR Garage",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -13,13 +13,13 @@
   "categories": ["business", "productivity", "utilities"],
   "icons": [
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjM2IiBmaWxsPSIjMGYxNzJhIi8+PHBhdGggZD0iTTQ4IDgwbDEyLTM2aDcybDEyIDM2aDE2djQ0SDU2VjgwSDE4djQ0aDE2VjE0MGgxMjR2LTE2aDE2VjgwSDE0OHoiIGZpbGw9IiMzOGJkZjgiLz48Y2lyY2xlIGN4PSI2OCIgY3k9IjEyNCIgcj0iMTAiIGZpbGw9IiMwZjE3MmEiLz48Y2lyY2xlIGN4PSIxMjQiIGN5PSIxMjQiIHI9IjEwIiBmaWxsPSIjMGYxNzJhIi8+PC9zdmc+",
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjM2IiBmaWxsPSIjMGYxNzJhIi8+PHBhdGggZD0iTTQ4IDgwbDEyLTM2aDcybDEyIDM2aDE2djQ0SDU2VjgwSDE4djQ0aDE2VjE0MGgxMjR2LTE2aDE2VjgwSDE0OHoiIGZpbGw9IiM2MGE1ZmEiLz48Y2lyY2xlIGN4PSI2OCIgY3k9IjEyNCIgcj0iMTAiIGZpbGw9IiMwZjE3MmEiLz48Y2lyY2xlIGN4PSIxMjQiIGN5PSIxMjQiIHI9IjEwIiBmaWxsPSIjMGYxNzJhIi8+PC9zdmc+",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9Ijk2IiBmaWxsPSIjMGYxNzJhIi8+PHBhdGggZD0iTTEyOCAyMTNsMzItOTZoMTkybDMyIDk2aDQzdjExN0gxNDlWMjEzaC0yMXoiIGZpbGw9IiMzOGJkZjgiLz48Y2lyY2xlIGN4PSIxODEiIGN5PSIzMzAiIHI9IjI3IiBmaWxsPSIjMGYxNzJhIi8+PGNpcmNsZSBjeD0iMzMxIiBjeT0iMzMwIiByPSIyNyIgZmlsbD0iIzBmMTcyYSIvPjwvc3ZnPg==",
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9Ijk2IiBmaWxsPSIjMGYxNzJhIi8+PHBhdGggZD0iTTEyOCAyMTNsMzItOTZoMTkybDMyIDk2aDQzdjExN0gxNDlWMjEzaC0yMXoiIGZpbGw9IiM2MDVhZmEiLz48Y2lyY2xlIGN4PSIxODEiIGN5PSIzMzAiIHI9IjI3IiBmaWxsPSIjMGYxNzJhIi8+PGNpcmNsZSBjeD0iMzMxIiBjeT0iMzMwIiByPSIyNyIgZmlsbD0iIzBmMTcyYSIvPjwvc3ZnPg==",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
@@ -30,19 +30,13 @@
       "name": "Démarrer une ronde",
       "short_name": "Ronde",
       "url": "./index.html#ronde",
-      "description": "Démarrer une nouvelle ronde de véhicules"
+      "description": "Démarrer une nouvelle ronde"
     },
     {
       "name": "Véhicules",
       "short_name": "Véhicules",
       "url": "./index.html#vehicules",
       "description": "Consulter la liste des véhicules"
-    },
-    {
-      "name": "Historique",
-      "short_name": "Historique",
-      "url": "./index.html#historique",
-      "description": "Voir l'historique des rondes"
     }
   ],
   "prefer_related_applications": false
