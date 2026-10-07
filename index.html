@@ -496,13 +496,20 @@ body.terrain-mode .btn { padding: 10px 16px; font-size: 0.9rem; }
 <div class="container">
 
 <section class="tab-content active" id="tab-vehicules">
-  <div class="section-header">
-    <h2 class="section-title">🚗 Véhicules <span class="badge badge-muted" id="vehCount">0</span></h2>
-    <div class="section-actions">
-      <button class="btn btn-primary btn-sm" id="btnAddVehicule">➕ Ajouter</button>
-      <button class="btn btn-ghost btn-sm" id="btnImport">📥 Import Excel</button>
-    </div>
+ <div class="section-header">
+  <h2 class="section-title">🚗 Véhicules <span class="badge badge-muted" id="vehCount">0</span></h2>
+  <div class="section-actions">
+    <button class="btn btn-primary btn-sm" id="btnAddVehicule">➕ Ajouter</button>
   </div>
+</div>
+
+<!-- Barre d'imports directs par source -->
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;padding:8px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius)">
+  <span style="font-size:0.72rem;color:var(--text-dim);align-self:center;margin-right:6px">📥 IMPORT EXCEL :</span>
+  <button class="btn btn-success btn-sm" id="btnImportHR">📦 Importer Garage HR</button>
+  <button class="btn btn-danger btn-sm" id="btnImportUM">📦 Importer Garage UM</button>
+  <button class="btn btn-ghost btn-sm" id="btnExportVehXls">📤 Exporter tout</button>
+</div>
   <div class="search-bar">
     <div class="search-input-wrap">
       <span class="search-ico">🔍</span>
@@ -764,14 +771,20 @@ body.terrain-mode .btn { padding: 10px 16px; font-size: 0.9rem; }
         <div class="form-group"><label class="form-label">Marque</label><input type="text" class="input" id="vehMarque"></div>
         <div class="form-group"><label class="form-label">Modèle</label><input type="text" class="input" id="vehModele"></div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Site</label><select class="select" id="vehSite"></select></div>
-        <div class="form-group"><label class="form-label">Société</label><select class="select" id="vehSociete"></select></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Client</label><input type="text" class="input" id="vehClient"></div>
-        <div class="form-group"><label class="form-label">Réf. cmd</label><input type="text" class="input" id="vehRef"></div>
-      </div>
+    <div class="form-row">
+  <div class="form-group">
+    <label class="form-label">Site</label>
+    <select class="select" id="vehSite"></select>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Client</label>
+    <select class="select" id="vehSociete"></select>
+  </div>
+</div>
+<div class="form-group">
+  <label class="form-label">Réf. commande</label>
+  <input type="text" class="input" id="vehRef">
+</div>
       <div class="form-group"><label class="form-label">Type maintenance</label><input type="text" class="input" id="vehType"></div>
       <div class="form-group"><label class="form-label">Photo</label><input type="file" class="input" id="vehPhoto" accept="image/*" capture="environment"><div id="vehPhotoPreview" style="margin-top:6px"></div></div>
     </div>
@@ -962,7 +975,9 @@ $('#btnTheme').addEventListener('click', () => {
 
 firebase.initializeApp(firebaseConfig);
 state.db = firebase.firestore();
-try { state.db.enablePersistence({ synchronizeTabs: true }).catch(() => {}); } catch (e) {}
+try {
+  state.db.settings({ cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED });
+} catch (e) {}
 
 // Anti-autocomplete Chrome
 setTimeout(() => {
@@ -1207,7 +1222,6 @@ function renderVehiculesList() {
         </div>
         <div class="vehicle-card-info">
           ${v.marque || v.modele ? `<span>🚘 ${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
-          ${v.societe ? `<span>🏢 ${escapeHtml(v.societe)}</span>` : ''}
           ${v.client ? `<span>👤 ${escapeHtml(v.client)}</span>` : ''}
         </div>
       </div>
@@ -1253,8 +1267,7 @@ function openVehiculeModal(id = null) {
   $('#vehMarque').value = v ? v.marque || '' : '';
   $('#vehModele').value = v ? v.modele || '' : '';
   $('#vehSite').value = v ? v.site || '' : '';
-  $('#vehSociete').value = v ? v.societe || '' : '';
-  $('#vehClient').value = v ? v.client || '' : '';
+  $('#vehSociete').value = v ? (v.client || v.societe || '') : '';
   $('#vehRef').value = v ? v.refCommande || '' : '';
   $('#vehType').value = v ? v.typeMaintenance || '' : '';
   $('#vehPhotoPreview').innerHTML = v && v.photo ? `<img src="${escapeHtml(v.photo)}" style="max-width:100px;border-radius:4px">` : '';
@@ -1267,11 +1280,15 @@ $('#vehSave').addEventListener('click', async () => {
   if (!immat) { toast('Immatriculation obligatoire', 'warning'); return; }
   const id = $('#vehId').value;
   if (!id && state.vehicules.find(v => normalizeImmat(v.immat) === immat)) { toast('Existe déjà', 'warning'); return; }
-  const data = {
-    immat, marque: $('#vehMarque').value.trim(), modele: $('#vehModele').value.trim(),
-    site: $('#vehSite').value, societe: $('#vehSociete').value,
-    client: $('#vehClient').value.trim(), refCommande: $('#vehRef').value.trim(),
-    typeMaintenance: $('#vehType').value.trim(), present: false
+    const data = {
+    immat,
+    marque: $('#vehMarque').value.trim(),
+    modele: $('#vehModele').value.trim(),
+    site: $('#vehSite').value,
+    client: $('#vehSociete').value,         // ← client = société
+    refCommande: $('#vehRef').value.trim(),
+    typeMaintenance: $('#vehType').value.trim(),
+    present: false
   };
   showLoading('Enregistrement…');
   try {
@@ -1292,65 +1309,156 @@ async function uploadToCloudinary(file) {
 }
 
 // IMPORT EXCEL
-$('#btnImport').addEventListener('click', () => {
-  $('#importSource').value = ''; $('#importFile').value = ''; $('#importStatus').textContent = '';
-  $('#importProgress').classList.add('hidden'); openModal('modalImport');
-});
 $('#importRun').addEventListener('click', async () => {
-  const source = $('#importSource').value; const file = $('#importFile').files[0];
-  if (!source) { toast('Source requise', 'warning'); return; }
-  if (!file) { toast('Fichier requis', 'warning'); return; }
-  showLoading('Lecture…');
+  const source = $('#importSource').value;
+  const file = $('#importFile').files[0];
+
+  if (!source) { toast('Sélectionne une source', 'warning'); return; }
+  if (!file) { toast('Sélectionne un fichier Excel', 'warning'); return; }
+
+  showLoading('Lecture du fichier…');
   try {
+    // 1. Lecture Excel
     const buf = await file.arrayBuffer();
     const wb = XLSX.read(buf, { type: 'array' });
-    const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
-    if (!rows.length) { toast('Vide', 'warning'); hideLoading(); return; }
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+
+    if (!rows.length) {
+      toast('Fichier vide', 'warning');
+      hideLoading();
+      return;
+    }
+
+    // 2. Diagnostic : afficher les colonnes détectées
+    const colonnes = Object.keys(rows[0]);
+    console.log('[IMPORT] Colonnes détectées :', colonnes);
+
+    // 3. Mapping intelligent
     const mapField = (row, keys) => {
       for (const k of Object.keys(row)) {
-        const kk = k.toLowerCase().replace(/[^a-z]/g, '');
-        for (const t of keys) if (kk.includes(t)) return String(row[k]).trim();
+        const kk = k.toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '')  // enlève accents
+          .replace(/[^a-z]/g, '');                            // enlève espaces/tirets
+        for (const target of keys) {
+          if (kk.includes(target)) return String(row[k]).trim();
+        }
       }
       return '';
     };
+
     const parsed = [];
-    rows.forEach(row => {
-      const immat = normalizeImmat(mapField(row, ['immatriculation','immat']));
-      if (!immat) return;
-      parsed.push({
-        immat, client: mapField(row, ['client']), marque: mapField(row, ['marque']),
-        modele: mapField(row, ['modele','model']),
-        refCommande: mapField(row, ['reference','refcommande','ref']),
-        typeMaintenance: mapField(row, ['typemaintenance','maintenance','type']),
-        societe: mapField(row, ['societe','society','company'])
+    const sansImmat = [];
+    rows.forEach((row, idx) => {
+      const immatBrut = mapField(row, ['immatriculation', 'immat']);
+      const immat = normalizeImmat(immatBrut);
+      if (!immat) {
+        sansImmat.push(idx + 2); // +2 car ligne 1 = entêtes
+        return;
+      }
+           parsed.push({
+        immat,
+        client: mapField(row, ['client', 'societe', 'society', 'company']),  // client OU société
+        marque: mapField(row, ['marque']),
+        modele: mapField(row, ['modele', 'model']),
+        refCommande: mapField(row, ['reference', 'refcommande', 'ref']),
+        typeMaintenance: mapField(row, ['typemaintenance', 'maintenance', 'type'])
       });
     });
-    if (!parsed.length) { toast('Aucune immat trouvée', 'warning'); hideLoading(); return; }
+
+    // 4. Message d'erreur détaillé
+    if (!parsed.length) {
+      hideLoading();
+      const colList = colonnes.map(c => `• "${c}"`).join('<br>');
+      toast('Aucune immatriculation trouvée', 'error', 'Colonnes du fichier');
+      await confirmDialog(
+        '❌ Aucune immatriculation détectée',
+        `Le fichier contient ces colonnes :<br><br>
+         <div style="font-family:var(--mono);font-size:0.75rem;background:var(--bg-3);padding:8px;border-radius:4px;max-height:200px;overflow:auto">${colList}</div><br>
+         Il faut une colonne contenant le mot <strong>"Immatriculation"</strong> ou <strong>"Immat"</strong>.<br><br>
+         <strong>Exemple de colonnes correctes :</strong><br>
+         Immatriculation · Client · Marque · Modele · Référence de commande · Type de Maintenance · Société`,
+        false
+      );
+      return;
+    }
+
+    // 5. Confirmation
     const srcLabel = SOURCES[source];
     const existing = state.vehicules.filter(v => v.source === source);
-    const ok = await confirmDialog('⚠️ Remplacer ?',
-      `La source <strong>${srcLabel}</strong> contient <strong>${existing.length}</strong> véhicule(s).<br>Elle sera remplacée par <strong>${parsed.length}</strong> du fichier.`);
+
+    const recap = `
+      <div style="background:var(--bg-3);padding:10px;border-radius:4px;font-size:0.8rem;line-height:1.7">
+        📦 <strong>Source :</strong> ${srcLabel}<br>
+        📊 <strong>Véhicules dans le fichier :</strong> ${parsed.length}<br>
+        🗑️ <strong>Véhicules actuels dans cette source :</strong> ${existing.length}<br>
+        ${sansImmat.length ? `⚠️ <strong>Lignes ignorées (immat vide) :</strong> ${sansImmat.length}<br>` : ''}
+      </div>
+      <p style="margin:10px 0 0">⚠️ Les <strong>${existing.length}</strong> véhicules actuels de cette source seront <strong>supprimés</strong> et remplacés.</p>
+      <p style="margin:6px 0 0">Continuer ?</p>
+    `;
+
+    const ok = await confirmDialog('📥 Importer ?', recap, false);
     if (!ok) { hideLoading(); return; }
-    showLoading(`Import…`);
+
+    // 6. Import avec progression détaillée
+    showLoading(`Import 0/${parsed.length}…`);
     $('#importProgress').classList.remove('hidden');
+    $('#importProgress .progress-bar').style.width = '0%';
+    $('#importStatus').textContent = `Préparation…`;
+
     const bs = 400;
-    for (let i = 0; i < existing.length; i += bs) {
-      const b = state.db.batch();
-      existing.slice(i, i + bs).forEach(v => b.delete(state.db.collection('vehicules').doc(v.id)));
-      await b.commit();
+
+    // 6a. Suppression ancienne source
+    if (existing.length) {
+      $('#importStatus').textContent = `Suppression ${existing.length} ancien(s)…`;
+      for (let i = 0; i < existing.length; i += bs) {
+        const b = state.db.batch();
+        existing.slice(i, i + bs).forEach(v => b.delete(state.db.collection('vehicules').doc(v.id)));
+        await b.commit();
+      }
     }
+
+    // 6b. Ajout nouveaux
+    let totalAjt = 0;
     for (let i = 0; i < parsed.length; i += bs) {
       const b = state.db.batch();
       const chunk = parsed.slice(i, i + bs);
-      chunk.forEach(v => b.set(state.db.collection('vehicules').doc(), { ...v, present: false, source, isCustom: false, lastSeen: null, createdAt: nowIso() }));
+      chunk.forEach(v => {
+        b.set(state.db.collection('vehicules').doc(), {
+          ...v,
+          present: false,
+          source,
+          isCustom: false,
+          lastSeen: null,
+          createdAt: nowIso()
+        });
+      });
       await b.commit();
-      const pct = Math.round(((i + chunk.length) / parsed.length) * 100);
+      totalAjt += chunk.length;
+      const pct = Math.round((totalAjt / parsed.length) * 100);
       $('#importProgress .progress-bar').style.width = pct + '%';
-      $('#importStatus').textContent = `${i + chunk.length} / ${parsed.length}`;
+      $('#importStatus').textContent = `${totalAjt} / ${parsed.length} ajoutés`;
+      $('#loadingText').textContent = `Import ${totalAjt}/${parsed.length}…`;
     }
-    hideLoading(); closeModal('modalImport');
-    toast(`Import : ${parsed.length} véhicules`, 'success');
-  } catch (err) { console.error(err); hideLoading(); toast('Erreur : ' + err.message, 'error'); }
+
+    // 7. Succès
+    hideLoading();
+    closeModal('modalImport');
+    toast(`${parsed.length} véhicule(s) importé(s) dans ${srcLabel}`, 'success', 'Import réussi ✅');
+
+    // 8. Switch vers Véhicules + filtre source
+    switchTab('vehicules');
+    state.vehFilters.source = source;
+    renderVehChips();
+    applyVehFilters();
+
+  } catch (err) {
+    console.error('[IMPORT]', err);
+    hideLoading();
+    toast('Erreur : ' + err.message, 'error');
+    await confirmDialog('❌ Erreur import', `<div style="font-family:var(--mono);font-size:0.75rem;background:var(--bg-3);padding:8px;border-radius:4px">${escapeHtml(err.message)}</div><br>Vérifie :<br>• Que le fichier est bien .xlsx ou .xls<br>• Que tu es connecté à Internet<br>• Que les règles Firestore autorisent l'écriture dans "vehicules"`, false);
+  }
 });
 
 // TERRAIN
@@ -1675,7 +1783,7 @@ function renderMouvements() {
     const snap = r.vehiculesSnapshot || [];
     const pIds = new Set(r.vehicules || []);
     snap.forEach(v => {
-      if (!MOUVEMENT_SOCIETES.includes(v.societe)) return;
+      if (!MOUVEMENT_SOCIETES.includes(v.client || v.societe)) return;
       if (q && !normalizeImmat(v.immat).includes(q)) return;
       if (!map[v.immat]) map[v.immat] = [];
       map[v.immat].push({ date: r.heureFin || r.heureDebut, site: r.site, effectueePar: r.effectueePar, presence: pIds.has(v.id) });
@@ -1689,7 +1797,7 @@ function renderMouvements() {
     const events = map[i].sort((x, y) => (y.date || '').localeCompare(x.date || ''));
     const v = state.vehicules.find(x => normalizeImmat(x.immat) === i);
     return `<div class="card" style="margin-bottom:10px">
-      <div class="card-title" style="color:var(--primary);font-family:var(--mono);font-size:0.9rem">🚗 ${escapeHtml(i)} ${v ? `<span class="badge badge-muted" style="margin-left:6px;font-family:var(--font)">${escapeHtml(v.societe || '')}</span>` : ''}</div>
+      <div class="card-title" style="color:var(--primary);font-family:var(--mono);font-size:0.9rem">🚗 ${escapeHtml(i)} ${v ? `<span class="badge badge-muted" style="margin-left:6px;font-family:var(--font)">${escapeHtml(v.client || '')}</span>` : ''}</div>
       <div class="timeline">${events.slice(0, 20).map(ev => `<div class="timeline-item"><div class="timeline-date">${formatDateTimeFR(ev.date)}</div><div class="timeline-content">📍 <strong>${escapeHtml(ev.site)}</strong> · 👤 ${escapeHtml(ev.effectueePar)} · ${ev.presence ? '<span style="color:var(--success)">✅ Présent</span>' : '<span style="color:var(--danger)">❌ Absent</span>'}</div></div>`).join('')}</div>
     </div>`;
   }).join('');
@@ -1764,7 +1872,11 @@ function renderSocietes() {
   const filter = state.socFilter || '';
   const c = $('#socList');
   const g = {};
-  state.vehicules.forEach(v => { const s = v.societe || '— Sans société —'; if (!g[s]) g[s] = []; g[s].push(v); });
+    state.vehicules.forEach(v => { 
+    const s = v.client || v.societe || '— Sans client —'; 
+    if (!g[s]) g[s] = []; 
+    g[s].push(v); 
+  });
   const keys = Object.keys(g).sort();
   const disp = filter ? keys.filter(s => s === filter) : keys;
   if (!disp.length) { c.innerHTML = `<div class="empty-state"><div class="es-ico">🏢</div><div class="es-title">Aucune société</div></div>`; return; }
@@ -2145,34 +2257,70 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { $$('.modal-overlay.show').forEach(m => m.classList.remove('show')); $('#lightbox').classList.remove('show'); }
 });
 
-// INIT
-async function init() {
-  showLoading('Initialisation…');
-  try {
-    await Promise.all([ensureUsers(), ensureSocietes()]);
-    await getChefPin();
-    listenUsers(); listenSocietes(); listenVehicules(); listenRondes();
-    fillSiteSelects(); renderVehChips(); renderUserSelectors();
-    updateRondeBanner();
-    if ($('#tab-chef').classList.contains('active')) renderChef();
-    hideLoading(); toast('Application prête 🚗', 'success', 'NTR Garage');
-  } catch (err) { console.error('[init]', err); hideLoading(); toast('Erreur init : ' + err.message, 'error'); }
+// ============================================================
+// IMPORTS RAPIDES PAR SOURCE
+// ============================================================
+$('#btnImportHR').addEventListener('click', () => openImportForSource('source1'));
+$('#btnImportUM').addEventListener('click', () => openImportForSource('source2'));
+
+function openImportForSource(source) {
+  $('#importSource').value = source;
+  $('#importFile').value = '';
+  $('#importStatus').textContent = `📍 Source : ${SOURCES[source]}`;
+  $('#importProgress').classList.add('hidden');
+  openModal('modalImport');
+  // Focus sur le champ fichier après ouverture
+  setTimeout(() => $('#importFile').click(), 200);
 }
-window.addEventListener('beforeunload', () => state.unsubscribers.forEach(u => { try { u(); } catch (e) {} }));
-window.__ntr = { state, openRondeModal, switchTab, toast };
+// INIT — non-bloquante : l'app s'affiche AVANT que Firestore réponde
+async function init() {
+  showLoading('Démarrage…');
 
-document.addEventListener('DOMContentLoaded', () => {
-  const nav = $('#mainNav');
-  if (nav && !$('#navStartRonde')) {
-    const btn = document.createElement('button');
-    btn.className = 'nav-btn'; btn.id = 'navStartRonde';
-    btn.innerHTML = '<span class="nav-ico">🟢</span>Démarrer ronde';
-    btn.addEventListener('click', openRondeModal);
-    nav.insertBefore(btn, nav.firstChild);
+  // 1. PREMIER RENDU IMMÉDIAT (vide mais interactif)
+  try {
+    fillSiteSelects();
+    renderVehChips();
+    renderUserSelectors();
+    renderVehiculesList();
+    renderHistorique();
+    renderAdminInfo();
+  } catch (e) { console.warn('[init] rendu initial:', e); }
+
+  // L'app est utilisable tout de suite
+  hideLoading();
+
+  // 2. Chargement Firestore en arrière-plan (ne bloque plus l'UI)
+  try {
+    // On lance les listeners d'abord → réactivité temps réel
+    listenUsers();
+    listenSocietes();
+    listenVehicules();
+    listenRondes();
+
+    // Ensuite on initialise les données par défaut (avec timeout)
+    const withTimeout = (promise, ms = 8000) => Promise.race([
+      promise,
+      new Promise((_, rej) => setTimeout(() => rej(new Error('Timeout Firestore')), ms))
+    ]);
+
+    await withTimeout(Promise.all([ensureUsers(), ensureSocietes()]), 8000);
+    await withTimeout(getChefPin(), 5000);
+
+    updateRondeBanner();
+    toast('Application prête 🚗', 'success', 'NTR Garage');
+  } catch (err) {
+    console.error('[init] arrière-plan:', err);
+    toast('Mode dégradé — vérifie les règles Firestore', 'warning', 'Firestore');
   }
-});
+}
 
-init();
+// Timeout global pour ne jamais bloquer le loading
+setTimeout(() => {
+  if ($('#loadingOverlay').classList.contains('show')) {
+    hideLoading();
+    toast('Chargement long, mais l\'app est utilisable', 'warning');
+  }
+}, 6000);
 </script>
 
 </body>
