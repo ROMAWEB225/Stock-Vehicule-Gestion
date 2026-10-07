@@ -57,6 +57,34 @@ img { max-width: 100%; display: block; }
 .header-logo .title span { color: var(--text-mute); font-weight: 300; }
 .header-logo .version { background: var(--bg-2); padding: 2px 8px; border-radius: 10px; font-size: 0.62rem; color: var(--text-dim); font-weight: 400; }
 .header-spacer { flex: 1; }
+
+/* COMPTEUR ÉQUIPE EN DIRECT DANS LE HEADER (bonus créatif) */
+.header-team {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  transition: all var(--transition);
+}
+.header-team .ht-count {
+  font-weight: 600;
+  color: var(--primary);
+}
+.header-team .ht-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+@media (max-width: 640px) { .header-team { display: none; } }
+
 .header-user { height: 32px; padding: 0 10px; background: var(--bg-2); color: var(--text); border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.78rem; min-width: 160px; max-width: 200px; }
 .header-user:focus { outline: none; border-color: var(--primary); }
 .header-actions { display: flex; gap: 4px; align-items: center; }
@@ -120,14 +148,7 @@ img { max-width: 100%; display: block; }
 
 /* ANTI-AUTOFILL */
 .anti-autofill { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'/>") !important; background-repeat: no-repeat !important; }
-.anti-autofill:-webkit-autofill,
-.anti-autofill:-webkit-autofill:hover,
-.anti-autofill:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--text);
-  -webkit-box-shadow: 0 0 0px 1000px var(--bg-3) inset;
-  transition: background-color 5000s ease-in-out 0s;
-  caret-color: var(--text);
-}
+.anti-autofill:-webkit-autofill, .anti-autofill:-webkit-autofill:hover, .anti-autofill:-webkit-autofill:focus { -webkit-text-fill-color: var(--text); -webkit-box-shadow: 0 0 0px 1000px var(--bg-3) inset; transition: background-color 5000s ease-in-out 0s; caret-color: var(--text); }
 
 /* RECHERCHE */
 .search-bar { position: relative; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
@@ -186,10 +207,12 @@ img { max-width: 100%; display: block; }
 
 /* POINTAGE */
 .pointage-bar { position: sticky; top: 0; z-index: 90; background: var(--bg-2); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.pointage-bar .pb-info { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; color: var(--text-dim); }
+.pointage-bar .pb-info { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; color: var(--text-dim); flex-wrap: wrap; }
 .pointage-bar .pb-site { font-weight: 600; color: var(--text); }
 .pointage-bar .pb-counter { background: var(--bg-3); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; color: var(--text); }
 .pointage-bar .pb-counter.done { background: rgba(52, 211, 153, 0.15); color: var(--success); }
+.pointage-bar .pb-counter-mine { background: rgba(96, 165, 250, 0.15); color: var(--primary); }
+.pointage-bar .pb-counter-global { background: var(--bg-3); color: var(--text); font-size: 0.72rem; }
 .pointage-bar .pb-spacer { flex: 1; }
 .pointage-bar .btn-terminer { padding: 8px 16px; background: var(--success); color: #0f172a; font-weight: 500; font-size: 0.78rem; border-radius: var(--radius-sm); display: none; }
 .pointage-bar .btn-terminer.show { display: inline-flex; }
@@ -205,17 +228,14 @@ img { max-width: 100%; display: block; }
 .pointage-item .pi-immat { font-family: var(--mono); font-weight: 700; font-size: 1rem; color: var(--primary); letter-spacing: 0.5px; }
 .pointage-item .pi-info { font-size: 0.72rem; color: var(--text-dim); margin-top: 2px; display: flex; flex-wrap: wrap; gap: 8px; }
 .pointage-item .pi-site { font-size: 0.7rem; padding: 2px 8px; border-radius: var(--radius-sm); background: rgba(52, 211, 153, 0.15); color: var(--success); font-weight: 500; }
-
-body.terrain-mode .pointage-item { padding: 18px 16px; }
-body.terrain-mode .pointage-item .pi-immat { font-size: 1.15rem; }
-body.terrain-mode .pointage-item .pi-check { width: 34px; height: 34px; font-size: 1.2rem; }
-body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
+.pi-mine { display: inline-flex; align-items: center; gap: 3px; padding: 1px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: 500; background: rgba(96, 165, 250, 0.18); color: var(--primary); margin-left: 6px; }
+.pi-multi { display: inline-flex; align-items: center; gap: 3px; padding: 1px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: 500; background: rgba(251, 191, 36, 0.18); color: var(--warning); margin-left: 6px; }
 
 .pointage-hint { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; font-size: 0.75rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 12px; }
 .pointage-hint strong { color: var(--text); }
 .pointage-hint kbd { background: var(--bg-3); padding: 2px 6px; border-radius: 3px; font-family: var(--mono); font-size: 0.7rem; border: 1px solid var(--border-light); }
 
-/* RÉCAP DE RONDE */
+/* RÉCAP */
 .recap-hero { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: #0f172a; border-radius: var(--radius); padding: 20px; text-align: center; margin-bottom: 16px; }
 .recap-hero .rh-number { font-size: 3rem; font-weight: 300; line-height: 1; margin: 0; }
 .recap-hero .rh-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; margin-top: 6px; }
@@ -250,6 +270,18 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 .manquant-item .mi-source.hr { background: rgba(96,165,250,0.15); color: var(--primary); }
 .manquant-item .mi-source.um { background: rgba(248,113,113,0.15); color: var(--danger); }
 .manquant-item .mi-source.custom { background: rgba(251,191,36,0.15); color: var(--warning); }
+
+/* AUTRUI (collaboratif) */
+.autrui-section { margin-top: 16px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.autrui-header { padding: 10px 14px; background: var(--bg-3); font-size: 0.75rem; font-weight: 500; color: var(--text-dim); display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
+.autrui-header .count { font-size: 0.7rem; color: var(--text-mute); }
+.autrui-body { padding: 10px 14px; display: none; }
+.autrui-section.open .autrui-body { display: block; }
+.autrui-list { display: flex; flex-direction: column; gap: 6px; }
+.autrui-user { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--bg-3); border-radius: var(--radius-sm); font-size: 0.78rem; }
+.autrui-user .au-nom { flex: 1; font-weight: 500; color: var(--text); }
+.autrui-user .au-count { font-size: 0.72rem; color: var(--primary); font-weight: 600; }
+.autrui-user .au-sites { font-size: 0.68rem; color: var(--text-mute); }
 
 /* MODALES */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 16px; }
@@ -330,12 +362,10 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-text { font-size: 0.85rem; color: var(--text-dim); }
 
-/* EMPTY STATE */
 .empty-state { text-align: center; padding: 40px 16px; color: var(--text-mute); }
 .empty-state .es-title { font-size: 0.9rem; font-weight: 500; color: var(--text-dim); margin-bottom: 4px; }
 .empty-state .es-sub { font-size: 0.78rem; }
 
-/* SECTION HEADER */
 .section-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
 .section-title { font-size: 1rem; font-weight: 500; margin: 0; display: flex; align-items: center; gap: 8px; }
 .section-actions { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -361,9 +391,17 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 <header class="header">
   <div class="header-logo">
     <div class="title">STOCK<span>VÉHICULES</span></div>
-    <span class="version">v3.2</span>
+    <span class="version">v3.3</span>
   </div>
   <div class="header-spacer"></div>
+
+  <!-- COMPTEUR ÉQUIPE EN DIRECT (bonus créatif) -->
+  <div class="header-team" id="headerTeam" title="Utilisateurs actifs aujourd'hui">
+    <span class="ht-dot"></span>
+    <span class="ht-count" id="headerTeamCount">0</span>
+    <span>actif(s) aujourd'hui</span>
+  </div>
+
   <select id="headerUser" class="header-user" title="Utilisateur actuel">
     <option value="">— Sélectionner utilisateur —</option>
   </select>
@@ -389,7 +427,6 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
   <button class="nav-btn" data-tab="mouvements">Mouvements</button>
   <button class="nav-btn" data-tab="chef">Chef</button>
   <button class="nav-btn" data-tab="galerie">Galerie</button>
-  <button class="nav-btn" data-tab="terrain">Terrain</button>
   <button class="nav-btn" data-tab="exports">Exports</button>
   <button class="nav-btn" data-tab="attestation">Attestation</button>
   <button class="nav-btn danger" data-tab="admin">Vider</button>
@@ -402,7 +439,8 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
   <div class="pointage-bar">
     <div class="pb-info">
       <span class="pb-site" id="pointageSiteLabel">— Choisir un site —</span>
-      <span class="pb-counter" id="pointageCounter">0 / 0 pointés</span>
+      <span class="pb-counter pb-counter-mine" id="pointageCounterMine" title="Mes pointages">Moi : 0</span>
+      <span class="pb-counter pb-counter-global" id="pointageCounterGlobal" title="Total équipe">Équipe : 0 / 0</span>
     </div>
     <div class="pb-spacer"></div>
     <select class="select" id="pointageSite" style="max-width:180px;padding:6px 30px 6px 12px;font-size:0.78rem;width:auto">
@@ -417,7 +455,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
       Sélectionnez un site en haut à droite<br>
       Tapez sur un véhicule dans la liste pour le marquer trouvé à ce site<br>
       Changez de site pour pointer d'autres véhicules (une même ronde peut couvrir plusieurs sites)<br>
-      À la fin, cliquez sur "Terminer la ronde" pour voir le récapitulatif
+      Vos pointages sont personnels : chaque utilisateur a les siens
     </div>
 
     <div class="search-bar">
@@ -433,13 +471,24 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
     <div class="chips" id="pointageStatusChips">
       <button class="chip active" data-pstatus="all">Tous</button>
       <button class="chip" data-pstatus="pending">À pointer</button>
-      <button class="chip" data-pstatus="pointed">Trouvés</button>
+      <button class="chip" data-pstatus="pointed">Trouvés par moi</button>
     </div>
 
     <div class="list" id="pointageList"></div>
     <div class="empty-state hidden" id="pointageEmpty">
       <div class="es-title">Sélectionnez un site pour commencer</div>
       <div class="es-sub">Choisissez un site dans le menu ci-dessus</div>
+    </div>
+
+    <!-- SECTION AUTRUI (collaboratif) -->
+    <div class="autrui-section" id="autruiSection">
+      <div class="autrui-header" id="autruiHeader">
+        <span>Autres pointages aujourd'hui</span>
+        <span class="count" id="autruiCount">0</span>
+      </div>
+      <div class="autrui-body">
+        <div class="autrui-list" id="autruiList"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -456,7 +505,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 
     <div class="pointage-hint">
       <strong>Véhicules non pointés</strong><br>
-      Ces véhicules font partie de la liste importée (Odoo) mais n'ont pas encore été trouvés sur le terrain.
+      Ces véhicules font partie de la liste importée (Odoo) mais n'ont pas encore été trouvés sur le terrain par aucun utilisateur.
     </div>
 
     <div class="form-group">
@@ -556,11 +605,11 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
       <h2 class="section-title">Évolution des présences</h2>
     </div>
     <div class="card">
-      <div class="card-title">12 dernières rondes (présents / absents)</div>
+      <div class="card-title">12 dernières rondes (trouvés / manquants)</div>
       <div class="chart-wrap"><canvas id="chartPresence"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-title">Taux de présence par site (7 jours)</div>
+      <div class="card-title">Véhicules trouvés par site (7 jours)</div>
       <div class="chart-wrap"><canvas id="chartSites"></canvas></div>
     </div>
   </div>
@@ -652,9 +701,13 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
           <span class="stat-value success" id="chef7Rate">0%</span>
         </div>
         <div class="stat-card">
-          <span class="stat-label">Sites en alerte</span>
+          <span class="stat-label">Manquants actuels</span>
           <span class="stat-value danger" id="chefMissing">0</span>
         </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Utilisateurs actifs aujourd'hui</div>
+        <div class="list" id="chefActiveUsers"></div>
       </div>
       <div class="card">
         <div class="card-title">Statistiques 7 jours par site</div>
@@ -664,7 +717,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
               <tr>
                 <th style="padding:8px 12px;text-align:left;font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-dim)">Site</th>
                 <th style="padding:8px 12px;text-align:left;font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-dim)">Rondes</th>
-                <th style="padding:8px 12px;text-align:left;font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-dim)">Taux</th>
+                <th style="padding:8px 12px;text-align:left;font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-dim)">Véhicules</th>
               </tr>
             </thead>
             <tbody id="chefSiteStats"></tbody>
@@ -689,35 +742,6 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
       <div class="es-title">Aucune photo</div>
       <div class="es-sub">Les photos ajoutées aux véhicules apparaîtront ici</div>
     </div>
-  </div>
-</section>
-
-<!-- ONGLET TERRAIN -->
-<section class="tab-content" id="tab-terrain">
-  <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">Mode Terrain</h2>
-      <div class="section-actions">
-        <label style="display:inline-flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--text-dim)">
-          <input type="checkbox" id="terrainToggle" style="width:16px;height:16px">
-          Grandes cases
-        </label>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Site</label>
-      <select class="select" id="terrainSite"><option value="">— Choisir un site —</option></select>
-    </div>
-    <div class="search-bar">
-      <div class="search-input-wrap">
-        <span class="search-ico">⌕</span>
-        <input type="search" class="search-input anti-autofill" id="terrainSearch" placeholder="Recherche rapide immat..." autocomplete="nope" autocapitalize="characters" name="terrain_search_5x9z4" aria-autocomplete="none" readonly>
-        <button class="search-clear" id="terrainClear">✕</button>
-        <div class="autocomplete-list" id="terrainAutocomplete"></div>
-      </div>
-      <button class="mic-btn" id="terrainMic" title="Recherche vocale">◉</button>
-    </div>
-    <div class="list" id="terrainList"></div>
   </div>
 </section>
 
@@ -812,7 +836,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
       <div style="display:flex;flex-direction:column;gap:8px">
         <button class="btn btn-warning btn-block" id="btnWipeHR">Vider Source HR</button>
         <button class="btn btn-warning btn-block" id="btnWipeUM">Vider Source UM</button>
-        <button class="btn btn-danger btn-block" id="btnWipeAll">Vider tout (véhicules + rondes)</button>
+        <button class="btn btn-danger btn-block" id="btnWipeAll">Vider tout (véhicules + rondes + pointages)</button>
       </div>
     </div>
     <div class="card">
@@ -824,6 +848,7 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
         <div>Clients : <span id="adminSocCount">—</span></div>
         <div>Véhicules : <span id="adminVehCount">—</span></div>
         <div>Rondes : <span id="adminRondeCount">—</span></div>
+        <div>Pointages aujourd'hui : <span id="adminPointageCount">—</span></div>
       </div>
     </div>
   </div>
@@ -1067,6 +1092,11 @@ body.terrain-mode .pointage-item .pi-info { font-size: 0.85rem; }
 <script src="https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js"></script>
 
 <script>
+/* ============================================================
+   NTR STOCK VÉHICULES - Version 3.3
+   Pointage collaboratif multi-utilisateurs
+   ============================================================ */
+
 const firebaseConfig = {
   apiKey: "AIzaSyAxfEpi-NERVExxVYD2EmH7JppiIQDwWOM",
   authDomain: "ntr-garage.firebaseapp.com",
@@ -1086,6 +1116,9 @@ const MOUVEMENT_CLIENTS = ['BNETD', 'Port Autonome'];
 const state = {
   db: null,
   vehicules: [], vehiculesFiltered: [], rondes: [], utilisateurs: [], clients: [],
+  pointages: [],
+  myPointages: new Map(),
+  otherPointages: new Map(),
   currentUser: localStorage.getItem('ntr_user') || '',
   chefUnlocked: false, pinBuffer: '',
   pointageSite: '', pointageStatus: 'all', pointageRecent: {},
@@ -1093,7 +1126,8 @@ const state = {
   histFilterUser: '', histFilterMonth: '',
   socFilter: '',
   vehFilters: { site: '', source: '', type: '', search: '' },
-  currentRondeDetail: null, unsubscribers: []
+  currentRondeDetail: null, unsubscribers: [],
+  lastPointageCount: 0
 };
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -1106,6 +1140,7 @@ function escapeHtml(s) {
 function normalizeImmat(s) { return String(s || '').replace(/[\s\-\.]/g, '').toUpperCase(); }
 function nowIso() { return new Date().toISOString(); }
 function todayKey() { return new Date().toISOString().slice(0, 10); }
+function todayKeyShort() { return new Date().toISOString().slice(0, 10); }
 function formatDateFR(iso) {
   if (!iso) return '—';
   const d = new Date(iso);
@@ -1170,7 +1205,7 @@ try {
 } catch (e) { console.error('[Firebase]', e); }
 
 setTimeout(() => {
-  ['#pointageSearch', '#vehSearch', '#terrainSearch', '#mouvSearch', '#attImmat', '#vehImmat'].forEach((sel) => {
+  ['#pointageSearch', '#vehSearch', '#mouvSearch', '#attImmat', '#vehImmat'].forEach((sel) => {
     const el = document.querySelector(sel);
     if (!el) return;
     el.setAttribute('autocomplete', 'nope');
@@ -1200,7 +1235,6 @@ function switchTab(name) {
   if (name === 'mouvements') renderMouvements();
   if (name === 'chef') renderChef();
   if (name === 'galerie') renderGalerie();
-  if (name === 'terrain') renderTerrain();
   if (name === 'admin') renderAdminInfo();
 }
 
@@ -1266,6 +1300,10 @@ $('#headerUser').addEventListener('change', (e) => {
   state.currentUser = e.target.value;
   localStorage.setItem('ntr_user', state.currentUser);
   if (state.currentUser) toast(`Utilisateur : ${state.currentUser}`, 'success');
+  aggregatePointages();
+  if ($('#tab-pointage').classList.contains('active')) renderPointage();
+  renderAutruiSection();
+  updateHeaderTeam();
 });
 function renderUsersModal() {
   const list = $('#usersList');
@@ -1395,7 +1433,6 @@ function listenVehicules() {
     renderAdminInfo();
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
     if ($('#tab-manquants').classList.contains('active')) renderManquants();
-    if ($('#tab-terrain').classList.contains('active')) renderTerrain();
     if ($('#tab-galerie').classList.contains('active')) renderGalerie();
   }, (err) => { console.error('[vehicules]', err); toast('Erreur de chargement', 'error'); });
   state.unsubscribers.push(unsub);
@@ -1444,8 +1481,8 @@ function showAutocomplete(query) {
     return;
   }
   vehAutoList.innerHTML = matches.map((v) => {
-    const p = v.present !== false;
-    return `<div class="autocomplete-item" data-id="${v.id}"><span class="ac-immat">${escapeHtml(v.immat)}</span><span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')} · ${escapeHtml(v.site || '—')}</span><span class="ac-status ${p ? 'present' : 'absent'}">${p ? 'Présent' : 'Manquant'}</span></div>`;
+    const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
+    return `<div class="autocomplete-item" data-id="${v.id}"><span class="ac-immat">${escapeHtml(v.immat)}</span><span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')} · ${escapeHtml(v.site || '—')}</span><span class="ac-status ${pointed ? 'present' : 'absent'}">${pointed ? 'Trouvé' : 'Manquant'}</span></div>`;
   }).join('');
   vehAutoList.classList.add('show');
   $$('.autocomplete-item', vehAutoList).forEach((item) => item.addEventListener('click', () => {
@@ -1466,10 +1503,10 @@ function renderVehiculesList() {
   if (!items.length) { list.innerHTML = ''; empty.classList.remove('hidden'); return; }
   empty.classList.add('hidden');
   list.innerHTML = items.map((v) => {
-    const p = v.present !== false;
+    const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
     const srcLabel = SOURCES[v.source] || v.source || '—';
     const isC = v.source === 'custom' || v.isCustom;
-    return `<div class="vehicle-card ${p ? 'present' : 'absent'}">
+    return `<div class="vehicle-card ${pointed ? 'present' : 'absent'}">
       <div class="vehicle-card-main">
         <div class="vehicle-card-immat">${escapeHtml(v.immat)}<span class="badge ${isC ? 'badge-info' : 'badge-muted'}">${escapeHtml(srcLabel)}</span>${v.site ? `<span class="badge badge-muted">${escapeHtml(v.site)}</span>` : ''}</div>
         <div class="vehicle-card-info">${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}</div>
@@ -1507,7 +1544,6 @@ function renderVehChips() {
 function fillSiteSelects() {
   const opts = SITES.map((s) => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
   const vehSite = $('#vehSite'); if (vehSite) vehSite.innerHTML = `<option value="">— Site —</option>${opts}`;
-  const terrainSite = $('#terrainSite'); if (terrainSite) terrainSite.innerHTML = `<option value="">— Choisir un site —</option>${opts}`;
   const pointageSite = $('#pointageSite'); if (pointageSite) pointageSite.innerHTML = `<option value="">— Site —</option>${opts}`;
   const galSite = $('#galSiteFilter'); if (galSite) galSite.innerHTML = `<option value="">Tous les sites</option>${opts}`;
 }
@@ -1551,10 +1587,68 @@ async function uploadToCloudinary(file) {
   return (await res.json()).secure_url;
 }
 
-/* POINTAGE */
+/* POINTAGES COLLABORATIFS */
+function listenPointages() {
+  if (!state.db) return;
+  const today = todayKeyShort();
+  const ref = state.db.collection('pointages').where('jour', '==', today);
+  const unsub = ref.onSnapshot((snap) => {
+    const newPointages = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    const prevCount = state.lastPointageCount;
+    state.pointages = newPointages;
+    state.lastPointageCount = newPointages.length;
+    aggregatePointages();
+    if ($('#tab-pointage').classList.contains('active')) renderPointage();
+    renderAutruiSection();
+    updateHeaderTeam();
+    // Notification discrète quand un autre utilisateur pointe
+    if (prevCount > 0 && newPointages.length > prevCount) {
+      const added = newPointages.slice(prevCount);
+      const others = added.filter((p) => p.userNom !== state.currentUser);
+      if (others.length && document.visibilityState === 'visible') {
+        const first = others[0];
+        if (others.length === 1) toast(`${first.userNom} vient de pointer ${first.immat} à ${first.site}`, 'info');
+        else toast(`${others.length} nouveaux pointages par vos collègues`, 'info');
+      }
+    }
+  }, (err) => console.warn('[pointages]', err));
+  state.unsubscribers.push(unsub);
+}
+
+function aggregatePointages() {
+  state.myPointages = new Map();
+  state.otherPointages = new Map();
+  const user = state.currentUser || '';
+  state.pointages.forEach((p) => {
+    if (p.userNom === user) {
+      const existing = state.myPointages.get(p.vehiculeId);
+      if (!existing || new Date(p.timestamp) < new Date(existing)) {
+        state.myPointages.set(p.vehiculeId, p.timestamp);
+      }
+    } else {
+      if (!state.otherPointages.has(p.vehiculeId)) state.otherPointages.set(p.vehiculeId, []);
+      state.otherPointages.get(p.vehiculeId).push(p);
+    }
+  });
+}
+
+function getPointageOfficiel(vehiculeId) {
+  const all = state.pointages.filter((p) => p.vehiculeId === vehiculeId);
+  if (!all.length) return null;
+  return all.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0];
+}
+
+function updateHeaderTeam() {
+  const el = $('#headerTeamCount');
+  if (!el) return;
+  const users = new Set(state.pointages.map((p) => p.userNom));
+  el.textContent = users.size;
+}
+
 function getVehiculesForPointage() {
   return state.vehicules.slice().sort((a, b) => a.immat.localeCompare(b.immat));
 }
+
 function renderPointage() {
   const siteSel = $('#pointageSite');
   if (siteSel && !siteSel.dataset.filled) {
@@ -1564,29 +1658,17 @@ function renderPointage() {
   }
   const site = state.pointageSite;
   const label = $('#pointageSiteLabel');
-  const counter = $('#pointageCounter');
   const list = $('#pointageList');
   const empty = $('#pointageEmpty');
   const btnTerminer = $('#btnTerminer');
 
-  // Compteur global (pas par site)
-  const total = state.vehicules.length;
-  const pointed = state.vehicules.filter((v) => v.present === true).length;
-  counter.textContent = `${pointed} / ${total} pointés`;
-  counter.classList.toggle('done', total > 0 && pointed === total);
-
-  // Bouton terminer visible dès qu'au moins 1 pointage
-  btnTerminer.classList.toggle('show', pointed > 0);
-
-  // Si pas de site, on affiche tous les véhicules quand même
-  // mais avec un message d'aide
   label.textContent = site || '— Choisir un site —';
 
   const search = normalizeImmat($('#pointageSearch').value);
   let items = getVehiculesForPointage();
   if (search) items = items.filter((v) => normalizeImmat(v.immat).includes(search));
-  if (state.pointageStatus === 'pending') items = items.filter((v) => v.present !== true);
-  if (state.pointageStatus === 'pointed') items = items.filter((v) => v.present === true);
+  if (state.pointageStatus === 'pending') items = items.filter((v) => !state.myPointages.has(v.id));
+  if (state.pointageStatus === 'pointed') items = items.filter((v) => state.myPointages.has(v.id));
 
   if (!items.length) {
     list.innerHTML = '';
@@ -1596,7 +1678,7 @@ function renderPointage() {
       empty.querySelector('.es-sub').textContent = `Aucune immatriculation ne contient "${search}"`;
     } else if (state.pointageStatus === 'pending') {
       empty.querySelector('.es-title').textContent = 'Tout est pointé';
-      empty.querySelector('.es-sub').textContent = 'Tous les véhicules ont été trouvés';
+      empty.querySelector('.es-sub').textContent = 'Vous avez trouvé tous les véhicules';
     } else if (state.pointageStatus === 'pointed') {
       empty.querySelector('.es-title').textContent = 'Aucun pointage';
       empty.querySelector('.es-sub').textContent = 'Tapez sur un véhicule pour le pointer';
@@ -1604,30 +1686,57 @@ function renderPointage() {
       empty.querySelector('.es-title').textContent = 'Aucun véhicule';
       empty.querySelector('.es-sub').textContent = 'Importez une liste';
     }
-    return;
-  }
-  empty.classList.add('hidden');
+  } else {
+    empty.classList.add('hidden');
 
-  list.innerHTML = items.map((v) => {
-    const isP = v.present === true;
-    const recent = state.pointageRecent[v.id] && (Date.now() - state.pointageRecent[v.id] < 1500);
-    return `<div class="pointage-item ${isP ? 'pointed' : ''} ${recent ? 'recent' : ''}" data-veh="${v.id}">
-      <div class="pi-check">${isP ? '✓' : ''}</div>
-      <div class="pi-main">
-        <div class="pi-immat">${escapeHtml(v.immat)}</div>
-        <div class="pi-info">
-          ${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
-          ${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}
-          ${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}
+    list.innerHTML = items.map((v) => {
+      const mine = state.myPointages.has(v.id);
+      const others = state.otherPointages.get(v.id) || [];
+      const recent = state.pointageRecent[v.id] && (Date.now() - state.pointageRecent[v.id] < 1500);
+      const officiel = getPointageOfficiel(v.id);
+      return `<div class="pointage-item ${mine ? 'pointed' : ''} ${recent ? 'recent' : ''}" data-veh="${v.id}">
+        <div class="pi-check">${mine ? '✓' : ''}</div>
+        <div class="pi-main">
+          <div class="pi-immat">
+            ${escapeHtml(v.immat)}
+            ${mine ? '<span class="pi-mine">Mon pointage</span>' : ''}
+            ${others.length ? `<span class="pi-multi">+${others.length}</span>` : ''}
+          </div>
+          <div class="pi-info">
+            ${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
+            ${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}
+            ${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}
+          </div>
         </div>
-      </div>
-      ${isP && v.site ? `<span class="pi-site">${escapeHtml(v.site)}</span>` : ''}
-    </div>`;
-  }).join('');
+        ${officiel && officiel.site ? `<span class="pi-site">${escapeHtml(officiel.site)}</span>` : ''}
+      </div>`;
+    }).join('');
 
-  $$('.pointage-item', list).forEach((item) => {
-    item.addEventListener('click', (e) => { e.stopPropagation(); handlePointage(item.dataset.veh); });
-  });
+    $$('.pointage-item', list).forEach((item) => {
+      item.addEventListener('click', (e) => { e.stopPropagation(); handlePointage(item.dataset.veh); });
+    });
+  }
+
+  updatePointageCounters();
+}
+
+function updatePointageCounters() {
+  const total = state.vehicules.length;
+  const mine = state.myPointages.size;
+  const uniqueVehicules = new Set();
+  state.pointages.forEach((p) => uniqueVehicules.add(p.vehiculeId));
+  const global = uniqueVehicules.size;
+
+  const counterMine = $('#pointageCounterMine');
+  const counterGlobal = $('#pointageCounterGlobal');
+  if (counterMine) counterMine.textContent = `Moi : ${mine}`;
+  if (counterGlobal) {
+    counterGlobal.textContent = `Équipe : ${global} / ${total}`;
+    counterGlobal.classList.toggle('done', total > 0 && global === total);
+  }
+
+  const btnTerminer = $('#btnTerminer');
+  if (btnTerminer) btnTerminer.classList.toggle('show', global > 0);
 }
 
 async function handlePointage(vehId) {
@@ -1635,19 +1744,42 @@ async function handlePointage(vehId) {
   if (!state.pointageSite) { toast('Sélectionnez un site avant de pointer', 'warning'); return; }
   const v = state.vehicules.find((x) => x.id === vehId);
   if (!v) return;
-  const wasPresent = v.present === true;
-  const newState = !wasPresent;
+
+  const isMine = state.myPointages.has(vehId);
   state.pointageRecent[vehId] = Date.now();
+
   try {
-    await state.db.collection('vehicules').doc(vehId).update({
-      present: newState,
-      lastSeen: newState ? nowIso() : (v.lastSeen || null),
-      site: newState ? state.pointageSite : null
-    });
-    if (newState) { toast(`${v.immat} trouvé à ${state.pointageSite}`, 'success'); try { playBeep(); } catch (e) {} }
-    else { toast(`${v.immat} démarqué`, 'info'); }
+    if (isMine) {
+      const toDelete = state.pointages.filter((p) => p.vehiculeId === vehId && p.userNom === state.currentUser);
+      for (const p of toDelete) {
+        await state.db.collection('pointages').doc(p.id).delete();
+      }
+      toast(`${v.immat} démarqué`, 'info');
+    } else {
+      await state.db.collection('pointages').add({
+        vehiculeId: vehId,
+        immat: v.immat,
+        userNom: state.currentUser,
+        site: state.pointageSite,
+        timestamp: nowIso(),
+        jour: todayKeyShort(),
+        createdAt: nowIso()
+      });
+      toast(`${v.immat} trouvé à ${state.pointageSite}`, 'success');
+      try { playBeep(); } catch (e) {}
+
+      const officiel = getPointageOfficiel(vehId);
+      if (!officiel) {
+        await state.db.collection('vehicules').doc(vehId).update({
+          present: true, lastSeen: nowIso(), site: state.pointageSite
+        });
+      }
+    }
     setTimeout(() => { delete state.pointageRecent[vehId]; }, 2000);
-  } catch (err) { console.error('[pointage]', err); toast('Erreur : ' + err.message, 'error'); }
+  } catch (err) {
+    console.error('[pointage]', err);
+    toast('Erreur : ' + err.message, 'error');
+  }
 }
 
 $('#pointageSite').addEventListener('change', (e) => {
@@ -1681,11 +1813,11 @@ function showPointageAutocomplete(query) {
   const matches = state.vehicules.filter((v) => normalizeImmat(v.immat).includes(q)).slice(0, 12);
   if (!matches.length) { l.classList.remove('show'); return; }
   l.innerHTML = matches.map((v) => {
-    const p = v.present === true;
+    const mine = state.myPointages.has(v.id);
     return `<div class="autocomplete-item" data-id="${v.id}">
       <span class="ac-immat">${escapeHtml(v.immat)}</span>
       <span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}</span>
-      <span class="ac-status ${p ? 'present' : 'absent'}">${p ? 'Trouvé' : 'À pointer'}</span>
+      <span class="ac-status ${mine ? 'present' : 'absent'}">${mine ? 'Mon pointage' : 'À pointer'}</span>
     </div>`;
   }).join('');
   l.classList.add('show');
@@ -1703,14 +1835,63 @@ document.addEventListener('click', (e) => {
   }
 });
 
+function renderAutruiSection() {
+  const section = $('#autruiSection');
+  if (!section) return;
+  const list = $('#autruiList');
+  const count = $('#autruiCount');
+
+  const byUser = {};
+  const me = state.currentUser;
+  state.pointages.forEach((p) => {
+    if (p.userNom === me) return;
+    if (!byUser[p.userNom]) byUser[p.userNom] = { count: 0, sites: new Set() };
+    byUser[p.userNom].count++;
+    byUser[p.userNom].sites.add(p.site);
+  });
+
+  const users = Object.keys(byUser);
+  if (!users.length) {
+    count.textContent = '0';
+    list.innerHTML = '<div style="font-size:0.72rem;color:var(--text-mute);text-align:center;padding:8px">Personne d\'autre n\'a pointé aujourd\'hui</div>';
+    return;
+  }
+
+  count.textContent = users.length + ' utilisateur' + (users.length > 1 ? 's' : '');
+  list.innerHTML = users.map((nom) => {
+    const d = byUser[nom];
+    return `<div class="autrui-user">
+      <span class="au-nom">${escapeHtml(nom)}</span>
+      <span class="au-count">${d.count} véhicule(s)</span>
+      <span class="au-sites">${[...d.sites].map((s) => escapeHtml(s)).join(', ')}</span>
+    </div>`;
+  }).join('');
+}
+
+document.addEventListener('click', (e) => {
+  const header = e.target.closest('#autruiHeader');
+  if (header) {
+    header.parentElement.classList.toggle('open');
+  }
+});
+
 /* RÉCAP DE RONDE */
 $('#btnTerminer').addEventListener('click', () => { renderRecapModal(); openModal('modalRecap'); });
 
 function computeRondeStats() {
   const all = state.vehicules;
   const total = all.length;
-  const found = all.filter((v) => v.present === true);
-  const manquants = all.filter((v) => v.present !== true);
+
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  const found = all.filter((v) => pointedIds.has(v.id));
+  const manquants = all.filter((v) => !pointedIds.has(v.id));
+
+  const siteOfficiel = (vehId) => {
+    const ps = state.pointages.filter((p) => p.vehiculeId === vehId);
+    if (!ps.length) return null;
+    const first = ps.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0];
+    return first.site;
+  };
 
   const bySource = {};
   ['source1', 'source2', 'custom'].forEach((src) => {
@@ -1729,15 +1910,21 @@ function computeRondeStats() {
 
   const bySite = {};
   found.forEach((v) => {
-    const s = v.site || '— Sans site —';
+    const s = siteOfficiel(v.id) || v.site || '— Sans site —';
     if (!bySite[s]) bySite[s] = 0;
     bySite[s]++;
+  });
+
+  const byUser = {};
+  state.pointages.forEach((p) => {
+    if (!byUser[p.userNom]) byUser[p.userNom] = 0;
+    byUser[p.userNom]++;
   });
 
   return {
     total, found: found.length, manquants: manquants.length,
     tauxGlobal: total ? Math.round((found.length / total) * 100) : 0,
-    bySource, bySite,
+    bySource, bySite, byUser,
     sitesVisited: Object.keys(bySite).filter((s) => s !== '— Sans site —')
   };
 }
@@ -1764,6 +1951,8 @@ function renderRecapModal() {
     return `<tr><td><strong>${escapeHtml(site)}</strong></td><td style="color:var(--success)">${count}</td><td>${pct}%</td></tr>`;
   }).join('') || '<tr><td colspan="3" style="text-align:center;color:var(--text-mute);padding:14px">Aucun véhicule pointé</td></tr>';
 
+  const userRows = Object.entries(s.byUser).sort((a, b) => b[1] - a[1]).map(([nom, count]) => `<tr><td>${escapeHtml(nom)}</td><td style="color:var(--primary)">${count}</td></tr>`).join('');
+
   $('#recapBody').innerHTML = `
     <div class="recap-hero">
       <p class="rh-number">${s.found} / ${s.total}</p>
@@ -1783,6 +1972,7 @@ function renderRecapModal() {
       <div class="card-title">Répartition par site (${s.sitesVisited.length} site(s) visité(s))</div>
       <table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules trouvés</th><th>Part</th></tr></thead><tbody>${siteRows}</tbody></table>
     </div>
+    ${userRows ? `<div class="card"><div class="card-title">Contribution par utilisateur</div><table class="bilan-table"><thead><tr><th>Utilisateur</th><th>Pointages</th></tr></thead><tbody>${userRows}</tbody></table></div>` : ''}
     <div class="card" style="background:var(--bg-3)">
       <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.7">
         <div>Ronde effectuée par : <strong style="color:var(--text)">${escapeHtml(state.currentUser || '—')}</strong></div>
@@ -1808,30 +1998,61 @@ $('#recapTerminer').addEventListener('click', async () => {
   showLoading('Enregistrement...');
   try {
     const now = nowIso();
-    const found = state.vehicules.filter((v) => v.present === true);
-    const snapshot = found.map((v) => ({ id: v.id, immat: v.immat, marque: v.marque || '', modele: v.modele || '', client: v.client || '', site: v.site || '', present: true }));
+    const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+    const found = state.vehicules.filter((v) => pointedIds.has(v.id));
+
+    const snapshot = found.map((v) => {
+      const ps = state.pointages.filter((p) => p.vehiculeId === v.id);
+      const first = ps.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0];
+      return {
+        id: v.id, immat: v.immat,
+        marque: v.marque || '', modele: v.modele || '',
+        client: v.client || '', site: first?.site || v.site || '', present: true
+      };
+    });
+
     await state.db.collection('rondes').add({
       date: todayKey(), heureDebut: now, heureFin: now,
       effectueePar: state.currentUser || '—',
       site: s.sitesVisited.join(', ') || '—',
-      note: `Ronde multi-sites · ${s.sitesVisited.length} site(s)`,
-      statut: 'terminee', mode: 'ronde_multi_sites',
+      note: `Ronde collaborative · ${s.sitesVisited.length} site(s) · ${s.found} pointages`,
+      statut: 'terminee', mode: 'ronde_collaborative',
       vehicules: found.map((v) => v.id), vehiculesSnapshot: snapshot,
       dureeSecondes: null,
-      stats: { total: s.total, presents: s.found, absents: s.manquants, taux: s.tauxGlobal, sitesVisites: s.sitesVisited.length, repartitionSites: s.bySite },
+      stats: { total: s.total, presents: s.found, absents: s.manquants, taux: s.tauxGlobal, sitesVisites: s.sitesVisited.length, repartitionSites: s.bySite, contributions: s.byUser },
       comparaison: null, createdAt: now
     });
+
+    const bs = 400;
+    for (let i = 0; i < found.length; i += bs) {
+      const b = state.db.batch();
+      found.slice(i, i + bs).forEach((v) => {
+        const snap = snapshot.find((s2) => s2.id === v.id);
+        b.update(state.db.collection('vehicules').doc(v.id), {
+          present: true, site: snap?.site || v.site, lastSeen: now
+        });
+      });
+      await b.commit();
+    }
+    const nonVus = state.vehicules.filter((v) => !pointedIds.has(v.id));
+    for (let i = 0; i < nonVus.length; i += bs) {
+      const b = state.db.batch();
+      nonVus.slice(i, i + bs).forEach((v) => b.update(state.db.collection('vehicules').doc(v.id), { present: false }));
+      await b.commit();
+    }
+
     hideLoading();
     closeModal('modalRecap');
     toast(`Ronde enregistrée · ${s.found}/${s.total}`, 'success');
     renderPointage();
-  } catch (err) { hideLoading(); toast('Erreur : ' + err.message, 'error'); }
+  } catch (err) { console.error(err); hideLoading(); toast('Erreur : ' + err.message, 'error'); }
 });
 
 /* ONGLET MANQUANTS */
 function renderManquants() {
   const filter = state.manquantsFilterSource || '';
-  let list = state.vehicules.filter((v) => v.present !== true);
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  let list = state.vehicules.filter((v) => !pointedIds.has(v.id));
   if (filter) list = list.filter((v) => v.source === filter);
 
   $('#manquantsCount').textContent = list.length;
@@ -1868,14 +2089,15 @@ function renderManquants() {
 }
 $('#manquantsSourceFilter').addEventListener('change', (e) => { state.manquantsFilterSource = e.target.value; renderManquants(); });
 $('#btnManquantsExportXls').addEventListener('click', () => {
-  let list = state.vehicules.filter((v) => v.present !== true);
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  let list = state.vehicules.filter((v) => !pointedIds.has(v.id));
   if (state.manquantsFilterSource) list = list.filter((v) => v.source === state.manquantsFilterSource);
   if (!list.length) { toast('Aucun véhicule manquant', 'warning'); return; }
   const rows = list.map((v) => ({ 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '', 'Reference commande': v.refCommande || '', 'Type maintenance': v.typeMaintenance || '', 'Source': SOURCES[v.source] || v.source || '' }));
   exportExcel(rows, `NTR_Manquants_${todayKey()}.xlsx`, 'Manquants');
 });
 
-/* EXPORT PDF DU RÉCAP */
+/* EXPORT PDF RÉCAP */
 function exportRecapPDF(s) {
   if (!s) return;
   const { jsPDF } = window.jspdf;
@@ -1909,7 +2131,16 @@ function exportRecapPDF(s) {
   doc.autoTable({ startY: y, head: [['Site', 'Trouves', 'Part']], body: siteData.length ? siteData : [['-', '-', '-']], theme: 'grid', headStyles: { fillColor: [52, 211, 153], textColor: 0, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
   y = doc.lastAutoTable.finalY + 10;
 
-  const manquants = state.vehicules.filter((v) => v.present !== true);
+  if (Object.keys(s.byUser).length) {
+    doc.setFontSize(11); doc.setFont(undefined, 'bold');
+    doc.text('Contribution par utilisateur', 14, y); y += 4;
+    const userData = Object.entries(s.byUser).sort((a, b) => b[1] - a[1]).map(([nom, count]) => [nom, String(count)]);
+    doc.autoTable({ startY: y, head: [['Utilisateur', 'Pointages']], body: userData, theme: 'grid', headStyles: { fillColor: [96, 165, 250], textColor: 0, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
+    y = doc.lastAutoTable.finalY + 10;
+  }
+
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  const manquants = state.vehicules.filter((v) => !pointedIds.has(v.id));
   if (manquants.length) {
     if (y > 240) { doc.addPage(); y = 20; }
     doc.setFontSize(11); doc.setFont(undefined, 'bold');
@@ -2014,25 +2245,10 @@ $('#importRun').addEventListener('click', async () => {
   } catch (err) { console.error('[IMPORT]', err); cleanup(); toast('Erreur : ' + err.message, 'error'); }
 });
 
-/* TERRAIN */
-$('#terrainToggle').addEventListener('change', (e) => { document.body.classList.toggle('terrain-mode', e.target.checked); localStorage.setItem('ntr_terrain', e.target.checked ? '1' : '0'); });
-if (localStorage.getItem('ntr_terrain') === '1') { document.body.classList.add('terrain-mode'); $('#terrainToggle').checked = true; }
-$('#terrainSite').addEventListener('change', renderTerrain);
-function renderTerrain() {
-  const site = $('#terrainSite').value;
-  const q = normalizeImmat($('#terrainSearch').value);
-  let list = state.vehicules;
-  if (site) list = list.filter((v) => v.site === site);
-  if (q) list = list.filter((v) => normalizeImmat(v.immat).includes(q));
-  const c = $('#terrainList');
-  if (!list.length) { c.innerHTML = `<div class="empty-state"><div class="es-title">Aucun véhicule</div></div>`; return; }
-  c.innerHTML = list.slice(0, 300).map((v) => `<div class="vehicle-card ${v.present ? 'present' : ''}"><div class="vehicle-card-main"><div class="vehicle-card-immat">${escapeHtml(v.immat)}</div><div class="vehicle-card-info"><span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}</span><span>${escapeHtml(v.site || '—')}</span></div></div></div>`).join('');
-}
-
 /* SYNC */
 $('#btnSync').addEventListener('click', async () => {
   showLoading('Synchronisation...');
-  try { await Promise.all([state.db.collection('vehicules').get(), state.db.collection('rondes').get(), state.db.collection('utilisateurs').get(), state.db.collection('societes').get()]); toast('Synchronisé', 'success'); }
+  try { await Promise.all([state.db.collection('vehicules').get(), state.db.collection('rondes').get(), state.db.collection('utilisateurs').get(), state.db.collection('societes').get(), state.db.collection('pointages').get()]); toast('Synchronisé', 'success'); }
   catch (err) { toast('Erreur : ' + err.message, 'error'); }
   finally { hideLoading(); }
 });
@@ -2041,6 +2257,7 @@ function renderAdminInfo() {
   const s = $('#adminSocCount'); if (s) s.textContent = state.clients.length;
   const v = $('#adminVehCount'); if (v) v.textContent = state.vehicules.length;
   const r = $('#adminRondeCount'); if (r) r.textContent = state.rondes.length;
+  const p = $('#adminPointageCount'); if (p) p.textContent = state.pointages.length;
 }
 
 /* HISTORIQUE */
@@ -2082,9 +2299,14 @@ function openRondeDetail(id) {
   const s = r.stats || {};
   const presents = r.vehiculesSnapshot || [];
   const repartition = s.repartitionSites || {};
+  const contributions = s.contributions || {};
   let repartitionHtml = '';
   if (Object.keys(repartition).length) {
     repartitionHtml = `<div class="card"><div class="card-title">Répartition par site</div><table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules</th></tr></thead><tbody>${Object.entries(repartition).sort((a, b) => b[1] - a[1]).map(([site, count]) => `<tr><td>${escapeHtml(site)}</td><td>${count}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  let contributionsHtml = '';
+  if (Object.keys(contributions).length) {
+    contributionsHtml = `<div class="card"><div class="card-title">Contribution par utilisateur</div><table class="bilan-table"><thead><tr><th>Utilisateur</th><th>Pointages</th></tr></thead><tbody>${Object.entries(contributions).sort((a, b) => b[1] - a[1]).map(([nom, count]) => `<tr><td>${escapeHtml(nom)}</td><td>${count}</td></tr>`).join('')}</tbody></table></div>`;
   }
   $('#rdBody').innerHTML = `
     <div class="stats-grid">
@@ -2095,6 +2317,7 @@ function openRondeDetail(id) {
     </div>
     <div class="card"><div class="card-title">Informations</div><div style="font-size:0.8rem;line-height:1.7"><div>Par : <strong>${escapeHtml(r.effectueePar)}</strong></div><div>Date : ${formatDateTimeFR(r.heureDebut)}</div><div>Sites visités : ${escapeHtml(r.site || '—')}</div></div></div>
     ${repartitionHtml}
+    ${contributionsHtml}
     <div class="card"><div class="card-title">Véhicules trouvés (${presents.length})</div>${presents.length ? `<div class="list">${presents.map((v) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}${v.site ? ' · ' + escapeHtml(v.site) : ''}</div></div></div>`).join('')}</div>` : '<div class="es-sub" style="color:var(--text-mute);padding:8px">Aucun</div>'}</div>`;
   openModal('modalRondeDetail');
 }
@@ -2195,7 +2418,19 @@ function renderChefDashboard() {
   const p = r7.reduce((s, r) => s + (r.stats?.presents ?? 0), 0);
   const t = r7.reduce((s, r) => s + (r.stats?.total ?? 0), 0);
   $('#chef7Rate').textContent = (t ? Math.round((p / t) * 100) : 0) + '%';
-  $('#chefMissing').textContent = state.vehicules.filter((v) => v.present !== true).length;
+
+  const pointedIds = new Set(state.pointages.map((pt) => pt.vehiculeId));
+  $('#chefMissing').textContent = state.vehicules.filter((v) => !pointedIds.has(v.id)).length;
+
+  const byUser = {};
+  state.pointages.forEach((pt) => {
+    if (!byUser[pt.userNom]) byUser[pt.userNom] = { count: 0, sites: new Set() };
+    byUser[pt.userNom].count++;
+    byUser[pt.userNom].sites.add(pt.site);
+  });
+  const users = Object.entries(byUser).sort((a, b) => b[1].count - a[1].count);
+  $('#chefActiveUsers').innerHTML = users.length ? users.map(([nom, d]) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${escapeHtml(nom)}</div><div class="list-item-sub"><span>${d.count} véhicule(s)</span><span>${[...d.sites].map((s) => escapeHtml(s)).join(', ')}</span></div></div><span class="badge badge-success">Actif</span></div>`).join('') : '<div class="es-sub" style="color:var(--text-mute);padding:8px">Aucun utilisateur actif aujourd\'hui</div>';
+
   const bySite = {};
   r7.forEach((r) => { const rep = r.stats?.repartitionSites || {}; Object.entries(rep).forEach(([s, c]) => { if (!bySite[s]) bySite[s] = { r: 0, c: 0 }; bySite[s].r++; bySite[s].c += c; }); });
   const rows = Object.entries(bySite).map(([s, d]) => `<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border)">${escapeHtml(s)}</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)">${d.r}</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)"><span class="badge badge-primary">${d.c} véhicules</span></td></tr>`);
@@ -2264,9 +2499,6 @@ setupVoiceSearch('pointageMic', 'pointageSearch', (text) => {
   else { toast(`Aucun véhicule "${text}"`, 'warning'); }
 });
 setupVoiceSearch('vehMic', 'vehSearch', (t) => { state.vehFilters.search = t; $('#vehSearchClear').classList.add('show'); applyVehFilters(); });
-setupVoiceSearch('terrainMic', 'terrainSearch', (t) => { renderTerrain(); });
-$('#terrainSearch').addEventListener('input', (e) => { $('#terrainClear').classList.toggle('show', e.target.value.length > 0); renderTerrain(); });
-$('#terrainClear').addEventListener('click', () => { $('#terrainSearch').value = ''; $('#terrainClear').classList.remove('show'); renderTerrain(); });
 
 /* EXPORTS */
 function exportExcel(rows, filename, sheet) {
@@ -2278,7 +2510,8 @@ function exportExcel(rows, filename, sheet) {
   toast('Fichier Excel téléchargé', 'success');
 }
 function vehToRow(v) {
-  return { 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '', 'Reference commande': v.refCommande || '', 'Type de maintenance': v.typeMaintenance || '', 'Site': v.site || '', 'Source': SOURCES[v.source] || v.source || '', 'Trouve': v.present === true ? 'Oui' : 'Non', 'Derniere vue': v.lastSeen ? formatDateFR(v.lastSeen) : '' };
+  const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
+  return { 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '', 'Reference commande': v.refCommande || '', 'Type de maintenance': v.typeMaintenance || '', 'Site': v.site || '', 'Source': SOURCES[v.source] || v.source || '', 'Trouve': pointed ? 'Oui' : 'Non', 'Derniere vue': v.lastSeen ? formatDateFR(v.lastSeen) : '' };
 }
 $('#btnExportVehXls').addEventListener('click', () => {
   const rows = (state.vehiculesFiltered.length ? state.vehiculesFiltered : state.vehicules).map(vehToRow);
@@ -2288,12 +2521,13 @@ document.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-export]');
   if (!btn) return;
   const type = btn.dataset.export;
-  if (type === 'xls-presents') { const p = state.vehicules.filter((v) => v.present === true); exportExcel(p.map(vehToRow), `NTR_Trouves_${todayKey()}.xlsx`, 'Trouves'); }
-  if (type === 'xls-absents') { const a = state.vehicules.filter((v) => v.present !== true); exportExcel(a.map(vehToRow), `NTR_Manquants_${todayKey()}.xlsx`, 'Manquants'); }
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  if (type === 'xls-presents') { const p = state.vehicules.filter((v) => pointedIds.has(v.id)); exportExcel(p.map(vehToRow), `NTR_Trouves_${todayKey()}.xlsx`, 'Trouves'); }
+  if (type === 'xls-absents') { const a = state.vehicules.filter((v) => !pointedIds.has(v.id)); exportExcel(a.map(vehToRow), `NTR_Manquants_${todayKey()}.xlsx`, 'Manquants'); }
   if (type === 'xls-sites') {
     const rows = [];
     SITES.forEach((site) => {
-      const vs = state.vehicules.filter((v) => v.site === site && v.present === true);
+      const vs = state.vehicules.filter((v) => v.site === site && pointedIds.has(v.id));
       if (!vs.length) return;
       rows.push({ 'SITE': site, 'Immatriculation': '', 'Marque': '', 'Modele': '', 'Client': '' });
       vs.forEach((v) => rows.push({ 'SITE': '', 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '' }));
@@ -2319,7 +2553,8 @@ function exportPDFSites() {
   doc.text(`Genere le ${new Date().toLocaleString('fr-FR')}`, 283, 13, { align: 'right' });
   doc.setTextColor(0, 0, 0);
   let y = 28, hasData = false;
-  const presents = state.vehicules.filter((v) => v.present === true);
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  const presents = state.vehicules.filter((v) => pointedIds.has(v.id));
   SITES.forEach((site) => {
     const vs = presents.filter((v) => v.site === site);
     if (!vs.length) return;
@@ -2338,7 +2573,8 @@ function exportPDFSites() {
 }
 function exportPDFAbsents() {
   const { jsPDF } = window.jspdf;
-  const absents = state.vehicules.filter((v) => v.present !== true);
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  const absents = state.vehicules.filter((v) => !pointedIds.has(v.id));
   if (!absents.length) { toast('Aucun véhicule manquant', 'warning'); return; }
   const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
   doc.setFillColor(220, 38, 38); doc.rect(0, 0, 297, 20, 'F');
@@ -2361,14 +2597,15 @@ function exportPDFGlobal() {
   doc.setFontSize(9); doc.setFont(undefined, 'normal');
   doc.text('Rapport global', 14, 16);
   doc.setTextColor(0, 0, 0);
-  const p = state.vehicules.filter((v) => v.present === true).length;
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  const p = state.vehicules.filter((v) => pointedIds.has(v.id)).length;
   const t = state.vehicules.length; const a = t - p;
   const taux = t ? Math.round((p / t) * 100) : 0;
   doc.setFontSize(11); doc.setFont(undefined, 'bold'); doc.text('Synthese', 14, 32);
   doc.setFont(undefined, 'normal'); doc.setFontSize(10);
   doc.text(`Total : ${t}`, 14, 40); doc.text(`Trouves : ${p}`, 14, 46);
   doc.text(`Manquants : ${a}`, 14, 52); doc.text(`Taux : ${taux}%`, 14, 58);
-  const rows = SITES.map((site) => { const vs = state.vehicules.filter((v) => v.site === site); const pp = vs.filter((v) => v.present === true).length; return [site, vs.length, pp, vs.length - pp, vs.length ? Math.round((pp / vs.length) * 100) + '%' : '-']; }).filter((r) => r[1] > 0);
+  const rows = SITES.map((site) => { const vs = state.vehicules.filter((v) => v.site === site); const pp = vs.filter((v) => pointedIds.has(v.id)).length; return [site, vs.length, pp, vs.length - pp, vs.length ? Math.round((pp / vs.length) * 100) + '%' : '-']; }).filter((r) => r[1] > 0);
   doc.autoTable({ startY: 68, head: [['Site', 'Total', 'Trouves', 'Manquants', 'Taux']], body: rows, theme: 'grid', headStyles: { fillColor: [15, 23, 42], textColor: 255, fontSize: 10 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
   doc.save(`NTR_Rapport_${todayKey()}.pdf`);
   toast('Rapport PDF téléchargé', 'success');
@@ -2398,7 +2635,8 @@ function exportRondePDF(r) {
 async function exportAbsentsWord(source) {
   if (typeof docx === 'undefined') { toast('Bibliotheque Word non chargee', 'error'); return; }
   const srcLabel = source === 'source1' ? 'Source HR' : 'Source UM';
-  const vehicles = state.vehicules.filter((v) => v.present !== true && v.source === source);
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  const vehicles = state.vehicules.filter((v) => !pointedIds.has(v.id) && v.source === source);
   if (!vehicles.length) { toast(`Aucun manquant dans ${srcLabel}`, 'warning'); return; }
   try {
     const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType } = docx;
@@ -2420,7 +2658,8 @@ async function exportAbsentsWord(source) {
 }
 async function exportPresentsWord() {
   if (typeof docx === 'undefined') { toast('Bibliotheque Word non chargee', 'error'); return; }
-  const vehicles = state.vehicules.filter((v) => v.present === true);
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  const vehicles = state.vehicules.filter((v) => pointedIds.has(v.id));
   if (!vehicles.length) { toast('Aucun present', 'warning'); return; }
   try {
     const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType } = docx;
@@ -2502,7 +2741,7 @@ async function wipeBySource(source) {
 $('#btnWipeHR').addEventListener('click', () => wipeBySource('source1'));
 $('#btnWipeUM').addEventListener('click', () => wipeBySource('source2'));
 $('#btnWipeAll').addEventListener('click', async () => {
-  const ok1 = await confirmDialog('Vider TOUT ? (1/2)', `Suppression de <strong>${state.vehicules.length}</strong> véhicules et <strong>${state.rondes.length}</strong> rondes.<br>Utilisateurs et clients conservés.`);
+  const ok1 = await confirmDialog('Vider TOUT ? (1/2)', `Suppression de <strong>${state.vehicules.length}</strong> véhicules, <strong>${state.rondes.length}</strong> rondes et <strong>${state.pointages.length}</strong> pointages.<br>Utilisateurs et clients conservés.`);
   if (!ok1) return;
   const ok2 = await confirmDialog('CONFIRMATION (2/2)', 'Cette action est <strong style="color:var(--danger)">IRREVERSIBLE</strong>.');
   if (!ok2) return;
@@ -2520,6 +2759,12 @@ $('#btnWipeAll').addEventListener('click', async () => {
     for (let i = 0; i < allR.length; i += bs) {
       const b = state.db.batch();
       allR.slice(i, i + bs).forEach((r) => b.delete(state.db.collection('rondes').doc(r.id)));
+      await b.commit();
+    }
+    const allP = state.pointages;
+    for (let i = 0; i < allP.length; i += bs) {
+      const b = state.db.batch();
+      allP.slice(i, i + bs).forEach((p) => b.delete(state.db.collection('pointages').doc(p.id)));
       await b.commit();
     }
     toast('Toutes les données ont été supprimées', 'success');
@@ -2572,11 +2817,12 @@ async function init() {
     renderVehiculesList();
     renderAdminInfo();
     renderPointage();
+    renderAutruiSection();
   } catch (e) { console.warn('[init]', e); }
   hideLoading();
   if (!state.db) { toast('Firebase indisponible', 'error'); return; }
   try {
-    listenUsers(); listenClients(); listenVehicules(); listenRondes();
+    listenUsers(); listenClients(); listenVehicules(); listenRondes(); listenPointages();
     const withTimeout = (promise, ms = 10000) => Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej(new Error('Timeout')), ms))]);
     await withTimeout(Promise.all([ensureUsers(), ensureClients()]), 10000);
     await withTimeout(getChefPin(), 6000);
