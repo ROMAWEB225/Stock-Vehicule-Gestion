@@ -2023,17 +2023,22 @@ function listenVehicules() {
   state.unsubscribers.push(unsub);
 }
 function applyVehFilters() {
-  const f = state.vehFilters; const q = normalizeImmat(f.search);
+  const f = state.vehFilters;
+  const q = normalizeImmat(f.search);
   let filtered = state.vehicules.filter((v) => {
-    if (f.site && v.site !== f.site) return false;
+    // Utiliser le site actuel (pointage officiel > site stocké)
+    const siteActuel = getSiteActuel(v);
+    if (f.site && siteActuel !== f.site) return false;
     if (f.source && v.source !== f.source) return false;
     if (f.type && v.typeMaintenance !== f.type) return false;
     if (q) {
-      const h = [v.immat, v.marque, v.modele, v.client, v.refCommande, v.typeMaintenance].map((x) => normalizeImmat(x)).join(' ');
+      const h = [v.immat, v.marque, v.modele, v.client, v.refCommande, v.typeMaintenance]
+        .map((x) => normalizeImmat(x)).join(' ');
       if (!h.includes(q)) return false;
     }
     return true;
   });
+  // Tri (inchangé)
   const s = state.vehSort;
   filtered.sort((a, b) => {
     if (s === 'immat') return (a.immat || '').localeCompare(b.immat || '');
@@ -2049,24 +2054,6 @@ function applyVehFilters() {
   renderVehiculesList();
   const cnt = $('#vehCount'); if (cnt) cnt.textContent = filtered.length;
 }
-
-const vehSearchInput = $('#vehSearch');
-const vehSearchClear = $('#vehSearchClear');
-const vehAutoList = $('#vehAutocomplete');
-vehSearchInput.addEventListener('input', (e) => {
-  const v = e.target.value;
-  state.vehFilters.search = v;
-  vehSearchClear.classList.toggle('show', v.length > 0);
-  showAutocomplete(v);
-  applyVehFilters();
-});
-vehSearchClear.addEventListener('click', () => {
-  vehSearchInput.value = '';
-  state.vehFilters.search = '';
-  vehSearchClear.classList.remove('show');
-  vehAutoList.classList.remove('show');
-  applyVehFilters();
-});
 function showAutocomplete(query) {
   const q = normalizeImmat(query);
   if (!q) { vehAutoList.classList.remove('show'); return; }
@@ -2102,7 +2089,7 @@ function renderVehiculesList() {
     const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
     const srcLabel = SOURCES[v.source] || v.source || '—';
     const isC = v.source === 'custom' || v.isCustom;
-    return `<div class="vehicle-card ${pointed ? 'present' : 'absent'}"><div class="vehicle-card-main"><div class="vehicle-card-immat">${escapeHtml(v.immat)}<span class="badge ${isC ? 'badge-blue' : 'badge-muted'}">${escapeHtml(srcLabel)}</span>${v.site ? `<span class="badge badge-muted">${escapeHtml(v.site)}</span>` : ''}</div><div class="vehicle-card-info">${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}</div></div><div class="list-item-actions">${isC ? `<button class="btn btn-sm btn-ghost" data-edit="${v.id}">Modifier</button><button class="btn btn-sm btn-danger" data-del="${v.id}">Suppr.</button>` : ''}</div></div>`;
+    return `<div class="vehicle-card ${pointed ? 'present' : 'absent'}"><div class="vehicle-card-main"><div class="vehicle-card-immat">${escapeHtml(v.immat)}<span class="badge ${isC ? 'badge-blue' : 'badge-muted'}">${escapeHtml(srcLabel)}</span>${(() => { const s = getSiteActuel(v); return s ? `<span class="badge badge-muted">${escapeHtml(s)}</span>` : ''; })()}</div><div class="vehicle-card-info">${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}</div></div><div class="list-item-actions">${isC ? `<button class="btn btn-sm btn-ghost" data-edit="${v.id}">Modifier</button><button class="btn btn-sm btn-danger" data-del="${v.id}">Suppr.</button>` : ''}</div></div>`;
   }).join('');
   if (pag) { if (shown < total) { pag.classList.remove('hidden'); $('#vehPgInfo').textContent = `${shown} sur ${total}`; } else pag.classList.add('hidden'); }
   $$('[data-edit]', list).forEach((b) => b.addEventListener('click', () => openVehiculeModal(b.dataset.edit)));
@@ -2246,6 +2233,16 @@ function getPointageOfficiel(vehiculeId) {
   if (!all.length) return null;
   return all.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0];
 }
+function getSiteActuel(vehicule) {
+  if (!vehicule) return null;
+  // Priorité 1 : site du pointage officiel du jour
+  const officiel = getPointageOfficiel(vehicule.id);
+  if (officiel && officiel.site) return officiel.site;
+  // Priorité 2 : site stocké sur le véhicule
+  if (vehicule.site) return vehicule.site;
+  // Pas de site connu
+  return null;
+}  
 function renderPointage() {
   const list = $('#pointageList'); const empty = $('#pointageEmpty'); const pag = $('#pointagePagination');
   if (!list) return;
@@ -2452,8 +2449,12 @@ function computeRondeStats() {
     const allSrc = all.filter((v) => v.source === src); const foundSrc = found.filter((v) => v.source === src); const missSrc = manquants.filter((v) => v.source === src);
     if (allSrc.length > 0) bySource[src] = { total: allSrc.length, found: foundSrc.length, manquants: missSrc.length, taux: allSrc.length ? Math.round((foundSrc.length / allSrc.length) * 100) : 0 };
   });
-  const bySite = {};
-  found.forEach((v) => { const s = siteOfficiel(v.id) || v.site || '— Sans site —'; if (!bySite[s]) bySite[s] = 0; bySite[s]++; });
+ const bySite = {};
+found.forEach((v) => {
+  const s = getSiteActuel(v) || '— Sans site —';
+  if (!bySite[s]) bySite[s] = 0;
+  bySite[s]++;
+});
   const byUser = {};
   state.pointages.forEach((p) => { if (!byUser[p.userNom]) byUser[p.userNom] = 0; byUser[p.userNom]++; });
   return { total, found: found.length, manquants: manquants.length, tauxGlobal: total ? Math.round((found.length / total) * 100) : 0, bySource, bySite, byUser, sitesVisited: Object.keys(bySite).filter((s) => s !== '— Sans site —') };
@@ -2619,7 +2620,7 @@ function renderGalerie() {
   let base;
   if (photoFilter === 'without') { const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId)); base = state.vehicules.filter((v) => pointedIds.has(v.id) && !v.photo); }
   else { base = state.vehicules.filter((v) => v.photo && v.photo.length > 0); }
-  if (site) base = base.filter((v) => v.site === site);
+  if (site) base = base.filter((v) => getSiteActuel(v) === site);
   const g = $('#galGrid'); const e = $('#galEmpty');
   if (!g) return;
   updateGalSelectionInfo();
@@ -2699,7 +2700,7 @@ function renderSocietes() {
   c.innerHTML = disp.map((soc) => {
     const vs = g[soc];
     const alerts = vs.filter((v) => !v.lastSeen || daysBetween(v.lastSeen) > 30);
-    return `<div class="card"><div class="section-header" style="margin-bottom:10px"><h3 class="section-title" style="font-size:0.95rem">${escapeHtml(soc)} <span class="badge badge-muted">${vs.length}</span></h3>${alerts.length ? `<span class="badge badge-warning">${alerts.length} alerte(s) 30j</span>` : ''}</div><div class="list">${vs.slice(0, 50).map((v) => { const nv = !v.lastSeen; const j = v.lastSeen ? daysBetween(v.lastSeen) : null; const a = nv || j > 30; return `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub"><span>${escapeHtml(v.site || '—')}</span>${v.lastSeen ? `<span>Vu il y a ${j}j</span>` : `<span style="color:var(--warning)">Jamais vu</span>`}</div></div>${a ? '<span class="badge badge-warning">Alerte</span>' : '<span class="badge badge-success">OK</span>'}</div>`; }).join('')}</div></div>`;
+    return `<div class="card"><div class="section-header" style="margin-bottom:10px"><h3 class="section-title" style="font-size:0.95rem">${escapeHtml(soc)} <span class="badge badge-muted">${vs.length}</span></h3>${alerts.length ? `<span class="badge badge-warning">${alerts.length} alerte(s) 30j</span>` : ''}</div><div class="list">${vs.slice(0, 50).map((v) => { const nv = !v.lastSeen; const j = v.lastSeen ? daysBetween(v.lastSeen) : null; const a = nv || j > 30; return `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub"><span>${escapeHtml(getSiteActuel(v) || '—')}</span>${v.lastSeen ? `<span>Vu il y a ${j}j</span>` : `<span style="color:var(--warning)">Jamais vu</span>`}</div></div>${a ? '<span class="badge badge-warning">Alerte</span>' : '<span class="badge badge-success">OK</span>'}</div>`; }).join('')}</div></div>`;
   }).join('');
 }
 
@@ -2740,16 +2741,27 @@ document.addEventListener('click', (e) => {
   if (type === 'xls-presents') { const p = state.vehicules.filter((v) => pointedIds.has(v.id)); exportExcel(p.map(vehToRow), `NTR_Trouves_${todayKey()}.xlsx`, 'Trouves'); }
   if (type === 'xls-absents') { const a = state.vehicules.filter((v) => !pointedIds.has(v.id)); exportExcel(a.map(vehToRow), `NTR_Manquants_${todayKey()}.xlsx`, 'Manquants'); }
   if (type === 'xls-sites') {
-    const rows = [];
-    SITES.forEach((site) => {
-      const vs = state.vehicules.filter((v) => v.site === site && pointedIds.has(v.id));
-      if (!vs.length) return;
-      rows.push({ 'SITE': site, 'Immatriculation': '', 'Marque': '', 'Modele': '', 'Client': '' });
-      vs.forEach((v) => rows.push({ 'SITE': '', 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '' }));
-      rows.push({});
+  const rows = [];
+  SITES.forEach((site) => {
+    const vs = state.vehicules.filter((v) => {
+      if (!pointedIds.has(v.id)) return false;
+      const siteActuel = getSiteActuel(v);
+      return siteActuel === site;
     });
-    exportExcel(rows, `NTR_Trouves_Par_Site_${todayKey()}.xlsx`, 'Par site');
-  }
+    if (!vs.length) return;
+    rows.push({ 'SITE': site, 'Immatriculation': '', 'Marque': '', 'Modele': '', 'Client': '' });
+    vs.forEach((v) => rows.push({
+      'SITE': '',
+      'Immatriculation': v.immat || '',
+      'Marque': v.marque || '',
+      'Modele': v.modele || '',
+      'Client': v.client || ''
+    }));
+    rows.push({});
+  });
+  if (!rows.length) { toast('Aucun véhicule trouvé par site', 'warning'); return; }
+  exportExcel(rows, `NTR_Trouves_Par_Site_${todayKey()}.xlsx`, 'Par site');
+}
   if (type === 'pdf-sites') exportPDFSites();
   if (type === 'pdf-absents') exportPDFAbsents();
   if (type === 'pdf-global') exportPDFGlobal();
@@ -2770,7 +2782,7 @@ function exportPDFSites() {
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   const presents = state.vehicules.filter((v) => pointedIds.has(v.id));
   SITES.forEach((site) => {
-    const vs = presents.filter((v) => v.site === site);
+   const vs = vehicles.filter((v) => getSiteActuel(v) === site);
     if (!vs.length) return;
     hasData = true;
     if (y > 180) { doc.addPage(); y = 20; }
@@ -2819,7 +2831,11 @@ function exportPDFGlobal() {
   doc.setFont(undefined, 'normal'); doc.setFontSize(10);
   doc.text(`Total : ${t}`, 14, 40); doc.text(`Trouves : ${p}`, 14, 46);
   doc.text(`Manquants : ${a}`, 14, 52); doc.text(`Taux : ${taux}%`, 14, 58);
-  const rows = SITES.map((site) => { const vs = state.vehicules.filter((v) => v.site === site); const pp = vs.filter((v) => pointedIds.has(v.id)).length; return [site, vs.length, pp, vs.length - pp, vs.length ? Math.round((pp / vs.length) * 100) + '%' : '-']; }).filter((r) => r[1] > 0);
+ const rows = SITES.map((site) => {
+  const vs = state.vehicules.filter((v) => getSiteActuel(v) === site);
+  const pp = vs.filter((v) => pointedIds.has(v.id)).length;
+  return [site, vs.length, pp, vs.length - pp, vs.length ? Math.round((pp / vs.length) * 100) + '%' : '-'];
+}).filter((r) => r[1] > 0);
   doc.autoTable({ startY: 68, head: [['Site', 'Total', 'Trouves', 'Manquants', 'Taux']], body: rows, theme: 'grid', headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 10 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
   doc.save(`NTR_Rapport_${todayKey()}.pdf`);
   toast('Rapport PDF téléchargé', 'success');
