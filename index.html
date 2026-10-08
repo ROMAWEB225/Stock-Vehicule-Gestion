@@ -1154,7 +1154,7 @@ body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Immatriculation <span class="req">*</span></label>
-          <input type="search" class="input anti-autofill" id="attImmat" placeholder="AA565TG01" style="text-transform:uppercase" autocomplete="nope" name="att_immat_2k7b6" aria-autocomplete="none" readonly>
+         <input type="text" class="input" id="attImmat" placeholder="AA565TG01" style="text-transform:uppercase" autocomplete="off" name="att_immat_input">
         </div>
         <div class="form-group">
           <label class="form-label">Assuré</label>
@@ -1239,7 +1239,7 @@ body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
     <div class="modal-header"><h3 class="modal-title" id="vehModalTitle">Ajouter un véhicule</h3><button class="modal-close" data-close="modalVehicule">✕</button></div>
     <div class="modal-body">
       <input type="hidden" id="vehId">
-      <div class="form-group"><label class="form-label">Immatriculation <span class="req">*</span></label><input type="search" class="input anti-autofill" id="vehImmat" style="text-transform:uppercase" autocomplete="nope" name="veh_immat_8c5f3" aria-autocomplete="none" readonly></div>
+      <div class="form-group"><label class="form-label">Immatriculation <span class="req">*</span></label><input type="text" class="input" id="vehImmat" style="text-transform:uppercase" autocomplete="off" name="veh_immat_input" placeholder="Ex: AA565TG01"></div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Marque</label><input type="text" class="input" id="vehMarque"></div>
         <div class="form-group"><label class="form-label">Modèle</label><input type="text" class="input" id="vehModele"></div>
@@ -1716,7 +1716,40 @@ $('#loginToggleView').addEventListener('click', () => {
 });
 
 setTimeout(() => {
-  ['#loginInput', '#adminPinInput'].forEach((sel) => {
+  [
+    '#loginInput',
+    '#adminPinInput',
+    '#attImmat',
+    '#attAssure',
+    '#attMarque',
+    '#attModele',
+    '#attCouleur',
+    '#attDuree',
+    '#attDateDebut',
+    '#attDateFin',
+    '#vehImmat',
+    '#vehMarque',
+    '#vehModele',
+    '#vehRef',
+    '#vehType',
+    '#vehClient',
+    '#vehSite',
+    '#vehSociete',
+    '#mouvSearch',
+    '#pointageSearch',
+    '#vehSearch',
+    '#newUserNom',
+    '#newSocNom',
+    '#pinOld',
+    '#pinNew',
+    '#pinNew2',
+    '#changeAccessOld',
+    '#changeAccessNew',
+    '#changeAccessNew2',
+    '#changePinOld',
+    '#changePinNew',
+    '#changePinNew2'
+  ].forEach((sel) => {
     const el = document.querySelector(sel);
     if (!el) return;
     const unlock = () => el.removeAttribute('readonly');
