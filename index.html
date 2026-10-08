@@ -541,8 +541,23 @@ img { max-width: 100%; display: block; }
 .autrui-user .au-nom { flex: 1; font-weight: 600; color: var(--text); }
 .autrui-user .au-count { font-size: 0.72rem; color: var(--primary); font-weight: 700; }
 .autrui-user .au-sites { font-size: 0.68rem; color: var(--text-mute); }
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
 
-.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 16px; }
+/* Modale PIN Admin toujours au-dessus des autres */
+.modal-overlay.admin-pin-modal {
+  z-index: 1100 !important;
+}
 .modal-overlay.show { display: flex; }
 .modal { background: var(--bg-2); border: 1px solid var(--border-light); border-radius: var(--radius-lg); width: 100%; max-width: 520px; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-lg); animation: modalIn 0.2s ease; }
 .modal.modal-lg { max-width: 820px; }
@@ -1534,24 +1549,32 @@ function hideLoading() { $('#loadingOverlay').classList.remove('show'); }
 function openModal(id) { $('#' + id).classList.add('show'); }
 function closeModal(id) { $('#' + id).classList.remove('show'); }
 document.addEventListener('click', (e) => {
-  // Ne pas fermer si une modale PIN Admin est ouverte par-dessus
-  const adminPinOpen = $('#modalAdminPin').classList.contains('show');
-  
+  // Si la modale PIN Admin est ouverte, on n'écoute rien d'autre
+  const pinOpen = document.getElementById('modalAdminPin').classList.contains('show');
+
   if (e.target.matches('[data-close]')) {
     const idToClose = e.target.dataset.close;
-    // Si on essaie de fermer une modale pendant que le PIN est ouvert, on bloque
-    if (adminPinOpen && idToClose !== 'modalAdminPin') {
+    // Interdire la fermeture d'autres modales quand PIN est ouvert
+    if (pinOpen && idToClose !== 'modalAdminPin') {
       return;
     }
     closeModal(idToClose);
+    if (idToClose === 'modalAdminPin') {
+      state.pendingAdminAction = null;
+      document.getElementById('modalAdminPin').style.zIndex = '';
+    }
   }
-  
+
   if (e.target.classList.contains('modal-overlay')) {
-    // Si clic sur le fond d'une modale pendant que PIN est ouvert, on bloque
-    if (adminPinOpen && e.target.id !== 'modalAdminPin') {
+    // Si clic sur le fond d'une autre modale quand PIN est ouvert → bloquer
+    if (pinOpen && e.target.id !== 'modalAdminPin') {
       return;
     }
     e.target.classList.remove('show');
+    if (e.target.id === 'modalAdminPin') {
+      state.pendingAdminAction = null;
+      e.target.style.zIndex = '';
+    }
   }
 });
 
@@ -1784,11 +1807,15 @@ function requireAdminPin(reason, callback) {
   $('#adminPinReason').textContent = reason || 'Cette action est protégée.';
   $('#adminPinInput').value = '';
   $('#adminPinError').textContent = '';
-  openModal('modalAdminPin');
+  // Forcer l'ouverture du PIN au-dessus de tout
+  const pinModal = $('#modalAdminPin');
+  pinModal.classList.add('show');
+  pinModal.style.zIndex = '2000';
   setTimeout(() => {
     const el = $('#adminPinInput');
     el.removeAttribute('readonly');
     el.focus();
+    el.select && el.select();
   }, 300);
 }
 
@@ -1796,6 +1823,7 @@ function validateAdminPin() {
   const input = $('#adminPinInput').value.trim();
   if (input === state.adminPin) {
     closeModal('modalAdminPin');
+    $('#modalAdminPin').style.zIndex = '';
     toast('Accès autorisé', 'success');
     const cb = state.pendingAdminAction;
     state.pendingAdminAction = null;
@@ -1809,23 +1837,25 @@ function validateAdminPin() {
   }
 }
 
-$('#adminPinValidate').addEventListener('click', validateAdminPin);
-$('#adminPinInput').addEventListener('keydown', (e) => {
+// Listeners
+document.getElementById('adminPinValidate').onclick = validateAdminPin;
+document.getElementById('adminPinInput').onkeydown = (e) => {
   if (e.key === 'Enter') { e.preventDefault(); validateAdminPin(); }
-});
+};
 
-// Annulation du PIN Admin
-$('#adminPinCancel').addEventListener('click', () => {
+// Annulation / fermeture propre
+document.getElementById('adminPinCancel').onclick = () => {
   state.pendingAdminAction = null;
   closeModal('modalAdminPin');
-});
+  $('#modalAdminPin').style.zIndex = '';
+};
 
-// Fermeture par X ou clic fond → annule proprement
-$('#modalAdminPin').addEventListener('click', (e) => {
-  if (e.target.id === 'modalAdminPin' || e.target.closest('[data-close="modalAdminPin"]')) {
-    state.pendingAdminAction = null;
-  }
-});
+// Le X de fermeture
+document.querySelector('#modalAdminPin .modal-close').onclick = () => {
+  state.pendingAdminAction = null;
+  closeModal('modalAdminPin');
+  $('#modalAdminPin').style.zIndex = '';
+};
 
 /* ============================================================
    NAV
