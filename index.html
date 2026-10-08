@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0f172a">
+<meta name="theme-color" content="#0b1120">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="NTR Track">
 <title>NTR Track — Stock Véhicules</title>
@@ -13,10 +13,6 @@
 <link rel="apple-touch-icon" href="android-chrome-192x192.png">
 
 <style>
-/* ============================================================
-   NTR TRACK - Design v4.0
-   Palette : bleu nuit + vert émeraude (accent)
-   ============================================================ */
 :root {
   --bg: #0b1120;
   --bg-2: #1a2332;
@@ -51,7 +47,6 @@
   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.4);
   --transition: 0.2s ease;
 }
-
 [data-theme="light"] {
   --bg: #f8fafc;
   --bg-2: #ffffff;
@@ -85,7 +80,6 @@ body {
   transition: background var(--transition), color var(--transition);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; border: none; background: none; }
@@ -94,8 +88,115 @@ img { max-width: 100%; display: block; }
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-2); }
 ::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
 .hidden { display: none !important; }
+
+/* ============================================================
+   ÉCRAN DE CONNEXION
+   ============================================================ */
+.login-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  background: linear-gradient(135deg, #0b1120 0%, #1a2332 100%);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.login-screen.show { display: flex; animation: fadeIn 0.3s ease; }
+.login-screen.unlocking { animation: unlockFade 0.5s ease forwards; }
+@keyframes unlockFade {
+  to { opacity: 0; transform: scale(1.05); }
+}
+.login-box {
+  background: var(--bg-2);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  animation: modalIn 0.35s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.login-logo {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+}
+.login-logo svg { width: 40px; height: 40px; }
+.login-title { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.5px; margin: 0 0 6px; color: var(--text); }
+.login-subtitle { font-size: 0.82rem; color: var(--text-dim); margin: 0 0 28px; }
+.login-input-wrap { position: relative; margin-bottom: 16px; }
+.login-input {
+  width: 100%;
+  padding: 14px 46px 14px 46px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-align: center;
+  font-family: var(--mono);
+  transition: all var(--transition);
+}
+.login-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
+.login-input.shake { animation: shake 0.4s ease; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+.login-input-wrap .lock-ico {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-mute);
+  font-size: 1.1rem;
+}
+.login-toggle-view {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-mute);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+.login-toggle-view:hover { background: var(--bg-2); color: var(--text); }
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: #ffffff;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all var(--transition);
+}
+.login-btn:hover { background: var(--primary-dark); }
+.login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.login-error { color: var(--danger); font-size: 0.8rem; margin-top: 12px; font-weight: 500; min-height: 18px; }
+.login-attempts { font-size: 0.72rem; color: var(--text-mute); margin-top: 8px; }
+.login-footer { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 0.72rem; color: var(--text-mute); line-height: 1.6; }
 
 /* ============================================================
    HEADER
@@ -113,45 +214,13 @@ img { max-width: 100%; display: block; }
   flex-wrap: wrap;
   box-shadow: var(--shadow-sm);
 }
-.header-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  flex-shrink: 0;
-}
-.header-logo .logo-mark {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.header-logo .logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-.header-logo .logo-text .lt-main {
-  font-size: 1rem;
-  color: var(--text);
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-.header-logo .logo-text .lt-sub {
-  font-size: 0.62rem;
-  color: var(--text-mute);
-  font-weight: 500;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-}
-@media (max-width: 480px) {
-  .header-logo .logo-text .lt-sub { display: none; }
-}
+.header-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; flex-shrink: 0; }
+.header-logo .logo-mark { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
+.header-logo .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.header-logo .logo-text .lt-main { font-size: 1rem; color: var(--text); font-weight: 700; letter-spacing: 0.5px; }
+.header-logo .logo-text .lt-sub { font-size: 0.62rem; color: var(--text-mute); font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; }
+@media (max-width: 480px) { .header-logo .logo-text .lt-sub { display: none; } }
 .header-spacer { flex: 1; }
-
-/* Badge d'état (remplace le bouton Sync) */
 .header-status {
   display: inline-flex;
   align-items: center;
@@ -163,29 +232,26 @@ img { max-width: 100%; display: block; }
   font-size: 0.7rem;
   color: var(--text-dim);
   font-weight: 500;
+}
+.header-status .hs-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 6px var(--success); animation: pulse-dot 2s ease-in-out infinite; }
+.header-status.offline .hs-dot { background: var(--danger); box-shadow: 0 0 6px var(--danger); animation: none; }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@media (max-width: 640px) { .header-status .hs-label { display: none; } }
+.header-session {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--primary-soft);
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  font-size: 0.7rem;
+  color: var(--primary);
+  font-weight: 600;
   transition: all var(--transition);
 }
-.header-status .hs-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--success);
-  box-shadow: 0 0 6px var(--success);
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-.header-status.offline .hs-dot {
-  background: var(--danger);
-  box-shadow: 0 0 6px var(--danger);
-  animation: none;
-}
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-@media (max-width: 640px) {
-  .header-status .hs-label { display: none; }
-}
-
+.header-session:hover { background: rgba(16, 185, 129, 0.2); }
+@media (max-width: 640px) { .header-session .hs-label-session { display: none; } }
 .header-user {
   height: 34px;
   padding: 0 12px;
@@ -216,7 +282,7 @@ img { max-width: 100%; display: block; }
 .header-btn:hover { background: var(--bg-3); color: var(--text); }
 
 /* ============================================================
-   NAVIGATION
+   NAV
    ============================================================ */
 .nav {
   position: sticky;
@@ -236,7 +302,6 @@ img { max-width: 100%; display: block; }
   color: var(--text-dim);
   font-size: 0.78rem;
   font-weight: 500;
-  letter-spacing: 0.2px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -244,19 +309,9 @@ img { max-width: 100%; display: block; }
   white-space: nowrap;
 }
 .nav-btn:hover { background: var(--bg-2); color: var(--text); }
-.nav-btn.active {
-  background: var(--primary-soft);
-  color: var(--primary);
-  font-weight: 600;
-}
-.nav-btn.primary {
-  background: var(--bg-2);
-  color: var(--text);
-}
-.nav-btn.primary.active {
-  background: var(--primary);
-  color: #ffffff;
-}
+.nav-btn.active { background: var(--primary-soft); color: var(--primary); font-weight: 600; }
+.nav-btn.primary { background: var(--bg-2); color: var(--text); }
+.nav-btn.primary.active { background: var(--primary); color: #ffffff; }
 .nav-btn.danger { color: var(--danger); }
 .nav-btn.danger:hover { background: var(--bg-2); }
 .nav-divider { width: 1px; height: 20px; background: var(--border-light); margin: 0 4px; }
@@ -296,81 +351,21 @@ img { max-width: 100%; display: block; }
 .btn-lg { padding: 12px 22px; font-size: 0.88rem; }
 .btn-block { width: 100%; }
 
-/* ============================================================
-   CONTENU
-   ============================================================ */
 .container { max-width: 1400px; margin: 0 auto; padding: 16px; }
-
-/* Cartes génériques */
-.card {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-  margin-bottom: 14px;
-}
-.card-title {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin: 0 0 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Stats */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.stat-card {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  transition: all var(--transition);
-}
-.stat-card:hover { border-color: var(--border-light); }
-.stat-label {
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  font-weight: 500;
-}
-.stat-value {
-  font-size: 1.7rem;
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
+.card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+.card-title { font-size: 0.78rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.8px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.stat-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.stat-label { font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 500; }
+.stat-value { font-size: 1.7rem; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
 .stat-value.primary { color: var(--primary); }
 .stat-value.success { color: var(--success); }
 .stat-value.danger  { color: var(--danger); }
 .stat-value.warning { color: var(--warning); }
 .stat-value.blue { color: var(--blue); }
 
-/* ============================================================
-   FORMULAIRES
-   ============================================================ */
 .form-group { margin-bottom: 12px; }
-.form-label {
-  display: block;
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 5px;
-  font-weight: 600;
-}
+.form-label { display: block; font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; font-weight: 600; }
 .form-label .req { color: var(--danger); margin-left: 2px; }
 .input, .select, .textarea {
   width: 100%;
@@ -384,11 +379,7 @@ img { max-width: 100%; display: block; }
   appearance: none;
   transition: border-color var(--transition), box-shadow var(--transition);
 }
-.input:focus, .select:focus, .textarea:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-soft);
-}
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
 .textarea { resize: vertical; min-height: 60px; font-family: inherit; }
 .select {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239aabc4' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
@@ -400,187 +391,38 @@ img { max-width: 100%; display: block; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
 
-/* ============================================================
-   ANTI-AUTOFILL
-   ============================================================ */
 .anti-autofill { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'/>") !important; background-repeat: no-repeat !important; }
-.anti-autofill:-webkit-autofill,
-.anti-autofill:-webkit-autofill:hover,
-.anti-autofill:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--text);
-  -webkit-box-shadow: 0 0 0px 1000px var(--bg-3) inset;
-  transition: background-color 5000s ease-in-out 0s;
-  caret-color: var(--text);
-}
+.anti-autofill:-webkit-autofill, .anti-autofill:-webkit-autofill:hover, .anti-autofill:-webkit-autofill:focus { -webkit-text-fill-color: var(--text); -webkit-box-shadow: 0 0 0px 1000px var(--bg-3) inset; transition: background-color 5000s ease-in-out 0s; caret-color: var(--text); }
 
-/* ============================================================
-   BARRE RECHERCHE
-   ============================================================ */
-.search-bar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
+.search-bar { position: relative; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
 .search-input-wrap { position: relative; flex: 1; }
-.search-input-wrap .search-ico {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-mute);
-  pointer-events: none;
-  font-size: 0.9rem;
-}
-.search-input {
-  width: 100%;
-  padding: 11px 38px 11px 36px;
-  background: var(--bg-2);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius);
-  color: var(--text);
-  font-size: 0.88rem;
-  transition: all var(--transition);
-}
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-soft);
-}
-.search-clear {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--bg-3);
-  color: var(--text-dim);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-}
+.search-input-wrap .search-ico { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-mute); pointer-events: none; font-size: 0.9rem; }
+.search-input { width: 100%; padding: 11px 38px 11px 36px; background: var(--bg-2); border: 1px solid var(--border-light); border-radius: var(--radius); color: var(--text); font-size: 0.88rem; transition: all var(--transition); }
+.search-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+.search-clear { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; border-radius: 50%; background: var(--bg-3); color: var(--text-dim); display: none; align-items: center; justify-content: center; font-size: 0.7rem; }
 .search-clear.show { display: flex; }
-.mic-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius);
-  background: var(--bg-2);
-  border: 1px solid var(--border-light);
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.95rem;
-  flex-shrink: 0;
-  transition: all var(--transition);
-}
+.mic-btn { width: 42px; height: 42px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--border-light); color: var(--text); display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
 .mic-btn:hover { background: var(--bg-3); }
-.mic-btn.listening {
-  background: var(--danger);
-  color: #fff;
-  border-color: var(--danger);
-  animation: pulse-mic 1.4s ease-in-out infinite;
-}
-@keyframes pulse-mic {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.6); }
-  50%      { box-shadow: 0 0 0 10px rgba(248, 113, 113, 0); }
-}
+.mic-btn.listening { background: var(--danger); color: #fff; border-color: var(--danger); animation: pulse-mic 1.4s ease-in-out infinite; }
+@keyframes pulse-mic { 0%, 100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.6); } 50% { box-shadow: 0 0 0 10px rgba(248, 113, 113, 0); } }
 
-.autocomplete-list {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  background: var(--bg-2);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius);
-  max-height: 300px;
-  overflow-y: auto;
-  z-index: 300;
-  display: none;
-  box-shadow: var(--shadow-lg);
-}
+.autocomplete-list { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--bg-2); border: 1px solid var(--border-light); border-radius: var(--radius); max-height: 300px; overflow-y: auto; z-index: 300; display: none; box-shadow: var(--shadow-lg); }
 .autocomplete-list.show { display: block; }
-.autocomplete-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  font-size: 0.82rem;
-  transition: background var(--transition);
-}
+.autocomplete-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--border); cursor: pointer; font-size: 0.82rem; }
 .autocomplete-item:last-child { border-bottom: none; }
 .autocomplete-item:hover { background: var(--bg-3); }
-.autocomplete-item .ac-immat {
-  font-family: var(--mono);
-  font-weight: 700;
-  color: var(--primary);
-  font-size: 0.85rem;
-}
-.autocomplete-item .ac-info {
-  flex: 1;
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.autocomplete-item .ac-status {
-  font-size: 0.62rem;
-  padding: 3px 8px;
-  border-radius: 10px;
-  font-weight: 600;
-}
+.autocomplete-item .ac-immat { font-family: var(--mono); font-weight: 700; color: var(--primary); font-size: 0.85rem; }
+.autocomplete-item .ac-info { flex: 1; font-size: 0.72rem; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.autocomplete-item .ac-status { font-size: 0.62rem; padding: 3px 8px; border-radius: 10px; font-weight: 600; }
 .ac-status.present { background: rgba(16, 185, 129, 0.15); color: var(--success); }
 .ac-status.absent  { background: rgba(248, 113, 113, 0.15); color: var(--danger); }
 
-/* Chips filtres */
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-.chip {
-  padding: 6px 14px;
-  background: var(--bg-2);
-  border: 1px solid var(--border-light);
-  border-radius: 20px;
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  cursor: pointer;
-  transition: all var(--transition);
-  white-space: nowrap;
-  font-weight: 500;
-}
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.chip { padding: 6px 14px; background: var(--bg-2); border: 1px solid var(--border-light); border-radius: 20px; font-size: 0.72rem; color: var(--text-dim); cursor: pointer; transition: all var(--transition); white-space: nowrap; font-weight: 500; }
 .chip:hover { color: var(--text); border-color: var(--primary); }
-.chip.active {
-  background: var(--primary);
-  color: #ffffff;
-  border-color: var(--primary);
-  font-weight: 600;
-}
+.chip.active { background: var(--primary); color: #ffffff; border-color: var(--primary); font-weight: 600; }
 
-/* ============================================================
-   BADGES
-   ============================================================ */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 9px;
-  border-radius: var(--radius-sm);
-  font-size: 0.65rem;
-  font-weight: 600;
-  white-space: nowrap;
-  letter-spacing: 0.2px;
-}
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: var(--radius-sm); font-size: 0.65rem; font-weight: 600; white-space: nowrap; }
 .badge-primary { background: var(--primary-soft); color: var(--primary); }
 .badge-success { background: rgba(16, 185, 129, 0.15); color: var(--success); }
 .badge-danger  { background: rgba(248, 113, 113, 0.15); color: var(--danger); }
@@ -589,686 +431,142 @@ img { max-width: 100%; display: block; }
 .badge-blue    { background: rgba(96, 165, 250, 0.15); color: var(--blue); }
 .badge-muted   { background: var(--bg-3); color: var(--text-dim); }
 
-/* ============================================================
-   LISTES
-   ============================================================ */
 .list { display: flex; flex-direction: column; gap: 8px; }
-.list-item {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  transition: all var(--transition);
-}
+.list-item { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; display: flex; align-items: center; gap: 12px; transition: all var(--transition); }
 .list-item:hover { border-color: var(--border-light); background: var(--bg-3); }
 .list-item-main { flex: 1; min-width: 0; }
-.list-item-title {
-  font-weight: 600;
-  font-size: 0.88rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 3px;
-}
-.list-item-sub {
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
+.list-item-title { font-weight: 600; font-size: 0.88rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 3px; }
+.list-item-sub { font-size: 0.72rem; color: var(--text-dim); display: flex; flex-wrap: wrap; gap: 12px; }
 .list-item-actions { display: flex; gap: 6px; flex-shrink: 0; }
 
-/* ============================================================
-   VEHICLE CARD (hiérarchie visuelle renforcée)
-   ============================================================ */
-.vehicle-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  transition: all var(--transition);
-  position: relative;
-  overflow: hidden;
-}
-.vehicle-card::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: var(--text-mute);
-  transition: all var(--transition);
-}
+.vehicle-card { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); transition: all var(--transition); position: relative; overflow: hidden; }
+.vehicle-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--text-mute); transition: all var(--transition); }
 .vehicle-card.present::before { background: var(--success); }
 .vehicle-card.absent::before  { background: var(--danger); }
-.vehicle-card:hover {
-  border-color: var(--border-light);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
+.vehicle-card:hover { border-color: var(--border-light); transform: translateY(-1px); box-shadow: var(--shadow-md); }
 .vehicle-card.present { background: linear-gradient(90deg, rgba(16, 185, 129, 0.05), var(--bg-2) 40%); }
 .vehicle-card-main { flex: 1; min-width: 0; }
-.vehicle-card-immat {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  letter-spacing: 0.5px;
-}
-.vehicle-card-info {
-  font-size: 0.74rem;
-  color: var(--text-dim);
-  margin-top: 5px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  line-height: 1.5;
-}
+.vehicle-card-immat { font-family: var(--mono); font-weight: 700; font-size: 1rem; color: var(--primary); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; letter-spacing: 0.5px; }
+.vehicle-card-info { font-size: 0.74rem; color: var(--text-dim); margin-top: 5px; display: flex; flex-wrap: wrap; gap: 12px; line-height: 1.5; }
 
-/* ============================================================
-   POINTAGE
-   ============================================================ */
-.pointage-bar {
-  position: sticky;
-  top: 0;
-  z-index: 90;
-  background: var(--bg-2);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-.pointage-bar .pb-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  flex-wrap: wrap;
-}
+.pointage-bar { position: sticky; top: 0; z-index: 90; background: var(--bg-2); border-bottom: 1px solid var(--border); padding: 12px 16px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.pointage-bar .pb-info { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; color: var(--text-dim); flex-wrap: wrap; }
 .pointage-bar .pb-site { font-weight: 600; color: var(--text); font-size: 0.85rem; }
-.pointage-bar .pb-counter {
-  background: var(--bg-3);
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text);
-}
+.pointage-bar .pb-counter { background: var(--bg-3); padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; color: var(--text); }
 .pointage-bar .pb-counter.done { background: var(--primary-soft); color: var(--primary); }
 .pointage-bar .pb-counter-mine { background: rgba(96, 165, 250, 0.15); color: var(--blue); }
 .pointage-bar .pb-counter-global { background: var(--bg-3); color: var(--text); font-size: 0.72rem; }
 .pointage-bar .pb-spacer { flex: 1; }
-.pointage-bar .btn-terminer {
-  padding: 9px 18px;
-  background: var(--primary);
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 0.8rem;
-  border-radius: var(--radius-sm);
-  display: none;
-}
+.pointage-bar .btn-terminer { padding: 9px 18px; background: var(--primary); color: #ffffff; font-weight: 600; font-size: 0.8rem; border-radius: var(--radius-sm); display: none; }
 .pointage-bar .btn-terminer.show { display: inline-flex; }
 
-.pointage-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  position: relative;
-  overflow: hidden;
-}
-.pointage-item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: var(--text-mute);
-}
+.pointage-item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: all 0.15s ease; user-select: none; -webkit-tap-highlight-color: transparent; position: relative; overflow: hidden; }
+.pointage-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--text-mute); }
 .pointage-item:hover { border-color: var(--border-light); background: var(--bg-3); }
-.pointage-item.pointed {
-  background: linear-gradient(90deg, rgba(16, 185, 129, 0.08), var(--bg-2) 40%);
-}
+.pointage-item.pointed { background: linear-gradient(90deg, rgba(16, 185, 129, 0.08), var(--bg-2) 40%); }
 .pointage-item.pointed::before { background: var(--success); }
 .pointage-item.recent { animation: flash-point 0.6s ease; }
-@keyframes flash-point {
-  0% { background: rgba(16, 185, 129, 0.3); }
-  100% { background: linear-gradient(90deg, rgba(16, 185, 129, 0.08), var(--bg-2) 40%); }
-}
-.pointage-item .pi-check {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 2px solid var(--border-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 1rem;
-  color: transparent;
-  transition: all 0.15s ease;
-}
-.pointage-item.pointed .pi-check {
-  background: var(--success);
-  border-color: var(--success);
-  color: #ffffff;
-  font-weight: 700;
-}
+@keyframes flash-point { 0% { background: rgba(16, 185, 129, 0.3); } 100% { background: linear-gradient(90deg, rgba(16, 185, 129, 0.08), var(--bg-2) 40%); } }
+.pointage-item .pi-check { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; color: transparent; transition: all 0.15s ease; }
+.pointage-item.pointed .pi-check { background: var(--success); border-color: var(--success); color: #ffffff; font-weight: 700; }
 .pointage-item .pi-main { flex: 1; min-width: 0; }
-.pointage-item .pi-immat {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--primary);
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.pointage-item .pi-info {
-  font-size: 0.74rem;
-  color: var(--text-dim);
-  margin-top: 4px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.pointage-item .pi-site {
-  font-size: 0.7rem;
-  padding: 3px 10px;
-  border-radius: 12px;
-  background: var(--primary-soft);
-  color: var(--primary);
-  font-weight: 600;
-}
-.pi-mine {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.6rem;
-  font-weight: 600;
-  background: rgba(96, 165, 250, 0.15);
-  color: var(--blue);
-}
-.pi-multi {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.6rem;
-  font-weight: 600;
-  background: rgba(251, 191, 36, 0.18);
-  color: var(--warning);
-}
-.pointage-item .pi-photo {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-3);
-  color: var(--text-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.05rem;
-  flex-shrink: 0;
-  border: 1px solid var(--border-light);
-  transition: all var(--transition);
-  cursor: pointer;
-  position: relative;
-}
-.pointage-item .pi-photo:hover {
-  background: var(--primary);
-  color: #ffffff;
-  border-color: var(--primary);
-}
-.pointage-item .pi-photo.has-photo {
-  background: var(--primary-soft);
-  color: var(--primary);
-  border-color: var(--primary);
-}
-.pointage-item .pi-photo.has-photo::after {
-  content: '✓';
-  position: absolute;
-  bottom: -3px;
-  right: -3px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: #ffffff;
-  font-size: 0.6rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid var(--bg-2);
-}
-.pointage-item .pi-photo-missing {
-  animation: pulse-photo 2s ease-in-out infinite;
-}
-@keyframes pulse-photo {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.6); }
-  50% { box-shadow: 0 0 0 6px rgba(251, 191, 36, 0); }
-}
+.pointage-item .pi-immat { font-family: var(--mono); font-weight: 700; font-size: 1.05rem; color: var(--primary); letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pointage-item .pi-info { font-size: 0.74rem; color: var(--text-dim); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 10px; }
+.pointage-item .pi-site { font-size: 0.7rem; padding: 3px 10px; border-radius: 12px; background: var(--primary-soft); color: var(--primary); font-weight: 600; }
+.pi-mine { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; background: rgba(96, 165, 250, 0.15); color: var(--blue); }
+.pi-multi { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; background: rgba(251, 191, 36, 0.18); color: var(--warning); }
+.pointage-item .pi-photo { width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--bg-3); color: var(--text-dim); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; flex-shrink: 0; border: 1px solid var(--border-light); cursor: pointer; position: relative; }
+.pointage-item .pi-photo:hover { background: var(--primary); color: #ffffff; border-color: var(--primary); }
+.pointage-item .pi-photo.has-photo { background: var(--primary-soft); color: var(--primary); border-color: var(--primary); }
+.pointage-item .pi-photo.has-photo::after { content: '✓'; position: absolute; bottom: -3px; right: -3px; width: 16px; height: 16px; border-radius: 50%; background: var(--primary); color: #ffffff; font-size: 0.6rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-2); }
+.pointage-item .pi-photo-missing { animation: pulse-photo 2s ease-in-out infinite; }
+@keyframes pulse-photo { 0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.6); } 50% { box-shadow: 0 0 0 6px rgba(251, 191, 36, 0); } }
 
-/* Bandeau photos manquantes */
-.photo-missing-banner {
-  background: linear-gradient(90deg, rgba(251, 191, 36, 0.12), var(--bg-2));
-  border: 1px solid var(--warning);
-  border-radius: var(--radius);
-  padding: 12px 16px;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.8rem;
-  color: var(--text);
-}
+.photo-missing-banner { background: linear-gradient(90deg, rgba(251, 191, 36, 0.12), var(--bg-2)); border: 1px solid var(--warning); border-radius: var(--radius); padding: 12px 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 12px; font-size: 0.8rem; color: var(--text); }
 .photo-missing-banner .pmb-icon { font-size: 1.3rem; }
 .photo-missing-banner .pmb-text { flex: 1; font-weight: 500; }
 .photo-missing-banner .pmb-text strong { color: var(--warning); font-weight: 700; }
-
-/* Hint */
-.pointage-hint {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  line-height: 1.7;
-  margin-bottom: 14px;
-}
+.pointage-hint { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; font-size: 0.78rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 14px; }
 .pointage-hint strong { color: var(--text); font-weight: 600; }
 
-/* ============================================================
-   PAGINATION
-   ============================================================ */
-.pagination-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 0;
-  margin-top: 8px;
-}
-.pagination-bar .pg-info {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  font-weight: 500;
-}
+.pagination-bar { display: flex; justify-content: center; align-items: center; gap: 12px; padding: 16px 0; margin-top: 8px; }
+.pagination-bar .pg-info { font-size: 0.75rem; color: var(--text-dim); font-weight: 500; }
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; padding: 10px 12px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); }
+.toolbar .tb-label { font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.toolbar .tb-select { padding: 6px 28px 6px 10px; background: var(--bg-3); border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.78rem; color: var(--text); cursor: pointer; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239aabc4' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>"); background-repeat: no-repeat; background-position: right 8px center; background-size: 12px; -webkit-appearance: none; appearance: none; }
 
-/* Tri / Filtre bar */
-.toolbar {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 12px;
-  padding: 10px 12px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-.toolbar .tb-label {
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 600;
-}
-.toolbar .tb-select {
-  padding: 6px 28px 6px 10px;
-  background: var(--bg-3);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  font-size: 0.78rem;
-  color: var(--text);
-  cursor: pointer;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239aabc4' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 12px;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-/* ============================================================
-   RÉCAP DE RONDE
-   ============================================================ */
-.recap-hero {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: #ffffff;
-  border-radius: var(--radius);
-  padding: 24px;
-  text-align: center;
-  margin-bottom: 18px;
-}
-.recap-hero .rh-number {
-  font-size: 3.2rem;
-  font-weight: 700;
-  line-height: 1;
-  margin: 0;
-  letter-spacing: -0.03em;
-}
-.recap-hero .rh-label {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0.9;
-  margin-top: 8px;
-  font-weight: 600;
-}
-.recap-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 16px;
-}
+.recap-hero { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: #ffffff; border-radius: var(--radius); padding: 24px; text-align: center; margin-bottom: 18px; }
+.recap-hero .rh-number { font-size: 3.2rem; font-weight: 700; line-height: 1; margin: 0; letter-spacing: -0.03em; }
+.recap-hero .rh-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; margin-top: 8px; font-weight: 600; }
+.recap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
 @media (max-width: 480px) { .recap-grid { grid-template-columns: 1fr; } }
-.recap-card {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--primary);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-}
+.recap-card { background: var(--bg-2); border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: var(--radius); padding: 14px 16px; }
 .recap-card.success { border-left-color: var(--success); }
 .recap-card.danger  { border-left-color: var(--danger); }
-.recap-card .rc-num {
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
+.recap-card .rc-num { font-size: 2rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
 .recap-card.success .rc-num { color: var(--success); }
 .recap-card.danger  .rc-num { color: var(--danger); }
-.recap-card .rc-label {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  margin-top: 6px;
-  font-weight: 600;
-}
-.recap-sources {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 14px;
-}
-.recap-sources .rs-tag {
-  background: rgba(255, 255, 255, 0.15);
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 0.72rem;
-  font-weight: 600;
-}
+.recap-card .rc-label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 6px; font-weight: 600; }
+.recap-sources { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+.recap-sources .rs-tag { background: rgba(255, 255, 255, 0.15); padding: 5px 14px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
 
-/* Bilan table */
 .bilan-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-.bilan-table th {
-  padding: 10px 12px;
-  text-align: left;
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-dim);
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-3);
-}
-.bilan-table td {
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--border);
-}
+.bilan-table th { padding: 10px 12px; text-align: left; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dim); border-bottom: 1px solid var(--border); background: var(--bg-3); }
+.bilan-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
 .bilan-table tr:last-child td { border-bottom: none; }
 .bilan-table tr:hover { background: var(--bg-3); }
-.bilan-table .bilan-bar {
-  height: 6px;
-  background: var(--bg-3);
-  border-radius: 3px;
-  overflow: hidden;
-  margin-top: 5px;
-}
-.bilan-table .bilan-bar-fill {
-  height: 100%;
-  background: var(--primary);
-  border-radius: 3px;
-  transition: width 0.4s;
-}
+.bilan-table .bilan-bar { height: 6px; background: var(--bg-3); border-radius: 3px; overflow: hidden; margin-top: 5px; }
+.bilan-table .bilan-bar-fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width 0.4s; }
 .bilan-table .bilan-bar-fill.low { background: var(--warning); }
 .bilan-table .bilan-bar-fill.critical { background: var(--danger); }
 
-/* ============================================================
-   MANQUANTS
-   ============================================================ */
-.manquant-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  position: relative;
-  overflow: hidden;
-}
-.manquant-item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: var(--danger);
-}
+.manquant-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); position: relative; overflow: hidden; }
+.manquant-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--danger); }
 .manquant-item .mi-main { flex: 1; min-width: 0; padding-left: 6px; }
-.manquant-item .mi-immat {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 0.92rem;
-  color: var(--text);
-}
-.manquant-item .mi-info {
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  margin-top: 3px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.manquant-item .mi-source {
-  font-size: 0.65rem;
-  padding: 3px 10px;
-  border-radius: 10px;
-  font-weight: 600;
-  white-space: nowrap;
-}
+.manquant-item .mi-immat { font-family: var(--mono); font-weight: 700; font-size: 0.92rem; color: var(--text); }
+.manquant-item .mi-info { font-size: 0.72rem; color: var(--text-dim); margin-top: 3px; display: flex; flex-wrap: wrap; gap: 10px; }
+.manquant-item .mi-source { font-size: 0.65rem; padding: 3px 10px; border-radius: 10px; font-weight: 600; white-space: nowrap; }
 .manquant-item .mi-source.hr { background: rgba(96, 165, 250, 0.15); color: var(--blue); }
 .manquant-item .mi-source.um { background: rgba(248, 113, 113, 0.15); color: var(--danger); }
 .manquant-item .mi-source.custom { background: rgba(251, 191, 36, 0.15); color: var(--warning); }
 
-/* ============================================================
-   AUTRUI (collaboratif)
-   ============================================================ */
-.autrui-section {
-  margin-top: 20px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.autrui-header {
-  padding: 12px 16px;
-  background: var(--bg-3);
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-dim);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  user-select: none;
-  transition: background var(--transition);
-}
+.autrui-section { margin-top: 20px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.autrui-header { padding: 12px 16px; background: var(--bg-3); font-size: 0.78rem; font-weight: 600; color: var(--text-dim); display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; transition: background var(--transition); }
 .autrui-header:hover { background: var(--bg-hover); }
-.autrui-header .count {
-  font-size: 0.7rem;
-  color: var(--text-mute);
-  font-weight: 500;
-}
+.autrui-header .count { font-size: 0.7rem; color: var(--text-mute); font-weight: 500; }
 .autrui-body { padding: 14px 16px; display: none; }
 .autrui-section.open .autrui-body { display: block; }
 .autrui-list { display: flex; flex-direction: column; gap: 8px; }
-.autrui-user {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  background: var(--bg-3);
-  border-radius: var(--radius-sm);
-  font-size: 0.8rem;
-}
+.autrui-user { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--bg-3); border-radius: var(--radius-sm); font-size: 0.8rem; }
 .autrui-user .au-nom { flex: 1; font-weight: 600; color: var(--text); }
 .autrui-user .au-count { font-size: 0.72rem; color: var(--primary); font-weight: 700; }
 .autrui-user .au-sites { font-size: 0.68rem; color: var(--text-mute); }
 
-/* ============================================================
-   MODALES
-   ============================================================ */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 1000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  animation: fadeIn 0.15s ease;
-}
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 16px; }
 .modal-overlay.show { display: flex; }
-.modal {
-  background: var(--bg-2);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  width: 100%;
-  max-width: 520px;
-  max-height: 92vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  animation: modalIn 0.2s ease;
-}
-@keyframes modalIn {
-  from { opacity: 0; transform: translateY(20px) scale(0.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
+.modal { background: var(--bg-2); border: 1px solid var(--border-light); border-radius: var(--radius-lg); width: 100%; max-width: 520px; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-lg); animation: modalIn 0.2s ease; }
 .modal.modal-lg { max-width: 820px; }
 .modal.modal-sm { max-width: 400px; }
-.modal-header {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-shrink: 0;
-}
-.modal-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0;
-  letter-spacing: -0.01em;
-}
-.modal-close {
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-3);
-  color: var(--text-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.95rem;
-  transition: all var(--transition);
-}
+.modal-header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-shrink: 0; }
+.modal-title { font-size: 1rem; font-weight: 600; margin: 0; }
+.modal-close { width: 30px; height: 30px; border-radius: var(--radius-sm); background: var(--bg-3); color: var(--text-dim); display: flex; align-items: center; justify-content: center; font-size: 0.95rem; }
 .modal-close:hover { background: var(--danger); color: #fff; }
 .modal-body { padding: 16px 18px; overflow-y: auto; flex: 1; }
-.modal-footer {
-  padding: 12px 18px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  flex-shrink: 0;
-}
+.modal-footer { padding: 12px 18px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; flex-shrink: 0; }
 
-/* ============================================================
-   TOASTS
-   ============================================================ */
-.toast-container {
-  position: fixed;
-  top: 20px;
-  right: 16px;
-  z-index: 2000;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 340px;
-  pointer-events: none;
-}
-.toast {
-  background: var(--bg-2);
-  border: 1px solid var(--border-light);
-  border-left: 4px solid var(--primary);
-  border-radius: var(--radius);
-  padding: 12px 16px;
-  font-size: 0.82rem;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  pointer-events: auto;
-  box-shadow: var(--shadow-lg);
-  animation: slideIn 0.3s ease;
-}
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
-}
+/* Modale PIN Admin */
+.admin-pin-modal .modal { max-width: 400px; }
+.admin-pin-icon { width: 60px; height: 60px; margin: 0 auto 14px; border-radius: 50%; background: rgba(251, 191, 36, 0.15); color: var(--warning); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; }
+.admin-pin-title { text-align: center; font-size: 1.1rem; font-weight: 600; margin: 0 0 6px; }
+.admin-pin-subtitle { text-align: center; font-size: 0.8rem; color: var(--text-dim); margin: 0 0 20px; }
+.admin-pin-input { width: 100%; padding: 14px; background: var(--bg-3); border: 1px solid var(--border-light); border-radius: var(--radius); color: var(--text); font-size: 1.1rem; letter-spacing: 4px; text-align: center; font-family: var(--mono); }
+.admin-pin-input:focus { outline: none; border-color: var(--warning); box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.15); }
+.admin-pin-input.shake { animation: shake 0.4s ease; }
+.admin-pin-error { color: var(--danger); font-size: 0.78rem; margin-top: 10px; text-align: center; min-height: 16px; font-weight: 500; }
+
+.toast-container { position: fixed; top: 20px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; max-width: 340px; pointer-events: none; }
+.toast { background: var(--bg-2); border: 1px solid var(--border-light); border-left: 4px solid var(--primary); border-radius: var(--radius); padding: 12px 16px; font-size: 0.82rem; display: flex; gap: 10px; align-items: flex-start; pointer-events: auto; box-shadow: var(--shadow-lg); animation: slideIn 0.3s ease; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
 .toast.success { border-left-color: var(--success); }
 .toast.error   { border-left-color: var(--danger); }
 .toast.warning { border-left-color: var(--warning); }
@@ -1276,405 +574,110 @@ img { max-width: 100%; display: block; }
 .toast-title { font-weight: 600; margin-bottom: 3px; font-size: 0.82rem; }
 .toast-msg { color: var(--text-dim); font-size: 0.74rem; }
 
-/* ============================================================
-   GALERIE
-   ============================================================ */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 10px;
-}
-.gallery-item {
-  position: relative;
-  aspect-ratio: 1;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--border-light);
-  background: var(--bg-3);
-  cursor: pointer;
-  transition: all var(--transition);
-}
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.gallery-item { position: relative; aspect-ratio: 1; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-3); cursor: pointer; transition: all var(--transition); }
 .gallery-item:hover { transform: scale(1.02); box-shadow: var(--shadow-md); }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
-.gallery-item .gallery-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 50%, rgba(11, 17, 32, 0.95) 100%);
-  color: #fff;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  font-size: 0.65rem;
-  opacity: 0;
-  transition: opacity var(--transition);
-}
+.gallery-item .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(11, 17, 32, 0.95) 100%); color: #fff; padding: 8px; display: flex; flex-direction: column; justify-content: flex-end; font-size: 0.65rem; opacity: 0; transition: opacity var(--transition); }
 .gallery-item:hover .gallery-overlay { opacity: 1; }
-.gallery-item .gi-immat {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 0.78rem;
-  color: var(--primary);
-}
-
-.gallery-item .gi-actions {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  display: flex;
-  gap: 5px;
-  opacity: 0;
-  transition: opacity var(--transition);
-  z-index: 2;
-}
-.gallery-item:hover .gi-actions,
-.gallery-item:focus-within .gi-actions { opacity: 1; }
+.gallery-item .gi-immat { font-family: var(--mono); font-weight: 700; font-size: 0.78rem; color: var(--primary); }
+.gallery-item .gi-actions { position: absolute; top: 8px; right: 8px; display: flex; gap: 5px; opacity: 0; transition: opacity var(--transition); z-index: 2; }
+.gallery-item:hover .gi-actions, .gallery-item:focus-within .gi-actions { opacity: 1; }
 @media (hover: none) { .gallery-item .gi-actions { opacity: 1; } }
-.gallery-item .gi-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(11, 17, 32, 0.9);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  cursor: pointer;
-  transition: all var(--transition);
-  backdrop-filter: blur(4px);
-}
-.gallery-item .gi-btn:hover {
-  background: var(--primary);
-  color: #ffffff;
-  transform: scale(1.1);
-}
-.gallery-item .gi-btn.gi-btn-download:hover { background: var(--primary); }
+.gallery-item .gi-btn { width: 30px; height: 30px; border-radius: 50%; background: rgba(11, 17, 32, 0.9); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; border: 1px solid rgba(255, 255, 255, 0.15); cursor: pointer; transition: all var(--transition); backdrop-filter: blur(4px); }
+.gallery-item .gi-btn:hover { background: var(--primary); color: #ffffff; transform: scale(1.1); }
 .gallery-item .gi-btn.gi-btn-delete:hover { background: var(--danger); }
-
 .gal-toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.gal-selection-info {
-  padding: 10px 14px;
-  background: var(--primary-soft);
-  border: 1px solid var(--primary);
-  border-radius: var(--radius-sm);
-  font-size: 0.78rem;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
+.gal-selection-info { padding: 10px 14px; background: var(--primary-soft); border: 1px solid var(--primary); border-radius: var(--radius-sm); font-size: 0.78rem; color: var(--text); display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .gal-selection-info .gsi-count { font-weight: 700; color: var(--primary); }
 .gal-selection-info .gsi-actions { margin-left: auto; display: flex; gap: 8px; }
 .gallery-item.selected { outline: 3px solid var(--primary); outline-offset: -3px; }
-.gallery-item .gi-checkbox {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(11, 17, 32, 0.9);
-  border: 2px solid #fff;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  color: transparent;
-  cursor: pointer;
-  z-index: 2;
-}
+.gallery-item .gi-checkbox { position: absolute; bottom: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; background: rgba(11, 17, 32, 0.9); border: 2px solid #fff; display: none; align-items: center; justify-content: center; font-size: 0.8rem; color: transparent; cursor: pointer; z-index: 2; }
 .gallery-item .gi-checkbox.show { display: flex; }
-.gallery-item.selected .gi-checkbox {
-  background: var(--primary);
-  color: #ffffff;
-  border-color: var(--primary);
-  font-weight: 700;
-}
+.gallery-item.selected .gi-checkbox { background: var(--primary); color: #ffffff; border-color: var(--primary); font-weight: 700; }
 body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
-
-.gallery-item .gi-photo-status {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  padding: 3px 8px;
-  border-radius: 10px;
-  font-size: 0.6rem;
-  font-weight: 700;
-}
+.gallery-item .gi-photo-status { position: absolute; top: 8px; left: 8px; padding: 3px 8px; border-radius: 10px; font-size: 0.6rem; font-weight: 700; }
 .gallery-item .gi-photo-status.ok { background: var(--primary); color: #ffffff; }
 .gallery-item .gi-photo-status.missing { background: var(--warning); color: #1a1205; }
 
-/* Lightbox */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.96);
-  z-index: 3000;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
+.lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.96); z-index: 3000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
 .lightbox.show { display: flex; }
 .lightbox img { max-width: 95vw; max-height: 75vh; object-fit: contain; border-radius: var(--radius); }
-.lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.lightbox-close { position: absolute; top: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: rgba(255, 255, 255, 0.15); color: #fff; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
 .lightbox-actions { margin-top: 18px; display: flex; gap: 10px; }
-.lightbox-actions .btn { padding: 11px 22px; font-size: 0.88rem; }
-.lightbox-info {
-  margin-top: 14px;
-  color: #cbd5e1;
-  font-size: 0.88rem;
-  text-align: center;
-  line-height: 1.6;
-}
-.lightbox-info .li-immat {
-  font-family: var(--mono);
-  font-weight: 700;
-  color: var(--primary);
-  font-size: 1.05rem;
-}
+.lightbox-info { margin-top: 14px; color: #cbd5e1; font-size: 0.88rem; text-align: center; line-height: 1.6; }
+.lightbox-info .li-immat { font-family: var(--mono); font-weight: 700; color: var(--primary); font-size: 1.05rem; }
 
-/* Archives */
-.archive-year {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 10px;
-  background: var(--bg-2);
-  overflow: hidden;
-}
-.archive-year-header {
-  padding: 14px 16px;
-  background: var(--bg-3);
-  font-weight: 600;
-  font-size: 0.88rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  user-select: none;
-  transition: background var(--transition);
-}
+.archive-year { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; background: var(--bg-2); overflow: hidden; }
+.archive-year-header { padding: 14px 16px; background: var(--bg-3); font-weight: 600; font-size: 0.88rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
 .archive-year-header:hover { background: var(--bg-hover); }
 .archive-year-header .count { font-size: 0.72rem; color: var(--text-dim); font-weight: 500; }
-.archive-months {
-  display: none;
-  padding: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 8px;
-}
+.archive-months { display: none; padding: 10px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
 .archive-year.open .archive-months { display: grid; }
-.archive-month {
-  padding: 12px 10px;
-  background: var(--bg-3);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  text-align: center;
-  transition: all var(--transition);
-}
+.archive-month { padding: 12px 10px; background: var(--bg-3); border-radius: var(--radius-sm); cursor: pointer; text-align: center; transition: all var(--transition); }
 .archive-month:hover { background: var(--primary); color: #fff; }
 .archive-month .am-name { font-weight: 600; font-size: 0.82rem; }
 .archive-month .am-count { font-size: 0.68rem; opacity: 0.75; margin-top: 3px; }
 
-/* Chart */
 .chart-wrap { position: relative; height: 320px; width: 100%; padding: 8px; }
 @media (max-width: 640px) { .chart-wrap { height: 250px; } }
 
-/* PIN */
-.pin-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  gap: 16px;
-  text-align: center;
-}
+.pin-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; gap: 16px; text-align: center; }
 .pin-icon { font-size: 2.6rem; color: var(--primary); }
 .pin-display { display: flex; gap: 12px; margin: 12px 0; }
-.pin-dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 2px solid var(--border-light);
-  transition: all var(--transition);
-}
-.pin-dot.filled {
-  background: var(--primary);
-  border-color: var(--primary);
-  box-shadow: 0 0 10px var(--primary-glow);
-}
-.pin-pad {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  max-width: 280px;
-  width: 100%;
-}
-.pin-key {
-  aspect-ratio: 1;
-  background: var(--bg-3);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius);
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text);
-  transition: all var(--transition);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.pin-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-light); transition: all var(--transition); }
+.pin-dot.filled { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+.pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 280px; width: 100%; }
+.pin-key { aspect-ratio: 1; background: var(--bg-3); border: 1px solid var(--border-light); border-radius: var(--radius); font-size: 1.25rem; font-weight: 600; color: var(--text); transition: all var(--transition); display: flex; align-items: center; justify-content: center; }
 .pin-key:hover { background: var(--bg-hover); }
 .pin-key.confirm { background: var(--success); color: #fff; }
 .pin-key.delete { background: var(--danger); color: #fff; }
 
-/* Timeline */
 .timeline { position: relative; padding-left: 28px; }
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  bottom: 10px;
-  width: 2px;
-  background: var(--border-light);
-}
+.timeline::before { content: ''; position: absolute; left: 10px; top: 10px; bottom: 10px; width: 2px; background: var(--border-light); }
 .timeline-item { position: relative; padding: 10px 0 14px; }
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: -22px;
-  top: 14px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--primary);
-  border: 3px solid var(--bg);
-}
+.timeline-item::before { content: ''; position: absolute; left: -22px; top: 14px; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); border: 3px solid var(--bg); }
 .timeline-date { font-size: 0.7rem; color: var(--text-mute); margin-bottom: 4px; }
-.timeline-content {
-  background: var(--bg-3);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  font-size: 0.8rem;
-}
+.timeline-content { background: var(--bg-3); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 0.8rem; }
 
-/* Loading */
-.loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(11, 17, 32, 0.9);
-  z-index: 2500;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 16px;
-  color: #fff;
-}
+.loading-overlay { position: fixed; inset: 0; background: rgba(11, 17, 32, 0.9); z-index: 2500; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 16px; color: #fff; }
 .loading-overlay.show { display: flex; }
-.spinner {
-  width: 42px;
-  height: 42px;
-  border: 3px solid var(--border-light);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
+.spinner { width: 42px; height: 42px; border: 3px solid var(--border-light); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-text { font-size: 0.88rem; color: var(--text-dim); font-weight: 500; }
 
-/* Empty state */
-.empty-state {
-  text-align: center;
-  padding: 50px 20px;
-  color: var(--text-mute);
-}
-.empty-state .es-title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-dim);
-  margin-bottom: 6px;
-}
+.empty-state { text-align: center; padding: 50px 20px; color: var(--text-mute); }
+.empty-state .es-title { font-size: 0.95rem; font-weight: 600; color: var(--text-dim); margin-bottom: 6px; }
 .empty-state .es-sub { font-size: 0.8rem; }
 
-/* Section header */
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 14px;
-}
-.section-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  letter-spacing: -0.01em;
-}
+.section-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.section-title { font-size: 1.1rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 10px; }
 .section-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .tab-content { display: none; }
-.tab-content.active { display: block; animation: tabIn 0.2s ease; }
-@keyframes tabIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.tab-content.active { display: block; }
 
-/* Install banner */
-.install-banner {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: #ffffff;
-  padding: 14px 18px;
-  display: none;
-  align-items: center;
-  gap: 14px;
-  font-size: 0.85rem;
-  box-shadow: var(--shadow-md);
-}
+.install-banner { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: #ffffff; padding: 14px 18px; display: none; align-items: center; gap: 14px; font-size: 0.85rem; box-shadow: var(--shadow-md); }
 .install-banner.show { display: flex; }
 .install-banner .ib-text { flex: 1; font-weight: 500; }
 .install-banner .ib-text strong { font-weight: 700; }
-.install-banner .btn {
-  padding: 8px 16px;
-  background: rgba(0, 0, 0, 0.2);
-  color: #ffffff;
-  font-weight: 600;
-}
+.install-banner .btn { padding: 8px 16px; background: rgba(0, 0, 0, 0.2); color: #ffffff; font-weight: 600; }
 .install-banner .btn:hover { background: rgba(0, 0, 0, 0.3); }
-.install-banner .ib-close {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.15);
-  color: #ffffff;
-  font-size: 0.85rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.install-banner .ib-close { width: 26px; height: 26px; border-radius: 50%; background: rgba(0, 0, 0, 0.15); color: #ffffff; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
 
-/* Responsive */
+.access-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; }
+.access-card-title { font-size: 0.82rem; font-weight: 600; color: var(--text); margin: 0 0 6px; display: flex; align-items: center; gap: 8px; }
+.access-card-sub { font-size: 0.75rem; color: var(--text-dim); margin: 0 0 14px; line-height: 1.6; }
+
+.login-log-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-3); border-radius: var(--radius-sm); font-size: 0.78rem; margin-bottom: 6px; }
+.login-log-item.success { border-left: 3px solid var(--success); }
+.login-log-item.failed  { border-left: 3px solid var(--danger); }
+.login-log-item .ll-date { color: var(--text-mute); font-size: 0.7rem; min-width: 130px; }
+.login-log-item .ll-status { font-weight: 600; }
+.login-log-item .ll-status.ok { color: var(--success); }
+.login-log-item .ll-status.ko { color: var(--danger); }
+.login-log-item .ll-device { flex: 1; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.7rem; }
+
 @media (max-width: 768px) {
   .container { padding: 12px; }
   .stat-value { font-size: 1.4rem; }
@@ -1690,6 +693,37 @@ body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
 </style>
 </head>
 <body>
+
+<!-- ÉCRAN DE CONNEXION -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" rx="10" fill="#0b1120"/>
+        <path d="M10 26 L14 16 L26 16 L30 26 Z" fill="#10b981" opacity="0.9"/>
+        <circle cx="15" cy="27" r="2.5" fill="#10b981"/>
+        <circle cx="25" cy="27" r="2.5" fill="#10b981"/>
+        <path d="M18 19 L20 19 L20 23 L22 23" stroke="#10b981" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1 class="login-title">NTR TRACK</h1>
+    <p class="login-subtitle">Entrez le code d'accès de l'équipe</p>
+    <div class="login-input-wrap">
+      <span class="lock-ico">🔒</span>
+      <input type="password" class="login-input anti-autofill" id="loginInput" placeholder="••••••••" maxlength="20" autocomplete="nope" name="login_access_8x4k2" readonly>
+      <button class="login-toggle-view" id="loginToggleView" type="button" title="Afficher">👁</button>
+    </div>
+    <button class="login-btn" id="loginBtn">
+      <span>Accéder</span>
+    </button>
+    <div class="login-error" id="loginError"></div>
+    <div class="login-attempts" id="loginAttempts"></div>
+    <div class="login-footer">
+      Accès réservé à l'équipe NTR Garage.<br>
+      Contactez Romaric Tanoh en cas de problème.
+    </div>
+  </div>
+</div>
 
 <!-- HEADER -->
 <header class="header">
@@ -1711,13 +745,17 @@ body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
     <span class="hs-dot"></span>
     <span class="hs-label" id="headerStatusLabel">En ligne</span>
   </div>
+  <button class="header-session" id="btnSession" title="Session active - Cliquer pour se déconnecter">
+    <span>🔓</span>
+    <span class="hs-label-session">Session</span>
+  </button>
   <select id="headerUser" class="header-user" title="Utilisateur actuel">
     <option value="">— Sélectionner —</option>
   </select>
   <div class="header-actions">
     <button class="header-btn" id="btnUsers" title="Utilisateurs">⚙</button>
-    <button class="header-btn" id="btnPin" title="Changer le PIN">⌘</button>
-    <button class="header-btn hidden" id="btnInstall" title="Installer l'application">↓</button>
+    <button class="header-btn" id="btnPin" title="Changer le PIN Chef">⌘</button>
+    <button class="header-btn hidden" id="btnInstall" title="Installer">↓</button>
     <button class="header-btn" id="btnTheme" title="Mode clair/sombre">☾</button>
   </div>
 </header>
@@ -1743,7 +781,7 @@ body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
   <button class="nav-btn" data-tab="galerie">Galerie</button>
   <button class="nav-btn" data-tab="exports">Exports</button>
   <button class="nav-btn" data-tab="attestation">Attestation</button>
-  <button class="nav-btn danger" data-tab="admin">Vider</button>
+  <button class="nav-btn danger" data-tab="admin">Admin</button>
 </nav>
 
 <main>
@@ -1764,7 +802,7 @@ body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
   </div>
   <div class="container">
     <div class="pointage-hint">
-      <strong>Comment pointer :</strong> sélectionnez un site en haut à droite, tapez sur un véhicule pour le marquer trouvé, changez de site pour continuer. Utilisez le bouton 📷 pour ajouter une photo.
+      <strong>Comment pointer :</strong> sélectionnez un site en haut à droite, tapez sur un véhicule pour le marquer trouvé, changez de site pour continuer. Utilisez le bouton photo pour ajouter une image.
     </div>
     <div class="search-bar">
       <div class="search-input-wrap">
@@ -2143,7 +1181,21 @@ body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
 <!-- ADMIN -->
 <section class="tab-content" id="tab-admin">
   <div class="container">
-    <div class="section-header"><h2 class="section-title">Suppression de données</h2></div>
+    <div class="section-header"><h2 class="section-title">Administration</h2></div>
+    <div class="access-card">
+      <h3 class="access-card-title">🔐 Sécurité</h3>
+      <p class="access-card-sub">Code d'accès de l'équipe et PIN administrateur pour les actions sensibles.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" id="btnChangeAccessCode">Changer le code d'accès</button>
+        <button class="btn btn-warning btn-sm" id="btnChangeAdminPin">Changer le PIN Admin</button>
+        <button class="btn btn-ghost btn-sm" id="btnViewLogs">Voir les connexions</button>
+        <button class="btn btn-danger btn-sm" id="btnLogout">Se déconnecter</button>
+      </div>
+    </div>
+    <div class="card" id="logsCard" style="display:none">
+      <div class="card-title">Dernières connexions</div>
+      <div id="loginLogsList"></div>
+    </div>
     <div class="card" style="border-left:4px solid var(--warning)">
       <div class="card-title">Zone dangereuse</div>
       <p style="color:var(--text-dim);font-size:0.82rem;margin:0 0 14px">Ces actions sont irréversibles.</p>
@@ -2246,13 +1298,87 @@ body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
 
 <div class="modal-overlay" id="modalPin">
   <div class="modal modal-sm">
-    <div class="modal-header"><h3 class="modal-title">Changer le PIN</h3><button class="modal-close" data-close="modalPin">✕</button></div>
+    <div class="modal-header"><h3 class="modal-title">Changer le PIN Chef</h3><button class="modal-close" data-close="modalPin">✕</button></div>
     <div class="modal-body">
       <div class="form-group"><label class="form-label">Ancien PIN</label><input type="password" class="input" id="pinOld" maxlength="4" inputmode="numeric"></div>
       <div class="form-group"><label class="form-label">Nouveau PIN</label><input type="password" class="input" id="pinNew" maxlength="4" inputmode="numeric"></div>
       <div class="form-group"><label class="form-label">Confirmer</label><input type="password" class="input" id="pinNew2" maxlength="4" inputmode="numeric"></div>
     </div>
     <div class="modal-footer"><button class="btn btn-ghost" data-close="modalPin">Annuler</button><button class="btn btn-primary" id="pinSave">Enregistrer</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay admin-pin-modal" id="modalAdminPin">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h3 class="modal-title">Action protégée</h3>
+      <button class="modal-close" data-close="modalAdminPin">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="admin-pin-icon">🔐</div>
+      <h4 class="admin-pin-title">Code administrateur requis</h4>
+      <p class="admin-pin-subtitle" id="adminPinReason">Cette action est protégée.</p>
+      <input type="password" class="admin-pin-input anti-autofill" id="adminPinInput" placeholder="••••" maxlength="4" inputmode="numeric" autocomplete="nope" name="admin_pin_9z3q1" readonly>
+      <div class="admin-pin-error" id="adminPinError"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="adminPinCancel">Annuler</button>
+      <button class="btn btn-warning" id="adminPinValidate">Valider</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalChangeAccess">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h3 class="modal-title">Changer le code d'accès</h3>
+      <button class="modal-close" data-close="modalChangeAccess">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Code actuel</label>
+        <input type="password" class="input" id="changeAccessOld" maxlength="20">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nouveau code (min 6 caractères)</label>
+        <input type="password" class="input" id="changeAccessNew" maxlength="20">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirmer</label>
+        <input type="password" class="input" id="changeAccessNew2" maxlength="20">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-close="modalChangeAccess">Annuler</button>
+      <button class="btn btn-primary" id="changeAccessSave">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalChangeAdminPin">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h3 class="modal-title">Changer le PIN Admin</h3>
+      <button class="modal-close" data-close="modalChangeAdminPin">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">PIN actuel</label>
+        <input type="password" class="input" id="changePinOld" maxlength="4" inputmode="numeric">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nouveau PIN (4 chiffres)</label>
+        <input type="password" class="input" id="changePinNew" maxlength="4" inputmode="numeric">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirmer</label>
+        <input type="password" class="input" id="changePinNew2" maxlength="4" inputmode="numeric">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-close="modalChangeAdminPin">Annuler</button>
+      <button class="btn btn-warning" id="changeAdminPinSave">Enregistrer</button>
+    </div>
   </div>
 </div>
 
@@ -2301,7 +1427,6 @@ body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
     <div class="modal-footer">
       <button class="btn btn-ghost" data-close="modalRondeDetail">Fermer</button>
       <button class="btn btn-danger" id="rdDelete">Supprimer</button>
-      <button class="btn btn-blue" id="rdPdf">Export PDF</button>
     </div>
   </div>
 </div>
@@ -2332,6 +1457,10 @@ body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
 <script src="https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js"></script>
 
 <script>
+/* ============================================================
+   NTR TRACK v4.1 - Code complet
+   ============================================================ */
+
 const firebaseConfig = {
   apiKey: "AIzaSyAxfEpi-NERVExxVYD2EmH7JppiIQDwWOM",
   authDomain: "ntr-garage.firebaseapp.com",
@@ -2348,15 +1477,15 @@ const DEFAULT_CLIENTS = ['BNETD'];
 const SOURCES = { source1: 'Source HR', source2: 'Source UM', custom: 'Ajout manuel' };
 const MOUVEMENT_CLIENTS = ['BNETD', 'Port Autonome'];
 const PAGE_SIZE = 50;
+const SESSION_KEY = 'ntr_session_token_v41';
+const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000;
 
 const state = {
   db: null,
   vehicules: [], vehiculesFiltered: [],
   rondes: [], utilisateurs: [], clients: [],
-  pointages: [],
-  mouvements: [],
-  myPointages: new Map(),
-  otherPointages: new Map(),
+  pointages: [], mouvements: [],
+  myPointages: new Map(), otherPointages: new Map(),
   currentUser: localStorage.getItem('ntr_user') || '',
   chefUnlocked: false, pinBuffer: '',
   pointageSite: '', pointageStatus: 'all', pointageRecent: {},
@@ -2365,13 +1494,16 @@ const state = {
   socFilter: '',
   vehFilters: { site: '', source: '', type: '', search: '' },
   vehSort: 'immat',
-  pageVeh: 1,
-  pageManquants: 1,
-  pagePointage: 1,
+  pageVeh: 1, pageManquants: 1, pagePointage: 1,
   currentRondeDetail: null,
   unsubscribers: [],
   lastPointageCount: 0,
-  chartPresence: null, chartSites: null
+  chartPresence: null, chartSites: null,
+  appUnlocked: false,
+  accessCode: 'NTR2026', adminPin: '9999',
+  loginAttempts: 0, loginCooldownUntil: 0, loginAttemptsWindow: [],
+  pendingAdminAction: null, adminPinBuffer: '',
+  accessLogs: []
 };
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -2385,18 +1517,8 @@ function normalizeImmat(s) { return String(s || '').replace(/[\s\-\.]/g, '').toU
 function nowIso() { return new Date().toISOString(); }
 function todayKey() { return new Date().toISOString().slice(0, 10); }
 function todayKeyShort() { return new Date().toISOString().slice(0, 10); }
-function formatDateFR(iso) {
-  if (!iso) return '—';
-  const d = new Date(iso);
-  if (isNaN(d)) return iso;
-  return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-}
-function formatDateTimeFR(iso) {
-  if (!iso) return '—';
-  const d = new Date(iso);
-  if (isNaN(d)) return iso;
-  return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-}
+function formatDateFR(iso) { if (!iso) return '—'; const d = new Date(iso); if (isNaN(d)) return iso; return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }); }
+function formatDateTimeFR(iso) { if (!iso) return '—'; const d = new Date(iso); if (isNaN(d)) return iso; return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); }
 function daysBetween(iso1, iso2 = nowIso()) { return Math.floor((new Date(iso2) - new Date(iso1)) / 86400000); }
 
 function toast(msg, type = 'info', title = '') {
@@ -2448,20 +1570,197 @@ try {
   try { state.db.settings({ cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED, merge: true }); } catch (e) {}
 } catch (e) { console.error('[Firebase]', e); }
 
+/* ============================================================
+   SESSION
+   ============================================================ */
+function getSession() {
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data.expires || data.expires < Date.now()) { localStorage.removeItem(SESSION_KEY); return null; }
+    return data;
+  } catch (e) { return null; }
+}
+function saveSession() {
+  const data = { expires: Date.now() + SESSION_DURATION, createdAt: nowIso() };
+  localStorage.setItem(SESSION_KEY, JSON.stringify(data));
+}
+function clearSession() { localStorage.removeItem(SESSION_KEY); }
+function isSessionValid() { const s = getSession(); return s && s.expires > Date.now(); }
+
+/* ============================================================
+   ACCÈS FIREBASE
+   ============================================================ */
+async function loadAccessCode() {
+  if (!state.db) return { code: 'NTR2026', adminPin: '9999' };
+  try {
+    const doc = await state.db.collection('config').doc('accesApp').get();
+    if (!doc.exists) {
+      await state.db.collection('config').doc('accesApp').set({ code: 'NTR2026', adminPin: '9999', updatedAt: nowIso() });
+      return { code: 'NTR2026', adminPin: '9999' };
+    }
+    const data = doc.data();
+    return { code: String(data.code || 'NTR2026'), adminPin: String(data.adminPin || '9999') };
+  } catch (e) { console.warn('[acces]', e); return { code: 'NTR2026', adminPin: '9999' }; }
+}
+async function saveAccessCode(code, adminPin) {
+  if (!state.db) return;
+  const update = { updatedAt: nowIso() };
+  if (code !== undefined) update.code = code;
+  if (adminPin !== undefined) update.adminPin = adminPin;
+  await state.db.collection('config').doc('accesApp').set(update, { merge: true });
+}
+async function logAccess(success, detail = '') {
+  try {
+    if (!state.db) return;
+    const device = (navigator.userAgent || '').substring(0, 80);
+    await state.db.collection('accesLogs').add({ success, detail, userNom: state.currentUser || '—', device, timestamp: nowIso(), jour: todayKeyShort() });
+  } catch (e) { console.warn('[logAccess]', e); }
+}
+function listenAccessLogs() {
+  if (!state.db) return;
+  const unsub = state.db.collection('accesLogs').orderBy('timestamp', 'desc').limit(50).onSnapshot((snap) => {
+    state.accessLogs = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    if ($('#logsCard') && $('#logsCard').style.display !== 'none') renderLoginLogs();
+  }, (err) => console.warn('[accesLogs]', err));
+  state.unsubscribers.push(unsub);
+}
+function renderLoginLogs() {
+  const c = $('#loginLogsList'); if (!c) return;
+  if (!state.accessLogs.length) { c.innerHTML = '<div style="text-align:center;color:var(--text-mute);padding:14px;font-size:0.8rem">Aucune connexion enregistrée</div>'; return; }
+  c.innerHTML = state.accessLogs.map((l) => `
+    <div class="login-log-item ${l.success ? 'success' : 'failed'}">
+      <span class="ll-date">${formatDateTimeFR(l.timestamp)}</span>
+      <span class="ll-status ${l.success ? 'ok' : 'ko'}">${l.success ? '✅ Succès' : '❌ Échec'}</span>
+      <span class="ll-device">${escapeHtml((l.device || '').substring(0, 40))}</span>
+    </div>
+  `).join('');
+}
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+function checkCooldown() {
+  if (state.loginCooldownUntil > Date.now()) return Math.ceil((state.loginCooldownUntil - Date.now()) / 1000);
+  return 0;
+}
+async function attemptLogin(inputCode) {
+  const cooldown = checkCooldown();
+  if (cooldown > 0) { $('#loginError').textContent = `Trop de tentatives. Attendez ${cooldown}s`; return false; }
+  if (!inputCode || inputCode.length < 4) {
+    $('#loginError').textContent = 'Code trop court';
+    $('#loginInput').classList.add('shake');
+    setTimeout(() => $('#loginInput').classList.remove('shake'), 400);
+    return false;
+  }
+  const codes = await loadAccessCode();
+  state.accessCode = codes.code;
+  state.adminPin = codes.adminPin;
+  if (inputCode === state.accessCode) {
+    state.loginAttempts = 0;
+    state.loginAttemptsWindow = [];
+    saveSession();
+    await logAccess(true, 'Code correct');
+    unlockApp();
+    return true;
+  } else {
+    state.loginAttempts++;
+    state.loginAttemptsWindow.push(Date.now());
+    state.loginAttemptsWindow = state.loginAttemptsWindow.filter((t) => Date.now() - t < 5 * 60 * 1000);
+    if (state.loginAttemptsWindow.length >= 5) {
+      state.loginCooldownUntil = Date.now() + 30000;
+      $('#loginError').textContent = 'Trop de tentatives. Attente 30 secondes...';
+      $('#loginInput').classList.add('shake');
+      setTimeout(() => $('#loginInput').classList.remove('shake'), 400);
+      $('#loginBtn').disabled = true;
+      const interval = setInterval(() => {
+        const rem = checkCooldown();
+        if (rem <= 0) { clearInterval(interval); $('#loginBtn').disabled = false; $('#loginError').textContent = ''; $('#loginAttempts').textContent = ''; }
+        else { $('#loginAttempts').textContent = `Réessayez dans ${rem}s`; }
+      }, 1000);
+      await logAccess(false, 'Trop de tentatives');
+      return false;
+    }
+    $('#loginError').textContent = 'Code incorrect';
+    $('#loginAttempts').textContent = `Tentative ${state.loginAttemptsWindow.length}/5`;
+    $('#loginInput').classList.add('shake');
+    setTimeout(() => $('#loginInput').classList.remove('shake'), 400);
+    $('#loginInput').value = '';
+    $('#loginInput').focus();
+    await logAccess(false, 'Code incorrect');
+    return false;
+  }
+}
+function unlockApp() {
+  state.appUnlocked = true;
+  const screen = $('#loginScreen');
+  screen.classList.add('unlocking');
+  setTimeout(() => { screen.classList.remove('show'); screen.classList.remove('unlocking'); }, 500);
+  setTimeout(() => { init(); }, 300);
+}
+function lockApp() {
+  state.appUnlocked = false;
+  clearSession();
+  $('#loginScreen').classList.add('show');
+  $('#loginInput').value = '';
+  $('#loginInput').focus();
+}
+
+$('#loginBtn').addEventListener('click', () => { attemptLogin($('#loginInput').value.trim()); });
+$('#loginInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); $('#loginBtn').click(); } });
+$('#loginToggleView').addEventListener('click', () => {
+  const inp = $('#loginInput');
+  if (inp.type === 'password') { inp.type = 'text'; $('#loginToggleView').textContent = '🙈'; }
+  else { inp.type = 'password'; $('#loginToggleView').textContent = '👁'; }
+});
+
 setTimeout(() => {
-  ['#pointageSearch', '#vehSearch', '#mouvSearch', '#attImmat', '#vehImmat'].forEach((sel) => {
+  ['#loginInput', '#adminPinInput'].forEach((sel) => {
     const el = document.querySelector(sel);
     if (!el) return;
-    el.setAttribute('autocomplete', 'nope');
-    el.setAttribute('autocorrect', 'off');
-    el.setAttribute('spellcheck', 'false');
     const unlock = () => el.removeAttribute('readonly');
     el.addEventListener('focus', unlock, { once: true });
     el.addEventListener('touchstart', unlock, { once: true });
     el.addEventListener('click', unlock, { once: true });
   });
-}, 200);
+}, 300);
 
+/* ============================================================
+   PIN ADMIN
+   ============================================================ */
+function requireAdminPin(reason, callback) {
+  state.pendingAdminAction = callback;
+  $('#adminPinReason').textContent = reason || 'Cette action est protégée.';
+  $('#adminPinInput').value = '';
+  $('#adminPinError').textContent = '';
+  openModal('modalAdminPin');
+  setTimeout(() => { const el = $('#adminPinInput'); el.removeAttribute('readonly'); el.focus(); }, 300);
+}
+function validateAdminPin() {
+  const input = $('#adminPinInput').value.trim();
+  if (input === state.adminPin) {
+    closeModal('modalAdminPin');
+    toast('Accès autorisé', 'success');
+    const cb = state.pendingAdminAction;
+    state.pendingAdminAction = null;
+    if (typeof cb === 'function') setTimeout(cb, 200);
+  } else {
+    $('#adminPinError').textContent = 'PIN incorrect';
+    $('#adminPinInput').classList.add('shake');
+    setTimeout(() => $('#adminPinInput').classList.remove('shake'), 400);
+    $('#adminPinInput').value = '';
+    $('#adminPinInput').focus();
+  }
+}
+$('#adminPinValidate').addEventListener('click', validateAdminPin);
+$('#adminPinInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); validateAdminPin(); } });
+$('#adminPinCancel').addEventListener('click', () => { state.pendingAdminAction = null; closeModal('modalAdminPin'); });
+
+/* ============================================================
+   NAV
+   ============================================================ */
+$$('.nav-btn[data-tab]').forEach((btn) => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
 function switchTab(name) {
   $$('.nav-btn[data-tab]').forEach((b) => b.classList.toggle('active', b.dataset.tab === name));
   $$('.tab-content').forEach((s) => s.classList.remove('active'));
@@ -2480,11 +1779,12 @@ function switchTab(name) {
   if (name === 'galerie') renderGalerie();
   if (name === 'admin') renderAdminInfo();
 }
-$$('.nav-btn[data-tab]').forEach((btn) => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
 
+/* ============================================================
+   VOICE
+   ============================================================ */
 function setupVoiceSearch(micId, inputId, cb) {
-  const btn = $('#' + micId);
-  const input = $('#' + inputId);
+  const btn = $('#' + micId); const input = $('#' + inputId);
   if (!btn || !input) return;
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) { btn.addEventListener('click', () => toast('Recherche vocale non supportée', 'warning')); btn.style.opacity = '0.4'; return; }
@@ -2503,12 +1803,10 @@ function setupVoiceSearch(micId, inputId, cb) {
     toast(`Détecté : ${t}`, 'success');
   };
 }
-
 function playBeep() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
     osc.connect(gain); gain.connect(ctx.destination);
     osc.frequency.value = 880; osc.type = 'sine'; gain.gain.value = 0.08;
     osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.06);
@@ -2624,7 +1922,7 @@ $('#addSocBtn').addEventListener('click', async () => {
 $('#socFilter').addEventListener('change', (e) => { state.socFilter = e.target.value; renderSocietes(); });
 
 /* ============================================================
-   PIN
+   PIN CHEF
    ============================================================ */
 async function getChefPin() {
   if (!state.db) return '1234';
@@ -2670,7 +1968,7 @@ $('#pinSave').addEventListener('click', async () => {
   if (o !== cur) { toast('Ancien PIN incorrect', 'error'); return; }
   await setChefPin(n);
   closeModal('modalPin');
-  toast('PIN modifié', 'success');
+  toast('PIN Chef modifié', 'success');
 });
 
 /* ============================================================
@@ -2692,8 +1990,7 @@ function listenVehicules() {
   state.unsubscribers.push(unsub);
 }
 function applyVehFilters() {
-  const f = state.vehFilters;
-  const q = normalizeImmat(f.search);
+  const f = state.vehFilters; const q = normalizeImmat(f.search);
   let filtered = state.vehicules.filter((v) => {
     if (f.site && v.site !== f.site) return false;
     if (f.source && v.source !== f.source) return false;
@@ -2704,7 +2001,6 @@ function applyVehFilters() {
     }
     return true;
   });
-  // Tri
   const s = state.vehSort;
   filtered.sort((a, b) => {
     if (s === 'immat') return (a.immat || '').localeCompare(b.immat || '');
@@ -2742,11 +2038,7 @@ function showAutocomplete(query) {
   const q = normalizeImmat(query);
   if (!q) { vehAutoList.classList.remove('show'); return; }
   const matches = state.vehicules.filter((v) => normalizeImmat(v.immat).includes(q)).slice(0, 12);
-  if (!matches.length) {
-    vehAutoList.innerHTML = `<div style="padding:14px;text-align:center;color:var(--text-mute);font-size:0.8rem">Aucun résultat</div>`;
-    vehAutoList.classList.add('show');
-    return;
-  }
+  if (!matches.length) { vehAutoList.innerHTML = `<div style="padding:14px;text-align:center;color:var(--text-mute);font-size:0.8rem">Aucun résultat</div>`; vehAutoList.classList.add('show'); return; }
   vehAutoList.innerHTML = matches.map((v) => {
     const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
     return `<div class="autocomplete-item" data-id="${v.id}"><span class="ac-immat">${escapeHtml(v.immat)}</span><span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')} · ${escapeHtml(v.site || '—')}</span><span class="ac-status ${pointed ? 'present' : 'absent'}">${pointed ? 'Trouvé' : 'Manquant'}</span></div>`;
@@ -2762,54 +2054,34 @@ function showAutocomplete(query) {
   }));
 }
 document.addEventListener('click', (e) => { if (!e.target.closest('.search-input-wrap')) vehAutoList.classList.remove('show'); });
-
-$('#vehSortSelect').addEventListener('change', (e) => {
-  state.vehSort = e.target.value;
-  applyVehFilters();
-});
+$('#vehSortSelect').addEventListener('change', (e) => { state.vehSort = e.target.value; applyVehFilters(); });
 
 function renderVehiculesList() {
-  const list = $('#vehList');
-  const empty = $('#vehEmpty');
-  const pag = $('#vehPagination');
+  const list = $('#vehList'); const empty = $('#vehEmpty'); const pag = $('#vehPagination');
   if (!list) return;
   const items = state.vehiculesFiltered;
   const total = items.length;
   const shown = Math.min(state.pageVeh * PAGE_SIZE, total);
   const pageItems = items.slice(0, shown);
-
   if (!total) { list.innerHTML = ''; if (empty) empty.classList.remove('hidden'); if (pag) pag.classList.add('hidden'); return; }
   if (empty) empty.classList.add('hidden');
-
   list.innerHTML = pageItems.map((v) => {
     const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
     const srcLabel = SOURCES[v.source] || v.source || '—';
     const isC = v.source === 'custom' || v.isCustom;
-    return `<div class="vehicle-card ${pointed ? 'present' : 'absent'}">
-      <div class="vehicle-card-main">
-        <div class="vehicle-card-immat">${escapeHtml(v.immat)}<span class="badge ${isC ? 'badge-blue' : 'badge-muted'}">${escapeHtml(srcLabel)}</span>${v.site ? `<span class="badge badge-muted">${escapeHtml(v.site)}</span>` : ''}</div>
-        <div class="vehicle-card-info">
-          ${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
-          ${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}
-          ${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}
-        </div>
-      </div>
-      <div class="list-item-actions">${isC ? `<button class="btn btn-sm btn-ghost" data-edit="${v.id}">Modifier</button><button class="btn btn-sm btn-danger" data-del="${v.id}">Suppr.</button>` : ''}</div>
-    </div>`;
+    return `<div class="vehicle-card ${pointed ? 'present' : 'absent'}"><div class="vehicle-card-main"><div class="vehicle-card-immat">${escapeHtml(v.immat)}<span class="badge ${isC ? 'badge-blue' : 'badge-muted'}">${escapeHtml(srcLabel)}</span>${v.site ? `<span class="badge badge-muted">${escapeHtml(v.site)}</span>` : ''}</div><div class="vehicle-card-info">${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}</div></div><div class="list-item-actions">${isC ? `<button class="btn btn-sm btn-ghost" data-edit="${v.id}">Modifier</button><button class="btn btn-sm btn-danger" data-del="${v.id}">Suppr.</button>` : ''}</div></div>`;
   }).join('');
-
-  if (pag) {
-    if (shown < total) { pag.classList.remove('hidden'); $('#vehPgInfo').textContent = `${shown} sur ${total}`; }
-    else pag.classList.add('hidden');
-  }
-
+  if (pag) { if (shown < total) { pag.classList.remove('hidden'); $('#vehPgInfo').textContent = `${shown} sur ${total}`; } else pag.classList.add('hidden'); }
   $$('[data-edit]', list).forEach((b) => b.addEventListener('click', () => openVehiculeModal(b.dataset.edit)));
-  $$('[data-del]', list).forEach((b) => b.addEventListener('click', async () => {
+  $$('[data-del]', list).forEach((b) => b.addEventListener('click', async (e) => {
+    e.preventDefault();
     const v = state.vehicules.find((x) => x.id === b.dataset.del);
-    const ok = await confirmDialog('Supprimer ?', `Supprimer <strong>${escapeHtml(v.immat)}</strong> ?`);
-    if (!ok) return;
-    await state.db.collection('vehicules').doc(v.id).delete();
-    toast('Véhicule supprimé', 'success');
+    requireAdminPin(`Supprimer le véhicule ${v.immat}`, async () => {
+      const ok = await confirmDialog('Supprimer ?', `Supprimer <strong>${escapeHtml(v.immat)}</strong> ?`);
+      if (!ok) return;
+      await state.db.collection('vehicules').doc(v.id).delete();
+      toast('Véhicule supprimé', 'success');
+    });
   }));
 }
 $('#vehLoadMore').addEventListener('click', () => { state.pageVeh++; renderVehiculesList(); });
@@ -2817,15 +2089,8 @@ $('#vehLoadMore').addEventListener('click', () => { state.pageVeh++; renderVehic
 function renderVehChips() {
   const renderChips = (container, opts, key, labels) => {
     if (!container) return;
-    container.innerHTML = opts.map((s) => {
-      const label = labels ? (labels[s] || s) : (s || 'Tous');
-      return `<button class="chip ${state.vehFilters[key] === s ? 'active' : ''}" data-val="${escapeHtml(s)}">${escapeHtml(label)}</button>`;
-    }).join('');
-    $$('.chip', container).forEach((b) => b.addEventListener('click', () => {
-      state.vehFilters[key] = b.dataset.val;
-      renderVehChips();
-      applyVehFilters();
-    }));
+    container.innerHTML = opts.map((s) => { const label = labels ? (labels[s] || s) : (s || 'Tous'); return `<button class="chip ${state.vehFilters[key] === s ? 'active' : ''}" data-val="${escapeHtml(s)}">${escapeHtml(label)}</button>`; }).join('');
+    $$('.chip', container).forEach((b) => b.addEventListener('click', () => { state.vehFilters[key] = b.dataset.val; renderVehChips(); applyVehFilters(); }));
   };
   renderChips($('#vehSiteChips'), ['', ...SITES], 'site', { '': 'Tous les sites' });
   renderChips($('#vehSourceChips'), ['', 'source1', 'source2', 'custom'], 'source', { '': 'Toutes sources', ...SOURCES });
@@ -2867,7 +2132,7 @@ $('#vehSave').addEventListener('click', async () => {
     if (id) { await state.db.collection('vehicules').doc(id).update({ ...data, updatedAt: nowIso() }); toast('Véhicule modifié', 'success'); }
     else { await state.db.collection('vehicules').add({ ...data, source: 'custom', isCustom: true, lastSeen: null, createdAt: nowIso() }); toast('Véhicule ajouté', 'success'); }
     closeModal('modalVehicule');
-  } catch (err) { console.error(err); toast('Erreur : ' + err.message, 'error'); }
+  } catch (err) { toast('Erreur : ' + err.message, 'error'); }
   finally { hideLoading(); }
 });
 async function uploadToCloudinary(file) {
@@ -2877,40 +2142,27 @@ async function uploadToCloudinary(file) {
   if (!res.ok) throw new Error('Upload Cloudinary échoué');
   return (await res.json()).secure_url;
 }
-
 async function prendrePhotoVehicule(vehId) {
   const v = state.vehicules.find((x) => x.id === vehId);
   if (!v) return;
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = 'image/*';
-  input.capture = 'environment';
+  const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*'; input.capture = 'environment';
   input.onchange = async (ev) => {
-    const file = ev.target.files[0];
-    if (!file) return;
+    const file = ev.target.files[0]; if (!file) return;
     showLoading('Upload en cours...');
     try {
       const url = await uploadToCloudinary(file);
       await state.db.collection('vehicules').doc(vehId).update({ photo: url, photoUpdatedAt: nowIso() });
-      hideLoading();
-      toast(`Photo ajoutée pour ${v.immat}`, 'success');
-    } catch (err) {
-      hideLoading();
-      toast('Erreur upload : ' + err.message, 'error');
-    }
+      hideLoading(); toast(`Photo ajoutée pour ${v.immat}`, 'success');
+    } catch (err) { hideLoading(); toast('Erreur upload : ' + err.message, 'error'); }
   };
   input.click();
 }
-
 function updatePhotoMissingBanner() {
-  const banner = $('#photoMissingBanner');
-  if (!banner) return;
+  const banner = $('#photoMissingBanner'); if (!banner) return;
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   const missing = state.vehicules.filter((v) => pointedIds.has(v.id) && !v.photo);
-  const countEl = $('#photoMissingCount');
-  if (countEl) countEl.textContent = missing.length;
-  if (missing.length > 0) banner.classList.remove('hidden');
-  else banner.classList.add('hidden');
+  const countEl = $('#photoMissingCount'); if (countEl) countEl.textContent = missing.length;
+  if (missing.length > 0) banner.classList.remove('hidden'); else banner.classList.add('hidden');
 }
 
 /* ============================================================
@@ -2942,7 +2194,6 @@ function listenPointages() {
   }, (err) => console.warn('[pointages]', err));
   state.unsubscribers.push(unsub);
 }
-
 function aggregatePointages() {
   state.myPointages = new Map();
   state.otherPointages = new Map();
@@ -2957,35 +2208,27 @@ function aggregatePointages() {
     }
   });
 }
-
 function getPointageOfficiel(vehiculeId) {
   const all = state.pointages.filter((p) => p.vehiculeId === vehiculeId);
   if (!all.length) return null;
   return all.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0];
 }
-
 function renderPointage() {
-  const list = $('#pointageList');
-  const empty = $('#pointageEmpty');
-  const pag = $('#pointagePagination');
+  const list = $('#pointageList'); const empty = $('#pointageEmpty'); const pag = $('#pointagePagination');
   if (!list) return;
   const site = state.pointageSite;
-  const label = $('#pointageSiteLabel');
-  if (label) label.textContent = site || '— Choisir un site —';
-
+  const label = $('#pointageSiteLabel'); if (label) label.textContent = site || '— Choisir un site —';
   const search = normalizeImmat($('#pointageSearch').value);
   let items = state.vehicules.slice().sort((a, b) => a.immat.localeCompare(b.immat));
   if (search) items = items.filter((v) => normalizeImmat(v.immat).includes(search));
   if (state.pointageStatus === 'pending') items = items.filter((v) => !state.myPointages.has(v.id));
   if (state.pointageStatus === 'pointed') items = items.filter((v) => state.myPointages.has(v.id));
-
   const total = items.length;
   const shown = Math.min(state.pagePointage * PAGE_SIZE, total);
   const pageItems = items.slice(0, shown);
-
   if (!total) {
     list.innerHTML = '';
-    if (empty) empty.classList.remove('hidden');
+    if (empty) { empty.classList.remove('hidden'); empty.querySelector('.es-title').textContent = search ? 'Aucun véhicule trouvé' : (state.pointageStatus === 'pending' ? 'Tout est pointé' : 'Aucun véhicule'); }
     if (pag) pag.classList.add('hidden');
   } else {
     if (empty) empty.classList.add('hidden');
@@ -2996,70 +2239,33 @@ function renderPointage() {
       const officiel = getPointageOfficiel(v.id);
       const hasPhoto = v.photo && v.photo.length > 0;
       const missingPhoto = mine && !hasPhoto;
-      return `<div class="pointage-item ${mine ? 'pointed' : ''} ${recent ? 'recent' : ''}" data-veh="${v.id}">
-        <div class="pi-check">${mine ? '✓' : ''}</div>
-        <div class="pi-main">
-          <div class="pi-immat">
-            ${escapeHtml(v.immat)}
-            ${mine ? '<span class="pi-mine">Mon pointage</span>' : ''}
-            ${others.length ? `<span class="pi-multi">+${others.length}</span>` : ''}
-          </div>
-          <div class="pi-info">
-            ${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
-            ${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}
-          </div>
-        </div>
-        ${officiel && officiel.site ? `<span class="pi-site">${escapeHtml(officiel.site)}</span>` : ''}
-        <button class="pi-photo ${hasPhoto ? 'has-photo' : ''} ${missingPhoto ? 'pi-photo-missing' : ''}" data-photo-veh="${v.id}">📷</button>
-      </div>`;
+      return `<div class="pointage-item ${mine ? 'pointed' : ''} ${recent ? 'recent' : ''}" data-veh="${v.id}"><div class="pi-check">${mine ? '✓' : ''}</div><div class="pi-main"><div class="pi-immat">${escapeHtml(v.immat)}${mine ? '<span class="pi-mine">Mon pointage</span>' : ''}${others.length ? `<span class="pi-multi">+${others.length}</span>` : ''}</div><div class="pi-info">${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}</div></div>${officiel && officiel.site ? `<span class="pi-site">${escapeHtml(officiel.site)}</span>` : ''}<button class="pi-photo ${hasPhoto ? 'has-photo' : ''} ${missingPhoto ? 'pi-photo-missing' : ''}" data-photo-veh="${v.id}">📷</button></div>`;
     }).join('');
-
-    if (pag) {
-      if (shown < total) { pag.classList.remove('hidden'); $('#pointagePgInfo').textContent = `${shown} sur ${total}`; }
-      else pag.classList.add('hidden');
-    }
-
-    $$('.pointage-item', list).forEach((item) => {
-      item.addEventListener('click', (e) => {
-        if (e.target.closest('[data-photo-veh]')) return;
-        e.stopPropagation();
-        handlePointage(item.dataset.veh);
-      });
-    });
-
-    $$('[data-photo-veh]', list).forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const vehId = btn.dataset.photoVeh;
-        const v = state.vehicules.find((x) => x.id === vehId);
-        if (!v) return;
-        if (v.photo && v.photo.length > 0) openLightbox(vehId);
-        else prendrePhotoVehicule(vehId);
-      });
-    });
+    if (pag) { if (shown < total) { pag.classList.remove('hidden'); $('#pointagePgInfo').textContent = `${shown} sur ${total}`; } else pag.classList.add('hidden'); }
+    $$('.pointage-item', list).forEach((item) => item.addEventListener('click', (e) => { if (e.target.closest('[data-photo-veh]')) return; e.stopPropagation(); handlePointage(item.dataset.veh); }));
+    $$('[data-photo-veh]', list).forEach((btn) => btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const vehId = btn.dataset.photoVeh;
+      const v = state.vehicules.find((x) => x.id === vehId);
+      if (!v) return;
+      if (v.photo && v.photo.length > 0) openLightbox(vehId);
+      else prendrePhotoVehicule(vehId);
+    }));
   }
-
   updatePointageCounters();
   updatePhotoMissingBanner();
 }
 $('#pointageLoadMore').addEventListener('click', () => { state.pagePointage++; renderPointage(); });
-
 function updatePointageCounters() {
   const total = state.vehicules.length;
   const mine = state.myPointages.size;
   const uniqueVehicules = new Set(state.pointages.map((p) => p.vehiculeId));
   const global = uniqueVehicules.size;
-  const counterMine = $('#pointageCounterMine');
-  const counterGlobal = $('#pointageCounterGlobal');
+  const counterMine = $('#pointageCounterMine'); const counterGlobal = $('#pointageCounterGlobal');
   if (counterMine) counterMine.textContent = `Moi : ${mine}`;
-  if (counterGlobal) {
-    counterGlobal.textContent = `Équipe : ${global} / ${total}`;
-    counterGlobal.classList.toggle('done', total > 0 && global === total);
-  }
-  const btnTerminer = $('#btnTerminer');
-  if (btnTerminer) btnTerminer.classList.toggle('show', global > 0);
+  if (counterGlobal) { counterGlobal.textContent = `Équipe : ${global} / ${total}`; counterGlobal.classList.toggle('done', total > 0 && global === total); }
+  const btnTerminer = $('#btnTerminer'); if (btnTerminer) btnTerminer.classList.toggle('show', global > 0);
 }
-
 async function handlePointage(vehId) {
   if (!state.currentUser) { toast('Sélectionnez un utilisateur dans le header', 'warning'); return; }
   if (!state.pointageSite) { toast('Sélectionnez un site avant de pointer', 'warning'); return; }
@@ -3073,52 +2279,23 @@ async function handlePointage(vehId) {
       for (const p of toDelete) await state.db.collection('pointages').doc(p.id).delete();
       toast(`${v.immat} démarqué`, 'info');
     } else {
-      // Détecter un mouvement inter-sites
       const lastSite = v.site;
       const newSite = state.pointageSite;
       if (lastSite && lastSite !== newSite) {
         try {
-          await state.db.collection('mouvements').add({
-            vehiculeId: vehId,
-            immat: v.immat,
-            fromSite: lastSite,
-            toSite: newSite,
-            userNom: state.currentUser,
-            timestamp: nowIso(),
-            jour: todayKeyShort()
-          });
-          console.log(`[Mouvement] ${v.immat} : ${lastSite} → ${newSite}`);
+          await state.db.collection('mouvements').add({ vehiculeId: vehId, immat: v.immat, fromSite: lastSite, toSite: newSite, userNom: state.currentUser, timestamp: nowIso(), jour: todayKeyShort() });
         } catch (e) { console.warn('[mouvement]', e); }
       }
-      await state.db.collection('pointages').add({
-        vehiculeId: vehId,
-        immat: v.immat,
-        userNom: state.currentUser,
-        site: newSite,
-        timestamp: nowIso(),
-        jour: todayKeyShort(),
-        createdAt: nowIso()
-      });
+      await state.db.collection('pointages').add({ vehiculeId: vehId, immat: v.immat, userNom: state.currentUser, site: newSite, timestamp: nowIso(), jour: todayKeyShort(), createdAt: nowIso() });
       toast(`${v.immat} trouvé à ${newSite}`, 'success');
       try { playBeep(); } catch (e) {}
       const officiel = getPointageOfficiel(vehId);
-      if (!officiel) {
-        await state.db.collection('vehicules').doc(vehId).update({ present: true, lastSeen: nowIso(), site: newSite });
-      }
+      if (!officiel) await state.db.collection('vehicules').doc(vehId).update({ present: true, lastSeen: nowIso(), site: newSite });
     }
     setTimeout(() => { delete state.pointageRecent[vehId]; }, 2000);
-  } catch (err) {
-    console.error('[pointage]', err);
-    toast('Erreur : ' + err.message, 'error');
-  }
+  } catch (err) { toast('Erreur : ' + err.message, 'error'); }
 }
-
-$('#pointageSite').addEventListener('change', (e) => {
-  state.pointageSite = e.target.value;
-  state.pointageRecent = {};
-  state.pagePointage = 1;
-  renderPointage();
-});
+$('#pointageSite').addEventListener('change', (e) => { state.pointageSite = e.target.value; state.pointageRecent = {}; state.pagePointage = 1; renderPointage(); });
 $$('#pointageStatusChips .chip').forEach((chip) => {
   chip.addEventListener('click', () => {
     $$('#pointageStatusChips .chip').forEach((c) => c.classList.remove('active'));
@@ -3134,13 +2311,7 @@ $('#pointageSearch').addEventListener('input', (e) => {
   state.pagePointage = 1;
   renderPointage();
 });
-$('#pointageClear').addEventListener('click', () => {
-  $('#pointageSearch').value = '';
-  $('#pointageClear').classList.remove('show');
-  $('#pointageAutocomplete').classList.remove('show');
-  state.pagePointage = 1;
-  renderPointage();
-});
+$('#pointageClear').addEventListener('click', () => { $('#pointageSearch').value = ''; $('#pointageClear').classList.remove('show'); $('#pointageAutocomplete').classList.remove('show'); state.pagePointage = 1; renderPointage(); });
 function showPointageAutocomplete(query) {
   const q = normalizeImmat(query);
   const l = $('#pointageAutocomplete');
@@ -3160,15 +2331,9 @@ function showPointageAutocomplete(query) {
     handlePointage(v.id);
   }));
 }
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('#pointageSearch') && !e.target.closest('#pointageAutocomplete')) {
-    $('#pointageAutocomplete').classList.remove('show');
-  }
-});
-
+document.addEventListener('click', (e) => { if (!e.target.closest('#pointageSearch') && !e.target.closest('#pointageAutocomplete')) $('#pointageAutocomplete').classList.remove('show'); });
 function renderAutruiSection() {
-  const list = $('#autruiList');
-  const count = $('#autruiCount');
+  const list = $('#autruiList'); const count = $('#autruiCount');
   if (!list) return;
   const byUser = {};
   const me = state.currentUser;
@@ -3179,24 +2344,14 @@ function renderAutruiSection() {
     byUser[p.userNom].sites.add(p.site);
   });
   const users = Object.keys(byUser);
-  if (!users.length) {
-    count.textContent = '0';
-    list.innerHTML = '<div style="font-size:0.74rem;color:var(--text-mute);text-align:center;padding:10px">Personne d\'autre n\'a pointé aujourd\'hui</div>';
-    return;
-  }
+  if (!users.length) { count.textContent = '0'; list.innerHTML = '<div style="font-size:0.74rem;color:var(--text-mute);text-align:center;padding:10px">Personne d\'autre n\'a pointé aujourd\'hui</div>'; return; }
   count.textContent = users.length + ' utilisateur' + (users.length > 1 ? 's' : '');
-  list.innerHTML = users.map((nom) => {
-    const d = byUser[nom];
-    return `<div class="autrui-user"><span class="au-nom">${escapeHtml(nom)}</span><span class="au-count">${d.count} véhicule(s)</span><span class="au-sites">${[...d.sites].map((s) => escapeHtml(s)).join(', ')}</span></div>`;
-  }).join('');
+  list.innerHTML = users.map((nom) => { const d = byUser[nom]; return `<div class="autrui-user"><span class="au-nom">${escapeHtml(nom)}</span><span class="au-count">${d.count} véhicule(s)</span><span class="au-sites">${[...d.sites].map((s) => escapeHtml(s)).join(', ')}</span></div>`; }).join('');
 }
-document.addEventListener('click', (e) => {
-  const header = e.target.closest('#autruiHeader');
-  if (header) header.parentElement.classList.toggle('open');
-});
+document.addEventListener('click', (e) => { const header = e.target.closest('#autruiHeader'); if (header) header.parentElement.classList.toggle('open'); });
 
 /* ============================================================
-   PHOTO EN SÉRIE
+   PHOTO SÉRIE
    ============================================================ */
 let photoSerieQueue = [];
 let photoSerieIndex = 0;
@@ -3209,18 +2364,14 @@ function openPhotoSerie() {
   updatePhotoSerieView();
 }
 function updatePhotoSerieView() {
-  const total = photoSerieQueue.length;
-  const current = photoSerieIndex;
+  const total = photoSerieQueue.length; const current = photoSerieIndex;
   const pct = total ? Math.round((current / total) * 100) : 0;
   $('#photoSerieProgress').textContent = `${current} / ${total}`;
   $('#photoSerieBar').style.width = pct + '%';
   if (current >= total) {
-    $('#photoSerieImmat').textContent = '✓';
-    $('#photoSerieInfo').textContent = 'Toutes les photos ont été prises';
-    $('#photoSerieSite').textContent = '';
-    $('#photoSeriePreview').innerHTML = '';
-    $('#photoSeriePrendre').classList.add('hidden');
-    $('#photoSerieSuivant').classList.add('hidden');
+    $('#photoSerieImmat').textContent = '✓'; $('#photoSerieInfo').textContent = 'Toutes les photos ont été prises';
+    $('#photoSerieSite').textContent = ''; $('#photoSeriePreview').innerHTML = '';
+    $('#photoSeriePrendre').classList.add('hidden'); $('#photoSerieSuivant').classList.add('hidden');
     setTimeout(() => { closeModal('modalPhotoSerie'); toast(`${total} photo(s) ajoutée(s)`, 'success'); }, 1200);
     return;
   }
@@ -3234,15 +2385,10 @@ function updatePhotoSerieView() {
 }
 $('#btnPhotoSerie').addEventListener('click', openPhotoSerie);
 $('#photoSeriePrendre').addEventListener('click', () => {
-  const v = photoSerieQueue[photoSerieIndex];
-  if (!v) return;
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = 'image/*';
-  input.capture = 'environment';
+  const v = photoSerieQueue[photoSerieIndex]; if (!v) return;
+  const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*'; input.capture = 'environment';
   input.onchange = async (ev) => {
-    const file = ev.target.files[0];
-    if (!file) return;
+    const file = ev.target.files[0]; if (!file) return;
     showLoading('Upload en cours...');
     try {
       const url = await uploadToCloudinary(file);
@@ -3259,27 +2405,18 @@ $('#photoSeriePrendre').addEventListener('click', () => {
 $('#photoSerieSuivant').addEventListener('click', () => { photoSerieIndex++; updatePhotoSerieView(); });
 
 /* ============================================================
-   RÉCAP DE RONDE
+   RÉCAP
    ============================================================ */
 $('#btnTerminer').addEventListener('click', () => { renderRecapModal(); openModal('modalRecap'); });
-
 function computeRondeStats() {
-  const all = state.vehicules;
-  const total = all.length;
+  const all = state.vehicules; const total = all.length;
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   const found = all.filter((v) => pointedIds.has(v.id));
   const manquants = all.filter((v) => !pointedIds.has(v.id));
-  const siteOfficiel = (vehId) => {
-    const ps = state.pointages.filter((p) => p.vehiculeId === vehId);
-    if (!ps.length) return null;
-    const first = ps.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0];
-    return first.site;
-  };
+  const siteOfficiel = (vehId) => { const ps = state.pointages.filter((p) => p.vehiculeId === vehId); if (!ps.length) return null; return ps.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0].site; };
   const bySource = {};
   ['source1', 'source2', 'custom'].forEach((src) => {
-    const allSrc = all.filter((v) => v.source === src);
-    const foundSrc = found.filter((v) => v.source === src);
-    const missSrc = manquants.filter((v) => v.source === src);
+    const allSrc = all.filter((v) => v.source === src); const foundSrc = found.filter((v) => v.source === src); const missSrc = manquants.filter((v) => v.source === src);
     if (allSrc.length > 0) bySource[src] = { total: allSrc.length, found: foundSrc.length, manquants: missSrc.length, taux: allSrc.length ? Math.round((foundSrc.length / allSrc.length) * 100) : 0 };
   });
   const bySite = {};
@@ -3288,46 +2425,20 @@ function computeRondeStats() {
   state.pointages.forEach((p) => { if (!byUser[p.userNom]) byUser[p.userNom] = 0; byUser[p.userNom]++; });
   return { total, found: found.length, manquants: manquants.length, tauxGlobal: total ? Math.round((found.length / total) * 100) : 0, bySource, bySite, byUser, sitesVisited: Object.keys(bySite).filter((s) => s !== '— Sans site —') };
 }
-
 function renderRecapModal() {
-  const s = computeRondeStats();
-  const now = new Date();
-  const heure = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-  const date = now.toLocaleDateString('fr-FR');
-  const sourcesTags = Object.entries(s.bySource).map(([src, data]) => {
-    const label = SOURCES[src] || src;
-    return `<span class="rs-tag">${escapeHtml(label)} : ${data.found}/${data.total}</span>`;
-  }).join('');
-  const sourceRows = Object.entries(s.bySource).map(([src, data]) => {
-    const label = SOURCES[src] || src;
-    const cls = data.taux >= 80 ? '' : data.taux >= 50 ? 'low' : 'critical';
-    return `<tr><td><strong>${escapeHtml(label)}</strong></td><td>${data.total}</td><td style="color:var(--success)">${data.found}</td><td style="color:var(--danger)">${data.manquants}</td><td>${data.taux}%<div class="bilan-bar"><div class="bilan-bar-fill ${cls}" style="width:${data.taux}%"></div></div></td></tr>`;
-  }).join('');
-  const siteRows = Object.entries(s.bySite).sort((a, b) => b[1] - a[1]).map(([site, count]) => {
-    const pct = s.found ? Math.round((count / s.found) * 100) : 0;
-    return `<tr><td><strong>${escapeHtml(site)}</strong></td><td style="color:var(--success)">${count}</td><td>${pct}%</td></tr>`;
-  }).join('') || '<tr><td colspan="3" style="text-align:center;color:var(--text-mute);padding:14px">Aucun véhicule pointé</td></tr>';
+  const s = computeRondeStats(); const now = new Date();
+  const heure = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); const date = now.toLocaleDateString('fr-FR');
+  const sourcesTags = Object.entries(s.bySource).map(([src, data]) => `<span class="rs-tag">${escapeHtml(SOURCES[src] || src)} : ${data.found}/${data.total}</span>`).join('');
+  const sourceRows = Object.entries(s.bySource).map(([src, data]) => { const label = SOURCES[src] || src; const cls = data.taux >= 80 ? '' : data.taux >= 50 ? 'low' : 'critical'; return `<tr><td><strong>${escapeHtml(label)}</strong></td><td>${data.total}</td><td style="color:var(--success)">${data.found}</td><td style="color:var(--danger)">${data.manquants}</td><td>${data.taux}%<div class="bilan-bar"><div class="bilan-bar-fill ${cls}" style="width:${data.taux}%"></div></div></td></tr>`; }).join('');
+  const siteRows = Object.entries(s.bySite).sort((a, b) => b[1] - a[1]).map(([site, count]) => { const pct = s.found ? Math.round((count / s.found) * 100) : 0; return `<tr><td><strong>${escapeHtml(site)}</strong></td><td style="color:var(--success)">${count}</td><td>${pct}%</td></tr>`; }).join('') || '<tr><td colspan="3" style="text-align:center;color:var(--text-mute);padding:14px">Aucun véhicule pointé</td></tr>';
   const userRows = Object.entries(s.byUser).sort((a, b) => b[1] - a[1]).map(([nom, count]) => `<tr><td>${escapeHtml(nom)}</td><td style="color:var(--primary)">${count}</td></tr>`).join('');
   $('#recapBody').innerHTML = `
-    <div class="recap-hero">
-      <p class="rh-number">${s.found} / ${s.total}</p>
-      <p class="rh-label">Véhicules trouvés</p>
-      <div class="recap-sources">${sourcesTags}</div>
-    </div>
-    <div class="recap-grid">
-      <div class="recap-card"><div class="rc-num">${s.total}</div><div class="rc-label">Total attendus</div></div>
-      <div class="recap-card success"><div class="rc-num">${s.found}</div><div class="rc-label">Trouvés (${s.tauxGlobal}%)</div></div>
-      <div class="recap-card danger"><div class="rc-num">${s.manquants}</div><div class="rc-label">Manquants</div></div>
-    </div>
+    <div class="recap-hero"><p class="rh-number">${s.found} / ${s.total}</p><p class="rh-label">Véhicules trouvés</p><div class="recap-sources">${sourcesTags}</div></div>
+    <div class="recap-grid"><div class="recap-card"><div class="rc-num">${s.total}</div><div class="rc-label">Total attendus</div></div><div class="recap-card success"><div class="rc-num">${s.found}</div><div class="rc-label">Trouvés (${s.tauxGlobal}%)</div></div><div class="recap-card danger"><div class="rc-num">${s.manquants}</div><div class="rc-label">Manquants</div></div></div>
     <div class="card"><div class="card-title">Bilan par source</div><table class="bilan-table"><thead><tr><th>Source</th><th>Total</th><th>Trouvés</th><th>Manquants</th><th>Taux</th></tr></thead><tbody>${sourceRows || '<tr><td colspan="5" style="text-align:center;color:var(--text-mute);padding:14px">Aucune donnée</td></tr>'}</tbody></table></div>
     <div class="card"><div class="card-title">Répartition par site (${s.sitesVisited.length} site(s))</div><table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules</th><th>Part</th></tr></thead><tbody>${siteRows}</tbody></table></div>
     ${userRows ? `<div class="card"><div class="card-title">Contribution par utilisateur</div><table class="bilan-table"><thead><tr><th>Utilisateur</th><th>Pointages</th></tr></thead><tbody>${userRows}</tbody></table></div>` : ''}
-    <div class="card" style="background:var(--bg-3)"><div style="font-size:0.78rem;color:var(--text-dim);line-height:1.8">
-      <div>Ronde effectuée par : <strong style="color:var(--text)">${escapeHtml(state.currentUser || '—')}</strong></div>
-      <div>Date : ${date} à ${heure}</div>
-      <div>Sites visités : ${s.sitesVisited.length ? escapeHtml(s.sitesVisited.join(', ')) : 'Aucun'}</div>
-    </div></div>
-  `;
+    <div class="card" style="background:var(--bg-3)"><div style="font-size:0.78rem;color:var(--text-dim);line-height:1.8"><div>Ronde effectuée par : <strong style="color:var(--text)">${escapeHtml(state.currentUser || '—')}</strong></div><div>Date : ${date} à ${heure}</div><div>Sites visités : ${s.sitesVisited.length ? escapeHtml(s.sitesVisited.join(', ')) : 'Aucun'}</div></div></div>`;
 }
 $('#recapShowManquants').addEventListener('click', () => { closeModal('modalRecap'); switchTab('manquants'); });
 $('#recapExportPdf').addEventListener('click', () => exportRecapPDF(computeRondeStats()));
@@ -3340,27 +2451,13 @@ $('#recapTerminer').addEventListener('click', async () => {
     const now = nowIso();
     const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
     const found = state.vehicules.filter((v) => pointedIds.has(v.id));
-    const snapshot = found.map((v) => {
-      const ps = state.pointages.filter((p) => p.vehiculeId === v.id);
-      const first = ps.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0];
-      return { id: v.id, immat: v.immat, marque: v.marque || '', modele: v.modele || '', client: v.client || '', site: first?.site || v.site || '', present: true };
-    });
-    await state.db.collection('rondes').add({
-      date: todayKey(), heureDebut: now, heureFin: now,
-      effectueePar: state.currentUser || '—',
-      site: s.sitesVisited.join(', ') || '—',
-      note: `Ronde collaborative · ${s.sitesVisited.length} site(s)`,
-      statut: 'terminee', mode: 'ronde_collaborative',
-      vehicules: found.map((v) => v.id), vehiculesSnapshot: snapshot,
-      dureeSecondes: null,
-      stats: { total: s.total, presents: s.found, absents: s.manquants, taux: s.tauxGlobal, sitesVisites: s.sitesVisited.length, repartitionSites: s.bySite, contributions: s.byUser },
-      comparaison: null, createdAt: now
-    });
+    const snapshot = found.map((v) => { const ps = state.pointages.filter((p) => p.vehiculeId === v.id); const first = ps.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0]; return { id: v.id, immat: v.immat, marque: v.marque || '', modele: v.modele || '', client: v.client || '', site: first?.site || v.site || '', present: true }; });
+    await state.db.collection('rondes').add({ date: todayKey(), heureDebut: now, heureFin: now, effectueePar: state.currentUser || '—', site: s.sitesVisited.join(', ') || '—', note: `Ronde collaborative · ${s.sitesVisited.length} site(s)`, statut: 'terminee', mode: 'ronde_collaborative', vehicules: found.map((v) => v.id), vehiculesSnapshot: snapshot, dureeSecondes: null, stats: { total: s.total, presents: s.found, absents: s.manquants, taux: s.tauxGlobal, sitesVisites: s.sitesVisited.length, repartitionSites: s.bySite, contributions: s.byUser }, comparaison: null, createdAt: now });
     hideLoading();
     closeModal('modalRecap');
     toast(`Ronde enregistrée · ${s.found}/${s.total}`, 'success');
     renderPointage();
-  } catch (err) { console.error(err); hideLoading(); toast('Erreur : ' + err.message, 'error'); }
+  } catch (err) { hideLoading(); toast('Erreur : ' + err.message, 'error'); }
 });
 
 /* ============================================================
@@ -3374,8 +2471,7 @@ function renderManquants() {
   const cntEl = $('#manquantsCount'); if (cntEl) cntEl.textContent = list.length;
   const c = $('#manquantsList'); const e = $('#manquantsEmpty'); const pag = $('#manquantsPagination');
   if (!c) return;
-  const total = list.length;
-  const shown = Math.min(state.pageManquants * PAGE_SIZE, total);
+  const total = list.length; const shown = Math.min(state.pageManquants * PAGE_SIZE, total);
   const pageItems = list.slice(0, shown);
   if (!total) { c.innerHTML = ''; if (e) e.classList.remove('hidden'); if (pag) pag.classList.add('hidden'); return; }
   if (e) e.classList.add('hidden');
@@ -3405,7 +2501,6 @@ $('#btnManquantsExportXls').addEventListener('click', () => {
    ============================================================ */
 let galSelectionMode = false;
 let galSelected = new Set();
-
 async function downloadPhotoFromGallery(vehId, immatSafe) {
   const v = state.vehicules.find((x) => x.id === vehId);
   if (!v || !v.photo) { toast('Photo introuvable', 'warning'); return; }
@@ -3416,27 +2511,12 @@ async function downloadPhotoFromGallery(vehId, immatSafe) {
     const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg';
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = `NTR_${immatSafe || v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
+    a.href = url; a.download = `NTR_${immatSafe || v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 2000);
     toast(`Photo de ${v.immat} téléchargée`, 'success');
-  } catch (err) {
-    console.error('[download]', err);
-    window.open(v.photo, '_blank');
-    toast('Ouverture dans un nouvel onglet', 'info');
-  }
+  } catch (err) { window.open(v.photo, '_blank'); toast('Ouverture dans un nouvel onglet', 'info'); }
 }
-
-async function deletePhotoFromGallery(vehId) {
-  const v = state.vehicules.find((x) => x.id === vehId);
-  if (!v) return;
-  const ok = await confirmDialog('Supprimer la photo ?', `Photo de <strong>${escapeHtml(v.immat)}</strong> ?`);
-  if (!ok) return;
-  await state.db.collection('vehicules').doc(vehId).update({ photo: '' });
-  toast('Photo supprimée', 'success');
-}
-
 function toggleGalSelectionMode() {
   galSelectionMode = !galSelectionMode;
   if (!galSelectionMode) galSelected.clear();
@@ -3445,7 +2525,6 @@ function toggleGalSelectionMode() {
   if (btn) btn.textContent = galSelectionMode ? 'Annuler la sélection' : 'Sélectionner';
   renderGalerie();
 }
-
 async function downloadSelectedPhotos() {
   if (!galSelected.size) return;
   const photos = [...galSelected].map((id) => state.vehicules.find((v) => v.id === id)).filter((v) => v && v.photo);
@@ -3459,28 +2538,20 @@ async function downloadSelectedPhotos() {
       const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg';
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = `NTR_${v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
+      a.href = url; a.download = `NTR_${v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 2000);
       done++;
       $('#loadingText').textContent = `Téléchargement ${done}/${photos.length}...`;
       await new Promise((r) => setTimeout(r, 400));
-    } catch (e) { console.warn('Erreur photo', v.immat, e); }
+    } catch (e) {}
   }
-  hideLoading();
-  toast(`${done} photo(s) téléchargée(s)`, 'success');
-  galSelected.clear();
-  renderGalerie();
+  hideLoading(); toast(`${done} photo(s) téléchargée(s)`, 'success'); galSelected.clear(); renderGalerie();
 }
-
 async function downloadAllPhotosOfSite() {
   const site = $('#galSiteFilter').value;
   const list = state.vehicules.filter((v) => v.photo && (!site || v.site === site));
   if (!list.length) { toast('Aucune photo à télécharger', 'warning'); return; }
-  const label = site || 'tous les sites';
-  const ok = await confirmDialog('Télécharger toutes les photos ?', `${list.length} photo(s) de <strong>${escapeHtml(label)}</strong> seront téléchargées.`);
-  if (!ok) return;
   showLoading(`Téléchargement de ${list.length} photo(s)...`);
   let done = 0;
   for (const v of list) {
@@ -3490,22 +2561,18 @@ async function downloadAllPhotosOfSite() {
       const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg';
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = `NTR_${v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
+      a.href = url; a.download = `NTR_${v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 2000);
       done++;
       $('#loadingText').textContent = `Téléchargement ${done}/${list.length}...`;
       await new Promise((r) => setTimeout(r, 400));
-    } catch (e) { console.warn('Erreur photo', v.immat, e); }
+    } catch (e) {}
   }
-  hideLoading();
-  toast(`${done} photo(s) téléchargée(s)`, 'success');
+  hideLoading(); toast(`${done} photo(s) téléchargée(s)`, 'success');
 }
-
 function updateGalSelectionInfo() {
-  const info = $('#galSelectionInfo');
-  if (!info) return;
+  const info = $('#galSelectionInfo'); if (!info) return;
   if (!galSelectionMode) { info.classList.add('hidden'); return; }
   info.classList.remove('hidden');
   $('#galSelectionCount').textContent = galSelected.size;
@@ -3513,51 +2580,43 @@ function updateGalSelectionInfo() {
   $('#galSelectionDownload').classList.toggle('hidden', !hasSel);
   $('#galSelectionClear').classList.toggle('hidden', !hasSel);
 }
-
 function renderGalerie() {
   const site = $('#galSiteFilter').value;
   const photoFilter = $('#galPhotoFilter') ? $('#galPhotoFilter').value : '';
   let base;
-  if (photoFilter === 'without') {
-    const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-    base = state.vehicules.filter((v) => pointedIds.has(v.id) && !v.photo);
-  } else {
-    base = state.vehicules.filter((v) => v.photo && v.photo.length > 0);
-  }
+  if (photoFilter === 'without') { const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId)); base = state.vehicules.filter((v) => pointedIds.has(v.id) && !v.photo); }
+  else { base = state.vehicules.filter((v) => v.photo && v.photo.length > 0); }
   if (site) base = base.filter((v) => v.site === site);
   const g = $('#galGrid'); const e = $('#galEmpty');
   if (!g) return;
   updateGalSelectionInfo();
-  if (!base.length) {
-    g.innerHTML = '';
-    if (e) { e.classList.remove('hidden'); e.querySelector('.es-title').textContent = photoFilter === 'without' ? 'Aucune photo manquante' : 'Aucune photo'; }
-    return;
-  }
+  if (!base.length) { g.innerHTML = ''; if (e) e.classList.remove('hidden'); return; }
   if (e) e.classList.add('hidden');
   g.innerHTML = base.map((v) => {
-    if (photoFilter === 'without') {
-      return `<div class="gallery-item" data-photo-veh="${v.id}" style="background:var(--bg-3)"><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:10px;text-align:center"><div style="font-size:2rem;color:var(--warning);margin-bottom:8px">📷</div><div style="font-family:var(--mono);font-weight:700;font-size:0.9rem;color:var(--primary)">${escapeHtml(v.immat)}</div><div style="font-size:0.7rem;color:var(--text-dim);margin-top:4px">${escapeHtml(v.site || '—')}</div></div><div class="gi-photo-status missing">MANQUANTE</div></div>`;
-    }
+    if (photoFilter === 'without') return `<div class="gallery-item" data-photo-veh="${v.id}" style="background:var(--bg-3)"><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:10px;text-align:center"><div style="font-size:2rem;color:var(--warning);margin-bottom:8px">📷</div><div style="font-family:var(--mono);font-weight:700;font-size:0.9rem;color:var(--primary)">${escapeHtml(v.immat)}</div><div style="font-size:0.7rem;color:var(--text-dim);margin-top:4px">${escapeHtml(v.site || '—')}</div></div><div class="gi-photo-status missing">MANQUANTE</div></div>`;
     const selected = galSelected.has(v.id);
     const immatSafe = escapeHtml(v.immat.replace(/[^A-Z0-9]/gi, '_'));
-    return `<div class="gallery-item ${selected ? 'selected' : ''}" data-photo="${v.id}"><img src="${escapeHtml(v.photo)}" loading="lazy" alt="${escapeHtml(v.immat)}"><div class="gi-photo-status ok">OK</div><div class="gi-checkbox ${galSelectionMode ? 'show' : ''}" data-select="${v.id}">✓</div><div class="gi-actions"><button class="gi-btn gi-btn-download" data-dl="${v.id}" data-dl-immat="${immatSafe}">⬇</button><button class="gi-btn gi-btn-delete" data-del-photo="${v.id}">✕</button></div><div class="gallery-overlay"><div class="gi-immat">${escapeHtml(v.immat)}</div><div>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</div></div></div>`;
+    return `<div class="gallery-item ${selected ? 'selected' : ''}" data-photo="${v.id}"><img src="${escapeHtml(v.photo)}" loading="lazy"><div class="gi-photo-status ok">OK</div><div class="gi-checkbox ${galSelectionMode ? 'show' : ''}" data-select="${v.id}">✓</div><div class="gi-actions"><button class="gi-btn" data-dl="${v.id}" data-dl-immat="${immatSafe}">⬇</button><button class="gi-btn gi-btn-delete" data-del-photo="${v.id}">✕</button></div><div class="gallery-overlay"><div class="gi-immat">${escapeHtml(v.immat)}</div><div>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</div></div></div>`;
   }).join('');
   $$('[data-photo]', g).forEach((item) => item.addEventListener('click', (e) => {
     if (e.target.closest('.gi-btn') || e.target.closest('.gi-checkbox')) return;
-    if (galSelectionMode) {
-      const id = item.dataset.photo;
-      if (galSelected.has(id)) galSelected.delete(id); else galSelected.add(id);
-      renderGalerie();
-    } else openLightbox(item.dataset.photo);
+    if (galSelectionMode) { const id = item.dataset.photo; if (galSelected.has(id)) galSelected.delete(id); else galSelected.add(id); renderGalerie(); }
+    else openLightbox(item.dataset.photo);
   }));
-  $$('[data-select]', g).forEach((cb) => cb.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const id = cb.dataset.select;
-    if (galSelected.has(id)) galSelected.delete(id); else galSelected.add(id);
-    renderGalerie();
-  }));
+  $$('[data-select]', g).forEach((cb) => cb.addEventListener('click', (e) => { e.stopPropagation(); const id = cb.dataset.select; if (galSelected.has(id)) galSelected.delete(id); else galSelected.add(id); renderGalerie(); }));
   $$('[data-dl]', g).forEach((btn) => btn.addEventListener('click', (e) => { e.stopPropagation(); downloadPhotoFromGallery(btn.dataset.dl, btn.dataset.dlImmat); }));
-  $$('[data-del-photo]', g).forEach((btn) => btn.addEventListener('click', async (e) => { e.stopPropagation(); await deletePhotoFromGallery(btn.dataset.delPhoto); }));
+  $$('[data-del-photo]', g).forEach((btn) => btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const id = btn.dataset.delPhoto;
+    const v = state.vehicules.find((x) => x.id === id);
+    if (!v) return;
+    requireAdminPin(`Supprimer la photo de ${v.immat}`, async () => {
+      const ok = await confirmDialog('Supprimer la photo ?', `Photo de <strong>${escapeHtml(v.immat)}</strong> ?`);
+      if (!ok) return;
+      await state.db.collection('vehicules').doc(id).update({ photo: '' });
+      toast('Photo supprimée', 'success');
+    });
+  }));
   $$('[data-photo-veh]', g).forEach((i) => i.addEventListener('click', (e) => { if (e.target.closest('.gi-btn')) return; prendrePhotoVehicule(i.dataset.photoVeh); }));
 }
 $('#galSiteFilter').addEventListener('change', renderGalerie);
@@ -3572,8 +2631,7 @@ function openLightbox(id) {
   if (!v || !v.photo) return;
   $('#lightboxImg').src = v.photo;
   const immatSafe = v.immat.replace(/[^A-Z0-9]/gi, '_');
-  const dl = $('#lightboxDownload');
-  dl.onclick = (e) => { e.preventDefault(); downloadPhotoFromGallery(id, immatSafe); };
+  $('#lightboxDownload').onclick = (e) => { e.preventDefault(); downloadPhotoFromGallery(id, immatSafe); };
   $('#lightboxDelete').dataset.vehId = id;
   const info = $('#lightboxInfo');
   if (info) info.innerHTML = `<div><span class="li-immat">${escapeHtml(v.immat)}</span></div><div>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}</div>${v.site ? `<div>${escapeHtml(v.site)}</div>` : ''}`;
@@ -3581,15 +2639,17 @@ function openLightbox(id) {
 }
 $('#lightboxClose').addEventListener('click', () => $('#lightbox').classList.remove('show'));
 $('#lightbox').addEventListener('click', (e) => { if (e.target.id === 'lightbox') $('#lightbox').classList.remove('show'); });
-$('#lightboxDelete').addEventListener('click', async () => {
+$('#lightboxDelete').addEventListener('click', () => {
   const id = $('#lightboxDelete').dataset.vehId;
   const v = state.vehicules.find((x) => x.id === id);
   if (!v) return;
-  const ok = await confirmDialog('Supprimer la photo ?', `Photo de <strong>${escapeHtml(v.immat)}</strong> ?`);
-  if (!ok) return;
-  await state.db.collection('vehicules').doc(id).update({ photo: '' });
-  $('#lightbox').classList.remove('show');
-  toast('Photo supprimée', 'success');
+  requireAdminPin(`Supprimer la photo de ${v.immat}`, async () => {
+    const ok = await confirmDialog('Supprimer la photo ?', `Photo de <strong>${escapeHtml(v.immat)}</strong> ?`);
+    if (!ok) return;
+    await state.db.collection('vehicules').doc(id).update({ photo: '' });
+    $('#lightbox').classList.remove('show');
+    toast('Photo supprimée', 'success');
+  });
 });
 
 /* ============================================================
@@ -3611,7 +2671,7 @@ function renderSocietes() {
 }
 
 /* ============================================================
-   VOICE
+   VOICE SEARCH
    ============================================================ */
 setupVoiceSearch('pointageMic', 'pointageSearch', (text) => {
   const exact = state.vehicules.find((v) => normalizeImmat(v.immat) === text);
@@ -3664,7 +2724,6 @@ document.addEventListener('click', (e) => {
   if (type === 'word-absent-s2') exportAbsentsWord('source2');
   if (type === 'word-present-site') exportPresentsWord();
 });
-
 function exportPDFSites() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
@@ -3761,24 +2820,6 @@ function exportRecapPDF(s) {
   doc.text('Repartition par site', 14, y); y += 4;
   const siteData = Object.entries(s.bySite).sort((a, b) => b[1] - a[1]).map(([site, count]) => [site, String(count), s.found ? Math.round((count / s.found) * 100) + '%' : '0%']);
   doc.autoTable({ startY: y, head: [['Site', 'Trouves', 'Part']], body: siteData.length ? siteData : [['-', '-', '-']], theme: 'grid', headStyles: { fillColor: [16, 185, 129], textColor: 255, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
-  y = doc.lastAutoTable.finalY + 10;
-  if (Object.keys(s.byUser).length) {
-    doc.setFontSize(11); doc.setFont(undefined, 'bold');
-    doc.text('Contribution par utilisateur', 14, y); y += 4;
-    const userData = Object.entries(s.byUser).sort((a, b) => b[1] - a[1]).map(([nom, count]) => [nom, String(count)]);
-    doc.autoTable({ startY: y, head: [['Utilisateur', 'Pointages']], body: userData, theme: 'grid', headStyles: { fillColor: [96, 165, 250], textColor: 255, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
-    y = doc.lastAutoTable.finalY + 10;
-  }
-  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  const manquants = state.vehicules.filter((v) => !pointedIds.has(v.id));
-  if (manquants.length) {
-    if (y > 240) { doc.addPage(); y = 20; }
-    doc.setFontSize(11); doc.setFont(undefined, 'bold');
-    doc.setTextColor(220, 38, 38);
-    doc.text(`Vehicules manquants (${manquants.length})`, 14, y); y += 4;
-    doc.setTextColor(0, 0, 0);
-    doc.autoTable({ startY: y, head: [['Immatriculation', 'Marque', 'Modele', 'Client', 'Source']], body: manquants.map((v) => [v.immat || '', v.marque || '', v.modele || '', v.client || '', SOURCES[v.source] || v.source || '']), theme: 'striped', headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 9 }, styles: { fontSize: 8, cellPadding: 2 }, alternateRowStyles: { fillColor: [254, 242, 242] }, margin: { left: 14, right: 14 } });
-  }
   const pageCount = doc.internal.getNumberOfPages();
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i); doc.setFontSize(8); doc.setTextColor(120, 120, 120);
@@ -3788,8 +2829,6 @@ function exportRecapPDF(s) {
   doc.save(`NTR_Rapport_Ronde_${todayKey()}.pdf`);
   toast('Rapport PDF téléchargé', 'success');
 }
-
-/* RAPPORT HEBDO (bouton chef) */
 $('#btnRapportHebdo').addEventListener('click', () => {
   const now = new Date();
   const weekAgo = new Date(now.getTime() - 7 * 86400000);
@@ -3802,66 +2841,26 @@ $('#btnRapportHebdo').addEventListener('click', () => {
   const taux = state.vehicules.length ? Math.round((found.length / state.vehicules.length) * 100) : 0;
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  // Page 1 - En-tête
   doc.setFillColor(11, 17, 32); doc.rect(0, 0, 210, 30, 'F');
   doc.setTextColor(16, 185, 129); doc.setFontSize(20); doc.setFont(undefined, 'bold');
   doc.text('NTR TRACK', 14, 13);
   doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'normal');
   doc.text('Rapport hebdomadaire', 14, 22);
   doc.text(period, 196, 22, { align: 'right' });
-  // Synthèse globale
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(13); doc.setFont(undefined, 'bold');
   doc.text('Synthese globale', 14, 45);
-  doc.setFillColor(240, 253, 244);
-  doc.rect(14, 50, 182, 30, 'F');
-  doc.setTextColor(5, 150, 105);
-  doc.setFontSize(24); doc.setFont(undefined, 'bold');
+  doc.setFillColor(240, 253, 244); doc.rect(14, 50, 182, 30, 'F');
+  doc.setTextColor(5, 150, 105); doc.setFontSize(24); doc.setFont(undefined, 'bold');
   doc.text(`${taux}%`, 105, 66, { align: 'center' });
-  doc.setFontSize(9); doc.setFont(undefined, 'normal');
-  doc.setTextColor(60, 60, 60);
+  doc.setFontSize(9); doc.setFont(undefined, 'normal'); doc.setTextColor(60, 60, 60);
   doc.text('Taux de presence global', 105, 74, { align: 'center' });
-  // 3 cartes
-  doc.setFontSize(11); doc.setFont(undefined, 'bold');
-  doc.setTextColor(0, 0, 0);
-  doc.text('Rondes effectuees', 14, 92);
-  doc.text('Vehicules trouves', 80, 92);
-  doc.text('Vehicules manquants', 146, 92);
+  doc.setFontSize(11); doc.setFont(undefined, 'bold'); doc.setTextColor(0, 0, 0);
+  doc.text('Rondes effectuees', 14, 92); doc.text('Vehicules trouves', 80, 92); doc.text('Vehicules manquants', 146, 92);
   doc.setFontSize(20);
   doc.setTextColor(59, 130, 246); doc.text(String(r7.length), 14, 104);
   doc.setTextColor(5, 150, 105); doc.text(String(found.length), 80, 104);
   doc.setTextColor(220, 38, 38); doc.text(String(manquants.length), 146, 104);
-  // Tableau par site
-  let y = 120;
-  doc.setFontSize(12); doc.setFont(undefined, 'bold'); doc.setTextColor(0, 0, 0);
-  doc.text('Detail par site', 14, y); y += 6;
-  const siteData = SITES.map((s) => {
-    const rondesSite = r7.filter((r) => r.site === s);
-    const vehiculesSite = found.filter((v) => v.site === s).length;
-    const missing = !rondesSite.length && vehiculesSite === 0;
-    return [s, String(rondesSite.length), String(vehiculesSite), missing ? 'Aucune activite' : 'OK'];
-  });
-  doc.autoTable({ startY: y, head: [['Site', 'Rondes', 'Vehicules trouves', 'Statut']], body: siteData, theme: 'grid', headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
-  y = doc.lastAutoTable.finalY + 12;
-  // Tableau utilisateurs
-  const byUser = {};
-  state.pointages.filter((p) => new Date(p.timestamp).getTime() >= since7).forEach((p) => { if (!byUser[p.userNom]) byUser[p.userNom] = { count: 0, sites: new Set() }; byUser[p.userNom].count++; byUser[p.userNom].sites.add(p.site); });
-  const userData = Object.entries(byUser).sort((a, b) => b[1].count - a[1].count).map(([nom, d]) => [nom, String(d.count), [...d.sites].join(', ')]);
-  if (userData.length) {
-    doc.setFontSize(12); doc.setFont(undefined, 'bold');
-    doc.text('Activite par utilisateur', 14, y); y += 6;
-    doc.autoTable({ startY: y, head: [['Utilisateur', 'Pointages', 'Sites visites']], body: userData, theme: 'grid', headStyles: { fillColor: [16, 185, 129], textColor: 255, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
-    y = doc.lastAutoTable.finalY + 12;
-  }
-  // Liste manquants
-  if (manquants.length) {
-    if (y > 220) { doc.addPage(); y = 20; }
-    doc.setFontSize(12); doc.setFont(undefined, 'bold'); doc.setTextColor(220, 38, 38);
-    doc.text(`Vehicules non trouves (${manquants.length})`, 14, y); y += 6;
-    doc.setTextColor(0, 0, 0);
-    doc.autoTable({ startY: y, head: [['Immatriculation', 'Marque', 'Client', 'Source']], body: manquants.slice(0, 100).map((v) => [v.immat || '', v.marque || '', v.client || '', SOURCES[v.source] || v.source || '']), theme: 'striped', headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 9 }, styles: { fontSize: 8, cellPadding: 2 }, alternateRowStyles: { fillColor: [254, 242, 242] }, margin: { left: 14, right: 14 } });
-  }
-  // Pied
   const pageCount = doc.internal.getNumberOfPages();
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i); doc.setFontSize(8); doc.setTextColor(120, 120, 120);
@@ -3871,8 +2870,6 @@ $('#btnRapportHebdo').addEventListener('click', () => {
   doc.save(`NTR_Rapport_Hebdo_${todayKey()}.pdf`);
   toast('Rapport hebdo PDF téléchargé', 'success');
 });
-
-/* WORD EXPORTS */
 async function exportAbsentsWord(source) {
   if (typeof docx === 'undefined') { toast('Bibliotheque Word non chargee', 'error'); return; }
   const srcLabel = source === 'source1' ? 'Source HR' : 'Source UM';
@@ -3890,8 +2887,7 @@ async function exportAbsentsWord(source) {
       new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } })
     ] }] });
     const blob = await Packer.toBlob(doc);
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
     a.download = `Manquants_${srcLabel.replace(/\s/g, '_')}_${todayKey()}.docx`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     toast(`${vehicles.length} manquants exportes`, 'success');
@@ -3919,15 +2915,16 @@ async function exportPresentsWord() {
       new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } })
     ] }] });
     const blob = await Packer.toBlob(doc);
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
     a.download = `Trouves_Par_Site_${todayKey()}.docx`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     toast(`${vehicles.length} presents exportes`, 'success');
   } catch (e) { toast('Erreur : ' + e.message, 'error'); }
 }
 
-/* ATTESTATION */
+/* ============================================================
+   ATTESTATION
+   ============================================================ */
 $('#attGenerate').addEventListener('click', async () => {
   if (typeof docx === 'undefined') { toast('Bibliotheque Word non chargee', 'error'); return; }
   const immat = $('#attImmat').value.trim().toUpperCase();
@@ -3954,14 +2951,15 @@ $('#attGenerate').addEventListener('click', async () => {
     new Paragraph({ children: [mk("Le Directeur des Operations", { bold: true })], alignment: AlignmentType.RIGHT })
   ] }] });
   const blob = await Packer.toBlob(doc);
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
   a.download = `Attestation_${immat}_${todayKey()}.docx`;
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   toast('Attestation generee', 'success');
 });
 
-/* WIPE */
+/* ============================================================
+   WIPE
+   ============================================================ */
 async function wipeBySource(source) {
   const list = state.vehicules.filter((v) => v.source === source);
   if (!list.length) { toast('Aucun véhicule dans cette source', 'info'); return; }
@@ -3979,40 +2977,32 @@ async function wipeBySource(source) {
   } catch (e) { toast('Erreur : ' + e.message, 'error'); }
   finally { hideLoading(); }
 }
-$('#btnWipeHR').addEventListener('click', () => wipeBySource('source1'));
-$('#btnWipeUM').addEventListener('click', () => wipeBySource('source2'));
-$('#btnWipeAll').addEventListener('click', async () => {
-  const ok1 = await confirmDialog('Vider TOUT ? (1/2)', `Suppression de <strong>${state.vehicules.length}</strong> véhicules, <strong>${state.rondes.length}</strong> rondes et <strong>${state.pointages.length}</strong> pointages.`);
-  if (!ok1) return;
-  const ok2 = await confirmDialog('CONFIRMATION (2/2)', 'Cette action est <strong style="color:var(--danger)">IRREVERSIBLE</strong>.');
-  if (!ok2) return;
-  showLoading('Suppression en cours...');
-  try {
-    const bs = 400;
-    const allV = state.vehicules;
-    for (let i = 0; i < allV.length; i += bs) {
-      const b = state.db.batch();
-      allV.slice(i, i + bs).forEach((v) => b.delete(state.db.collection('vehicules').doc(v.id)));
-      await b.commit();
-    }
-    const allR = state.rondes;
-    for (let i = 0; i < allR.length; i += bs) {
-      const b = state.db.batch();
-      allR.slice(i, i + bs).forEach((r) => b.delete(state.db.collection('rondes').doc(r.id)));
-      await b.commit();
-    }
-    const allP = state.pointages;
-    for (let i = 0; i < allP.length; i += bs) {
-      const b = state.db.batch();
-      allP.slice(i, i + bs).forEach((p) => b.delete(state.db.collection('pointages').doc(p.id)));
-      await b.commit();
-    }
-    toast('Toutes les données ont été supprimées', 'success');
-  } catch (e) { toast('Erreur : ' + e.message, 'error'); }
-  finally { hideLoading(); }
+$('#btnWipeHR').addEventListener('click', () => { requireAdminPin('Vider Source HR', () => wipeBySource('source1')); });
+$('#btnWipeUM').addEventListener('click', () => { requireAdminPin('Vider Source UM', () => wipeBySource('source2')); });
+$('#btnWipeAll').addEventListener('click', () => {
+  requireAdminPin('Vider TOUT', async () => {
+    const ok1 = await confirmDialog('Vider TOUT ? (1/2)', `Suppression de <strong>${state.vehicules.length}</strong> véhicules, <strong>${state.rondes.length}</strong> rondes et <strong>${state.pointages.length}</strong> pointages.`);
+    if (!ok1) return;
+    const ok2 = await confirmDialog('CONFIRMATION (2/2)', 'Cette action est <strong style="color:var(--danger)">IRREVERSIBLE</strong>.');
+    if (!ok2) return;
+    showLoading('Suppression en cours...');
+    try {
+      const bs = 400;
+      const allV = state.vehicules;
+      for (let i = 0; i < allV.length; i += bs) { const b = state.db.batch(); allV.slice(i, i + bs).forEach((v) => b.delete(state.db.collection('vehicules').doc(v.id))); await b.commit(); }
+      const allR = state.rondes;
+      for (let i = 0; i < allR.length; i += bs) { const b = state.db.batch(); allR.slice(i, i + bs).forEach((r) => b.delete(state.db.collection('rondes').doc(r.id))); await b.commit(); }
+      const allP = state.pointages;
+      for (let i = 0; i < allP.length; i += bs) { const b = state.db.batch(); allP.slice(i, i + bs).forEach((p) => b.delete(state.db.collection('pointages').doc(p.id))); await b.commit(); }
+      toast('Toutes les données ont été supprimées', 'success');
+    } catch (e) { toast('Erreur : ' + e.message, 'error'); }
+    finally { hideLoading(); }
+  });
 });
 
-/* IMPORT EXCEL */
+/* ============================================================
+   IMPORT EXCEL
+   ============================================================ */
 function openImportForSource(source) {
   $('#importSource').value = source;
   $('#importFile').value = '';
@@ -4050,7 +3040,7 @@ $('#importRun').addEventListener('click', async () => {
       if (!immat) return;
       parsed.push({ immat, client: mapField(row, ['client', 'societe', 'society', 'company']), marque: mapField(row, ['marque']), modele: mapField(row, ['modele', 'model']), refCommande: mapField(row, ['reference', 'refcommande', 'ref']), typeMaintenance: mapField(row, ['typemaintenance', 'maintenance', 'type']) });
     });
-    if (!parsed.length) { cleanup(); await confirmDialog('Aucune immatriculation détectée', 'Il faut une colonne <strong>"Immatriculation"</strong> ou <strong>"Immat"</strong>.', false); return; }
+    if (!parsed.length) { cleanup(); await confirmDialog('Aucune immatriculation détectée', 'Il faut une colonne <strong>"Immatriculation"</strong>.', false); return; }
     const srcLabel = SOURCES[source];
     const existing = state.vehicules.filter((v) => v.source === source);
     cleanup();
@@ -4058,15 +3048,9 @@ $('#importRun').addEventListener('click', async () => {
     if (!ok) return;
     showLoading(`Import 0/${parsed.length}...`);
     $('#importProgressWrap').style.display = 'block';
-    $('#importProgressBar').style.width = '0%';
-    $('#importStatus').textContent = 'Préparation...';
     const bs = 400;
     if (existing.length) {
-      for (let i = 0; i < existing.length; i += bs) {
-        const b = state.db.batch();
-        existing.slice(i, i + bs).forEach((v) => b.delete(state.db.collection('vehicules').doc(v.id)));
-        await b.commit();
-      }
+      for (let i = 0; i < existing.length; i += bs) { const b = state.db.batch(); existing.slice(i, i + bs).forEach((v) => b.delete(state.db.collection('vehicules').doc(v.id))); await b.commit(); }
     }
     let totalAjt = 0;
     for (let i = 0; i < parsed.length; i += bs) {
@@ -4078,19 +3062,18 @@ $('#importRun').addEventListener('click', async () => {
       const pct = Math.round((totalAjt / parsed.length) * 100);
       $('#importProgressBar').style.width = pct + '%';
       $('#importStatus').textContent = `${totalAjt} / ${parsed.length} véhicules traités`;
-      $('#loadingText').textContent = `Import ${totalAjt}/${parsed.length}...`;
     }
-    cleanup();
-    closeModal('modalImport');
+    cleanup(); closeModal('modalImport');
     toast(`${parsed.length} véhicules importés dans ${srcLabel}`, 'success', 'Import réussi');
     switchTab('vehicules');
     state.vehFilters.source = source;
-    renderVehChips();
-    applyVehFilters();
-  } catch (err) { console.error('[IMPORT]', err); cleanup(); toast('Erreur : ' + err.message, 'error'); }
+    renderVehChips(); applyVehFilters();
+  } catch (err) { cleanup(); toast('Erreur : ' + err.message, 'error'); }
 });
 
-/* SYNC (indicateur d'état) */
+/* ============================================================
+   ADMIN
+   ============================================================ */
 function renderAdminInfo() {
   const u = $('#adminUserCount'); if (u) u.textContent = state.utilisateurs.length;
   const s = $('#adminSocCount'); if (s) s.textContent = state.clients.length;
@@ -4099,14 +3082,70 @@ function renderAdminInfo() {
   const p = $('#adminPointageCount'); if (p) p.textContent = state.pointages.length;
 }
 function updateOnlineStatus() {
-  const s = $('#headerStatus'); const l = $('#headerStatusLabel');
-  if (!s) return;
+  const s = $('#headerStatus'); const l = $('#headerStatusLabel'); if (!s) return;
   if (navigator.onLine) { s.classList.remove('offline'); if (l) l.textContent = 'En ligne'; }
   else { s.classList.add('offline'); if (l) l.textContent = 'Hors ligne'; }
 }
 window.addEventListener('online', () => { updateOnlineStatus(); toast('Connexion rétablie', 'success'); });
 window.addEventListener('offline', () => { updateOnlineStatus(); toast('Mode hors ligne', 'warning'); });
 updateOnlineStatus();
+
+/* Actions admin */
+$('#btnLogout').addEventListener('click', async () => {
+  const ok = await confirmDialog('Se déconnecter ?', 'Vous devrez entrer le code d\'accès à nouveau.');
+  if (!ok) return;
+  await logAccess(true, 'Déconnexion volontaire');
+  lockApp();
+});
+$('#btnSession').addEventListener('click', async () => {
+  const s = getSession();
+  const exp = s ? new Date(s.expires).toLocaleString('fr-FR') : '—';
+  const ok = await confirmDialog('Se déconnecter ?', `Session active jusqu'au <strong>${exp}</strong>.<br><br>Voulez-vous vous déconnecter ?`);
+  if (!ok) return;
+  await logAccess(true, 'Déconnexion volontaire');
+  lockApp();
+});
+$('#btnChangeAccessCode').addEventListener('click', () => {
+  requireAdminPin('Changer le code d\'accès de l\'équipe', () => {
+    $('#changeAccessOld').value = ''; $('#changeAccessNew').value = ''; $('#changeAccessNew2').value = '';
+    openModal('modalChangeAccess');
+  });
+});
+$('#changeAccessSave').addEventListener('click', async () => {
+  const oldCode = $('#changeAccessOld').value.trim();
+  const newCode = $('#changeAccessNew').value.trim();
+  const newCode2 = $('#changeAccessNew2').value.trim();
+  if (oldCode !== state.accessCode) { toast('Code actuel incorrect', 'error'); return; }
+  if (newCode.length < 6) { toast('Le nouveau code doit contenir au moins 6 caractères', 'warning'); return; }
+  if (newCode !== newCode2) { toast('Les deux codes ne correspondent pas', 'warning'); return; }
+  await saveAccessCode(newCode, undefined);
+  state.accessCode = newCode;
+  closeModal('modalChangeAccess');
+  toast('Code d\'accès modifié', 'success');
+});
+$('#btnChangeAdminPin').addEventListener('click', () => {
+  requireAdminPin('Changer le PIN administrateur', () => {
+    $('#changePinOld').value = ''; $('#changePinNew').value = ''; $('#changePinNew2').value = '';
+    openModal('modalChangeAdminPin');
+  });
+});
+$('#changeAdminPinSave').addEventListener('click', async () => {
+  const o = $('#changePinOld').value.trim();
+  const n = $('#changePinNew').value.trim();
+  const n2 = $('#changePinNew2').value.trim();
+  if (o !== state.adminPin) { toast('PIN actuel incorrect', 'error'); return; }
+  if (!/^\d{4}$/.test(n)) { toast('Le nouveau PIN doit contenir 4 chiffres', 'warning'); return; }
+  if (n !== n2) { toast('Les deux PIN ne correspondent pas', 'warning'); return; }
+  await saveAccessCode(undefined, n);
+  state.adminPin = n;
+  closeModal('modalChangeAdminPin');
+  toast('PIN Admin modifié', 'success');
+});
+$('#btnViewLogs').addEventListener('click', () => {
+  const card = $('#logsCard');
+  card.style.display = card.style.display === 'none' ? 'block' : 'none';
+  if (card.style.display === 'block') renderLoginLogs();
+});
 
 /* ============================================================
    RONDES (historique)
@@ -4119,70 +3158,55 @@ function listenRondes() {
     if ($('#tab-archives').classList.contains('active')) renderArchives();
     if ($('#tab-graphiques').classList.contains('active')) renderGraphiques();
     if ($('#tab-chef').classList.contains('active')) renderChefDashboard();
-    renderAdminInfo();
-    updateSmartTabs();
+    renderAdminInfo(); updateSmartTabs();
   }, (err) => console.warn('[rondes]', err));
   state.unsubscribers.push(unsub);
 }
-
 function renderHistorique() {
-  const list = $('#histList'); const empty = $('#histEmpty');
-  if (!list) return;
+  const list = $('#histList'); const empty = $('#histEmpty'); if (!list) return;
   let rondes = state.rondes.filter((r) => r.statut !== 'en_cours');
   if (state.histFilterUser) rondes = rondes.filter((r) => r.effectueePar === state.histFilterUser);
-  if (state.histFilterMonth) rondes = rondes.filter((r) => (r.heureDebut || '').startsWith(state.histFilterMonth));
   if (!rondes.length) { list.innerHTML = ''; if (empty) empty.classList.remove('hidden'); return; }
   if (empty) empty.classList.add('hidden');
   list.innerHTML = rondes.map((r) => {
-    const s = r.stats || {};
-    const taux = s.taux ?? 0;
+    const s = r.stats || {}; const taux = s.taux ?? 0;
     const bc = taux >= 80 ? 'success' : taux >= 50 ? 'warning' : 'danger';
-    return `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${formatDateFR(r.heureDebut)}<span class="badge badge-primary">${escapeHtml(r.site || '—')}</span><span class="badge badge-${bc}">${taux}%</span></div><div class="list-item-sub"><span>Par ${escapeHtml(r.effectueePar)}</span><span>${s.presents ?? 0} trouvés sur ${s.total ?? 0}</span><span>${s.absents ?? 0} manquants</span></div></div><div class="list-item-actions"><button class="btn btn-sm btn-ghost" data-hist-open="${r.id}">Voir</button></div></div>`;
+    return `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${formatDateFR(r.heureDebut)}<span class="badge badge-primary">${escapeHtml(r.site || '—')}</span><span class="badge badge-${bc}">${taux}%</span></div><div class="list-item-sub"><span>Par ${escapeHtml(r.effectueePar)}</span><span>${s.presents ?? 0} trouvés sur ${s.total ?? 0}</span></div></div><div class="list-item-actions"><button class="btn btn-sm btn-ghost" data-hist-open="${r.id}">Voir</button></div></div>`;
   }).join('');
   $$('[data-hist-open]', list).forEach((b) => b.addEventListener('click', () => openRondeDetail(b.dataset.histOpen)));
 }
 $('#histUserFilter').addEventListener('change', (e) => { state.histFilterUser = e.target.value; renderHistorique(); });
 $('#btnHistRefresh').addEventListener('click', () => { renderHistorique(); toast('Rafraîchi', 'success'); });
-
 function openRondeDetail(id) {
-  const r = state.rondes.find((x) => x.id === id);
-  if (!r) return;
+  const r = state.rondes.find((x) => x.id === id); if (!r) return;
   state.currentRondeDetail = r;
   $('#rdTitle').textContent = `Ronde du ${formatDateFR(r.heureDebut)} — ${r.site}`;
-  const s = r.stats || {};
-  const presents = r.vehiculesSnapshot || [];
-  const repartition = s.repartitionSites || {};
-  const contributions = s.contributions || {};
-  let repartitionHtml = '';
-  if (Object.keys(repartition).length) {
-    repartitionHtml = `<div class="card"><div class="card-title">Répartition par site</div><table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules</th></tr></thead><tbody>${Object.entries(repartition).sort((a, b) => b[1] - a[1]).map(([site, count]) => `<tr><td>${escapeHtml(site)}</td><td>${count}</td></tr>`).join('')}</tbody></table></div>`;
-  }
-  let contributionsHtml = '';
-  if (Object.keys(contributions).length) {
-    contributionsHtml = `<div class="card"><div class="card-title">Contribution par utilisateur</div><table class="bilan-table"><thead><tr><th>Utilisateur</th><th>Pointages</th></tr></thead><tbody>${Object.entries(contributions).sort((a, b) => b[1] - a[1]).map(([nom, count]) => `<tr><td>${escapeHtml(nom)}</td><td>${count}</td></tr>`).join('')}</tbody></table></div>`;
-  }
+  const s = r.stats || {}; const presents = r.vehiculesSnapshot || [];
+  const repartition = s.repartitionSites || {}; const contributions = s.contributions || {};
+  let repartitionHtml = ''; let contributionsHtml = '';
+  if (Object.keys(repartition).length) repartitionHtml = `<div class="card"><div class="card-title">Répartition par site</div><table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules</th></tr></thead><tbody>${Object.entries(repartition).sort((a, b) => b[1] - a[1]).map(([site, count]) => `<tr><td>${escapeHtml(site)}</td><td>${count}</td></tr>`).join('')}</tbody></table></div>`;
+  if (Object.keys(contributions).length) contributionsHtml = `<div class="card"><div class="card-title">Contribution par utilisateur</div><table class="bilan-table"><thead><tr><th>Utilisateur</th><th>Pointages</th></tr></thead><tbody>${Object.entries(contributions).sort((a, b) => b[1] - a[1]).map(([nom, count]) => `<tr><td>${escapeHtml(nom)}</td><td>${count}</td></tr>`).join('')}</tbody></table></div>`;
   $('#rdBody').innerHTML = `
-    <div class="stats-grid">
-      <div class="stat-card"><span class="stat-label">Total</span><span class="stat-value">${s.total ?? '—'}</span></div>
-      <div class="stat-card"><span class="stat-label">Trouvés</span><span class="stat-value success">${s.presents ?? presents.length}</span></div>
-      <div class="stat-card"><span class="stat-label">Manquants</span><span class="stat-value danger">${s.absents ?? 0}</span></div>
-      <div class="stat-card"><span class="stat-label">Taux</span><span class="stat-value primary">${s.taux ?? 0}%</span></div>
-    </div>
+    <div class="stats-grid"><div class="stat-card"><span class="stat-label">Total</span><span class="stat-value">${s.total ?? '—'}</span></div><div class="stat-card"><span class="stat-label">Trouvés</span><span class="stat-value success">${s.presents ?? presents.length}</span></div><div class="stat-card"><span class="stat-label">Manquants</span><span class="stat-value danger">${s.absents ?? 0}</span></div><div class="stat-card"><span class="stat-label">Taux</span><span class="stat-value primary">${s.taux ?? 0}%</span></div></div>
     <div class="card"><div class="card-title">Informations</div><div style="font-size:0.82rem;line-height:1.8"><div>Par : <strong>${escapeHtml(r.effectueePar)}</strong></div><div>Date : ${formatDateTimeFR(r.heureDebut)}</div><div>Sites visités : ${escapeHtml(r.site || '—')}</div></div></div>
     ${repartitionHtml}${contributionsHtml}
     <div class="card"><div class="card-title">Véhicules trouvés (${presents.length})</div>${presents.length ? `<div class="list">${presents.map((v) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}${v.site ? ' · ' + escapeHtml(v.site) : ''}</div></div></div>`).join('')}</div>` : '<div class="es-sub" style="color:var(--text-mute);padding:10px">Aucun</div>'}</div>`;
   openModal('modalRondeDetail');
 }
-$('#rdDelete').addEventListener('click', async () => {
+$('#rdDelete').addEventListener('click', () => {
   if (!state.currentRondeDetail) return;
-  const ok = await confirmDialog('Supprimer la ronde ?', 'Cette action est irréversible.');
-  if (!ok) return;
-  await state.db.collection('rondes').doc(state.currentRondeDetail.id).delete();
-  closeModal('modalRondeDetail');
-  toast('Ronde supprimée', 'success');
+  requireAdminPin(`Supprimer la ronde du ${formatDateFR(state.currentRondeDetail.heureDebut)}`, async () => {
+    const ok = await confirmDialog('Supprimer la ronde ?', 'Cette action est irréversible.');
+    if (!ok) return;
+    await state.db.collection('rondes').doc(state.currentRondeDetail.id).delete();
+    closeModal('modalRondeDetail');
+    toast('Ronde supprimée', 'success');
+  });
 });
 
-/* ARCHIVES */
+/* ============================================================
+   ARCHIVES
+   ============================================================ */
 function renderArchives() {
   const c = $('#archivesList'); if (!c) return;
   const rondes = state.rondes.filter((r) => r.statut !== 'en_cours');
@@ -4205,15 +3229,15 @@ function renderArchives() {
   }));
 }
 
-/* GRAPHIQUES */
+/* ============================================================
+   GRAPHIQUES
+   ============================================================ */
 function renderGraphiques() {
-  const c1 = $('#chartPresence'); const c2 = $('#chartSites');
-  if (!c1 || !c2) return;
+  const c1 = $('#chartPresence'); const c2 = $('#chartSites'); if (!c1 || !c2) return;
   let rondes = state.rondes.filter((r) => r.statut !== 'en_cours').sort((a, b) => (a.heureDebut || '').localeCompare(b.heureDebut || ''));
   const last12 = rondes.slice(-12);
   const labels = last12.map((r) => new Date(r.heureDebut).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }));
-  const p = last12.map((r) => r.stats?.presents ?? 0);
-  const a = last12.map((r) => r.stats?.absents ?? 0);
+  const p = last12.map((r) => r.stats?.presents ?? 0); const a = last12.map((r) => r.stats?.absents ?? 0);
   const txtColor = getComputedStyle(document.body).color;
   if (state.chartPresence) state.chartPresence.destroy();
   state.chartPresence = new Chart(c1, { type: 'bar', data: { labels, datasets: [{ label: 'Trouvés', data: p, backgroundColor: '#10b981' }, { label: 'Manquants', data: a, backgroundColor: '#f87171' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { stacked: true, ticks: { color: txtColor } }, y: { stacked: true, beginAtZero: true, ticks: { color: txtColor } } } } });
@@ -4221,16 +3245,16 @@ function renderGraphiques() {
   const r7 = state.rondes.filter((r) => r.statut !== 'en_cours' && new Date(r.heureDebut).getTime() >= since);
   const bySite = {};
   r7.forEach((r) => { const rep = r.stats?.repartitionSites || {}; Object.entries(rep).forEach(([s, c]) => { if (!bySite[s]) bySite[s] = 0; bySite[s] += c; }); });
-  const siteLabels = Object.keys(bySite);
-  const siteCounts = siteLabels.map((s) => bySite[s]);
+  const siteLabels = Object.keys(bySite); const siteCounts = siteLabels.map((s) => bySite[s]);
   if (state.chartSites) state.chartSites.destroy();
   state.chartSites = new Chart(c2, { type: 'bar', data: { labels: siteLabels.length ? siteLabels : ['Aucune donnée'], datasets: [{ label: 'Véhicules trouvés', data: siteCounts.length ? siteCounts : [0], backgroundColor: '#10b981' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { ticks: { color: txtColor } }, y: { beginAtZero: true, ticks: { color: txtColor } } } } });
 }
 
-/* MOUVEMENTS */
+/* ============================================================
+   MOUVEMENTS
+   ============================================================ */
 function renderMouvements() {
-  const c = $('#mouvList'); const e = $('#mouvEmpty');
-  if (!c) return;
+  const c = $('#mouvList'); const e = $('#mouvEmpty'); if (!c) return;
   const q = normalizeImmat($('#mouvSearch').value);
   const since = Date.now() - 365 * 86400000;
   const map = {};
@@ -4260,7 +3284,9 @@ function listenMouvements() {
   state.unsubscribers.push(unsub);
 }
 
-/* CHEF */
+/* ============================================================
+   CHEF
+   ============================================================ */
 function renderChef() {
   if (state.chefUnlocked) { $('#chefPinScreen').classList.add('hidden'); $('#chefDashboard').classList.remove('hidden'); renderChefDashboard(); }
   else { $('#chefPinScreen').classList.remove('hidden'); $('#chefDashboard').classList.add('hidden'); state.pinBuffer = ''; renderPinDots(); }
@@ -4284,7 +3310,7 @@ function renderChefDashboard() {
     byUser[pt.userNom].sites.add(pt.site);
   });
   const users = Object.entries(byUser).sort((a, b) => b[1].count - a[1].count);
-  $('#chefActiveUsers').innerHTML = users.length ? users.map(([nom, d]) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${escapeHtml(nom)}</div><div class="list-item-sub"><span>${d.count} véhicule(s)</span><span>${[...d.sites].map((s) => escapeHtml(s)).join(', ')}</span></div></div><span class="badge badge-success">Actif</span></div>`).join('') : '<div class="es-sub" style="color:var(--text-mute);padding:10px">Aucun utilisateur actif aujourd\'hui</div>';
+  $('#chefActiveUsers').innerHTML = users.length ? users.map(([nom, d]) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${escapeHtml(nom)}</div><div class="list-item-sub"><span>${d.count} véhicule(s)</span><span>${[...d.sites].map((s) => escapeHtml(s)).join(', ')}</span></div></div><span class="badge badge-success">Actif</span></div>`).join('') : '<div class="es-sub" style="color:var(--text-mute);padding:10px">Aucun utilisateur actif</div>';
   const bySite = {};
   r7.forEach((r) => { const rep = r.stats?.repartitionSites || {}; Object.entries(rep).forEach(([s, c]) => { if (!bySite[s]) bySite[s] = { r: 0, c: 0 }; bySite[s].r++; bySite[s].c += c; }); });
   const rows = Object.entries(bySite).map(([s, d]) => `<tr><td style="padding:10px 12px;border-bottom:1px solid var(--border)">${escapeHtml(s)}</td><td style="padding:10px 12px;border-bottom:1px solid var(--border)">${d.r}</td><td style="padding:10px 12px;border-bottom:1px solid var(--border)"><span class="badge badge-primary">${d.c} véhicules</span></td></tr>`);
@@ -4292,22 +3318,14 @@ function renderChefDashboard() {
 }
 
 /* ============================================================
-   MASQUAGE INTELLIGENT DES ONGLETS
+   MASQUAGE INTELLIGENT
    ============================================================ */
 function updateSmartTabs() {
-  const navMouv = $('#navMouvements');
-  const navArch = $('#navArchives');
-  const navGraph = $('#navGraphiques');
-  // Mouvements : visible si au moins 1 mouvement
-  if (state.mouvements.length > 0) navMouv.classList.remove('hidden');
-  else navMouv.classList.add('hidden');
-  // Archives : visible si au moins 1 ronde de + de 30 jours
+  const navMouv = $('#navMouvements'); const navArch = $('#navArchives'); const navGraph = $('#navGraphiques');
+  if (state.mouvements.length > 0) navMouv.classList.remove('hidden'); else navMouv.classList.add('hidden');
   const old = state.rondes.filter((r) => new Date(r.heureDebut).getTime() < Date.now() - 30 * 86400000).length;
-  if (old > 0) navArch.classList.remove('hidden');
-  else navArch.classList.add('hidden');
-  // Graphiques : visible si au moins 5 rondes
-  if (state.rondes.length >= 5) navGraph.classList.remove('hidden');
-  else navGraph.classList.add('hidden');
+  if (old > 0) navArch.classList.remove('hidden'); else navArch.classList.add('hidden');
+  if (state.rondes.length >= 5) navGraph.classList.remove('hidden'); else navGraph.classList.add('hidden');
 }
 
 /* ============================================================
@@ -4315,16 +3333,13 @@ function updateSmartTabs() {
    ============================================================ */
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+  e.preventDefault(); deferredPrompt = e;
   $('#btnInstall').classList.remove('hidden');
   const dismissed = localStorage.getItem('ntr_install_dismissed');
   if (dismissed !== '1') $('#installBanner').classList.add('show');
 });
 window.addEventListener('appinstalled', () => {
-  deferredPrompt = null;
-  $('#btnInstall').classList.add('hidden');
-  $('#installBanner').classList.remove('show');
+  deferredPrompt = null; $('#btnInstall').classList.add('hidden'); $('#installBanner').classList.remove('show');
   toast('Application installée', 'success');
 });
 async function doInstall() {
@@ -4337,21 +3352,12 @@ async function doInstall() {
   deferredPrompt.prompt();
   const { outcome } = await deferredPrompt.userChoice;
   if (outcome === 'accepted') toast('Application installée', 'success');
-  deferredPrompt = null;
-  $('#btnInstall').classList.add('hidden');
-  $('#installBanner').classList.remove('show');
+  deferredPrompt = null; $('#btnInstall').classList.add('hidden'); $('#installBanner').classList.remove('show');
 }
 $('#btnInstall').addEventListener('click', doInstall);
 $('#installBannerBtn').addEventListener('click', doInstall);
-$('#installBannerClose').addEventListener('click', () => {
-  $('#installBanner').classList.remove('show');
-  localStorage.setItem('ntr_install_dismissed', '1');
-});
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch((err) => console.warn('[SW]', err));
-  });
-}
+$('#installBannerClose').addEventListener('click', () => { $('#installBanner').classList.remove('show'); localStorage.setItem('ntr_install_dismissed', '1'); });
+if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch((err) => console.warn('[SW]', err)); }); }
 
 document.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); switchTab('pointage'); $('#pointageSearch').focus(); }
@@ -4359,7 +3365,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* ============================================================
-   MIGRATION societe → client
+   MIGRATION
    ============================================================ */
 async function migrateSocieteToClient() {
   if (!state.db) return;
@@ -4376,21 +3382,16 @@ async function migrateSocieteToClient() {
    INIT
    ============================================================ */
 async function init() {
+  if (!state.appUnlocked) return;
   showLoading('Demarrage...');
   try {
-    fillSiteSelects();
-    renderVehChips();
-    renderUserSelectors();
-    renderVehiculesList();
-    renderAdminInfo();
-    renderPointage();
-    renderAutruiSection();
-    updateSmartTabs();
+    fillSiteSelects(); renderVehChips(); renderUserSelectors(); renderVehiculesList();
+    renderAdminInfo(); renderPointage(); renderAutruiSection(); updateSmartTabs();
   } catch (e) { console.warn('[init]', e); }
   hideLoading();
   if (!state.db) { toast('Firebase indisponible', 'error'); return; }
   try {
-    listenUsers(); listenClients(); listenVehicules(); listenRondes(); listenPointages(); listenMouvements();
+    listenUsers(); listenClients(); listenVehicules(); listenRondes(); listenPointages(); listenMouvements(); listenAccessLogs();
     const withTimeout = (promise, ms = 10000) => Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej(new Error('Timeout')), ms))]);
     await withTimeout(Promise.all([ensureUsers(), ensureClients()]), 10000);
     await withTimeout(getChefPin(), 6000);
@@ -4398,9 +3399,29 @@ async function init() {
     toast('NTR Track prêt', 'success', 'Application');
   } catch (err) { console.error('[init]', err); toast('Mode degrade', 'warning'); }
 }
-setTimeout(() => { if ($('#loadingOverlay').classList.contains('show')) { hideLoading(); toast('Chargement long', 'warning'); } }, 8000);
 window.addEventListener('beforeunload', () => { state.unsubscribers.forEach((u) => { try { u(); } catch (e) {} }); });
-init();
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+async function bootApp() {
+  if (state.db) {
+    try {
+      const codes = await loadAccessCode();
+      state.accessCode = codes.code;
+      state.adminPin = codes.adminPin;
+    } catch (e) { console.warn('[boot]', e); }
+  }
+  if (isSessionValid()) {
+    state.appUnlocked = true;
+    $('#loginScreen').classList.remove('show');
+    init();
+  } else {
+    $('#loginScreen').classList.add('show');
+    $('#loginInput').focus();
+  }
+}
+bootApp();
 </script>
 
 </body>
