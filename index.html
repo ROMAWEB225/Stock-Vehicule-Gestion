@@ -1534,8 +1534,25 @@ function hideLoading() { $('#loadingOverlay').classList.remove('show'); }
 function openModal(id) { $('#' + id).classList.add('show'); }
 function closeModal(id) { $('#' + id).classList.remove('show'); }
 document.addEventListener('click', (e) => {
-  if (e.target.matches('[data-close]')) closeModal(e.target.dataset.close);
-  if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('show');
+  // Ne pas fermer si une modale PIN Admin est ouverte par-dessus
+  const adminPinOpen = $('#modalAdminPin').classList.contains('show');
+  
+  if (e.target.matches('[data-close]')) {
+    const idToClose = e.target.dataset.close;
+    // Si on essaie de fermer une modale pendant que le PIN est ouvert, on bloque
+    if (adminPinOpen && idToClose !== 'modalAdminPin') {
+      return;
+    }
+    closeModal(idToClose);
+  }
+  
+  if (e.target.classList.contains('modal-overlay')) {
+    // Si clic sur le fond d'une modale pendant que PIN est ouvert, on bloque
+    if (adminPinOpen && e.target.id !== 'modalAdminPin') {
+      return;
+    }
+    e.target.classList.remove('show');
+  }
 });
 
 let confirmResolver = null;
@@ -1768,8 +1785,13 @@ function requireAdminPin(reason, callback) {
   $('#adminPinInput').value = '';
   $('#adminPinError').textContent = '';
   openModal('modalAdminPin');
-  setTimeout(() => { const el = $('#adminPinInput'); el.removeAttribute('readonly'); el.focus(); }, 300);
+  setTimeout(() => {
+    const el = $('#adminPinInput');
+    el.removeAttribute('readonly');
+    el.focus();
+  }, 300);
 }
+
 function validateAdminPin() {
   const input = $('#adminPinInput').value.trim();
   if (input === state.adminPin) {
@@ -1786,9 +1808,24 @@ function validateAdminPin() {
     $('#adminPinInput').focus();
   }
 }
+
 $('#adminPinValidate').addEventListener('click', validateAdminPin);
-$('#adminPinInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); validateAdminPin(); } });
-$('#adminPinCancel').addEventListener('click', () => { state.pendingAdminAction = null; closeModal('modalAdminPin'); });
+$('#adminPinInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); validateAdminPin(); }
+});
+
+// Annulation du PIN Admin
+$('#adminPinCancel').addEventListener('click', () => {
+  state.pendingAdminAction = null;
+  closeModal('modalAdminPin');
+});
+
+// Fermeture par X ou clic fond → annule proprement
+$('#modalAdminPin').addEventListener('click', (e) => {
+  if (e.target.id === 'modalAdminPin' || e.target.closest('[data-close="modalAdminPin"]')) {
+    state.pendingAdminAction = null;
+  }
+});
 
 /* ============================================================
    NAV
@@ -2772,28 +2809,78 @@ document.addEventListener('click', (e) => {
 function exportPDFSites() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-  doc.setFillColor(11, 17, 32); doc.rect(0, 0, 297, 20, 'F');
-  doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
-  doc.text('NTR TRACK - VEHICULES TROUVES PAR SITE', 14, 10);
-  doc.setFontSize(9); doc.setFont(undefined, 'normal');
+  doc.setFillColor(11, 17, 32);
+  doc.rect(0, 0, 297, 20, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(14);
+  doc.setFont(undefined, 'bold');
+  doc.text('NTR TRACK - VEHICULES PRESENTS PAR SITE', 14, 10);
+  doc.setFontSize(9);
+  doc.setFont(undefined, 'normal');
   doc.text(`Genere le ${new Date().toLocaleString('fr-FR')}`, 283, 13, { align: 'right' });
   doc.setTextColor(0, 0, 0);
-  let y = 28, hasData = false;
+
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   const presents = state.vehicules.filter((v) => pointedIds.has(v.id));
+
+  if (!presents.length) {
+    toast('Aucun véhicule trouvé', 'warning');
+    return;
+  }
+
+  let y = 28;
+  let hasData = false;
+
   SITES.forEach((site) => {
-   const vs = vehicles.filter((v) => getSiteActuel(v) === site);
+    // Utiliser getSiteActuel pour regrouper correctement
+    const vs = presents.filter((v) => {
+      const siteActuel = getSiteActuel(v);
+      return siteActuel === site;
+    });
+
     if (!vs.length) return;
     hasData = true;
-    if (y > 180) { doc.addPage(); y = 20; }
-    doc.setFillColor(37, 48, 68); doc.rect(14, y - 5, 269, 8, 'F');
-    doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'bold');
+
+    if (y > 180) {
+      doc.addPage();
+      y = 20;
+    }
+
+    doc.setFillColor(37, 48, 68);
+    doc.rect(14, y - 5, 269, 8, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(11);
+    doc.setFont(undefined, 'bold');
     doc.text(`${site} - ${vs.length} vehicule(s)`, 16, y);
-    doc.setTextColor(0, 0, 0); y += 4;
-    doc.autoTable({ startY: y, head: [['N°', 'Immatriculation', 'Client', 'Marque', 'Modele', 'Vue le']], body: vs.map((v, i) => [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || '', v.lastSeen ? formatDateFR(v.lastSeen) : '-']), theme: 'striped', headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 9 }, styles: { fontSize: 8.5, cellPadding: 2 }, columnStyles: { 0: { cellWidth: 12, halign: 'center' } }, margin: { left: 14, right: 14 } });
+    doc.setTextColor(0, 0, 0);
+    y += 4;
+
+    doc.autoTable({
+      startY: y,
+      head: [['N°', 'Immatriculation', 'Client', 'Marque', 'Modele', 'Vue le']],
+      body: vs.map((v, i) => [
+        String(i + 1),
+        v.immat || '',
+        v.client || '',
+        v.marque || '',
+        v.modele || '',
+        v.lastSeen ? formatDateFR(v.lastSeen) : '-'
+      ]),
+      theme: 'striped',
+      headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 9 },
+      styles: { fontSize: 8.5, cellPadding: 2 },
+      columnStyles: { 0: { cellWidth: 12, halign: 'center' } },
+      margin: { left: 14, right: 14 }
+    });
+
     y = doc.lastAutoTable.finalY + 8;
   });
-  if (!hasData) { toast('Aucun véhicule trouvé', 'warning'); return; }
+
+  if (!hasData) {
+    toast('Aucun véhicule trouvé par site', 'warning');
+    return;
+  }
+
   doc.save(`NTR_Trouves_Par_Site_${todayKey()}.pdf`);
   toast('PDF téléchargé', 'success');
 }
@@ -2943,32 +3030,128 @@ async function exportAbsentsWord(source) {
   } catch (e) { toast('Erreur : ' + e.message, 'error'); }
 }
 async function exportPresentsWord() {
-  if (typeof docx === 'undefined') { toast('Bibliotheque Word non chargee', 'error'); return; }
+  if (typeof docx === 'undefined') {
+    toast('Bibliotheque Word non chargee', 'error');
+    return;
+  }
+
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   const vehicles = state.vehicules.filter((v) => pointedIds.has(v.id));
-  if (!vehicles.length) { toast('Aucun present', 'warning'); return; }
+
+  if (!vehicles.length) {
+    toast('Aucun véhicule trouvé', 'warning');
+    return;
+  }
+
   try {
     const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType } = docx;
-    const rows = [new TableRow({ children: ['Site', 'N°', 'Immatriculation', 'Client', 'Marque', 'Modele'].map((h) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: h, bold: true, size: 22 })], alignment: AlignmentType.CENTER })] })) })];
+
+    // En-tête du tableau
+    const rows = [
+      new TableRow({
+        children: ['Site', 'N°', 'Immatriculation', 'Client', 'Marque', 'Modele'].map((h) =>
+          new TableCell({
+            children: [new Paragraph({
+              children: [new TextRun({ text: h, bold: true, size: 22 })],
+              alignment: AlignmentType.CENTER
+            })]
+          })
+        )
+      })
+    ];
+
     let idx = 0;
+    let totalAdded = 0;
+
     SITES.forEach((site) => {
-      const vs = vehicles.filter((v) => v.site === site);
+      // Utiliser getSiteActuel
+      const vs = vehicles.filter((v) => getSiteActuel(v) === site);
       if (!vs.length) return;
-      rows.push(new TableRow({ children: [new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: site, bold: true, size: 22 })], alignment: AlignmentType.CENTER })], columnSpan: 6 })] }));
-      vs.forEach((v) => { idx++; rows.push(new TableRow({ children: ['', String(idx), v.immat || '', v.client || '', v.marque || '', v.modele || ''].map((txt) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: txt, size: 22 })], alignment: AlignmentType.CENTER })] })) })); });
+
+      // Ligne de titre du site
+      rows.push(new TableRow({
+        children: [
+          new TableCell({
+            children: [new Paragraph({
+              children: [new TextRun({ text: site, bold: true, size: 22 })],
+              alignment: AlignmentType.CENTER
+            })],
+            columnSpan: 6
+          })
+        ]
+      }));
+
+      vs.forEach((v) => {
+        idx++;
+        totalAdded++;
+        rows.push(new TableRow({
+          children: [
+            '', // Site (vide car titre au-dessus)
+            String(idx),
+            v.immat || '',
+            v.client || '',
+            v.marque || '',
+            v.modele || ''
+          ].map((txt) =>
+            new TableCell({
+              children: [new Paragraph({
+                children: [new TextRun({ text: txt, size: 22 })],
+                alignment: AlignmentType.CENTER
+              })]
+            })
+          )
+        }));
+      });
     });
-    const doc = new Document({ sections: [{ children: [
-      new Paragraph({ children: [new TextRun({ text: 'LISTE DES VEHICULES TROUVES PAR SITE', bold: true, size: 32, font: 'Arial' })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
-      new Paragraph({ children: [new TextRun({ text: `Genere le ${new Date().toLocaleString()}`, size: 20, font: 'Arial' })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
-      new Paragraph({ children: [new TextRun({ text: `Total : ${vehicles.length} vehicule(s)`, size: 22, font: 'Arial' })], spacing: { after: 400 } }),
-      new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } })
-    ] }] });
+
+    if (totalAdded === 0) {
+      toast('Aucun véhicule à exporter', 'warning');
+      return;
+    }
+
+    const doc = new Document({
+      sections: [{
+        children: [
+          new Paragraph({
+            children: [new TextRun({
+              text: 'LISTE DES VEHICULES PRESENTS PAR SITE',
+              bold: true, size: 32, font: 'Arial'
+            })],
+            alignment: AlignmentType.CENTER,
+            spacing: { after: 400 }
+          }),
+          new Paragraph({
+            children: [new TextRun({
+              text: `Genere le ${new Date().toLocaleString()}`,
+              size: 20, font: 'Arial'
+            })],
+            alignment: AlignmentType.CENTER,
+            spacing: { after: 400 }
+          }),
+          new Paragraph({
+            children: [new TextRun({
+              text: `Total : ${totalAdded} vehicule(s)`,
+              size: 22, font: 'Arial'
+            })],
+            spacing: { after: 400 }
+          }),
+          new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } })
+        ]
+      }]
+    });
+
     const blob = await Packer.toBlob(doc);
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
     a.download = `Trouves_Par_Site_${todayKey()}.docx`;
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    toast(`${vehicles.length} presents exportes`, 'success');
-  } catch (e) { toast('Erreur : ' + e.message, 'error'); }
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    toast(`${totalAdded} presents exportes`, 'success');
+  } catch (e) {
+    toast('Erreur : ' + e.message, 'error');
+  }
 }
 
 /* ============================================================
