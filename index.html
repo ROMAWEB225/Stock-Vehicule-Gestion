@@ -9,7 +9,8 @@
 <title>NTR Stock Véhicules</title>
 
 <link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjM2IiBmaWxsPSIjMGYxNzJhIi8+PHBhdGggZD0iTTQ4IDgwbDEyLTM2aDcybDEyIDM2aDE2djQ0SDU2VjgwSDE4djQ0aDE2VjE0MGgxMjR2LTE2aDE2VjgwSDE0OHoiIGZpbGw9IiM2MGE1ZmEiLz48Y2lyY2xlIGN4PSI2OCIgY3k9IjEyNCIgcj0iMTAiIGZpbGw9IiMwZjE3MmEiLz48Y2lyY2xlIGN4PSIxMjQiIGN5PSIxMjQiIHI9IjEwIiBmaWxsPSIjMGYxNzJhIi8+PC9zdmc+">
+<link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
+<link rel="apple-touch-icon" href="android-chrome-192x192.png">
 
 <style>
 :root {
@@ -50,15 +51,12 @@ img { max-width: 100%; display: block; }
 ::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 4px; }
 .hidden { display: none !important; }
 
-/* HEADER */
 .header { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .header-logo { display: flex; align-items: center; gap: 10px; font-weight: 500; letter-spacing: 0.5px; flex-shrink: 0; }
 .header-logo .title { font-size: 1rem; color: var(--text); }
 .header-logo .title span { color: var(--text-mute); font-weight: 300; }
 .header-logo .version { background: var(--bg-2); padding: 2px 8px; border-radius: 10px; font-size: 0.62rem; color: var(--text-dim); font-weight: 400; }
 .header-spacer { flex: 1; }
-
-/* COMPTEUR ÉQUIPE EN DIRECT DANS LE HEADER (bonus créatif) */
 .header-team {
   display: inline-flex;
   align-items: center;
@@ -71,20 +69,10 @@ img { max-width: 100%; display: block; }
   color: var(--text-dim);
   transition: all var(--transition);
 }
-.header-team .ht-count {
-  font-weight: 600;
-  color: var(--primary);
-}
-.header-team .ht-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--success);
-  animation: pulse-dot 2s ease-in-out infinite;
-}
+.header-team .ht-count { font-weight: 600; color: var(--primary); }
+.header-team .ht-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: pulse-dot 2s ease-in-out infinite; }
 @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 @media (max-width: 640px) { .header-team { display: none; } }
-
 .header-user { height: 32px; padding: 0 10px; background: var(--bg-2); color: var(--text); border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.78rem; min-width: 160px; max-width: 200px; }
 .header-user:focus { outline: none; border-color: var(--primary); }
 .header-actions { display: flex; gap: 4px; align-items: center; }
@@ -93,7 +81,6 @@ img { max-width: 100%; display: block; }
 .header-btn.online::after { content: ''; position: absolute; top: 5px; right: 5px; width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
 .header-btn.offline::after { content: ''; position: absolute; top: 5px; right: 5px; width: 6px; height: 6px; border-radius: 50%; background: var(--danger); }
 
-/* NAV */
 .nav { position: sticky; top: var(--header-h); z-index: 99; background: var(--bg); border-bottom: 1px solid var(--border); padding: 6px 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
 .nav-btn { padding: 6px 12px; border-radius: var(--radius-sm); color: var(--text-dim); font-size: 0.78rem; font-weight: 400; letter-spacing: 0.3px; display: inline-flex; align-items: center; gap: 6px; transition: all var(--transition); white-space: nowrap; }
 .nav-btn:hover { background: var(--bg-2); color: var(--text); }
@@ -105,7 +92,6 @@ img { max-width: 100%; display: block; }
 .nav-btn.danger:hover { background: var(--bg-2); }
 .nav-divider { width: 1px; height: 20px; background: var(--border-light); margin: 0 4px; }
 
-/* BOUTONS */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 6px 12px; border-radius: var(--radius-sm); background: var(--bg-2); color: var(--text); font-size: 0.78rem; font-weight: 400; border: 1px solid transparent; transition: all var(--transition); white-space: nowrap; }
 .btn:hover { background: var(--bg-3); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -122,7 +108,6 @@ img { max-width: 100%; display: block; }
 .btn-lg { padding: 10px 20px; font-size: 0.9rem; }
 .btn-block { width: 100%; }
 
-/* CARDS */
 .container { max-width: 1400px; margin: 0 auto; padding: 16px; }
 .card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 12px; }
 .card-title { font-size: 0.8rem; font-weight: 500; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.6px; margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
@@ -135,7 +120,6 @@ img { max-width: 100%; display: block; }
 .stat-value.danger  { color: var(--danger); }
 .stat-value.warning { color: var(--warning); }
 
-/* FORMULAIRES */
 .form-group { margin-bottom: 10px; }
 .form-label { display: block; font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
 .form-label .req { color: var(--danger); margin-left: 2px; }
@@ -146,11 +130,9 @@ img { max-width: 100%; display: block; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
 
-/* ANTI-AUTOFILL */
 .anti-autofill { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'/>") !important; background-repeat: no-repeat !important; }
 .anti-autofill:-webkit-autofill, .anti-autofill:-webkit-autofill:hover, .anti-autofill:-webkit-autofill:focus { -webkit-text-fill-color: var(--text); -webkit-box-shadow: 0 0 0px 1000px var(--bg-3) inset; transition: background-color 5000s ease-in-out 0s; caret-color: var(--text); }
 
-/* RECHERCHE */
 .search-bar { position: relative; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 .search-input-wrap { position: relative; flex: 1; }
 .search-input-wrap .search-ico { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-mute); pointer-events: none; font-size: 0.85rem; }
@@ -179,7 +161,6 @@ img { max-width: 100%; display: block; }
 .chip:hover { color: var(--text); border-color: var(--primary); }
 .chip.active { background: var(--primary); color: #0f172a; border-color: var(--primary); font-weight: 500; }
 
-/* BADGES */
 .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: var(--radius-sm); font-size: 0.65rem; font-weight: 500; white-space: nowrap; }
 .badge-primary { background: rgba(96, 165, 250, 0.15); color: var(--primary); }
 .badge-success { background: rgba(52, 211, 153, 0.15); color: var(--success); }
@@ -188,7 +169,6 @@ img { max-width: 100%; display: block; }
 .badge-info    { background: rgba(129, 140, 248, 0.15); color: var(--info); }
 .badge-muted   { background: var(--bg-3); color: var(--text-dim); }
 
-/* LISTES */
 .list { display: flex; flex-direction: column; gap: 6px; }
 .list-item { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; display: flex; align-items: center; gap: 10px; transition: border-color var(--transition); }
 .list-item:hover { border-color: var(--border-light); }
@@ -197,7 +177,6 @@ img { max-width: 100%; display: block; }
 .list-item-sub { font-size: 0.72rem; color: var(--text-dim); display: flex; flex-wrap: wrap; gap: 10px; }
 .list-item-actions { display: flex; gap: 4px; flex-shrink: 0; }
 
-/* VEHICLE CARD */
 .vehicle-card { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--text-mute); border-radius: var(--radius); transition: all var(--transition); }
 .vehicle-card.present { border-left-color: var(--success); }
 .vehicle-card.absent  { border-left-color: var(--danger); }
@@ -205,7 +184,6 @@ img { max-width: 100%; display: block; }
 .vehicle-card-immat { font-family: var(--mono); font-weight: 700; font-size: 0.9rem; color: var(--primary); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .vehicle-card-info { font-size: 0.72rem; color: var(--text-dim); margin-top: 3px; display: flex; flex-wrap: wrap; gap: 10px; }
 
-/* POINTAGE */
 .pointage-bar { position: sticky; top: 0; z-index: 90; background: var(--bg-2); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .pointage-bar .pb-info { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; color: var(--text-dim); flex-wrap: wrap; }
 .pointage-bar .pb-site { font-weight: 600; color: var(--text); }
@@ -231,11 +209,33 @@ img { max-width: 100%; display: block; }
 .pi-mine { display: inline-flex; align-items: center; gap: 3px; padding: 1px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: 500; background: rgba(96, 165, 250, 0.18); color: var(--primary); margin-left: 6px; }
 .pi-multi { display: inline-flex; align-items: center; gap: 3px; padding: 1px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: 500; background: rgba(251, 191, 36, 0.18); color: var(--warning); margin-left: 6px; }
 
+.pointage-item .pi-photo { width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--bg-3); color: var(--text-dim); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; border: 1px solid var(--border-light); transition: all var(--transition); cursor: pointer; position: relative; }
+.pointage-item .pi-photo:hover { background: var(--primary); color: #0f172a; border-color: var(--primary); }
+.pointage-item .pi-photo.has-photo { background: rgba(52, 211, 153, 0.15); color: var(--success); border-color: var(--success); }
+.pointage-item .pi-photo.has-photo::after { content: '✓'; position: absolute; bottom: -2px; right: -2px; width: 14px; height: 14px; border-radius: 50%; background: var(--success); color: #0f172a; font-size: 0.55rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-2); }
+.pointage-item .pi-photo-missing { animation: pulse-photo 2s ease-in-out infinite; }
+@keyframes pulse-photo { 0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.6); } 50% { box-shadow: 0 0 0 6px rgba(251, 191, 36, 0); } }
+
+.photo-missing-banner { background: linear-gradient(90deg, rgba(251, 191, 36, 0.15), var(--bg-2)); border: 1px solid var(--warning); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; font-size: 0.78rem; color: var(--text); }
+.photo-missing-banner .pmb-icon { font-size: 1.2rem; }
+.photo-missing-banner .pmb-text { flex: 1; }
+.photo-missing-banner .pmb-text strong { color: var(--warning); }
+.photo-missing-banner .btn { padding: 5px 12px; font-size: 0.72rem; }
+
+.photo-serie-container { display: flex; flex-direction: column; gap: 12px; }
+.photo-serie-progress { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--bg-3); border-radius: var(--radius-sm); font-size: 0.78rem; }
+.photo-serie-progress .psp-bar { flex: 1; height: 4px; background: var(--bg-2); border-radius: 2px; overflow: hidden; }
+.photo-serie-progress .psp-bar-fill { height: 100%; background: var(--primary); border-radius: 2px; transition: width 0.3s; }
+.photo-serie-vehicule { text-align: center; padding: 16px; background: var(--bg-3); border-radius: var(--radius); }
+.photo-serie-vehicule .psv-immat { font-family: var(--mono); font-weight: 700; font-size: 1.4rem; color: var(--primary); }
+.photo-serie-vehicule .psv-info { font-size: 0.8rem; color: var(--text-dim); margin-top: 4px; }
+.photo-serie-vehicule .psv-site { display: inline-block; padding: 2px 10px; background: rgba(52, 211, 153, 0.15); color: var(--success); border-radius: 12px; font-size: 0.72rem; margin-top: 8px; }
+.photo-serie-preview { max-width: 200px; margin: 12px auto 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border-light); }
+
 .pointage-hint { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; font-size: 0.75rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 12px; }
 .pointage-hint strong { color: var(--text); }
 .pointage-hint kbd { background: var(--bg-3); padding: 2px 6px; border-radius: 3px; font-family: var(--mono); font-size: 0.7rem; border: 1px solid var(--border-light); }
 
-/* RÉCAP */
 .recap-hero { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: #0f172a; border-radius: var(--radius); padding: 20px; text-align: center; margin-bottom: 16px; }
 .recap-hero .rh-number { font-size: 3rem; font-weight: 300; line-height: 1; margin: 0; }
 .recap-hero .rh-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; margin-top: 6px; }
@@ -261,7 +261,6 @@ img { max-width: 100%; display: block; }
 .bilan-table .bilan-bar-fill.low { background: var(--warning); }
 .bilan-table .bilan-bar-fill.critical { background: var(--danger); }
 
-/* MANQUANTS */
 .manquant-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--danger); border-radius: var(--radius); }
 .manquant-item .mi-main { flex: 1; min-width: 0; }
 .manquant-item .mi-immat { font-family: var(--mono); font-weight: 700; font-size: 0.9rem; color: var(--text); }
@@ -271,7 +270,6 @@ img { max-width: 100%; display: block; }
 .manquant-item .mi-source.um { background: rgba(248,113,113,0.15); color: var(--danger); }
 .manquant-item .mi-source.custom { background: rgba(251,191,36,0.15); color: var(--warning); }
 
-/* AUTRUI (collaboratif) */
 .autrui-section { margin-top: 16px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
 .autrui-header { padding: 10px 14px; background: var(--bg-3); font-size: 0.75rem; font-weight: 500; color: var(--text-dim); display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
 .autrui-header .count { font-size: 0.7rem; color: var(--text-mute); }
@@ -283,7 +281,6 @@ img { max-width: 100%; display: block; }
 .autrui-user .au-count { font-size: 0.72rem; color: var(--primary); font-weight: 600; }
 .autrui-user .au-sites { font-size: 0.68rem; color: var(--text-mute); }
 
-/* MODALES */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 16px; }
 .modal-overlay.show { display: flex; }
 .modal { background: var(--bg-2); border: 1px solid var(--border-light); border-radius: var(--radius-lg); width: 100%; max-width: 520px; max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; }
@@ -296,7 +293,6 @@ img { max-width: 100%; display: block; }
 .modal-body { padding: 14px 16px; overflow-y: auto; flex: 1; }
 .modal-footer { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; flex-shrink: 0; }
 
-/* TOASTS */
 .toast-container { position: fixed; top: 16px; right: 16px; z-index: 2000; display: flex; flex-direction: column; gap: 6px; max-width: 340px; pointer-events: none; }
 .toast { background: var(--bg-2); border: 1px solid var(--border-light); border-left: 3px solid var(--primary); border-radius: var(--radius); padding: 10px 14px; font-size: 0.8rem; display: flex; gap: 10px; align-items: flex-start; pointer-events: auto; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); animation: slide-in 0.25s ease; }
 @keyframes slide-in { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
@@ -307,7 +303,6 @@ img { max-width: 100%; display: block; }
 .toast-title { font-weight: 500; margin-bottom: 2px; font-size: 0.8rem; }
 .toast-msg { color: var(--text-dim); font-size: 0.72rem; }
 
-/* GALERIE */
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
 .gallery-item { position: relative; aspect-ratio: 1; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-3); cursor: pointer; }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
@@ -315,13 +310,38 @@ img { max-width: 100%; display: block; }
 .gallery-item:hover .gallery-overlay { opacity: 1; }
 .gallery-item .gi-immat { font-family: var(--mono); font-weight: 700; font-size: 0.75rem; }
 
+.gallery-item .gi-actions { position: absolute; top: 6px; right: 6px; display: flex; gap: 4px; opacity: 0; transition: opacity var(--transition); z-index: 2; }
+.gallery-item:hover .gi-actions, .gallery-item:focus-within .gi-actions { opacity: 1; }
+@media (hover: none) { .gallery-item .gi-actions { opacity: 1; } }
+.gallery-item .gi-btn { width: 28px; height: 28px; border-radius: 50%; background: rgba(15, 23, 42, 0.85); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 1px solid rgba(255, 255, 255, 0.15); cursor: pointer; transition: all var(--transition); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.gallery-item .gi-btn:hover { background: var(--primary); color: #0f172a; transform: scale(1.1); border-color: var(--primary); }
+.gallery-item .gi-btn.gi-btn-download:hover { background: var(--success); color: #0f172a; border-color: var(--success); }
+.gallery-item .gi-btn.gi-btn-delete:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+.gal-toolbar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+
+.gal-selection-info { padding: 8px 12px; background: var(--bg-3); border-radius: var(--radius-sm); font-size: 0.75rem; color: var(--text-dim); display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.gal-selection-info .gsi-count { font-weight: 600; color: var(--primary); }
+.gal-selection-info .gsi-actions { margin-left: auto; display: flex; gap: 6px; }
+.gallery-item.selected { outline: 3px solid var(--primary); outline-offset: -3px; }
+.gallery-item .gi-checkbox { position: absolute; bottom: 6px; left: 6px; width: 22px; height: 22px; border-radius: 50%; background: rgba(15, 23, 42, 0.85); border: 2px solid #fff; display: none; align-items: center; justify-content: center; font-size: 0.75rem; color: transparent; cursor: pointer; z-index: 2; }
+.gallery-item .gi-checkbox.show { display: flex; }
+.gallery-item.selected .gi-checkbox { background: var(--primary); color: #0f172a; border-color: var(--primary); font-weight: 700; }
+body.gal-selection-mode .gallery-item .gallery-overlay { display: none; }
+
+.gallery-item .gi-photo-status { position: absolute; top: 6px; left: 6px; padding: 2px 6px; border-radius: 8px; font-size: 0.6rem; font-weight: 600; background: rgba(0,0,0,0.7); color: #fff; }
+.gallery-item .gi-photo-status.ok { background: rgba(52, 211, 153, 0.9); color: #0f172a; }
+.gallery-item .gi-photo-status.missing { background: rgba(251, 191, 36, 0.9); color: #1a1205; }
+
 .lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 3000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
 .lightbox.show { display: flex; }
-.lightbox img { max-width: 95vw; max-height: 80vh; object-fit: contain; }
+.lightbox img { max-width: 95vw; max-height: 75vh; object-fit: contain; }
 .lightbox-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.15); color: #fff; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
 .lightbox-actions { margin-top: 14px; display: flex; gap: 8px; }
+.lightbox-actions .btn { padding: 10px 18px; font-size: 0.85rem; }
+.lightbox-info { margin-top: 12px; color: #cbd5e1; font-size: 0.85rem; text-align: center; }
+.lightbox-info .li-immat { font-family: var(--mono); font-weight: 700; color: var(--primary); }
 
-/* ARCHIVES */
 .archive-year { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; background: var(--bg-2); overflow: hidden; }
 .archive-year-header { padding: 10px 14px; background: var(--bg-3); font-weight: 500; font-size: 0.85rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
 .archive-year-header .count { font-size: 0.7rem; color: var(--text-dim); }
@@ -335,7 +355,6 @@ img { max-width: 100%; display: block; }
 .chart-wrap { position: relative; height: 320px; width: 100%; padding: 6px; }
 @media (max-width: 640px) { .chart-wrap { height: 250px; } }
 
-/* PIN */
 .pin-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; gap: 14px; text-align: center; }
 .pin-icon { font-size: 2.4rem; color: var(--text-dim); }
 .pin-display { display: flex; gap: 10px; margin: 10px 0; }
@@ -347,7 +366,6 @@ img { max-width: 100%; display: block; }
 .pin-key.confirm { background: var(--success); color: #0f172a; }
 .pin-key.delete { background: var(--danger); color: #fff; }
 
-/* TIMELINE */
 .timeline { position: relative; padding-left: 24px; }
 .timeline::before { content: ''; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 2px; background: var(--border-light); }
 .timeline-item { position: relative; padding: 8px 0 12px; }
@@ -355,7 +373,6 @@ img { max-width: 100%; display: block; }
 .timeline-date { font-size: 0.68rem; color: var(--text-mute); margin-bottom: 3px; }
 .timeline-content { background: var(--bg-3); border-radius: var(--radius-sm); padding: 8px 12px; font-size: 0.78rem; }
 
-/* LOADING */
 .loading-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); z-index: 2500; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 14px; color: #fff; }
 .loading-overlay.show { display: flex; }
 .spinner { width: 38px; height: 38px; border: 3px solid var(--border-light); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.7s linear infinite; }
@@ -373,6 +390,14 @@ img { max-width: 100%; display: block; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
+.install-banner { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #0f172a; padding: 12px 16px; display: none; align-items: center; gap: 12px; font-size: 0.82rem; }
+.install-banner.show { display: flex; }
+.install-banner .ib-text { flex: 1; }
+.install-banner .ib-text strong { font-weight: 700; }
+.install-banner .btn { padding: 6px 14px; background: rgba(0,0,0,0.15); color: #0f172a; font-weight: 500; }
+.install-banner .btn:hover { background: rgba(0,0,0,0.25); }
+.install-banner .ib-close { width: 24px; height: 24px; border-radius: 50%; background: rgba(0,0,0,0.15); color: #0f172a; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; }
+
 @media (max-width: 768px) {
   .container { padding: 12px; }
   .stat-value { font-size: 1.25rem; }
@@ -387,21 +412,17 @@ img { max-width: 100%; display: block; }
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
   <div class="header-logo">
     <div class="title">STOCK<span>VÉHICULES</span></div>
-    <span class="version">v3.3</span>
+    <span class="version">v3.5</span>
   </div>
   <div class="header-spacer"></div>
-
-  <!-- COMPTEUR ÉQUIPE EN DIRECT (bonus créatif) -->
   <div class="header-team" id="headerTeam" title="Utilisateurs actifs aujourd'hui">
     <span class="ht-dot"></span>
     <span class="ht-count" id="headerTeamCount">0</span>
-    <span>actif(s) aujourd'hui</span>
+    <span>actif(s)</span>
   </div>
-
   <select id="headerUser" class="header-user" title="Utilisateur actuel">
     <option value="">— Sélectionner utilisateur —</option>
   </select>
@@ -409,12 +430,17 @@ img { max-width: 100%; display: block; }
     <button class="header-btn" id="btnSync" title="Synchroniser">↻</button>
     <button class="header-btn" id="btnUsers" title="Utilisateurs">⚙</button>
     <button class="header-btn" id="btnPin" title="Changer le PIN">⌘</button>
-    <button class="header-btn hidden" id="btnInstall" title="Installer">↓</button>
+    <button class="header-btn hidden" id="btnInstall" title="Installer l'application">↓</button>
     <button class="header-btn" id="btnTheme" title="Mode clair/sombre">☾</button>
   </div>
 </header>
 
-<!-- NAV -->
+<div class="install-banner" id="installBanner">
+  <span class="ib-text"><strong>Installer NTR Stock</strong> — Ajoutez l'app à votre écran d'accueil pour un accès rapide.</span>
+  <button class="btn" id="installBannerBtn">Installer</button>
+  <button class="ib-close" id="installBannerClose">✕</button>
+</div>
+
 <nav class="nav" id="mainNav">
   <button class="nav-btn primary active" data-tab="pointage">Pointage</button>
   <span class="nav-divider"></span>
@@ -434,7 +460,6 @@ img { max-width: 100%; display: block; }
 
 <main>
 
-<!-- ONGLET POINTAGE -->
 <section class="tab-content active" id="tab-pointage">
   <div class="pointage-bar">
     <div class="pb-info">
@@ -454,8 +479,8 @@ img { max-width: 100%; display: block; }
       <strong>Comment pointer :</strong><br>
       Sélectionnez un site en haut à droite<br>
       Tapez sur un véhicule dans la liste pour le marquer trouvé à ce site<br>
-      Changez de site pour pointer d'autres véhicules (une même ronde peut couvrir plusieurs sites)<br>
-      Vos pointages sont personnels : chaque utilisateur a les siens
+      Changez de site pour pointer d'autres véhicules<br>
+      Utilisez le bouton photo pour ajouter une image du véhicule
     </div>
 
     <div class="search-bar">
@@ -466,6 +491,14 @@ img { max-width: 100%; display: block; }
         <div class="autocomplete-list" id="pointageAutocomplete"></div>
       </div>
       <button class="mic-btn" id="pointageMic" title="Recherche vocale">◉</button>
+    </div>
+
+    <div class="photo-missing-banner hidden" id="photoMissingBanner">
+      <span class="pmb-icon">📷</span>
+      <div class="pmb-text">
+        <strong id="photoMissingCount">0</strong> véhicule(s) pointé(s) sans photo
+      </div>
+      <button class="btn btn-primary" id="btnPhotoSerie">Prendre les photos</button>
     </div>
 
     <div class="chips" id="pointageStatusChips">
@@ -480,7 +513,6 @@ img { max-width: 100%; display: block; }
       <div class="es-sub">Choisissez un site dans le menu ci-dessus</div>
     </div>
 
-    <!-- SECTION AUTRUI (collaboratif) -->
     <div class="autrui-section" id="autruiSection">
       <div class="autrui-header" id="autruiHeader">
         <span>Autres pointages aujourd'hui</span>
@@ -493,7 +525,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ONGLET MANQUANTS -->
 <section class="tab-content" id="tab-manquants">
   <div class="container">
     <div class="section-header">
@@ -502,12 +533,10 @@ img { max-width: 100%; display: block; }
         <button class="btn btn-ghost btn-sm" id="btnManquantsExportXls">Export Excel</button>
       </div>
     </div>
-
     <div class="pointage-hint">
       <strong>Véhicules non pointés</strong><br>
-      Ces véhicules font partie de la liste importée (Odoo) mais n'ont pas encore été trouvés sur le terrain par aucun utilisateur.
+      Ces véhicules font partie de la liste importée (Odoo) mais n'ont pas encore été trouvés.
     </div>
-
     <div class="form-group">
       <label class="form-label">Filtrer par source</label>
       <select class="select" id="manquantsSourceFilter">
@@ -517,7 +546,6 @@ img { max-width: 100%; display: block; }
         <option value="custom">Ajout manuel</option>
       </select>
     </div>
-
     <div class="list" id="manquantsList"></div>
     <div class="empty-state hidden" id="manquantsEmpty">
       <div class="es-title">Aucun véhicule manquant</div>
@@ -526,7 +554,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ONGLET VÉHICULES -->
 <section class="tab-content" id="tab-vehicules">
   <div class="container">
     <div class="section-header">
@@ -535,7 +562,6 @@ img { max-width: 100%; display: block; }
         <button class="btn btn-primary btn-sm" id="btnAddVehicule">Ajouter</button>
       </div>
     </div>
-
     <div class="card" style="padding:10px 12px;margin-bottom:10px">
       <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
         <span style="font-size:0.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px">Import Excel :</span>
@@ -544,7 +570,6 @@ img { max-width: 100%; display: block; }
         <button class="btn btn-ghost btn-sm" id="btnExportVehXls">Exporter la liste</button>
       </div>
     </div>
-
     <div class="search-bar">
       <div class="search-input-wrap">
         <span class="search-ico">⌕</span>
@@ -554,11 +579,9 @@ img { max-width: 100%; display: block; }
       </div>
       <button class="mic-btn" id="vehMic" title="Recherche vocale">◉</button>
     </div>
-
     <div class="chips" id="vehSiteChips"></div>
     <div class="chips" id="vehSourceChips"></div>
     <div class="chips" id="vehTypeChips"></div>
-
     <div class="list" id="vehList"></div>
     <div class="empty-state hidden" id="vehEmpty">
       <div class="es-title">Aucun véhicule</div>
@@ -567,7 +590,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ONGLET HISTORIQUE -->
 <section class="tab-content" id="tab-historique">
   <div class="container">
     <div class="section-header">
@@ -590,7 +612,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ONGLET ARCHIVES -->
 <section class="tab-content" id="tab-archives">
   <div class="container">
     <div class="section-header"><h2 class="section-title">Archives</h2></div>
@@ -598,7 +619,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ONGLET GRAPHIQUES -->
 <section class="tab-content" id="tab-graphiques">
   <div class="container">
     <div class="section-header">
@@ -615,7 +635,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ONGLET CLIENTS -->
 <section class="tab-content" id="tab-societes">
   <div class="container">
     <div class="section-header">
@@ -633,7 +652,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ONGLET MOUVEMENTS -->
 <section class="tab-content" id="tab-mouvements">
   <div class="container">
     <div class="section-header">
@@ -651,7 +669,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ONGLET CHEF -->
 <section class="tab-content" id="tab-chef">
   <div class="container">
     <div class="pin-screen" id="chefPinScreen">
@@ -728,24 +745,37 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ONGLET GALERIE -->
 <section class="tab-content" id="tab-galerie">
   <div class="container">
     <div class="section-header">
       <h2 class="section-title">Galerie photos</h2>
-      <div class="section-actions">
+      <div class="section-actions gal-toolbar">
         <select class="select" id="galSiteFilter" style="width:auto"><option value="">Tous les sites</option></select>
+        <select class="select" id="galPhotoFilter" style="width:auto">
+          <option value="">Avec photo</option>
+          <option value="without">Sans photo (pointés)</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" id="btnGalSelectToggle">Sélectionner</button>
+        <button class="btn btn-primary btn-sm" id="btnGalDownloadAll">⬇ Tout télécharger</button>
       </div>
     </div>
+
+    <div class="gal-selection-info hidden" id="galSelectionInfo">
+      <span><span class="gsi-count" id="galSelectionCount">0</span> photo(s) sélectionnée(s)</span>
+      <div class="gsi-actions">
+        <button class="btn btn-ghost btn-sm hidden" id="galSelectionClear">Effacer</button>
+        <button class="btn btn-primary btn-sm hidden" id="galSelectionDownload">⬇ Télécharger</button>
+      </div>
+    </div>
+
     <div class="gallery-grid" id="galGrid"></div>
     <div class="empty-state hidden" id="galEmpty">
       <div class="es-title">Aucune photo</div>
-      <div class="es-sub">Les photos ajoutées aux véhicules apparaîtront ici</div>
+      <div class="es-sub">Les photos ajoutées apparaîtront ici</div>
     </div>
   </div>
 </section>
 
-<!-- ONGLET EXPORTS -->
 <section class="tab-content" id="tab-exports">
   <div class="container">
     <div class="section-header"><h2 class="section-title">Exports</h2></div>
@@ -776,7 +806,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ONGLET ATTESTATION -->
 <section class="tab-content" id="tab-attestation">
   <div class="container">
     <div class="section-header"><h2 class="section-title">Attestation d'immobilisation</h2></div>
@@ -826,7 +855,6 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ONGLET ADMIN -->
 <section class="tab-content" id="tab-admin">
   <div class="container">
     <div class="section-header"><h2 class="section-title">Suppression de données</h2></div>
@@ -836,7 +864,7 @@ img { max-width: 100%; display: block; }
       <div style="display:flex;flex-direction:column;gap:8px">
         <button class="btn btn-warning btn-block" id="btnWipeHR">Vider Source HR</button>
         <button class="btn btn-warning btn-block" id="btnWipeUM">Vider Source UM</button>
-        <button class="btn btn-danger btn-block" id="btnWipeAll">Vider tout (véhicules + rondes + pointages)</button>
+        <button class="btn btn-danger btn-block" id="btnWipeAll">Vider tout</button>
       </div>
     </div>
     <div class="card">
@@ -856,17 +884,16 @@ img { max-width: 100%; display: block; }
 
 </main>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="lightboxClose">✕</button>
   <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-info" id="lightboxInfo"></div>
   <div class="lightbox-actions">
-    <a class="btn btn-primary" id="lightboxDownload" download>Télécharger</a>
+    <button class="btn btn-primary" id="lightboxDownload">⬇ Télécharger</button>
     <button class="btn btn-danger" id="lightboxDelete">Supprimer</button>
   </div>
 </div>
 
-<!-- MODALE VEHICULE -->
 <div class="modal-overlay" id="modalVehicule">
   <div class="modal">
     <div class="modal-header">
@@ -880,34 +907,16 @@ img { max-width: 100%; display: block; }
         <input type="search" class="input anti-autofill" id="vehImmat" style="text-transform:uppercase" autocomplete="nope" name="veh_immat_8c5f3" aria-autocomplete="none" readonly>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Marque</label>
-          <input type="text" class="input" id="vehMarque">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Modèle</label>
-          <input type="text" class="input" id="vehModele">
-        </div>
+        <div class="form-group"><label class="form-label">Marque</label><input type="text" class="input" id="vehMarque"></div>
+        <div class="form-group"><label class="form-label">Modèle</label><input type="text" class="input" id="vehModele"></div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Site</label>
-          <select class="select" id="vehSite"></select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Client</label>
-          <select class="select" id="vehClient"></select>
-        </div>
+        <div class="form-group"><label class="form-label">Site</label><select class="select" id="vehSite"></select></div>
+        <div class="form-group"><label class="form-label">Client</label><select class="select" id="vehClient"></select></div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Réf. commande</label>
-          <input type="text" class="input" id="vehRef">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Type maintenance</label>
-          <input type="text" class="input" id="vehType">
-        </div>
+        <div class="form-group"><label class="form-label">Réf. commande</label><input type="text" class="input" id="vehRef"></div>
+        <div class="form-group"><label class="form-label">Type maintenance</label><input type="text" class="input" id="vehType"></div>
       </div>
       <div class="form-group">
         <label class="form-label">Photo (optionnelle)</label>
@@ -922,7 +931,6 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- MODALE IMPORT -->
 <div class="modal-overlay" id="modalImport">
   <div class="modal">
     <div class="modal-header">
@@ -960,7 +968,6 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- MODALE USERS -->
 <div class="modal-overlay" id="modalUsers">
   <div class="modal">
     <div class="modal-header">
@@ -974,13 +981,10 @@ img { max-width: 100%; display: block; }
       </div>
       <div class="list" id="usersList"></div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" data-close="modalUsers">Fermer</button>
-    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" data-close="modalUsers">Fermer</button></div>
   </div>
 </div>
 
-<!-- MODALE CLIENTS -->
 <div class="modal-overlay" id="modalSocietes">
   <div class="modal">
     <div class="modal-header">
@@ -994,13 +998,10 @@ img { max-width: 100%; display: block; }
       </div>
       <div class="list" id="socManageList"></div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" data-close="modalSocietes">Fermer</button>
-    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" data-close="modalSocietes">Fermer</button></div>
   </div>
 </div>
 
-<!-- MODALE PIN -->
 <div class="modal-overlay" id="modalPin">
   <div class="modal modal-sm">
     <div class="modal-header">
@@ -1008,18 +1009,9 @@ img { max-width: 100%; display: block; }
       <button class="modal-close" data-close="modalPin">✕</button>
     </div>
     <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Ancien PIN</label>
-        <input type="password" class="input" id="pinOld" maxlength="4" inputmode="numeric">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Nouveau PIN (4 chiffres)</label>
-        <input type="password" class="input" id="pinNew" maxlength="4" inputmode="numeric">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Confirmer</label>
-        <input type="password" class="input" id="pinNew2" maxlength="4" inputmode="numeric">
-      </div>
+      <div class="form-group"><label class="form-label">Ancien PIN</label><input type="password" class="input" id="pinOld" maxlength="4" inputmode="numeric"></div>
+      <div class="form-group"><label class="form-label">Nouveau PIN (4 chiffres)</label><input type="password" class="input" id="pinNew" maxlength="4" inputmode="numeric"></div>
+      <div class="form-group"><label class="form-label">Confirmer</label><input type="password" class="input" id="pinNew2" maxlength="4" inputmode="numeric"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" data-close="modalPin">Annuler</button>
@@ -1028,7 +1020,34 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- MODALE RÉCAP DE RONDE -->
+<div class="modal-overlay" id="modalPhotoSerie">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Photos en série</h3>
+      <button class="modal-close" data-close="modalPhotoSerie">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="photo-serie-container">
+        <div class="photo-serie-progress">
+          <span id="photoSerieProgress">0 / 0</span>
+          <div class="psp-bar"><div class="psp-bar-fill" id="photoSerieBar" style="width:0%"></div></div>
+        </div>
+        <div class="photo-serie-vehicule" id="photoSerieVehicule">
+          <div class="psv-immat" id="photoSerieImmat">—</div>
+          <div class="psv-info" id="photoSerieInfo">—</div>
+          <div class="psv-site" id="photoSerieSite">—</div>
+          <div class="photo-serie-preview" id="photoSeriePreview"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-close="modalPhotoSerie">Fermer</button>
+      <button class="btn btn-primary" id="photoSeriePrendre">📷 Prendre la photo</button>
+      <button class="btn btn-success hidden" id="photoSerieSuivant">Suivant →</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modalRecap">
   <div class="modal modal-lg">
     <div class="modal-header">
@@ -1045,7 +1064,6 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- MODALE DÉTAIL RONDE -->
 <div class="modal-overlay" id="modalRondeDetail">
   <div class="modal modal-lg">
     <div class="modal-header">
@@ -1061,7 +1079,6 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- MODALE CONFIRM -->
 <div class="modal-overlay" id="modalConfirm">
   <div class="modal modal-sm">
     <div class="modal-header">
@@ -1076,7 +1093,6 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
-<!-- LOADING + TOASTS -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
   <div class="loading-text" id="loadingText">Chargement...</div>
@@ -1092,11 +1108,6 @@ img { max-width: 100%; display: block; }
 <script src="https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js"></script>
 
 <script>
-/* ============================================================
-   NTR STOCK VÉHICULES - Version 3.3
-   Pointage collaboratif multi-utilisateurs
-   ============================================================ */
-
 const firebaseConfig = {
   apiKey: "AIzaSyAxfEpi-NERVExxVYD2EmH7JppiIQDwWOM",
   authDomain: "ntr-garage.firebaseapp.com",
@@ -1127,7 +1138,8 @@ const state = {
   socFilter: '',
   vehFilters: { site: '', source: '', type: '', search: '' },
   currentRondeDetail: null, unsubscribers: [],
-  lastPointageCount: 0
+  lastPointageCount: 0,
+  chartPresence: null, chartSites: null
 };
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -1218,7 +1230,9 @@ setTimeout(() => {
   });
 }, 200);
 
-$$('.nav-btn[data-tab]').forEach((btn) => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
 function switchTab(name) {
   $$('.nav-btn[data-tab]').forEach((b) => b.classList.toggle('active', b.dataset.tab === name));
   $$('.tab-content').forEach((s) => s.classList.remove('active'));
@@ -1237,7 +1251,11 @@ function switchTab(name) {
   if (name === 'galerie') renderGalerie();
   if (name === 'admin') renderAdminInfo();
 }
+$$('.nav-btn[data-tab]').forEach((btn) => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
 
+/* ============================================================
+   VOICE SEARCH
+   ============================================================ */
 function setupVoiceSearch(micId, inputId, cb) {
   const btn = $('#' + micId);
   const input = $('#' + inputId);
@@ -1271,7 +1289,9 @@ function playBeep() {
   } catch (e) {}
 }
 
-/* USERS */
+/* ============================================================
+   UTILISATEURS
+   ============================================================ */
 async function ensureUsers() {
   if (!state.db) return;
   const ref = state.db.collection('utilisateurs');
@@ -1293,8 +1313,8 @@ function listenUsers() {
 }
 function renderUserSelectors() {
   const opts = state.utilisateurs.map((u) => `<option value="${escapeHtml(u.nom)}">${escapeHtml(u.nom)}</option>`).join('');
-  const h = $('#headerUser'); h.innerHTML = `<option value="">— Sélectionner utilisateur —</option>${opts}`; h.value = state.currentUser || '';
-  const s = $('#histUserFilter'); s.innerHTML = `<option value="">Tous</option>${opts}`; s.value = state.histFilterUser || '';
+  const h = $('#headerUser'); if (h) { h.innerHTML = `<option value="">— Sélectionner utilisateur —</option>${opts}`; h.value = state.currentUser || ''; }
+  const s = $('#histUserFilter'); if (s) { s.innerHTML = `<option value="">Tous</option>${opts}`; s.value = state.histFilterUser || ''; }
 }
 $('#headerUser').addEventListener('change', (e) => {
   state.currentUser = e.target.value;
@@ -1306,7 +1326,7 @@ $('#headerUser').addEventListener('change', (e) => {
   updateHeaderTeam();
 });
 function renderUsersModal() {
-  const list = $('#usersList');
+  const list = $('#usersList'); if (!list) return;
   if (!state.utilisateurs.length) { list.innerHTML = `<div class="empty-state" style="padding:14px"><div class="es-sub">Aucun utilisateur</div></div>`; return; }
   list.innerHTML = state.utilisateurs.map((u) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${escapeHtml(u.nom)}</div><div class="list-item-sub">Ajouté le ${formatDateFR(u.createdAt)}</div></div><button class="btn btn-sm btn-danger" data-del-user="${u.id}">Supprimer</button></div>`).join('');
   $$('[data-del-user]', list).forEach((b) => b.addEventListener('click', async () => {
@@ -1327,7 +1347,9 @@ $('#addUserBtn').addEventListener('click', async () => {
   toast(`Utilisateur ajouté : ${nom}`, 'success');
 });
 
-/* CLIENTS */
+/* ============================================================
+   CLIENTS
+   ============================================================ */
 async function ensureClients() {
   if (!state.db) return;
   const ref = state.db.collection('societes');
@@ -1353,7 +1375,7 @@ function renderClientSelectors() {
   const f = $('#socFilter'); if (f) f.innerHTML = `<option value="">Tous les clients</option>${opts}`;
 }
 function renderClientsManageList() {
-  const list = $('#socManageList');
+  const list = $('#socManageList'); if (!list) return;
   if (!state.clients.length) { list.innerHTML = `<div class="empty-state" style="padding:14px"><div class="es-sub">Aucun client</div></div>`; return; }
   list.innerHTML = state.clients.map((s) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${escapeHtml(s.nom)}</div></div><button class="btn btn-sm btn-danger" data-del-soc="${s.id}">Supprimer</button></div>`).join('');
   $$('[data-del-soc]', list).forEach((b) => b.addEventListener('click', async () => {
@@ -1376,7 +1398,9 @@ $('#addSocBtn').addEventListener('click', async () => {
 });
 $('#socFilter').addEventListener('change', (e) => { state.socFilter = e.target.value; renderSocietes(); });
 
-/* PIN */
+/* ============================================================
+   PIN CHEF
+   ============================================================ */
 async function getChefPin() {
   if (!state.db) return '1234';
   const doc = await state.db.collection('config').doc('chefPin').get();
@@ -1424,7 +1448,9 @@ $('#pinSave').addEventListener('click', async () => {
   toast('PIN modifié', 'success');
 });
 
-/* VEHICULES */
+/* ============================================================
+   VEHICULES
+   ============================================================ */
 function listenVehicules() {
   if (!state.db) return;
   const unsub = state.db.collection('vehicules').orderBy('immat').onSnapshot((snap) => {
@@ -1434,6 +1460,7 @@ function listenVehicules() {
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
     if ($('#tab-manquants').classList.contains('active')) renderManquants();
     if ($('#tab-galerie').classList.contains('active')) renderGalerie();
+    updatePhotoMissingBanner();
   }, (err) => { console.error('[vehicules]', err); toast('Erreur de chargement', 'error'); });
   state.unsubscribers.push(unsub);
 }
@@ -1499,9 +1526,10 @@ document.addEventListener('click', (e) => { if (!e.target.closest('.search-input
 function renderVehiculesList() {
   const list = $('#vehList');
   const empty = $('#vehEmpty');
+  if (!list) return;
   const items = state.vehiculesFiltered;
-  if (!items.length) { list.innerHTML = ''; empty.classList.remove('hidden'); return; }
-  empty.classList.add('hidden');
+  if (!items.length) { list.innerHTML = ''; if (empty) empty.classList.remove('hidden'); return; }
+  if (empty) empty.classList.add('hidden');
   list.innerHTML = items.map((v) => {
     const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
     const srcLabel = SOURCES[v.source] || v.source || '—';
@@ -1587,7 +1615,45 @@ async function uploadToCloudinary(file) {
   return (await res.json()).secure_url;
 }
 
-/* POINTAGES COLLABORATIFS */
+async function prendrePhotoVehicule(vehId) {
+  const v = state.vehicules.find((x) => x.id === vehId);
+  if (!v) return;
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.capture = 'environment';
+  input.onchange = async (ev) => {
+    const file = ev.target.files[0];
+    if (!file) return;
+    showLoading('Upload en cours...');
+    try {
+      const url = await uploadToCloudinary(file);
+      await state.db.collection('vehicules').doc(vehId).update({ photo: url, photoUpdatedAt: nowIso() });
+      hideLoading();
+      toast(`Photo ajoutée pour ${v.immat}`, 'success');
+    } catch (err) {
+      hideLoading();
+      toast('Erreur upload : ' + err.message, 'error');
+    }
+  };
+  input.click();
+}
+
+function updatePhotoMissingBanner() {
+  const banner = $('#photoMissingBanner');
+  if (!banner) return;
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  const missing = state.vehicules.filter((v) => pointedIds.has(v.id) && !v.photo);
+  const count = missing.length;
+  const countEl = $('#photoMissingCount');
+  if (countEl) countEl.textContent = count;
+  if (count > 0) banner.classList.remove('hidden');
+  else banner.classList.add('hidden');
+}
+
+/* ============================================================
+   POINTAGES COLLABORATIFS
+   ============================================================ */
 function listenPointages() {
   if (!state.db) return;
   const today = todayKeyShort();
@@ -1599,9 +1665,10 @@ function listenPointages() {
     state.lastPointageCount = newPointages.length;
     aggregatePointages();
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
+    if ($('#tab-manquants').classList.contains('active')) renderManquants();
     renderAutruiSection();
     updateHeaderTeam();
-    // Notification discrète quand un autre utilisateur pointe
+    updatePhotoMissingBanner();
     if (prevCount > 0 && newPointages.length > prevCount) {
       const added = newPointages.slice(prevCount);
       const others = added.filter((p) => p.userNom !== state.currentUser);
@@ -1645,10 +1712,6 @@ function updateHeaderTeam() {
   el.textContent = users.size;
 }
 
-function getVehiculesForPointage() {
-  return state.vehicules.slice().sort((a, b) => a.immat.localeCompare(b.immat));
-}
-
 function renderPointage() {
   const siteSel = $('#pointageSite');
   if (siteSel && !siteSel.dataset.filled) {
@@ -1660,12 +1723,11 @@ function renderPointage() {
   const label = $('#pointageSiteLabel');
   const list = $('#pointageList');
   const empty = $('#pointageEmpty');
-  const btnTerminer = $('#btnTerminer');
 
-  label.textContent = site || '— Choisir un site —';
+  if (label) label.textContent = site || '— Choisir un site —';
 
   const search = normalizeImmat($('#pointageSearch').value);
-  let items = getVehiculesForPointage();
+  let items = state.vehicules.slice().sort((a, b) => a.immat.localeCompare(b.immat));
   if (search) items = items.filter((v) => normalizeImmat(v.immat).includes(search));
   if (state.pointageStatus === 'pending') items = items.filter((v) => !state.myPointages.has(v.id));
   if (state.pointageStatus === 'pointed') items = items.filter((v) => state.myPointages.has(v.id));
@@ -1694,6 +1756,8 @@ function renderPointage() {
       const others = state.otherPointages.get(v.id) || [];
       const recent = state.pointageRecent[v.id] && (Date.now() - state.pointageRecent[v.id] < 1500);
       const officiel = getPointageOfficiel(v.id);
+      const hasPhoto = v.photo && v.photo.length > 0;
+      const missingPhoto = mine && !hasPhoto;
       return `<div class="pointage-item ${mine ? 'pointed' : ''} ${recent ? 'recent' : ''}" data-veh="${v.id}">
         <div class="pi-check">${mine ? '✓' : ''}</div>
         <div class="pi-main">
@@ -1709,15 +1773,32 @@ function renderPointage() {
           </div>
         </div>
         ${officiel && officiel.site ? `<span class="pi-site">${escapeHtml(officiel.site)}</span>` : ''}
+        <button class="pi-photo ${hasPhoto ? 'has-photo' : ''} ${missingPhoto ? 'pi-photo-missing' : ''}" data-photo-veh="${v.id}" title="${hasPhoto ? 'Voir la photo' : 'Prendre une photo'}">📷</button>
       </div>`;
     }).join('');
 
     $$('.pointage-item', list).forEach((item) => {
-      item.addEventListener('click', (e) => { e.stopPropagation(); handlePointage(item.dataset.veh); });
+      item.addEventListener('click', (e) => {
+        if (e.target.closest('[data-photo-veh]')) return;
+        e.stopPropagation();
+        handlePointage(item.dataset.veh);
+      });
+    });
+
+    $$('[data-photo-veh]', list).forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const vehId = btn.dataset.photoVeh;
+        const v = state.vehicules.find((x) => x.id === vehId);
+        if (!v) return;
+        if (v.photo && v.photo.length > 0) openLightbox(vehId);
+        else prendrePhotoVehicule(vehId);
+      });
     });
   }
 
   updatePointageCounters();
+  updatePhotoMissingBanner();
 }
 
 function updatePointageCounters() {
@@ -1836,10 +1917,9 @@ document.addEventListener('click', (e) => {
 });
 
 function renderAutruiSection() {
-  const section = $('#autruiSection');
-  if (!section) return;
   const list = $('#autruiList');
   const count = $('#autruiCount');
+  if (!list) return;
 
   const byUser = {};
   const me = state.currentUser;
@@ -1867,21 +1947,93 @@ function renderAutruiSection() {
     </div>`;
   }).join('');
 }
-
 document.addEventListener('click', (e) => {
   const header = e.target.closest('#autruiHeader');
-  if (header) {
-    header.parentElement.classList.toggle('open');
-  }
+  if (header) header.parentElement.classList.toggle('open');
 });
 
-/* RÉCAP DE RONDE */
+/* ============================================================
+   PHOTO EN SÉRIE
+   ============================================================ */
+let photoSerieQueue = [];
+let photoSerieIndex = 0;
+
+function openPhotoSerie() {
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  photoSerieQueue = state.vehicules.filter((v) => pointedIds.has(v.id) && !v.photo).sort((a, b) => a.immat.localeCompare(b.immat));
+  photoSerieIndex = 0;
+  if (!photoSerieQueue.length) { toast('Aucun véhicule à photographier', 'success'); return; }
+  openModal('modalPhotoSerie');
+  updatePhotoSerieView();
+}
+
+function updatePhotoSerieView() {
+  const total = photoSerieQueue.length;
+  const current = photoSerieIndex;
+  const pct = total ? Math.round((current / total) * 100) : 0;
+
+  $('#photoSerieProgress').textContent = `${current} / ${total}`;
+  $('#photoSerieBar').style.width = pct + '%';
+
+  if (current >= total) {
+    $('#photoSerieImmat').textContent = '✓';
+    $('#photoSerieInfo').textContent = 'Toutes les photos ont été prises';
+    $('#photoSerieSite').textContent = '';
+    $('#photoSeriePreview').innerHTML = '';
+    $('#photoSeriePrendre').classList.add('hidden');
+    $('#photoSerieSuivant').classList.add('hidden');
+    setTimeout(() => { closeModal('modalPhotoSerie'); toast(`${total} photo(s) ajoutée(s)`, 'success'); }, 1200);
+    return;
+  }
+
+  const v = photoSerieQueue[current];
+  $('#photoSerieImmat').textContent = v.immat;
+  $('#photoSerieInfo').textContent = [v.marque, v.modele].filter(Boolean).join(' ') || '—';
+  $('#photoSerieSite').textContent = v.site || '—';
+  $('#photoSeriePreview').innerHTML = '';
+  $('#photoSeriePrendre').classList.remove('hidden');
+  $('#photoSerieSuivant').classList.add('hidden');
+}
+$('#btnPhotoSerie').addEventListener('click', openPhotoSerie);
+$('#photoSeriePrendre').addEventListener('click', () => {
+  const v = photoSerieQueue[photoSerieIndex];
+  if (!v) return;
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.capture = 'environment';
+  input.onchange = async (ev) => {
+    const file = ev.target.files[0];
+    if (!file) return;
+    showLoading('Upload en cours...');
+    try {
+      const url = await uploadToCloudinary(file);
+      await state.db.collection('vehicules').doc(v.id).update({ photo: url, photoUpdatedAt: nowIso() });
+      hideLoading();
+      $('#photoSeriePreview').innerHTML = `<img src="${url}" style="width:100%;border-radius:6px">`;
+      $('#photoSeriePrendre').classList.add('hidden');
+      $('#photoSerieSuivant').classList.remove('hidden');
+      toast(`Photo ajoutée : ${v.immat}`, 'success');
+    } catch (err) {
+      hideLoading();
+      toast('Erreur upload : ' + err.message, 'error');
+    }
+  };
+  input.click();
+});
+$('#photoSerieSuivant').addEventListener('click', () => {
+  photoSerieIndex++;
+  updatePhotoSerieView();
+});
+
+/* ============================================================
+   RÉCAP DE RONDE
+   ============================================================ */
 $('#btnTerminer').addEventListener('click', () => { renderRecapModal(); openModal('modalRecap'); });
 
 function computeRondeStats() {
   const all = state.vehicules;
   const total = all.length;
-
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   const found = all.filter((v) => pointedIds.has(v.id));
   const manquants = all.filter((v) => !pointedIds.has(v.id));
@@ -1899,12 +2051,7 @@ function computeRondeStats() {
     const foundSrc = found.filter((v) => v.source === src);
     const missSrc = manquants.filter((v) => v.source === src);
     if (allSrc.length > 0) {
-      bySource[src] = {
-        total: allSrc.length,
-        found: foundSrc.length,
-        manquants: missSrc.length,
-        taux: allSrc.length ? Math.round((foundSrc.length / allSrc.length) * 100) : 0
-      };
+      bySource[src] = { total: allSrc.length, found: foundSrc.length, manquants: missSrc.length, taux: allSrc.length ? Math.round((foundSrc.length / allSrc.length) * 100) : 0 };
     }
   });
 
@@ -1964,31 +2111,19 @@ function renderRecapModal() {
       <div class="recap-card success"><div class="rc-num">${s.found}</div><div class="rc-label">Trouvés (${s.tauxGlobal}%)</div></div>
       <div class="recap-card danger"><div class="rc-num">${s.manquants}</div><div class="rc-label">Manquants</div></div>
     </div>
-    <div class="card">
-      <div class="card-title">Bilan par source</div>
-      <table class="bilan-table"><thead><tr><th>Source</th><th>Total</th><th>Trouvés</th><th>Manquants</th><th>Taux</th></tr></thead><tbody>${sourceRows || '<tr><td colspan="5" style="text-align:center;color:var(--text-mute);padding:14px">Aucune donnée</td></tr>'}</tbody></table>
-    </div>
-    <div class="card">
-      <div class="card-title">Répartition par site (${s.sitesVisited.length} site(s) visité(s))</div>
-      <table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules trouvés</th><th>Part</th></tr></thead><tbody>${siteRows}</tbody></table>
-    </div>
+    <div class="card"><div class="card-title">Bilan par source</div><table class="bilan-table"><thead><tr><th>Source</th><th>Total</th><th>Trouvés</th><th>Manquants</th><th>Taux</th></tr></thead><tbody>${sourceRows || '<tr><td colspan="5" style="text-align:center;color:var(--text-mute);padding:14px">Aucune donnée</td></tr>'}</tbody></table></div>
+    <div class="card"><div class="card-title">Répartition par site (${s.sitesVisited.length} site(s))</div><table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules</th><th>Part</th></tr></thead><tbody>${siteRows}</tbody></table></div>
     ${userRows ? `<div class="card"><div class="card-title">Contribution par utilisateur</div><table class="bilan-table"><thead><tr><th>Utilisateur</th><th>Pointages</th></tr></thead><tbody>${userRows}</tbody></table></div>` : ''}
-    <div class="card" style="background:var(--bg-3)">
-      <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.7">
-        <div>Ronde effectuée par : <strong style="color:var(--text)">${escapeHtml(state.currentUser || '—')}</strong></div>
-        <div>Date : ${date} à ${heure}</div>
-        <div>Sites visités : ${s.sitesVisited.length ? escapeHtml(s.sitesVisited.join(', ')) : 'Aucun'}</div>
-      </div>
-    </div>
+    <div class="card" style="background:var(--bg-3)"><div style="font-size:0.75rem;color:var(--text-dim);line-height:1.7">
+      <div>Ronde effectuée par : <strong style="color:var(--text)">${escapeHtml(state.currentUser || '—')}</strong></div>
+      <div>Date : ${date} à ${heure}</div>
+      <div>Sites visités : ${s.sitesVisited.length ? escapeHtml(s.sitesVisited.join(', ')) : 'Aucun'}</div>
+    </div></div>
   `;
 }
-
 $('#recapShowManquants').addEventListener('click', () => {
-  closeModal('modalRecap');
-  switchTab('manquants');
-  state.manquantsFilterSource = '';
-  $('#manquantsSourceFilter').value = '';
-  renderManquants();
+  closeModal('modalRecap'); switchTab('manquants');
+  state.manquantsFilterSource = ''; $('#manquantsSourceFilter').value = ''; renderManquants();
 });
 $('#recapExportPdf').addEventListener('click', () => exportRecapPDF(computeRondeStats()));
 $('#recapTerminer').addEventListener('click', async () => {
@@ -2000,17 +2135,11 @@ $('#recapTerminer').addEventListener('click', async () => {
     const now = nowIso();
     const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
     const found = state.vehicules.filter((v) => pointedIds.has(v.id));
-
     const snapshot = found.map((v) => {
       const ps = state.pointages.filter((p) => p.vehiculeId === v.id);
       const first = ps.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0];
-      return {
-        id: v.id, immat: v.immat,
-        marque: v.marque || '', modele: v.modele || '',
-        client: v.client || '', site: first?.site || v.site || '', present: true
-      };
+      return { id: v.id, immat: v.immat, marque: v.marque || '', modele: v.modele || '', client: v.client || '', site: first?.site || v.site || '', present: true };
     });
-
     await state.db.collection('rondes').add({
       date: todayKey(), heureDebut: now, heureFin: now,
       effectueePar: state.currentUser || '—',
@@ -2022,15 +2151,12 @@ $('#recapTerminer').addEventListener('click', async () => {
       stats: { total: s.total, presents: s.found, absents: s.manquants, taux: s.tauxGlobal, sitesVisites: s.sitesVisited.length, repartitionSites: s.bySite, contributions: s.byUser },
       comparaison: null, createdAt: now
     });
-
     const bs = 400;
     for (let i = 0; i < found.length; i += bs) {
       const b = state.db.batch();
       found.slice(i, i + bs).forEach((v) => {
         const snap = snapshot.find((s2) => s2.id === v.id);
-        b.update(state.db.collection('vehicules').doc(v.id), {
-          present: true, site: snap?.site || v.site, lastSeen: now
-        });
+        b.update(state.db.collection('vehicules').doc(v.id), { present: true, site: snap?.site || v.site, lastSeen: now });
       });
       await b.commit();
     }
@@ -2040,7 +2166,6 @@ $('#recapTerminer').addEventListener('click', async () => {
       nonVus.slice(i, i + bs).forEach((v) => b.update(state.db.collection('vehicules').doc(v.id), { present: false }));
       await b.commit();
     }
-
     hideLoading();
     closeModal('modalRecap');
     toast(`Ronde enregistrée · ${s.found}/${s.total}`, 'success');
@@ -2048,42 +2173,38 @@ $('#recapTerminer').addEventListener('click', async () => {
   } catch (err) { console.error(err); hideLoading(); toast('Erreur : ' + err.message, 'error'); }
 });
 
-/* ONGLET MANQUANTS */
+/* ============================================================
+   ONGLET MANQUANTS
+   ============================================================ */
 function renderManquants() {
   const filter = state.manquantsFilterSource || '';
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   let list = state.vehicules.filter((v) => !pointedIds.has(v.id));
   if (filter) list = list.filter((v) => v.source === filter);
-
-  $('#manquantsCount').textContent = list.length;
-  const c = $('#manquantsList');
-  const e = $('#manquantsEmpty');
-
-  if (!list.length) { c.innerHTML = ''; e.classList.remove('hidden'); return; }
-  e.classList.add('hidden');
-
+  const cntEl = $('#manquantsCount'); if (cntEl) cntEl.textContent = list.length;
+  const c = $('#manquantsList'); const e = $('#manquantsEmpty');
+  if (!c) return;
+  if (!list.length) { c.innerHTML = ''; if (e) e.classList.remove('hidden'); return; }
+  if (e) e.classList.add('hidden');
   const groups = {};
   list.forEach((v) => { if (!groups[v.source]) groups[v.source] = []; groups[v.source].push(v); });
-
   c.innerHTML = Object.keys(groups).sort().map((src) => {
     const items = groups[src].sort((a, b) => a.immat.localeCompare(b.immat));
     const label = SOURCES[src] || src;
     const cls = src === 'source1' ? 'hr' : src === 'source2' ? 'um' : 'custom';
     return `<div class="card">
       <div class="card-title">${escapeHtml(label)} <span class="badge badge-danger" style="margin-left:6px">${items.length}</span></div>
-      <div class="list">
-        ${items.map((v) => `<div class="manquant-item">
-          <div class="mi-main">
-            <div class="mi-immat">${escapeHtml(v.immat)}</div>
-            <div class="mi-info">
-              ${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
-              ${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}
-              ${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}
-            </div>
+      <div class="list">${items.map((v) => `<div class="manquant-item">
+        <div class="mi-main">
+          <div class="mi-immat">${escapeHtml(v.immat)}</div>
+          <div class="mi-info">
+            ${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
+            ${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}
+            ${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}
           </div>
-          <span class="mi-source ${cls}">${escapeHtml(label)}</span>
-        </div>`).join('')}
-      </div>
+        </div>
+        <span class="mi-source ${cls}">${escapeHtml(label)}</span>
+      </div>`).join('')}</div>
     </div>`;
   }).join('');
 }
@@ -2097,365 +2218,236 @@ $('#btnManquantsExportXls').addEventListener('click', () => {
   exportExcel(rows, `NTR_Manquants_${todayKey()}.xlsx`, 'Manquants');
 });
 
-/* EXPORT PDF RÉCAP */
-function exportRecapPDF(s) {
-  if (!s) return;
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  const now = new Date();
-  doc.setFillColor(15, 23, 42); doc.rect(0, 0, 210, 26, 'F');
-  doc.setTextColor(255, 255, 255); doc.setFontSize(15); doc.setFont(undefined, 'bold');
-  doc.text('NTR GARAGE - RAPPORT DE RONDE', 14, 12);
-  doc.setFontSize(9); doc.setFont(undefined, 'normal');
-  doc.text(`Genere le ${now.toLocaleString('fr-FR')}`, 14, 20);
-  doc.text(`Par : ${state.currentUser || '—'}`, 196, 20, { align: 'right' });
-  doc.setTextColor(0, 0, 0);
-  doc.setFontSize(11); doc.setFont(undefined, 'bold');
-  doc.text('Synthese globale', 14, 36);
-  doc.setFont(undefined, 'normal'); doc.setFontSize(10);
-  doc.text(`Total attendus : ${s.total}`, 14, 44);
-  doc.text(`Trouves : ${s.found} (${s.tauxGlobal}%)`, 14, 50);
-  doc.text(`Manquants : ${s.manquants}`, 14, 56);
-  doc.text(`Sites visites : ${s.sitesVisited.length}`, 14, 62);
+/* ============================================================
+   GALERIE PHOTOS
+   ============================================================ */
+let galSelectionMode = false;
+let galSelected = new Set();
 
-  let y = 72;
-  doc.setFontSize(11); doc.setFont(undefined, 'bold');
-  doc.text('Bilan par source', 14, y); y += 4;
-  const sourceData = Object.entries(s.bySource).map(([src, d]) => [SOURCES[src] || src, String(d.total), String(d.found), String(d.manquants), d.taux + '%']);
-  doc.autoTable({ startY: y, head: [['Source', 'Total', 'Trouves', 'Manquants', 'Taux']], body: sourceData.length ? sourceData : [['-', '-', '-', '-', '-']], theme: 'grid', headStyles: { fillColor: [15, 23, 42], textColor: 255, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
-  y = doc.lastAutoTable.finalY + 10;
-
-  doc.setFontSize(11); doc.setFont(undefined, 'bold');
-  doc.text('Repartition par site', 14, y); y += 4;
-  const siteData = Object.entries(s.bySite).sort((a, b) => b[1] - a[1]).map(([site, count]) => [site, String(count), s.found ? Math.round((count / s.found) * 100) + '%' : '0%']);
-  doc.autoTable({ startY: y, head: [['Site', 'Trouves', 'Part']], body: siteData.length ? siteData : [['-', '-', '-']], theme: 'grid', headStyles: { fillColor: [52, 211, 153], textColor: 0, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
-  y = doc.lastAutoTable.finalY + 10;
-
-  if (Object.keys(s.byUser).length) {
-    doc.setFontSize(11); doc.setFont(undefined, 'bold');
-    doc.text('Contribution par utilisateur', 14, y); y += 4;
-    const userData = Object.entries(s.byUser).sort((a, b) => b[1] - a[1]).map(([nom, count]) => [nom, String(count)]);
-    doc.autoTable({ startY: y, head: [['Utilisateur', 'Pointages']], body: userData, theme: 'grid', headStyles: { fillColor: [96, 165, 250], textColor: 0, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
-    y = doc.lastAutoTable.finalY + 10;
-  }
-
-  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  const manquants = state.vehicules.filter((v) => !pointedIds.has(v.id));
-  if (manquants.length) {
-    if (y > 240) { doc.addPage(); y = 20; }
-    doc.setFontSize(11); doc.setFont(undefined, 'bold');
-    doc.setTextColor(220, 38, 38);
-    doc.text(`Vehicules manquants (${manquants.length})`, 14, y); y += 4;
-    doc.setTextColor(0, 0, 0);
-    doc.autoTable({
-      startY: y,
-      head: [['Immatriculation', 'Marque', 'Modele', 'Client', 'Source']],
-      body: manquants.map((v) => [v.immat || '', v.marque || '', v.modele || '', v.client || '', SOURCES[v.source] || v.source || '']),
-      theme: 'striped', headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 9 },
-      styles: { fontSize: 8, cellPadding: 2 }, alternateRowStyles: { fillColor: [254, 242, 242] },
-      margin: { left: 14, right: 14 }
-    });
-  }
-  const pageCount = doc.internal.getNumberOfPages();
-  for (let i = 1; i <= pageCount; i++) {
-    doc.setPage(i); doc.setFontSize(8); doc.setTextColor(120, 120, 120);
-    doc.text('NTR Garage - Stock Vehicules', 14, 290);
-    doc.text(`Page ${i} / ${pageCount}`, 196, 290, { align: 'right' });
-  }
-  doc.save(`NTR_Rapport_Ronde_${todayKey()}.pdf`);
-  toast('Rapport PDF téléchargé', 'success');
-}
-
-/* IMPORT EXCEL */
-function openImportForSource(source) {
-  $('#importSource').value = source;
-  $('#importFile').value = '';
-  $('#importProgressWrap').style.display = 'none';
-  openModal('modalImport');
-  setTimeout(() => $('#importFile').click(), 200);
-}
-$('#btnImportHR').addEventListener('click', () => openImportForSource('source1'));
-$('#btnImportUM').addEventListener('click', () => openImportForSource('source2'));
-$('#importRun').addEventListener('click', async () => {
-  const source = $('#importSource').value;
-  const file = $('#importFile').files[0];
-  if (!source) { toast('Sélectionnez une source', 'warning'); return; }
-  if (!file) { toast('Sélectionnez un fichier Excel', 'warning'); return; }
-  const importTimeout = setTimeout(() => { hideLoading(); toast('Import interrompu (timeout)', 'error'); }, 60000);
-  const cleanup = () => { clearTimeout(importTimeout); hideLoading(); };
-  showLoading('Lecture du fichier...');
+async function downloadPhotoFromGallery(vehId, immatSafe) {
+  const v = state.vehicules.find((x) => x.id === vehId);
+  if (!v || !v.photo) { toast('Photo introuvable', 'warning'); return; }
   try {
-    const buf = await file.arrayBuffer();
-    const wb = XLSX.read(buf, { type: 'array' });
-    const ws = wb.Sheets[wb.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
-    if (!rows.length) { toast('Fichier vide', 'warning'); cleanup(); return; }
-    const mapField = (row, keys) => {
-      for (const k of Object.keys(row)) {
-        const kk = k.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, '');
-        for (const target of keys) { if (kk.includes(target)) return String(row[k]).trim(); }
-      }
-      return '';
-    };
-    const parsed = [];
-    rows.forEach((row) => {
-      const immatBrut = mapField(row, ['immatriculation', 'immat']);
-      const immat = normalizeImmat(immatBrut);
-      if (!immat) return;
-      parsed.push({ immat, client: mapField(row, ['client', 'societe', 'society', 'company']), marque: mapField(row, ['marque']), modele: mapField(row, ['modele', 'model']), refCommande: mapField(row, ['reference', 'refcommande', 'ref']), typeMaintenance: mapField(row, ['typemaintenance', 'maintenance', 'type']) });
-    });
-    if (!parsed.length) { cleanup(); await confirmDialog('Aucune immatriculation détectée', 'Il faut une colonne <strong>"Immatriculation"</strong> ou <strong>"Immat"</strong>.', false); return; }
-    const srcLabel = SOURCES[source];
-    const existing = state.vehicules.filter((v) => v.source === source);
-    cleanup();
-    const ok = await confirmDialog('Importer ?', `Source : <strong>${srcLabel}</strong><br>Véhicules dans le fichier : <strong>${parsed.length}</strong><br>Véhicules actuels : <strong>${existing.length}</strong><br><br>Les véhicules actuels seront remplacés.`, false);
-    if (!ok) return;
-    showLoading(`Import 0/${parsed.length}...`);
-    $('#importProgressWrap').style.display = 'block';
-    $('#importProgressBar').style.width = '0%';
-    $('#importStatus').textContent = 'Préparation...';
-    const bs = 400;
-    if (existing.length) {
-      $('#importStatus').textContent = `Suppression de ${existing.length} ancien(s)...`;
-      for (let i = 0; i < existing.length; i += bs) {
-        const b = state.db.batch();
-        existing.slice(i, i + bs).forEach((v) => b.delete(state.db.collection('vehicules').doc(v.id)));
-        await b.commit();
-      }
-    }
-    let totalAjt = 0;
-    for (let i = 0; i < parsed.length; i += bs) {
-      const b = state.db.batch();
-      const chunk = parsed.slice(i, i + bs);
-      chunk.forEach((v) => b.set(state.db.collection('vehicules').doc(), { ...v, present: false, source, isCustom: false, lastSeen: null, createdAt: nowIso() }));
-      await b.commit();
-      totalAjt += chunk.length;
-      const pct = Math.round((totalAjt / parsed.length) * 100);
-      $('#importProgressBar').style.width = pct + '%';
-      $('#importStatus').textContent = `${totalAjt} / ${parsed.length} véhicules traités`;
-      $('#loadingText').textContent = `Import ${totalAjt}/${parsed.length}...`;
-    }
-    cleanup();
-    closeModal('modalImport');
-    toast(`${parsed.length} véhicules importés dans ${srcLabel}`, 'success', 'Import réussi');
-    switchTab('vehicules');
-    state.vehFilters.source = source;
-    renderVehChips();
-    applyVehFilters();
-  } catch (err) { console.error('[IMPORT]', err); cleanup(); toast('Erreur : ' + err.message, 'error'); }
-});
-
-/* SYNC */
-$('#btnSync').addEventListener('click', async () => {
-  showLoading('Synchronisation...');
-  try { await Promise.all([state.db.collection('vehicules').get(), state.db.collection('rondes').get(), state.db.collection('utilisateurs').get(), state.db.collection('societes').get(), state.db.collection('pointages').get()]); toast('Synchronisé', 'success'); }
-  catch (err) { toast('Erreur : ' + err.message, 'error'); }
-  finally { hideLoading(); }
-});
-function renderAdminInfo() {
-  const u = $('#adminUserCount'); if (u) u.textContent = state.utilisateurs.length;
-  const s = $('#adminSocCount'); if (s) s.textContent = state.clients.length;
-  const v = $('#adminVehCount'); if (v) v.textContent = state.vehicules.length;
-  const r = $('#adminRondeCount'); if (r) r.textContent = state.rondes.length;
-  const p = $('#adminPointageCount'); if (p) p.textContent = state.pointages.length;
+    const res = await fetch(v.photo, { mode: 'cors' });
+    if (!res.ok) throw new Error('Erreur téléchargement');
+    const blob = await res.blob();
+    const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg';
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `NTR_${immatSafe || v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+    toast(`Photo de ${v.immat} téléchargée`, 'success');
+  } catch (err) {
+    console.error('[download]', err);
+    window.open(v.photo, '_blank');
+    toast('Ouverture dans un nouvel onglet', 'info');
+  }
 }
 
-/* HISTORIQUE */
-function listenRondes() {
-  if (!state.db) return;
-  const unsub = state.db.collection('rondes').orderBy('heureDebut', 'desc').onSnapshot((snap) => {
-    state.rondes = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-    if ($('#tab-historique').classList.contains('active')) renderHistorique();
-    if ($('#tab-archives').classList.contains('active')) renderArchives();
-    if ($('#tab-graphiques').classList.contains('active')) renderGraphiques();
-    if ($('#tab-chef').classList.contains('active')) renderChefDashboard();
-    if ($('#tab-mouvements').classList.contains('active')) renderMouvements();
-  }, (err) => console.warn('[rondes]', err));
-  state.unsubscribers.push(unsub);
-}
-function renderHistorique() {
-  const list = $('#histList');
-  const empty = $('#histEmpty');
-  let rondes = state.rondes.filter((r) => r.statut !== 'en_cours');
-  if (state.histFilterUser) rondes = rondes.filter((r) => r.effectueePar === state.histFilterUser);
-  if (state.histFilterMonth) rondes = rondes.filter((r) => (r.heureDebut || '').startsWith(state.histFilterMonth));
-  if (!rondes.length) { list.innerHTML = ''; empty.classList.remove('hidden'); return; }
-  empty.classList.add('hidden');
-  list.innerHTML = rondes.map((r) => {
-    const s = r.stats || {};
-    const taux = s.taux ?? 0;
-    const bc = taux >= 80 ? 'success' : taux >= 50 ? 'warning' : 'danger';
-    return `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${formatDateFR(r.heureDebut)}<span class="badge badge-primary">${escapeHtml(r.site || '—')}</span><span class="badge badge-${bc}">${taux}%</span></div><div class="list-item-sub"><span>Par ${escapeHtml(r.effectueePar)}</span><span>${s.presents ?? 0} trouvés sur ${s.total ?? 0}</span><span>${s.absents ?? 0} manquants</span></div></div><div class="list-item-actions"><button class="btn btn-sm btn-ghost" data-hist-open="${r.id}">Voir</button></div></div>`;
-  }).join('');
-  $$('[data-hist-open]', list).forEach((b) => b.addEventListener('click', () => openRondeDetail(b.dataset.histOpen)));
-}
-$('#histUserFilter').addEventListener('change', (e) => { state.histFilterUser = e.target.value; renderHistorique(); });
-$('#btnHistRefresh').addEventListener('click', () => { renderHistorique(); toast('Rafraîchi', 'success'); });
-function openRondeDetail(id) {
-  const r = state.rondes.find((x) => x.id === id);
-  if (!r) return;
-  state.currentRondeDetail = r;
-  $('#rdTitle').textContent = `Ronde du ${formatDateFR(r.heureDebut)} — ${r.site}`;
-  const s = r.stats || {};
-  const presents = r.vehiculesSnapshot || [];
-  const repartition = s.repartitionSites || {};
-  const contributions = s.contributions || {};
-  let repartitionHtml = '';
-  if (Object.keys(repartition).length) {
-    repartitionHtml = `<div class="card"><div class="card-title">Répartition par site</div><table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules</th></tr></thead><tbody>${Object.entries(repartition).sort((a, b) => b[1] - a[1]).map(([site, count]) => `<tr><td>${escapeHtml(site)}</td><td>${count}</td></tr>`).join('')}</tbody></table></div>`;
-  }
-  let contributionsHtml = '';
-  if (Object.keys(contributions).length) {
-    contributionsHtml = `<div class="card"><div class="card-title">Contribution par utilisateur</div><table class="bilan-table"><thead><tr><th>Utilisateur</th><th>Pointages</th></tr></thead><tbody>${Object.entries(contributions).sort((a, b) => b[1] - a[1]).map(([nom, count]) => `<tr><td>${escapeHtml(nom)}</td><td>${count}</td></tr>`).join('')}</tbody></table></div>`;
-  }
-  $('#rdBody').innerHTML = `
-    <div class="stats-grid">
-      <div class="stat-card"><span class="stat-label">Total</span><span class="stat-value">${s.total ?? '—'}</span></div>
-      <div class="stat-card"><span class="stat-label">Trouvés</span><span class="stat-value success">${s.presents ?? presents.length}</span></div>
-      <div class="stat-card"><span class="stat-label">Manquants</span><span class="stat-value danger">${s.absents ?? 0}</span></div>
-      <div class="stat-card"><span class="stat-label">Taux</span><span class="stat-value primary">${s.taux ?? 0}%</span></div>
-    </div>
-    <div class="card"><div class="card-title">Informations</div><div style="font-size:0.8rem;line-height:1.7"><div>Par : <strong>${escapeHtml(r.effectueePar)}</strong></div><div>Date : ${formatDateTimeFR(r.heureDebut)}</div><div>Sites visités : ${escapeHtml(r.site || '—')}</div></div></div>
-    ${repartitionHtml}
-    ${contributionsHtml}
-    <div class="card"><div class="card-title">Véhicules trouvés (${presents.length})</div>${presents.length ? `<div class="list">${presents.map((v) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}${v.site ? ' · ' + escapeHtml(v.site) : ''}</div></div></div>`).join('')}</div>` : '<div class="es-sub" style="color:var(--text-mute);padding:8px">Aucun</div>'}</div>`;
-  openModal('modalRondeDetail');
-}
-$('#rdDelete').addEventListener('click', async () => {
-  if (!state.currentRondeDetail) return;
-  const ok = await confirmDialog('Supprimer la ronde ?', 'Cette action est irréversible.');
+async function deletePhotoFromGallery(vehId) {
+  const v = state.vehicules.find((x) => x.id === vehId);
+  if (!v) return;
+  const ok = await confirmDialog('Supprimer la photo ?', `Photo de <strong>${escapeHtml(v.immat)}</strong> ?`);
   if (!ok) return;
-  await state.db.collection('rondes').doc(state.currentRondeDetail.id).delete();
-  closeModal('modalRondeDetail');
-  toast('Ronde supprimée', 'success');
-});
-$('#rdPdf').addEventListener('click', () => exportRondePDF(state.currentRondeDetail));
+  await state.db.collection('vehicules').doc(vehId).update({ photo: '' });
+  toast('Photo supprimée', 'success');
+}
 
-/* ARCHIVES */
-function renderArchives() {
-  const c = $('#archivesList');
-  const rondes = state.rondes.filter((r) => r.statut !== 'en_cours');
-  if (!rondes.length) { c.innerHTML = `<div class="empty-state"><div class="es-title">Aucune archive</div></div>`; return; }
-  const byYM = {};
-  rondes.forEach((r) => { const d = new Date(r.heureDebut); const y = d.getFullYear(); const m = d.getMonth(); if (!byYM[y]) byYM[y] = {}; if (!byYM[y][m]) byYM[y][m] = 0; byYM[y][m]++; });
-  const moisNoms = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-  const years = Object.keys(byYM).sort((a, b) => b - a);
-  c.innerHTML = years.map((y, i) => {
-    const months = Object.keys(byYM[y]).sort((a, b) => b - a);
-    const totalY = months.reduce((s, m) => s + byYM[y][m], 0);
-    return `<div class="archive-year ${i === 0 ? 'open' : ''}"><div class="archive-year-header"><span>Année ${y}</span><span class="count">${totalY} ronde(s)</span></div><div class="archive-months">${months.map((m) => `<div class="archive-month" data-ym="${y}-${String(parseInt(m) + 1).padStart(2, '0')}"><div class="am-name">${moisNoms[parseInt(m)]}</div><div class="am-count">${byYM[y][m]} ronde(s)</div></div>`).join('')}</div></div>`;
+function toggleGalSelectionMode() {
+  galSelectionMode = !galSelectionMode;
+  if (!galSelectionMode) galSelected.clear();
+  document.body.classList.toggle('gal-selection-mode', galSelectionMode);
+  const btn = $('#btnGalSelectToggle');
+  if (btn) btn.textContent = galSelectionMode ? 'Annuler la sélection' : 'Sélectionner';
+  renderGalerie();
+}
+
+async function downloadSelectedPhotos() {
+  if (!galSelected.size) return;
+  const photos = [...galSelected].map((id) => state.vehicules.find((v) => v.id === id)).filter((v) => v && v.photo);
+  if (!photos.length) { toast('Aucune photo à télécharger', 'warning'); return; }
+  showLoading(`Téléchargement de ${photos.length} photo(s)...`);
+  let done = 0;
+  for (const v of photos) {
+    try {
+      const res = await fetch(v.photo, { mode: 'cors' });
+      const blob = await res.blob();
+      const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg';
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `NTR_${v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      done++;
+      $('#loadingText').textContent = `Téléchargement ${done}/${photos.length}...`;
+      await new Promise((r) => setTimeout(r, 400));
+    } catch (e) { console.warn('Erreur photo', v.immat, e); }
+  }
+  hideLoading();
+  toast(`${done} photo(s) téléchargée(s)`, 'success');
+  galSelected.clear();
+  renderGalerie();
+}
+
+async function downloadAllPhotosOfSite() {
+  const site = $('#galSiteFilter').value;
+  const list = state.vehicules.filter((v) => v.photo && (!site || v.site === site));
+  if (!list.length) { toast('Aucune photo à télécharger', 'warning'); return; }
+  const label = site || 'tous les sites';
+  const ok = await confirmDialog('Télécharger toutes les photos ?', `${list.length} photo(s) de <strong>${escapeHtml(label)}</strong> seront téléchargées.<br><br><em>Acceptez la demande du navigateur pour plusieurs téléchargements.</em>`);
+  if (!ok) return;
+  showLoading(`Téléchargement de ${list.length} photo(s)...`);
+  let done = 0;
+  for (const v of list) {
+    try {
+      const res = await fetch(v.photo, { mode: 'cors' });
+      const blob = await res.blob();
+      const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg';
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `NTR_${v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      done++;
+      $('#loadingText').textContent = `Téléchargement ${done}/${list.length}...`;
+      await new Promise((r) => setTimeout(r, 400));
+    } catch (e) { console.warn('Erreur photo', v.immat, e); }
+  }
+  hideLoading();
+  toast(`${done} photo(s) téléchargée(s)`, 'success');
+}
+
+function updateGalSelectionInfo() {
+  const info = $('#galSelectionInfo');
+  if (!info) return;
+  if (!galSelectionMode) { info.classList.add('hidden'); return; }
+  info.classList.remove('hidden');
+  $('#galSelectionCount').textContent = galSelected.size;
+  const hasSel = galSelected.size > 0;
+  $('#galSelectionDownload').classList.toggle('hidden', !hasSel);
+  $('#galSelectionClear').classList.toggle('hidden', !hasSel);
+}
+
+function renderGalerie() {
+  const site = $('#galSiteFilter').value;
+  const photoFilter = $('#galPhotoFilter') ? $('#galPhotoFilter').value : '';
+
+  let base;
+  if (photoFilter === 'without') {
+    const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+    base = state.vehicules.filter((v) => pointedIds.has(v.id) && !v.photo);
+  } else {
+    base = state.vehicules.filter((v) => v.photo && v.photo.length > 0);
+  }
+  if (site) base = base.filter((v) => v.site === site);
+
+  const g = $('#galGrid'); const e = $('#galEmpty');
+  if (!g) return;
+  updateGalSelectionInfo();
+
+  if (!base.length) {
+    g.innerHTML = '';
+    if (e) {
+      e.classList.remove('hidden');
+      e.querySelector('.es-title').textContent = photoFilter === 'without' ? 'Aucune photo manquante' : 'Aucune photo';
+      e.querySelector('.es-sub').textContent = photoFilter === 'without' ? 'Tous les véhicules pointés ont une photo' : 'Les photos ajoutées apparaîtront ici';
+    }
+    return;
+  }
+  if (e) e.classList.add('hidden');
+
+  g.innerHTML = base.map((v) => {
+    if (photoFilter === 'without') {
+      return `<div class="gallery-item" data-photo-veh="${v.id}" style="background:var(--bg-3)">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:8px;text-align:center">
+          <div style="font-size:1.8rem;color:var(--warning);margin-bottom:6px">📷</div>
+          <div style="font-family:var(--mono);font-weight:700;font-size:0.85rem;color:var(--primary)">${escapeHtml(v.immat)}</div>
+          <div style="font-size:0.65rem;color:var(--text-dim);margin-top:4px">${escapeHtml(v.site || '—')}</div>
+        </div>
+        <div class="gi-photo-status missing">MANQUANTE</div>
+      </div>`;
+    }
+    const selected = galSelected.has(v.id);
+    const immatSafe = escapeHtml(v.immat.replace(/[^A-Z0-9]/gi, '_'));
+    return `<div class="gallery-item ${selected ? 'selected' : ''}" data-photo="${v.id}">
+      <img src="${escapeHtml(v.photo)}" loading="lazy" alt="${escapeHtml(v.immat)}">
+      <div class="gi-photo-status ok">OK</div>
+      <div class="gi-checkbox ${galSelectionMode ? 'show' : ''}" data-select="${v.id}">✓</div>
+      <div class="gi-actions">
+        <button class="gi-btn gi-btn-download" data-dl="${v.id}" data-dl-immat="${immatSafe}" title="Télécharger la photo">⬇</button>
+        <button class="gi-btn gi-btn-delete" data-del-photo="${v.id}" title="Supprimer la photo">✕</button>
+      </div>
+      <div class="gallery-overlay">
+        <div class="gi-immat">${escapeHtml(v.immat)}</div>
+        <div>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</div>
+        ${v.site ? `<div>${escapeHtml(v.site)}</div>` : ''}
+      </div>
+    </div>`;
   }).join('');
-  $$('.archive-year-header', c).forEach((h) => h.addEventListener('click', () => h.parentElement.classList.toggle('open')));
-  $$('.archive-month', c).forEach((m) => m.addEventListener('click', () => {
-    state.histFilterMonth = m.dataset.ym; state.histFilterUser = '';
-    $('#histUserFilter').value = '';
-    switchTab('historique'); renderHistorique();
-    toast(`Filtré sur ${m.querySelector('.am-name').textContent}`, 'info');
+
+  $$('[data-photo]', g).forEach((item) => item.addEventListener('click', (e) => {
+    if (e.target.closest('.gi-btn') || e.target.closest('.gi-checkbox')) return;
+    if (galSelectionMode) {
+      const id = item.dataset.photo;
+      if (galSelected.has(id)) galSelected.delete(id);
+      else galSelected.add(id);
+      renderGalerie();
+    } else {
+      openLightbox(item.dataset.photo);
+    }
+  }));
+
+  $$('[data-select]', g).forEach((cb) => cb.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const id = cb.dataset.select;
+    if (galSelected.has(id)) galSelected.delete(id);
+    else galSelected.add(id);
+    renderGalerie();
+  }));
+
+  $$('[data-dl]', g).forEach((btn) => btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    downloadPhotoFromGallery(btn.dataset.dl, btn.dataset.dlImmat);
+  }));
+
+  $$('[data-del-photo]', g).forEach((btn) => btn.addEventListener('click', async (e) => {
+    e.stopPropagation();
+    await deletePhotoFromGallery(btn.dataset.delPhoto);
+  }));
+
+  $$('[data-photo-veh]', g).forEach((i) => i.addEventListener('click', (e) => {
+    if (e.target.closest('.gi-btn')) return;
+    prendrePhotoVehicule(i.dataset.photoVeh);
   }));
 }
 
-/* GRAPHIQUES */
-let chartPresence = null, chartSites = null;
-function renderGraphiques() {
-  let rondes = state.rondes.filter((r) => r.statut !== 'en_cours').sort((a, b) => (a.heureDebut || '').localeCompare(b.heureDebut || ''));
-  const last12 = rondes.slice(-12);
-  const labels = last12.map((r) => new Date(r.heureDebut).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }));
-  const p = last12.map((r) => r.stats?.presents ?? 0);
-  const a = last12.map((r) => r.stats?.absents ?? 0);
-  const txtColor = getComputedStyle(document.body).color;
-  if (chartPresence) chartPresence.destroy();
-  chartPresence = new Chart($('#chartPresence'), { type: 'bar', data: { labels, datasets: [{ label: 'Trouvés', data: p, backgroundColor: '#34d399' }, { label: 'Manquants', data: a, backgroundColor: '#f87171' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { stacked: true, ticks: { color: txtColor } }, y: { stacked: true, beginAtZero: true, ticks: { color: txtColor } } } } });
-  const since = Date.now() - 7 * 86400000;
-  const r7 = state.rondes.filter((r) => r.statut !== 'en_cours' && new Date(r.heureDebut).getTime() >= since);
-  const bySite = {};
-  r7.forEach((r) => { const rep = r.stats?.repartitionSites || {}; Object.entries(rep).forEach(([s, c]) => { if (!bySite[s]) bySite[s] = 0; bySite[s] += c; }); });
-  const siteLabels = Object.keys(bySite);
-  const siteCounts = siteLabels.map((s) => bySite[s]);
-  if (chartSites) chartSites.destroy();
-  chartSites = new Chart($('#chartSites'), { type: 'bar', data: { labels: siteLabels.length ? siteLabels : ['Aucune donnée'], datasets: [{ label: 'Véhicules trouvés', data: siteCounts.length ? siteCounts : [0], backgroundColor: '#60a5fa' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { ticks: { color: txtColor } }, y: { beginAtZero: true, ticks: { color: txtColor } } } } });
-}
-
-/* MOUVEMENTS */
-function renderMouvements() {
-  const q = normalizeImmat($('#mouvSearch').value);
-  const since = Date.now() - 365 * 86400000;
-  const map = {};
-  state.rondes.filter((r) => r.statut !== 'en_cours' && new Date(r.heureDebut).getTime() >= since).forEach((r) => {
-    const snap = r.vehiculesSnapshot || [];
-    snap.forEach((v) => {
-      const cli = v.client || '';
-      if (!MOUVEMENT_CLIENTS.includes(cli)) return;
-      if (q && !normalizeImmat(v.immat).includes(q)) return;
-      if (!map[v.immat]) map[v.immat] = [];
-      map[v.immat].push({ date: r.heureFin || r.heureDebut, site: v.site || r.site || '—', effectueePar: r.effectueePar });
-    });
-  });
-  const c = $('#mouvList'), e = $('#mouvEmpty');
-  const imm = Object.keys(map);
-  if (!imm.length) { c.innerHTML = ''; e.classList.remove('hidden'); return; }
-  e.classList.add('hidden');
-  c.innerHTML = imm.map((i) => {
-    const events = map[i].sort((x, y) => (y.date || '').localeCompare(x.date || ''));
-    const v = state.vehicules.find((x) => normalizeImmat(x.immat) === i);
-    const cli = v ? (v.client || '') : '';
-    return `<div class="card"><div class="card-title" style="color:var(--primary);font-family:var(--mono);font-size:0.9rem">${escapeHtml(i)}${cli ? `<span class="badge badge-muted" style="margin-left:6px;font-family:var(--font)">${escapeHtml(cli)}</span>` : ''}</div><div class="timeline">${events.slice(0, 20).map((ev) => `<div class="timeline-item"><div class="timeline-date">${formatDateTimeFR(ev.date)}</div><div class="timeline-content"><strong>${escapeHtml(ev.site)}</strong> · Par ${escapeHtml(ev.effectueePar)}</div></div>`).join('')}</div></div>`;
-  }).join('');
-}
-$('#mouvSearch').addEventListener('input', renderMouvements);
-
-/* CHEF */
-function renderChef() {
-  if (state.chefUnlocked) { $('#chefPinScreen').classList.add('hidden'); $('#chefDashboard').classList.remove('hidden'); renderChefDashboard(); }
-  else { $('#chefPinScreen').classList.remove('hidden'); $('#chefDashboard').classList.add('hidden'); state.pinBuffer = ''; renderPinDots(); }
-}
-function renderChefDashboard() {
-  if (!state.chefUnlocked) return;
-  const today = todayKey();
-  $('#chefToday').textContent = state.rondes.filter((r) => r.statut !== 'en_cours' && (r.heureDebut || '').startsWith(today)).length;
-  const since7 = Date.now() - 7 * 86400000;
-  const r7 = state.rondes.filter((r) => r.statut !== 'en_cours' && new Date(r.heureDebut).getTime() >= since7);
-  $('#chef7Total').textContent = r7.length;
-  const p = r7.reduce((s, r) => s + (r.stats?.presents ?? 0), 0);
-  const t = r7.reduce((s, r) => s + (r.stats?.total ?? 0), 0);
-  $('#chef7Rate').textContent = (t ? Math.round((p / t) * 100) : 0) + '%';
-
-  const pointedIds = new Set(state.pointages.map((pt) => pt.vehiculeId));
-  $('#chefMissing').textContent = state.vehicules.filter((v) => !pointedIds.has(v.id)).length;
-
-  const byUser = {};
-  state.pointages.forEach((pt) => {
-    if (!byUser[pt.userNom]) byUser[pt.userNom] = { count: 0, sites: new Set() };
-    byUser[pt.userNom].count++;
-    byUser[pt.userNom].sites.add(pt.site);
-  });
-  const users = Object.entries(byUser).sort((a, b) => b[1].count - a[1].count);
-  $('#chefActiveUsers').innerHTML = users.length ? users.map(([nom, d]) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${escapeHtml(nom)}</div><div class="list-item-sub"><span>${d.count} véhicule(s)</span><span>${[...d.sites].map((s) => escapeHtml(s)).join(', ')}</span></div></div><span class="badge badge-success">Actif</span></div>`).join('') : '<div class="es-sub" style="color:var(--text-mute);padding:8px">Aucun utilisateur actif aujourd\'hui</div>';
-
-  const bySite = {};
-  r7.forEach((r) => { const rep = r.stats?.repartitionSites || {}; Object.entries(rep).forEach(([s, c]) => { if (!bySite[s]) bySite[s] = { r: 0, c: 0 }; bySite[s].r++; bySite[s].c += c; }); });
-  const rows = Object.entries(bySite).map(([s, d]) => `<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border)">${escapeHtml(s)}</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)">${d.r}</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)"><span class="badge badge-primary">${d.c} véhicules</span></td></tr>`);
-  $('#chefSiteStats').innerHTML = rows.length ? rows.join('') : `<tr><td colspan="3" style="text-align:center;color:var(--text-mute);padding:14px">Aucune donnée</td></tr>`;
-}
-
-/* GALERIE */
-function renderGalerie() {
-  const site = $('#galSiteFilter').value;
-  let vs = state.vehicules.filter((v) => v.photo);
-  if (site) vs = vs.filter((v) => v.site === site);
-  const g = $('#galGrid'), e = $('#galEmpty');
-  if (!vs.length) { g.innerHTML = ''; e.classList.remove('hidden'); return; }
-  e.classList.add('hidden');
-  g.innerHTML = vs.map((v) => `<div class="gallery-item" data-photo="${v.id}"><img src="${escapeHtml(v.photo)}" loading="lazy" alt=""><div class="gallery-overlay"><div class="gi-immat">${escapeHtml(v.immat)}</div><div>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</div></div></div>`).join('');
-  $$('[data-photo]', g).forEach((i) => i.addEventListener('click', () => openLightbox(i.dataset.photo)));
-}
 $('#galSiteFilter').addEventListener('change', renderGalerie);
+$('#galPhotoFilter') && $('#galPhotoFilter').addEventListener('change', renderGalerie);
+$('#btnGalSelectToggle') && $('#btnGalSelectToggle').addEventListener('click', toggleGalSelectionMode);
+$('#btnGalDownloadAll') && $('#btnGalDownloadAll').addEventListener('click', downloadAllPhotosOfSite);
+$('#galSelectionClear') && $('#galSelectionClear').addEventListener('click', () => { galSelected.clear(); renderGalerie(); });
+$('#galSelectionDownload') && $('#galSelectionDownload').addEventListener('click', downloadSelectedPhotos);
+
 function openLightbox(id) {
   const v = state.vehicules.find((x) => x.id === id);
   if (!v || !v.photo) return;
   $('#lightboxImg').src = v.photo;
-  $('#lightboxDownload').href = v.photo;
-  $('#lightboxDownload').setAttribute('download', `ntr_${v.immat}.jpg`);
+  const immatSafe = v.immat.replace(/[^A-Z0-9]/gi, '_');
+  const dl = $('#lightboxDownload');
+  dl.onclick = (e) => { e.preventDefault(); downloadPhotoFromGallery(id, immatSafe); };
   $('#lightboxDelete').dataset.vehId = id;
+  const info = $('#lightboxInfo');
+  if (info) info.innerHTML = `<div><span class="li-immat">${escapeHtml(v.immat)}</span></div><div>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}</div>${v.site ? `<div>${escapeHtml(v.site)}</div>` : ''}`;
   $('#lightbox').classList.add('show');
 }
 $('#lightboxClose').addEventListener('click', () => $('#lightbox').classList.remove('show'));
@@ -2471,10 +2463,13 @@ $('#lightboxDelete').addEventListener('click', async () => {
   toast('Photo supprimée', 'success');
 });
 
-/* CLIENTS view */
+/* ============================================================
+   CLIENTS (vue groupée)
+   ============================================================ */
 function renderSocietes() {
   const filter = state.socFilter || '';
   const c = $('#socList');
+  if (!c) return;
   const g = {};
   state.vehicules.forEach((v) => { const s = v.client || '— Sans client —'; if (!g[s]) g[s] = []; g[s].push(v); });
   const keys = Object.keys(g).sort();
@@ -2492,7 +2487,9 @@ function renderSocietes() {
   }).join('');
 }
 
-/* VOICE SEARCH */
+/* ============================================================
+   VOICE SEARCH (déclencheurs)
+   ============================================================ */
 setupVoiceSearch('pointageMic', 'pointageSearch', (text) => {
   const exact = state.vehicules.find((v) => normalizeImmat(v.immat) === text);
   if (exact) { handlePointage(exact.id); $('#pointageSearch').value = ''; $('#pointageClear').classList.remove('show'); }
@@ -2500,7 +2497,9 @@ setupVoiceSearch('pointageMic', 'pointageSearch', (text) => {
 });
 setupVoiceSearch('vehMic', 'vehSearch', (t) => { state.vehFilters.search = t; $('#vehSearchClear').classList.add('show'); applyVehFilters(); });
 
-/* EXPORTS */
+/* ============================================================
+   EXPORTS
+   ============================================================ */
 function exportExcel(rows, filename, sheet) {
   if (!rows || !rows.length) { toast('Aucune donnée à exporter', 'warning'); return; }
   const ws = XLSX.utils.json_to_sheet(rows);
@@ -2610,27 +2609,61 @@ function exportPDFGlobal() {
   doc.save(`NTR_Rapport_${todayKey()}.pdf`);
   toast('Rapport PDF téléchargé', 'success');
 }
-function exportRondePDF(r) {
-  if (!r) return;
+function exportRecapPDF(s) {
+  if (!s) return;
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  doc.setFillColor(15, 23, 42); doc.rect(0, 0, 210, 22, 'F');
-  doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
-  doc.text('NTR GARAGE', 14, 10);
+  const now = new Date();
+  doc.setFillColor(15, 23, 42); doc.rect(0, 0, 210, 26, 'F');
+  doc.setTextColor(255, 255, 255); doc.setFontSize(15); doc.setFont(undefined, 'bold');
+  doc.text('NTR GARAGE - RAPPORT DE RONDE', 14, 12);
   doc.setFontSize(9); doc.setFont(undefined, 'normal');
-  doc.text(`Ronde du ${formatDateFR(r.heureDebut)}`, 14, 16);
-  doc.setTextColor(0, 0, 0); doc.setFontSize(10);
-  doc.text(`Par : ${r.effectueePar}`, 14, 32);
-  doc.text(`Date : ${formatDateTimeFR(r.heureDebut)}`, 14, 38);
-  doc.text(`Sites : ${r.site || '—'}`, 14, 44);
-  const s = r.stats || {};
-  doc.setFont(undefined, 'bold');
-  doc.text(`Trouves : ${s.presents ?? 0}   Manquants : ${s.absents ?? 0}   Taux : ${s.taux ?? 0}%`, 14, 54);
-  doc.setFont(undefined, 'normal');
-  const presents = r.vehiculesSnapshot || [];
-  doc.autoTable({ startY: 60, head: [['Immatriculation', 'Marque', 'Modele', 'Client', 'Site']], body: presents.map((v) => [v.immat || '', v.marque || '', v.modele || '', v.client || '', v.site || '']), theme: 'striped', headStyles: { fillColor: [52, 211, 153], textColor: 0, fontSize: 9 }, styles: { fontSize: 8.5, cellPadding: 2 }, margin: { left: 14, right: 14 } });
-  doc.save(`NTR_Ronde_${todayKey()}.pdf`);
-  toast('PDF téléchargé', 'success');
+  doc.text(`Genere le ${now.toLocaleString('fr-FR')}`, 14, 20);
+  doc.text(`Par : ${state.currentUser || '—'}`, 196, 20, { align: 'right' });
+  doc.setTextColor(0, 0, 0);
+  doc.setFontSize(11); doc.setFont(undefined, 'bold');
+  doc.text('Synthese globale', 14, 36);
+  doc.setFont(undefined, 'normal'); doc.setFontSize(10);
+  doc.text(`Total attendus : ${s.total}`, 14, 44);
+  doc.text(`Trouves : ${s.found} (${s.tauxGlobal}%)`, 14, 50);
+  doc.text(`Manquants : ${s.manquants}`, 14, 56);
+  doc.text(`Sites visites : ${s.sitesVisited.length}`, 14, 62);
+  let y = 72;
+  doc.setFontSize(11); doc.setFont(undefined, 'bold');
+  doc.text('Bilan par source', 14, y); y += 4;
+  const sourceData = Object.entries(s.bySource).map(([src, d]) => [SOURCES[src] || src, String(d.total), String(d.found), String(d.manquants), d.taux + '%']);
+  doc.autoTable({ startY: y, head: [['Source', 'Total', 'Trouves', 'Manquants', 'Taux']], body: sourceData.length ? sourceData : [['-', '-', '-', '-', '-']], theme: 'grid', headStyles: { fillColor: [15, 23, 42], textColor: 255, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
+  y = doc.lastAutoTable.finalY + 10;
+  doc.setFontSize(11); doc.setFont(undefined, 'bold');
+  doc.text('Repartition par site', 14, y); y += 4;
+  const siteData = Object.entries(s.bySite).sort((a, b) => b[1] - a[1]).map(([site, count]) => [site, String(count), s.found ? Math.round((count / s.found) * 100) + '%' : '0%']);
+  doc.autoTable({ startY: y, head: [['Site', 'Trouves', 'Part']], body: siteData.length ? siteData : [['-', '-', '-']], theme: 'grid', headStyles: { fillColor: [52, 211, 153], textColor: 0, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
+  y = doc.lastAutoTable.finalY + 10;
+  if (Object.keys(s.byUser).length) {
+    doc.setFontSize(11); doc.setFont(undefined, 'bold');
+    doc.text('Contribution par utilisateur', 14, y); y += 4;
+    const userData = Object.entries(s.byUser).sort((a, b) => b[1] - a[1]).map(([nom, count]) => [nom, String(count)]);
+    doc.autoTable({ startY: y, head: [['Utilisateur', 'Pointages']], body: userData, theme: 'grid', headStyles: { fillColor: [96, 165, 250], textColor: 0, fontSize: 9 }, styles: { fontSize: 9, cellPadding: 2.5 }, margin: { left: 14, right: 14 } });
+    y = doc.lastAutoTable.finalY + 10;
+  }
+  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
+  const manquants = state.vehicules.filter((v) => !pointedIds.has(v.id));
+  if (manquants.length) {
+    if (y > 240) { doc.addPage(); y = 20; }
+    doc.setFontSize(11); doc.setFont(undefined, 'bold');
+    doc.setTextColor(220, 38, 38);
+    doc.text(`Vehicules manquants (${manquants.length})`, 14, y); y += 4;
+    doc.setTextColor(0, 0, 0);
+    doc.autoTable({ startY: y, head: [['Immatriculation', 'Marque', 'Modele', 'Client', 'Source']], body: manquants.map((v) => [v.immat || '', v.marque || '', v.modele || '', v.client || '', SOURCES[v.source] || v.source || '']), theme: 'striped', headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 9 }, styles: { fontSize: 8, cellPadding: 2 }, alternateRowStyles: { fillColor: [254, 242, 242] }, margin: { left: 14, right: 14 } });
+  }
+  const pageCount = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i); doc.setFontSize(8); doc.setTextColor(120, 120, 120);
+    doc.text('NTR Garage - Stock Vehicules', 14, 290);
+    doc.text(`Page ${i} / ${pageCount}`, 196, 290, { align: 'right' });
+  }
+  doc.save(`NTR_Rapport_Ronde_${todayKey()}.pdf`);
+  toast('Rapport PDF téléchargé', 'success');
 }
 async function exportAbsentsWord(source) {
   if (typeof docx === 'undefined') { toast('Bibliotheque Word non chargee', 'error'); return; }
@@ -2686,7 +2719,9 @@ async function exportPresentsWord() {
   } catch (e) { toast('Erreur : ' + e.message, 'error'); }
 }
 
-/* ATTESTATION */
+/* ============================================================
+   ATTESTATION
+   ============================================================ */
 $('#attGenerate').addEventListener('click', async () => {
   if (typeof docx === 'undefined') { toast('Bibliotheque Word non chargee', 'error'); return; }
   const immat = $('#attImmat').value.trim().toUpperCase();
@@ -2720,7 +2755,9 @@ $('#attGenerate').addEventListener('click', async () => {
   toast('Attestation generee', 'success');
 });
 
-/* WIPE */
+/* ============================================================
+   WIPE
+   ============================================================ */
 async function wipeBySource(source) {
   const list = state.vehicules.filter((v) => v.source === source);
   if (!list.length) { toast('Aucun véhicule dans cette source', 'info'); return; }
@@ -2741,7 +2778,7 @@ async function wipeBySource(source) {
 $('#btnWipeHR').addEventListener('click', () => wipeBySource('source1'));
 $('#btnWipeUM').addEventListener('click', () => wipeBySource('source2'));
 $('#btnWipeAll').addEventListener('click', async () => {
-  const ok1 = await confirmDialog('Vider TOUT ? (1/2)', `Suppression de <strong>${state.vehicules.length}</strong> véhicules, <strong>${state.rondes.length}</strong> rondes et <strong>${state.pointages.length}</strong> pointages.<br>Utilisateurs et clients conservés.`);
+  const ok1 = await confirmDialog('Vider TOUT ? (1/2)', `Suppression de <strong>${state.vehicules.length}</strong> véhicules, <strong>${state.rondes.length}</strong> rondes et <strong>${state.pointages.length}</strong> pointages.`);
   if (!ok1) return;
   const ok2 = await confirmDialog('CONFIRMATION (2/2)', 'Cette action est <strong style="color:var(--danger)">IRREVERSIBLE</strong>.');
   if (!ok2) return;
@@ -2772,30 +2809,381 @@ $('#btnWipeAll').addEventListener('click', async () => {
   finally { hideLoading(); }
 });
 
-/* PWA */
+/* ============================================================
+   IMPORT EXCEL
+   ============================================================ */
+function openImportForSource(source) {
+  $('#importSource').value = source;
+  $('#importFile').value = '';
+  $('#importProgressWrap').style.display = 'none';
+  openModal('modalImport');
+  setTimeout(() => $('#importFile').click(), 200);
+}
+$('#btnImportHR').addEventListener('click', () => openImportForSource('source1'));
+$('#btnImportUM').addEventListener('click', () => openImportForSource('source2'));
+$('#importRun').addEventListener('click', async () => {
+  const source = $('#importSource').value;
+  const file = $('#importFile').files[0];
+  if (!source) { toast('Sélectionnez une source', 'warning'); return; }
+  if (!file) { toast('Sélectionnez un fichier Excel', 'warning'); return; }
+  const importTimeout = setTimeout(() => { hideLoading(); toast('Import interrompu (timeout)', 'error'); }, 60000);
+  const cleanup = () => { clearTimeout(importTimeout); hideLoading(); };
+  showLoading('Lecture du fichier...');
+  try {
+    const buf = await file.arrayBuffer();
+    const wb = XLSX.read(buf, { type: 'array' });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+    if (!rows.length) { toast('Fichier vide', 'warning'); cleanup(); return; }
+    const mapField = (row, keys) => {
+      for (const k of Object.keys(row)) {
+        const kk = k.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, '');
+        for (const target of keys) { if (kk.includes(target)) return String(row[k]).trim(); }
+      }
+      return '';
+    };
+    const parsed = [];
+    rows.forEach((row) => {
+      const immatBrut = mapField(row, ['immatriculation', 'immat']);
+      const immat = normalizeImmat(immatBrut);
+      if (!immat) return;
+      parsed.push({ immat, client: mapField(row, ['client', 'societe', 'society', 'company']), marque: mapField(row, ['marque']), modele: mapField(row, ['modele', 'model']), refCommande: mapField(row, ['reference', 'refcommande', 'ref']), typeMaintenance: mapField(row, ['typemaintenance', 'maintenance', 'type']) });
+    });
+    if (!parsed.length) { cleanup(); await confirmDialog('Aucune immatriculation détectée', 'Il faut une colonne <strong>"Immatriculation"</strong> ou <strong>"Immat"</strong>.', false); return; }
+    const srcLabel = SOURCES[source];
+    const existing = state.vehicules.filter((v) => v.source === source);
+    cleanup();
+    const ok = await confirmDialog('Importer ?', `Source : <strong>${srcLabel}</strong><br>Véhicules dans le fichier : <strong>${parsed.length}</strong><br>Véhicules actuels : <strong>${existing.length}</strong><br><br>Les véhicules actuels seront remplacés.`, false);
+    if (!ok) return;
+    showLoading(`Import 0/${parsed.length}...`);
+    $('#importProgressWrap').style.display = 'block';
+    $('#importProgressBar').style.width = '0%';
+    $('#importStatus').textContent = 'Préparation...';
+    const bs = 400;
+    if (existing.length) {
+      $('#importStatus').textContent = `Suppression de ${existing.length} ancien(s)...`;
+      for (let i = 0; i < existing.length; i += bs) {
+        const b = state.db.batch();
+        existing.slice(i, i + bs).forEach((v) => b.delete(state.db.collection('vehicules').doc(v.id)));
+        await b.commit();
+      }
+    }
+    let totalAjt = 0;
+    for (let i = 0; i < parsed.length; i += bs) {
+      const b = state.db.batch();
+      const chunk = parsed.slice(i, i + bs);
+      chunk.forEach((v) => b.set(state.db.collection('vehicules').doc(), { ...v, present: false, source, isCustom: false, lastSeen: null, createdAt: nowIso() }));
+      await b.commit();
+      totalAjt += chunk.length;
+      const pct = Math.round((totalAjt / parsed.length) * 100);
+      $('#importProgressBar').style.width = pct + '%';
+      $('#importStatus').textContent = `${totalAjt} / ${parsed.length} véhicules traités`;
+      $('#loadingText').textContent = `Import ${totalAjt}/${parsed.length}...`;
+    }
+    cleanup();
+    closeModal('modalImport');
+    toast(`${parsed.length} véhicules importés dans ${srcLabel}`, 'success', 'Import réussi');
+    switchTab('vehicules');
+    state.vehFilters.source = source;
+    renderVehChips();
+    applyVehFilters();
+  } catch (err) { console.error('[IMPORT]', err); cleanup(); toast('Erreur : ' + err.message, 'error'); }
+});
+
+/* ============================================================
+   SYNC
+   ============================================================ */
+$('#btnSync').addEventListener('click', async () => {
+  showLoading('Synchronisation...');
+  try { await Promise.all([state.db.collection('vehicules').get(), state.db.collection('rondes').get(), state.db.collection('utilisateurs').get(), state.db.collection('societes').get(), state.db.collection('pointages').get()]); toast('Synchronisé', 'success'); }
+  catch (err) { toast('Erreur : ' + err.message, 'error'); }
+  finally { hideLoading(); }
+});
+function renderAdminInfo() {
+  const u = $('#adminUserCount'); if (u) u.textContent = state.utilisateurs.length;
+  const s = $('#adminSocCount'); if (s) s.textContent = state.clients.length;
+  const v = $('#adminVehCount'); if (v) v.textContent = state.vehicules.length;
+  const r = $('#adminRondeCount'); if (r) r.textContent = state.rondes.length;
+  const p = $('#adminPointageCount'); if (p) p.textContent = state.pointages.length;
+}
+
+/* ============================================================
+   RONDES (HISTORIQUE)
+   ============================================================ */
+function listenRondes() {
+  if (!state.db) return;
+  const unsub = state.db.collection('rondes').orderBy('heureDebut', 'desc').onSnapshot((snap) => {
+    state.rondes = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    if ($('#tab-historique').classList.contains('active')) renderHistorique();
+    if ($('#tab-archives').classList.contains('active')) renderArchives();
+    if ($('#tab-graphiques').classList.contains('active')) renderGraphiques();
+    if ($('#tab-chef').classList.contains('active')) renderChefDashboard();
+    if ($('#tab-mouvements').classList.contains('active')) renderMouvements();
+    renderAdminInfo();
+  }, (err) => console.warn('[rondes]', err));
+  state.unsubscribers.push(unsub);
+}
+
+function renderHistorique() {
+  const list = $('#histList'); const empty = $('#histEmpty');
+  if (!list) return;
+  let rondes = state.rondes.filter((r) => r.statut !== 'en_cours');
+  if (state.histFilterUser) rondes = rondes.filter((r) => r.effectueePar === state.histFilterUser);
+  if (state.histFilterMonth) rondes = rondes.filter((r) => (r.heureDebut || '').startsWith(state.histFilterMonth));
+  if (!rondes.length) { list.innerHTML = ''; if (empty) empty.classList.remove('hidden'); return; }
+  if (empty) empty.classList.add('hidden');
+  list.innerHTML = rondes.map((r) => {
+    const s = r.stats || {};
+    const taux = s.taux ?? 0;
+    const bc = taux >= 80 ? 'success' : taux >= 50 ? 'warning' : 'danger';
+    return `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${formatDateFR(r.heureDebut)}<span class="badge badge-primary">${escapeHtml(r.site || '—')}</span><span class="badge badge-${bc}">${taux}%</span></div><div class="list-item-sub"><span>Par ${escapeHtml(r.effectueePar)}</span><span>${s.presents ?? 0} trouvés sur ${s.total ?? 0}</span><span>${s.absents ?? 0} manquants</span></div></div><div class="list-item-actions"><button class="btn btn-sm btn-ghost" data-hist-open="${r.id}">Voir</button></div></div>`;
+  }).join('');
+  $$('[data-hist-open]', list).forEach((b) => b.addEventListener('click', () => openRondeDetail(b.dataset.histOpen)));
+}
+$('#histUserFilter').addEventListener('change', (e) => { state.histFilterUser = e.target.value; renderHistorique(); });
+$('#btnHistRefresh').addEventListener('click', () => { renderHistorique(); toast('Rafraîchi', 'success'); });
+
+function openRondeDetail(id) {
+  const r = state.rondes.find((x) => x.id === id);
+  if (!r) return;
+  state.currentRondeDetail = r;
+  $('#rdTitle').textContent = `Ronde du ${formatDateFR(r.heureDebut)} — ${r.site}`;
+  const s = r.stats || {};
+  const presents = r.vehiculesSnapshot || [];
+  const repartition = s.repartitionSites || {};
+  const contributions = s.contributions || {};
+  let repartitionHtml = '';
+  if (Object.keys(repartition).length) {
+    repartitionHtml = `<div class="card"><div class="card-title">Répartition par site</div><table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules</th></tr></thead><tbody>${Object.entries(repartition).sort((a, b) => b[1] - a[1]).map(([site, count]) => `<tr><td>${escapeHtml(site)}</td><td>${count}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  let contributionsHtml = '';
+  if (Object.keys(contributions).length) {
+    contributionsHtml = `<div class="card"><div class="card-title">Contribution par utilisateur</div><table class="bilan-table"><thead><tr><th>Utilisateur</th><th>Pointages</th></tr></thead><tbody>${Object.entries(contributions).sort((a, b) => b[1] - a[1]).map(([nom, count]) => `<tr><td>${escapeHtml(nom)}</td><td>${count}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  $('#rdBody').innerHTML = `
+    <div class="stats-grid">
+      <div class="stat-card"><span class="stat-label">Total</span><span class="stat-value">${s.total ?? '—'}</span></div>
+      <div class="stat-card"><span class="stat-label">Trouvés</span><span class="stat-value success">${s.presents ?? presents.length}</span></div>
+      <div class="stat-card"><span class="stat-label">Manquants</span><span class="stat-value danger">${s.absents ?? 0}</span></div>
+      <div class="stat-card"><span class="stat-label">Taux</span><span class="stat-value primary">${s.taux ?? 0}%</span></div>
+    </div>
+    <div class="card"><div class="card-title">Informations</div><div style="font-size:0.8rem;line-height:1.7"><div>Par : <strong>${escapeHtml(r.effectueePar)}</strong></div><div>Date : ${formatDateTimeFR(r.heureDebut)}</div><div>Sites visités : ${escapeHtml(r.site || '—')}</div></div></div>
+    ${repartitionHtml}
+    ${contributionsHtml}
+    <div class="card"><div class="card-title">Véhicules trouvés (${presents.length})</div>${presents.length ? `<div class="list">${presents.map((v) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}${v.site ? ' · ' + escapeHtml(v.site) : ''}</div></div></div>`).join('')}</div>` : '<div class="es-sub" style="color:var(--text-mute);padding:8px">Aucun</div>'}</div>`;
+  openModal('modalRondeDetail');
+}
+$('#rdDelete').addEventListener('click', async () => {
+  if (!state.currentRondeDetail) return;
+  const ok = await confirmDialog('Supprimer la ronde ?', 'Cette action est irréversible.');
+  if (!ok) return;
+  await state.db.collection('rondes').doc(state.currentRondeDetail.id).delete();
+  closeModal('modalRondeDetail');
+  toast('Ronde supprimée', 'success');
+});
+$('#rdPdf').addEventListener('click', () => {
+  const r = state.currentRondeDetail;
+  if (!r) return;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  doc.setFillColor(15, 23, 42); doc.rect(0, 0, 210, 22, 'F');
+  doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
+  doc.text('NTR GARAGE', 14, 10);
+  doc.setFontSize(9); doc.setFont(undefined, 'normal');
+  doc.text(`Ronde du ${formatDateFR(r.heureDebut)}`, 14, 16);
+  doc.setTextColor(0, 0, 0); doc.setFontSize(10);
+  doc.text(`Par : ${r.effectueePar}`, 14, 32);
+  doc.text(`Date : ${formatDateTimeFR(r.heureDebut)}`, 14, 38);
+  doc.text(`Sites : ${r.site || '—'}`, 14, 44);
+  const s = r.stats || {};
+  doc.setFont(undefined, 'bold');
+  doc.text(`Trouves : ${s.presents ?? 0}   Manquants : ${s.absents ?? 0}   Taux : ${s.taux ?? 0}%`, 14, 54);
+  doc.setFont(undefined, 'normal');
+  const presents = r.vehiculesSnapshot || [];
+  doc.autoTable({ startY: 60, head: [['Immatriculation', 'Marque', 'Modele', 'Client', 'Site']], body: presents.map((v) => [v.immat || '', v.marque || '', v.modele || '', v.client || '', v.site || '']), theme: 'striped', headStyles: { fillColor: [52, 211, 153], textColor: 0, fontSize: 9 }, styles: { fontSize: 8.5, cellPadding: 2 }, margin: { left: 14, right: 14 } });
+  doc.save(`NTR_Ronde_${todayKey()}.pdf`);
+  toast('PDF téléchargé', 'success');
+});
+
+/* ============================================================
+   ARCHIVES
+   ============================================================ */
+function renderArchives() {
+  const c = $('#archivesList'); if (!c) return;
+  const rondes = state.rondes.filter((r) => r.statut !== 'en_cours');
+  if (!rondes.length) { c.innerHTML = `<div class="empty-state"><div class="es-title">Aucune archive</div></div>`; return; }
+  const byYM = {};
+  rondes.forEach((r) => { const d = new Date(r.heureDebut); const y = d.getFullYear(); const m = d.getMonth(); if (!byYM[y]) byYM[y] = {}; if (!byYM[y][m]) byYM[y][m] = 0; byYM[y][m]++; });
+  const moisNoms = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+  const years = Object.keys(byYM).sort((a, b) => b - a);
+  c.innerHTML = years.map((y, i) => {
+    const months = Object.keys(byYM[y]).sort((a, b) => b - a);
+    const totalY = months.reduce((s, m) => s + byYM[y][m], 0);
+    return `<div class="archive-year ${i === 0 ? 'open' : ''}"><div class="archive-year-header"><span>Année ${y}</span><span class="count">${totalY} ronde(s)</span></div><div class="archive-months">${months.map((m) => `<div class="archive-month" data-ym="${y}-${String(parseInt(m) + 1).padStart(2, '0')}"><div class="am-name">${moisNoms[parseInt(m)]}</div><div class="am-count">${byYM[y][m]} ronde(s)</div></div>`).join('')}</div></div>`;
+  }).join('');
+  $$('.archive-year-header', c).forEach((h) => h.addEventListener('click', () => h.parentElement.classList.toggle('open')));
+  $$('.archive-month', c).forEach((m) => m.addEventListener('click', () => {
+    state.histFilterMonth = m.dataset.ym; state.histFilterUser = '';
+    const huf = $('#histUserFilter'); if (huf) huf.value = '';
+    switchTab('historique'); renderHistorique();
+    toast(`Filtré sur ${m.querySelector('.am-name').textContent}`, 'info');
+  }));
+}
+
+/* ============================================================
+   GRAPHIQUES
+   ============================================================ */
+function renderGraphiques() {
+  const c1 = $('#chartPresence'); const c2 = $('#chartSites');
+  if (!c1 || !c2) return;
+  let rondes = state.rondes.filter((r) => r.statut !== 'en_cours').sort((a, b) => (a.heureDebut || '').localeCompare(b.heureDebut || ''));
+  const last12 = rondes.slice(-12);
+  const labels = last12.map((r) => new Date(r.heureDebut).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }));
+  const p = last12.map((r) => r.stats?.presents ?? 0);
+  const a = last12.map((r) => r.stats?.absents ?? 0);
+  const txtColor = getComputedStyle(document.body).color;
+  if (state.chartPresence) state.chartPresence.destroy();
+  state.chartPresence = new Chart(c1, { type: 'bar', data: { labels, datasets: [{ label: 'Trouvés', data: p, backgroundColor: '#34d399' }, { label: 'Manquants', data: a, backgroundColor: '#f87171' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { stacked: true, ticks: { color: txtColor } }, y: { stacked: true, beginAtZero: true, ticks: { color: txtColor } } } } });
+  const since = Date.now() - 7 * 86400000;
+  const r7 = state.rondes.filter((r) => r.statut !== 'en_cours' && new Date(r.heureDebut).getTime() >= since);
+  const bySite = {};
+  r7.forEach((r) => { const rep = r.stats?.repartitionSites || {}; Object.entries(rep).forEach(([s, c]) => { if (!bySite[s]) bySite[s] = 0; bySite[s] += c; }); });
+  const siteLabels = Object.keys(bySite);
+  const siteCounts = siteLabels.map((s) => bySite[s]);
+  if (state.chartSites) state.chartSites.destroy();
+  state.chartSites = new Chart(c2, { type: 'bar', data: { labels: siteLabels.length ? siteLabels : ['Aucune donnée'], datasets: [{ label: 'Véhicules trouvés', data: siteCounts.length ? siteCounts : [0], backgroundColor: '#60a5fa' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { ticks: { color: txtColor } }, y: { beginAtZero: true, ticks: { color: txtColor } } } } });
+}
+
+/* ============================================================
+   MOUVEMENTS
+   ============================================================ */
+function renderMouvements() {
+  const c = $('#mouvList'); const e = $('#mouvEmpty');
+  if (!c) return;
+  const q = normalizeImmat($('#mouvSearch').value);
+  const since = Date.now() - 365 * 86400000;
+  const map = {};
+  state.rondes.filter((r) => r.statut !== 'en_cours' && new Date(r.heureDebut).getTime() >= since).forEach((r) => {
+    const snap = r.vehiculesSnapshot || [];
+    snap.forEach((v) => {
+      const cli = v.client || '';
+      if (!MOUVEMENT_CLIENTS.includes(cli)) return;
+      if (q && !normalizeImmat(v.immat).includes(q)) return;
+      if (!map[v.immat]) map[v.immat] = [];
+      map[v.immat].push({ date: r.heureFin || r.heureDebut, site: v.site || r.site || '—', effectueePar: r.effectueePar });
+    });
+  });
+  const imm = Object.keys(map);
+  if (!imm.length) { c.innerHTML = ''; if (e) e.classList.remove('hidden'); return; }
+  if (e) e.classList.add('hidden');
+  c.innerHTML = imm.map((i) => {
+    const events = map[i].sort((x, y) => (y.date || '').localeCompare(x.date || ''));
+    const v = state.vehicules.find((x) => normalizeImmat(x.immat) === i);
+    const cli = v ? (v.client || '') : '';
+    return `<div class="card"><div class="card-title" style="color:var(--primary);font-family:var(--mono);font-size:0.9rem">${escapeHtml(i)}${cli ? `<span class="badge badge-muted" style="margin-left:6px;font-family:var(--font)">${escapeHtml(cli)}</span>` : ''}</div><div class="timeline">${events.slice(0, 20).map((ev) => `<div class="timeline-item"><div class="timeline-date">${formatDateTimeFR(ev.date)}</div><div class="timeline-content"><strong>${escapeHtml(ev.site)}</strong> · Par ${escapeHtml(ev.effectueePar)}</div></div>`).join('')}</div></div>`;
+  }).join('');
+}
+$('#mouvSearch').addEventListener('input', renderMouvements);
+
+/* ============================================================
+   CHEF
+   ============================================================ */
+function renderChef() {
+  if (state.chefUnlocked) { $('#chefPinScreen').classList.add('hidden'); $('#chefDashboard').classList.remove('hidden'); renderChefDashboard(); }
+  else { $('#chefPinScreen').classList.remove('hidden'); $('#chefDashboard').classList.add('hidden'); state.pinBuffer = ''; renderPinDots(); }
+}
+function renderChefDashboard() {
+  if (!state.chefUnlocked) return;
+  const today = todayKey();
+  $('#chefToday').textContent = state.rondes.filter((r) => r.statut !== 'en_cours' && (r.heureDebut || '').startsWith(today)).length;
+  const since7 = Date.now() - 7 * 86400000;
+  const r7 = state.rondes.filter((r) => r.statut !== 'en_cours' && new Date(r.heureDebut).getTime() >= since7);
+  $('#chef7Total').textContent = r7.length;
+  const p = r7.reduce((s, r) => s + (r.stats?.presents ?? 0), 0);
+  const t = r7.reduce((s, r) => s + (r.stats?.total ?? 0), 0);
+  $('#chef7Rate').textContent = (t ? Math.round((p / t) * 100) : 0) + '%';
+  const pointedIds = new Set(state.pointages.map((pt) => pt.vehiculeId));
+  $('#chefMissing').textContent = state.vehicules.filter((v) => !pointedIds.has(v.id)).length;
+  const byUser = {};
+  state.pointages.forEach((pt) => {
+    if (!byUser[pt.userNom]) byUser[pt.userNom] = { count: 0, sites: new Set() };
+    byUser[pt.userNom].count++;
+    byUser[pt.userNom].sites.add(pt.site);
+  });
+  const users = Object.entries(byUser).sort((a, b) => b[1].count - a[1].count);
+  $('#chefActiveUsers').innerHTML = users.length ? users.map(([nom, d]) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${escapeHtml(nom)}</div><div class="list-item-sub"><span>${d.count} véhicule(s)</span><span>${[...d.sites].map((s) => escapeHtml(s)).join(', ')}</span></div></div><span class="badge badge-success">Actif</span></div>`).join('') : '<div class="es-sub" style="color:var(--text-mute);padding:8px">Aucun utilisateur actif aujourd\'hui</div>';
+  const bySite = {};
+  r7.forEach((r) => { const rep = r.stats?.repartitionSites || {}; Object.entries(rep).forEach(([s, c]) => { if (!bySite[s]) bySite[s] = { r: 0, c: 0 }; bySite[s].r++; bySite[s].c += c; }); });
+  const rows = Object.entries(bySite).map(([s, d]) => `<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border)">${escapeHtml(s)}</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)">${d.r}</td><td style="padding:8px 12px;border-bottom:1px solid var(--border)"><span class="badge badge-primary">${d.c} véhicules</span></td></tr>`);
+  $('#chefSiteStats').innerHTML = rows.length ? rows.join('') : `<tr><td colspan="3" style="text-align:center;color:var(--text-mute);padding:14px">Aucune donnée</td></tr>`;
+}
+
+/* ============================================================
+   PWA / INSTALLATION
+   ============================================================ */
 let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; $('#btnInstall').classList.remove('hidden'); });
-$('#btnInstall').addEventListener('click', async () => {
-  if (!deferredPrompt) { toast('Utilisez le menu navigateur pour installer', 'info'); return; }
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  console.log('[PWA] beforeinstallprompt déclenché');
+  $('#btnInstall').classList.remove('hidden');
+  const dismissed = localStorage.getItem('ntr_install_dismissed');
+  if (dismissed !== '1') $('#installBanner').classList.add('show');
+});
+window.addEventListener('appinstalled', () => {
+  console.log('[PWA] Installée');
+  deferredPrompt = null;
+  $('#btnInstall').classList.add('hidden');
+  $('#installBanner').classList.remove('show');
+  toast('Application installée', 'success');
+});
+async function doInstall() {
+  if (!deferredPrompt) {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (isIOS) toast('Sur iPhone : bouton Partager → "Sur l\'écran d\'accueil"', 'info', 'Installation iOS');
+    else toast('Menu navigateur → "Installer l\'application"', 'info');
+    return;
+  }
   deferredPrompt.prompt();
   const { outcome } = await deferredPrompt.userChoice;
+  console.log('[PWA] Choix :', outcome);
   if (outcome === 'accepted') toast('Application installée', 'success');
   deferredPrompt = null;
   $('#btnInstall').classList.add('hidden');
+  $('#installBanner').classList.remove('show');
+}
+$('#btnInstall').addEventListener('click', doInstall);
+$('#installBannerBtn').addEventListener('click', doInstall);
+$('#installBannerClose').addEventListener('click', () => {
+  $('#installBanner').classList.remove('show');
+  localStorage.setItem('ntr_install_dismissed', '1');
 });
-if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch((err) => console.warn('[SW]', err)); }); }
-function updateOnlineStatus() { const b = $('#btnSync'); if (navigator.onLine) { b.classList.remove('offline'); b.classList.add('online'); } else { b.classList.remove('online'); b.classList.add('offline'); } }
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then((reg) => console.log('[SW] Enregistré, scope:', reg.scope))
+      .catch((err) => console.warn('[SW] Erreur:', err));
+  });
+}
+
+function updateOnlineStatus() {
+  const b = $('#btnSync');
+  if (!b) return;
+  if (navigator.onLine) { b.classList.remove('offline'); b.classList.add('online'); }
+  else { b.classList.remove('online'); b.classList.add('offline'); }
+}
 window.addEventListener('online', updateOnlineStatus);
 window.addEventListener('offline', () => { updateOnlineStatus(); toast('Mode hors ligne', 'warning'); });
 updateOnlineStatus();
 
-/* SHORTCUTS */
 document.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); switchTab('pointage'); $('#pointageSearch').focus(); }
   if (e.key === 'Escape') { $$('.modal-overlay.show').forEach((m) => m.classList.remove('show')); $('#lightbox').classList.remove('show'); }
 });
 
-/* MIGRATION */
+/* ============================================================
+   MIGRATION societe → client
+   ============================================================ */
 async function migrateSocieteToClient() {
   if (!state.db) return;
   try {
@@ -2807,7 +3195,9 @@ async function migrateSocieteToClient() {
   } catch (e) { console.warn('[Migration]', e); }
 }
 
-/* INIT */
+/* ============================================================
+   INIT
+   ============================================================ */
 async function init() {
   showLoading('Demarrage...');
   try {
