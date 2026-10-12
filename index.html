@@ -45,7 +45,7 @@
 }
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; min-height: 100%; }
-body { font-family: var(--font); font-size: 15px; line-height: 1.5; background: var(--bg); color: var(--text); transition: background var(--transition), color var(--transition); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font); font-size: 15px; line-height: 1.5; background: var(--bg); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; border: none; background: none; }
 a { color: var(--primary); text-decoration: none; }
@@ -55,18 +55,15 @@ img { max-width: 100%; display: block; }
 ::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 4px; }
 .hidden { display: none !important; }
 
-/* ============================================================
-   LOGIN
-   ============================================================ */
+/* LOGIN */
 .login-screen { position: fixed; inset: 0; z-index: 5000; background: linear-gradient(135deg, #0b1120 0%, #1a2332 100%); display: none; align-items: center; justify-content: center; padding: 20px; }
-.login-screen.show { display: flex; animation: fadeIn 0.3s ease; }
+.login-screen.show { display: flex; }
 .login-screen.unlocking { animation: unlockFade 0.5s ease forwards; }
 @keyframes unlockFade { to { opacity: 0; transform: scale(1.05); } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 .login-box { background: var(--bg-2); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 36px 32px; max-width: 400px; width: 100%; text-align: center; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5); }
 .login-logo { width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 16px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35); }
 .login-logo svg { width: 40px; height: 40px; }
-.login-title { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.5px; margin: 0 0 6px; color: var(--text); }
+.login-title { font-size: 1.4rem; font-weight: 700; margin: 0 0 6px; }
 .login-subtitle { font-size: 0.82rem; color: var(--text-dim); margin: 0 0 28px; }
 .login-input-wrap { position: relative; margin-bottom: 16px; }
 .login-input { width: 100%; padding: 14px 46px; background: var(--bg-3); border: 1px solid var(--border-light); border-radius: var(--radius); color: var(--text); font-size: 1rem; letter-spacing: 2px; text-align: center; font-family: var(--mono); }
@@ -74,7 +71,7 @@ img { max-width: 100%; display: block; }
 .login-input.shake { animation: shake 0.4s ease; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
 .login-input-wrap .lock-ico { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-mute); font-size: 1.1rem; }
-.login-toggle-view { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; background: transparent; color: var(--text-mute); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+.login-toggle-view { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; color: var(--text-mute); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
 .login-toggle-view:hover { background: var(--bg-2); color: var(--text); }
 .login-btn { width: 100%; padding: 14px; background: var(--primary); color: #ffffff; border-radius: var(--radius); font-size: 0.95rem; font-weight: 600; }
 .login-btn:hover { background: var(--primary-dark); }
@@ -83,14 +80,12 @@ img { max-width: 100%; display: block; }
 .login-attempts { font-size: 0.72rem; color: var(--text-mute); margin-top: 8px; }
 .login-footer { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 0.72rem; color: var(--text-mute); line-height: 1.6; }
 
-/* ============================================================
-   HEADER
-   ============================================================ */
+/* HEADER */
 .header { position: sticky; top: 0; z-index: 100; background: var(--bg-2); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; box-shadow: var(--shadow-sm); }
 .header-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; flex-shrink: 0; }
 .header-logo .logo-mark { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
 .header-logo .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
-.header-logo .logo-text .lt-main { font-size: 1rem; color: var(--text); font-weight: 700; letter-spacing: 0.5px; }
+.header-logo .logo-text .lt-main { font-size: 1rem; font-weight: 700; letter-spacing: 0.5px; }
 .header-logo .logo-text .lt-sub { font-size: 0.62rem; color: var(--text-mute); font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; }
 @media (max-width: 480px) { .header-logo .logo-text .lt-sub { display: none; } }
 .header-spacer { flex: 1; }
@@ -105,12 +100,10 @@ img { max-width: 100%; display: block; }
 .header-user { height: 34px; padding: 0 12px; background: var(--bg-3); color: var(--text); border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.78rem; min-width: 160px; max-width: 200px; font-weight: 500; }
 .header-user:focus { outline: none; border-color: var(--primary); }
 .header-actions { display: flex; gap: 4px; align-items: center; }
-.header-btn { width: 34px; height: 34px; border-radius: var(--radius-sm); background: transparent; color: var(--text-dim); display: flex; align-items: center; justify-content: center; font-size: 0.95rem; position: relative; }
+.header-btn { width: 34px; height: 34px; border-radius: var(--radius-sm); color: var(--text-dim); display: flex; align-items: center; justify-content: center; font-size: 0.95rem; position: relative; }
 .header-btn:hover { background: var(--bg-3); color: var(--text); }
 
-/* ============================================================
-   NAV
-   ============================================================ */
+/* NAV */
 .nav { position: sticky; top: var(--header-h); z-index: 99; background: var(--bg); border-bottom: 1px solid var(--border); padding: 8px 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
 .nav-btn { padding: 8px 14px; border-radius: var(--radius-sm); color: var(--text-dim); font-size: 0.78rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .nav-btn:hover { background: var(--bg-2); color: var(--text); }
@@ -121,23 +114,18 @@ img { max-width: 100%; display: block; }
 .nav-btn.danger:hover { background: var(--bg-2); }
 .nav-divider { width: 1px; height: 20px; background: var(--border-light); margin: 0 4px; }
 
-/* ============================================================
-   BOUTONS
-   ============================================================ */
+/* BOUTONS */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 14px; border-radius: var(--radius-sm); background: var(--bg-3); color: var(--text); font-size: 0.78rem; font-weight: 500; border: 1px solid transparent; white-space: nowrap; }
 .btn:hover { background: var(--bg-hover); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn-primary { background: var(--primary); color: #ffffff; }
 .btn-primary:hover { background: var(--primary-dark); }
 .btn-success { background: var(--success); color: #ffffff; }
-.btn-success:hover { background: var(--success-dark); }
 .btn-danger { background: var(--danger); color: #ffffff; }
-.btn-danger:hover { background: var(--danger-dark); }
 .btn-warning { background: var(--warning); color: #1a1205; }
 .btn-ghost { background: transparent; border: 1px solid var(--border-light); }
 .btn-ghost:hover { background: var(--bg-2); }
 .btn-blue { background: var(--blue); color: #ffffff; }
-.btn-blue:hover { background: var(--blue-dark); }
 .btn-sm { padding: 5px 10px; font-size: 0.72rem; }
 .btn-lg { padding: 12px 22px; font-size: 0.88rem; }
 .btn-block { width: 100%; }
@@ -205,6 +193,29 @@ img { max-width: 100%; display: block; }
 .badge-muted { background: var(--bg-3); color: var(--text-dim); }
 .badge-gray { background: rgba(148, 163, 184, 0.15); color: var(--gray); }
 
+/* SITE BADGE - Nouveau style bien visible */
+.site-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.site-badge.known {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--primary);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+.site-badge.unknown {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--gray);
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
 .list { display: flex; flex-direction: column; gap: 8px; }
 .list-item { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
 .list-item:hover { border-color: var(--border-light); background: var(--bg-3); }
@@ -245,7 +256,7 @@ img { max-width: 100%; display: block; }
 .pointage-item.pointed .pi-check { background: var(--success); border-color: var(--success); color: #ffffff; font-weight: 700; }
 .pointage-item .pi-main { flex: 1; min-width: 0; }
 .pointage-item .pi-immat { font-family: var(--mono); font-weight: 700; font-size: 1.05rem; color: var(--primary); letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.pointage-item .pi-info { font-size: 0.74rem; color: var(--text-dim); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 10px; }
+.pointage-item .pi-info { font-size: 0.74rem; color: var(--text-dim); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .pointage-item .pi-site { font-size: 0.7rem; padding: 3px 10px; border-radius: 12px; background: var(--primary-soft); color: var(--primary); font-weight: 600; }
 .pi-mine { display: inline-flex; padding: 2px 8px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; background: rgba(96, 165, 250, 0.15); color: var(--blue); }
 .pi-multi { display: inline-flex; padding: 2px 8px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; background: rgba(251, 191, 36, 0.18); color: var(--warning); }
@@ -257,19 +268,7 @@ img { max-width: 100%; display: block; }
 @keyframes pulse-photo { 0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.6); } 50% { box-shadow: 0 0 0 6px rgba(251, 191, 36, 0); } }
 
 /* STATUT BADGE */
-.statut-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 0.65rem;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all var(--transition);
-  border: 1px solid transparent;
-}
+.statut-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 600; white-space: nowrap; cursor: pointer; border: 1px solid transparent; }
 .statut-badge:hover { transform: scale(1.05); }
 .statut-badge.non-defini { background: rgba(148, 163, 184, 0.12); color: var(--gray); border-color: rgba(148, 163, 184, 0.3); }
 .statut-badge.pret-livraison { background: rgba(16, 185, 129, 0.15); color: var(--success); border-color: rgba(16, 185, 129, 0.3); }
@@ -278,24 +277,8 @@ img { max-width: 100%; display: block; }
 .statut-badge.attente-reglement { background: rgba(248, 113, 113, 0.15); color: var(--danger); border-color: rgba(248, 113, 113, 0.3); }
 .statut-badge.livre { background: rgba(148, 163, 184, 0.2); color: var(--gray); border-color: rgba(148, 163, 184, 0.4); }
 
-/* Statut options dans la modale */
-.statut-options {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 8px;
-  margin-top: 8px;
-}
-.statut-option {
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  background: var(--bg-3);
-  border: 2px solid transparent;
-  cursor: pointer;
-  text-align: center;
-  transition: all var(--transition);
-  font-size: 0.78rem;
-  font-weight: 500;
-}
+.statut-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-top: 8px; }
+.statut-option { padding: 12px; border-radius: var(--radius-sm); background: var(--bg-3); border: 2px solid transparent; cursor: pointer; text-align: center; font-size: 0.78rem; font-weight: 500; }
 .statut-option:hover { border-color: var(--border-light); }
 .statut-option.selected { border-color: var(--primary); background: var(--primary-soft); }
 .statut-option .so-icon { font-size: 1.3rem; display: block; margin-bottom: 4px; }
@@ -334,7 +317,6 @@ img { max-width: 100%; display: block; }
 .bilan-table th { padding: 10px 12px; text-align: left; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dim); border-bottom: 1px solid var(--border); background: var(--bg-3); }
 .bilan-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
 .bilan-table tr:last-child td { border-bottom: none; }
-.bilan-table tr:hover { background: var(--bg-3); }
 
 .manquant-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); position: relative; }
 .manquant-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--danger); }
@@ -384,59 +366,38 @@ img { max-width: 100%; display: block; }
 .toast.success { border-left-color: var(--success); }
 .toast.error { border-left-color: var(--danger); }
 .toast.warning { border-left-color: var(--warning); }
-.toast-content { flex: 1; min-width: 0; }
-.toast-title { font-weight: 600; margin-bottom: 3px; font-size: 0.82rem; }
+.toast-content { flex: 1; }
+.toast-title { font-weight: 600; margin-bottom: 3px; }
 .toast-msg { color: var(--text-dim); font-size: 0.74rem; }
 
 /* GALERIE PAR SITE */
-.gal-site-section {
-  margin-bottom: 24px;
-}
-.gal-site-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 12px;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
+.gal-site-section { margin-bottom: 24px; }
+.gal-site-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; font-weight: 600; font-size: 0.9rem; }
 .gal-site-header .gsh-icon { font-size: 1.1rem; }
 .gal-site-header .gsh-name { flex: 1; }
-.gal-site-header .gsh-count {
-  background: var(--primary-soft);
-  color: var(--primary);
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 700;
-}
+.gal-site-header .gsh-count { background: var(--primary-soft); color: var(--primary); padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; }
 
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
 .gallery-item { position: relative; aspect-ratio: 1; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border-light); background: var(--bg-3); cursor: pointer; }
 .gallery-item:hover { transform: scale(1.02); box-shadow: var(--shadow-md); }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
-.gallery-item .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(11, 17, 32, 0.95) 100%); color: #fff; padding: 8px; display: flex; flex-direction: column; justify-content: flex-end; font-size: 0.65rem; opacity: 0; transition: opacity var(--transition); }
+.gallery-item .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(11, 17, 32, 0.95) 100%); color: #fff; padding: 8px; display: flex; flex-direction: column; justify-content: flex-end; font-size: 0.65rem; opacity: 0; }
 .gallery-item:hover .gallery-overlay { opacity: 1; }
 .gallery-item .gi-immat { font-family: var(--mono); font-weight: 700; font-size: 0.78rem; color: var(--primary); }
 .gallery-item .gi-date { font-size: 0.65rem; color: var(--text-mute); margin-top: 2px; }
-.gallery-item .gi-actions { position: absolute; top: 8px; right: 8px; display: flex; gap: 5px; opacity: 0; transition: opacity var(--transition); z-index: 2; }
-.gallery-item:hover .gi-actions, .gallery-item:focus-within .gi-actions { opacity: 1; }
+.gallery-item .gi-actions { position: absolute; top: 8px; right: 8px; display: flex; gap: 5px; opacity: 0; z-index: 2; }
+.gallery-item:hover .gi-actions { opacity: 1; }
 @media (hover: none) { .gallery-item .gi-actions { opacity: 1; } }
-.gallery-item .gi-btn { width: 30px; height: 30px; border-radius: 50%; background: rgba(11, 17, 32, 0.9); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; border: 1px solid rgba(255, 255, 255, 0.15); cursor: pointer; }
-.gallery-item .gi-btn:hover { background: var(--primary); transform: scale(1.1); }
+.gallery-item .gi-btn { width: 30px; height: 30px; border-radius: 50%; background: rgba(11, 17, 32, 0.9); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; border: 1px solid rgba(255, 255, 255, 0.15); }
+.gallery-item .gi-btn:hover { background: var(--primary); }
 .gallery-item .gi-btn.gi-btn-delete:hover { background: var(--danger); }
 .gallery-item.selected { outline: 3px solid var(--primary); outline-offset: -3px; }
-.gallery-item .gi-checkbox { position: absolute; bottom: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; background: rgba(11, 17, 32, 0.9); border: 2px solid #fff; display: none; align-items: center; justify-content: center; font-size: 0.8rem; color: transparent; cursor: pointer; z-index: 2; }
+.gallery-item .gi-checkbox { position: absolute; bottom: 8px; left: 8px; width: 24px; height: 24px; border-radius: 50%; background: rgba(11, 17, 32, 0.9); border: 2px solid #fff; display: none; align-items: center; justify-content: center; font-size: 0.8rem; color: transparent; z-index: 2; }
 .gallery-item .gi-checkbox.show { display: flex; }
 .gallery-item.selected .gi-checkbox { background: var(--primary); color: #ffffff; border-color: var(--primary); font-weight: 700; }
 .gallery-item .gi-photo-status { position: absolute; top: 8px; left: 8px; padding: 3px 8px; border-radius: 10px; font-size: 0.6rem; font-weight: 700; }
 .gallery-item .gi-photo-status.ok { background: var(--primary); color: #ffffff; }
 .gallery-item .gi-photo-status.missing { background: var(--warning); color: #1a1205; }
-
 .gal-toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .gal-selection-info { padding: 10px 14px; background: var(--primary-soft); border: 1px solid var(--primary); border-radius: var(--radius-sm); font-size: 0.78rem; display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .gal-selection-info .gsi-count { font-weight: 700; color: var(--primary); }
@@ -469,7 +430,7 @@ img { max-width: 100%; display: block; }
 .pin-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-light); }
 .pin-dot.filled { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
 .pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 280px; width: 100%; }
-.pin-key { aspect-ratio: 1; background: var(--bg-3); border: 1px solid var(--border-light); border-radius: var(--radius); font-size: 1.25rem; font-weight: 600; color: var(--text); display: flex; align-items: center; justify-content: center; }
+.pin-key { aspect-ratio: 1; background: var(--bg-3); border: 1px solid var(--border-light); border-radius: var(--radius); font-size: 1.25rem; font-weight: 600; display: flex; align-items: center; justify-content: center; }
 .pin-key:hover { background: var(--bg-hover); }
 .pin-key.confirm { background: var(--success); color: #fff; }
 .pin-key.delete { background: var(--danger); color: #fff; }
@@ -517,29 +478,124 @@ img { max-width: 100%; display: block; }
 .login-log-item .ll-status.ko { color: var(--danger); }
 .login-log-item .ll-device { flex: 1; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.7rem; }
 
-/* Modale photo choix */
-.photo-choice-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 10px;
-}
-.photo-choice-btn {
-  padding: 24px 16px;
-  background: var(--bg-3);
-  border: 2px solid var(--border-light);
-  border-radius: var(--radius);
-  text-align: center;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-.photo-choice-btn:hover {
-  border-color: var(--primary);
-  background: var(--primary-soft);
-  transform: translateY(-2px);
-}
+.photo-choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+.photo-choice-btn { padding: 24px 16px; background: var(--bg-3); border: 2px solid var(--border-light); border-radius: var(--radius); text-align: center; cursor: pointer; }
+.photo-choice-btn:hover { border-color: var(--primary); background: var(--primary-soft); transform: translateY(-2px); }
 .photo-choice-btn .pc-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
 .photo-choice-btn .pc-label { font-size: 0.8rem; font-weight: 600; }
+
+/* OU EST - NOUVEAU */
+.where-result-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.where-hero {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.where-hero .wh-photo {
+  width: 90px;
+  height: 90px;
+  border-radius: var(--radius);
+  object-fit: cover;
+  border: 2px solid var(--primary);
+  flex-shrink: 0;
+  background: var(--bg-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+.where-hero .wh-info { flex: 1; min-width: 0; }
+.where-hero .wh-immat {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--primary);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.where-hero .wh-details {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.where-site-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+}
+.where-site-box.not-found {
+  background: rgba(148, 163, 184, 0.1);
+  border-color: var(--gray);
+}
+.where-site-box .ws-icon { font-size: 2.5rem; }
+.where-site-box .ws-text { flex: 1; min-width: 0; }
+.where-site-box .ws-label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 600;
+}
+.where-site-box .ws-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 4px;
+  line-height: 1.2;
+}
+.where-site-box.not-found .ws-value { color: var(--gray); }
+.where-site-box .ws-sub {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+.where-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.where-info-item {
+  background: var(--bg-3);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.where-info-item .wii-label {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.where-info-item .wii-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  word-break: break-word;
+}
+.where-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
 
 @media (max-width: 768px) {
   .container { padding: 12px; }
@@ -548,6 +604,9 @@ img { max-width: 100%; display: block; }
   .header-user { min-width: 120px; max-width: 140px; font-size: 0.72rem; }
   .nav { padding: 6px 8px; }
   .nav-btn { padding: 7px 10px; font-size: 0.75rem; }
+  .where-hero { flex-direction: column; align-items: flex-start; }
+  .where-hero .wh-immat { font-size: 1.3rem; }
+  .where-site-box { flex-direction: column; align-items: flex-start; }
 }
 @media print {
   .header, .nav, .btn, .modal-footer, .toast-container { display: none !important; }
@@ -628,6 +687,7 @@ img { max-width: 100%; display: block; }
 <nav class="nav" id="mainNav">
   <button class="nav-btn primary active" data-tab="pointage">Pointage</button>
   <span class="nav-divider"></span>
+  <button class="nav-btn" data-tab="ou-est">🔍 Où est ?</button>
   <button class="nav-btn" data-tab="manquants">Manquants</button>
   <button class="nav-btn" data-tab="vehicules">Véhicules</button>
   <button class="nav-btn" data-tab="historique">Historique</button>
@@ -644,6 +704,33 @@ img { max-width: 100%; display: block; }
 
 <main>
 
+<!-- ONGLET OÙ EST -->
+<section class="tab-content" id="tab-ou-est">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">🔍 Où est ce véhicule ?</h2>
+    </div>
+    <div class="pointage-hint">
+      <strong>Recherche rapide</strong> — Tapez une immatriculation pour savoir où se trouve un véhicule, quand il a été vu pour la dernière fois et par qui.
+    </div>
+    <div class="search-bar">
+      <div class="search-input-wrap">
+        <span class="search-ico">⌕</span>
+        <input type="text" class="search-input" id="whereSearch" placeholder="Tapez une immatriculation (ex: AA565TG01)..." autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false">
+        <button class="search-clear" id="whereSearchClear">✕</button>
+        <div class="autocomplete-list" id="whereAutocomplete"></div>
+      </div>
+      <button class="search-btn" id="whereSearchBtn">🔍</button>
+      <button class="mic-btn" id="whereMic" title="Recherche vocale">◉</button>
+    </div>
+    <div id="whereResult"></div>
+    <div class="empty-state" id="whereEmpty">
+      <div class="es-title">Recherchez un véhicule</div>
+      <div class="es-sub">Tapez une immatriculation pour connaître sa position actuelle</div>
+    </div>
+  </div>
+</section>
+
 <!-- POINTAGE -->
 <section class="tab-content active" id="tab-pointage">
   <div class="pointage-bar">
@@ -653,14 +740,12 @@ img { max-width: 100%; display: block; }
       <span class="pb-counter pb-counter-global" id="pointageCounterGlobal">Équipe : 0 / 0</span>
     </div>
     <div class="pb-spacer"></div>
-    <select class="select" id="pointageSite" style="max-width:200px;padding:7px 32px 7px 12px;font-size:0.8rem;width:auto">
-      <option value="">— Site —</option>
-    </select>
+    <select class="select" id="pointageSite" style="max-width:200px;padding:7px 32px 7px 12px;font-size:0.8rem;width:auto"><option value="">— Site —</option></select>
     <button class="btn btn-terminer" id="btnTerminer">Terminer la ronde</button>
   </div>
   <div class="container">
     <div class="pointage-hint">
-      <strong>Comment pointer :</strong> sélectionnez un site en haut à droite, tapez sur un véhicule pour le marquer trouvé, changez de site pour continuer. Utilisez le bouton photo pour ajouter une image.
+      <strong>Comment pointer :</strong> sélectionnez un site en haut à droite, tapez sur un véhicule pour le marquer trouvé, changez de site pour continuer.
     </div>
     <div class="search-bar">
       <div class="search-input-wrap">
@@ -669,7 +754,7 @@ img { max-width: 100%; display: block; }
         <button class="search-clear" id="pointageClear">✕</button>
         <div class="autocomplete-list" id="pointageAutocomplete"></div>
       </div>
-      <button class="search-btn" id="pointageSearchBtn" title="Rechercher">🔍</button>
+      <button class="search-btn" id="pointageSearchBtn">🔍</button>
       <button class="mic-btn" id="pointageMic" title="Recherche vocale">◉</button>
     </div>
     <div class="photo-missing-banner hidden" id="photoMissingBanner">
@@ -696,9 +781,7 @@ img { max-width: 100%; display: block; }
         <span>Autres pointages aujourd'hui</span>
         <span class="count" id="autruiCount">0</span>
       </div>
-      <div class="autrui-body">
-        <div class="autrui-list" id="autruiList"></div>
-      </div>
+      <div class="autrui-body"><div class="autrui-list" id="autruiList"></div></div>
     </div>
   </div>
 </section>
@@ -708,13 +791,9 @@ img { max-width: 100%; display: block; }
   <div class="container">
     <div class="section-header">
       <h2 class="section-title">Véhicules manquants <span class="badge badge-danger" id="manquantsCount">0</span></h2>
-      <div class="section-actions">
-        <button class="btn btn-ghost btn-sm" id="btnManquantsExportXls">Export Excel</button>
-      </div>
+      <div class="section-actions"><button class="btn btn-ghost btn-sm" id="btnManquantsExportXls">Export Excel</button></div>
     </div>
-    <div class="pointage-hint">
-      <strong>Véhicules non pointés</strong> — Ces véhicules font partie de la liste importée mais n'ont pas encore été trouvés.
-    </div>
+    <div class="pointage-hint"><strong>Véhicules non pointés</strong> — Ces véhicules n'ont pas été trouvés lors de la dernière ronde.</div>
     <div class="form-group">
       <label class="form-label">Filtrer par source</label>
       <select class="select" id="manquantsSourceFilter">
@@ -741,9 +820,7 @@ img { max-width: 100%; display: block; }
   <div class="container">
     <div class="section-header">
       <h2 class="section-title">Véhicules <span class="badge badge-muted" id="vehCount">0</span></h2>
-      <div class="section-actions">
-        <button class="btn btn-primary btn-sm" id="btnAddVehicule">Ajouter</button>
-      </div>
+      <div class="section-actions"><button class="btn btn-primary btn-sm" id="btnAddVehicule">Ajouter</button></div>
     </div>
     <div class="card" style="padding:12px 14px;margin-bottom:12px">
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
@@ -760,6 +837,7 @@ img { max-width: 100%; display: block; }
         <option value="immat_desc">Immatriculation (Z-A)</option>
         <option value="marque">Marque</option>
         <option value="client">Client</option>
+        <option value="site">Site</option>
         <option value="date">Date d'ajout</option>
         <option value="lastSeen">Dernière vue</option>
       </select>
@@ -771,7 +849,7 @@ img { max-width: 100%; display: block; }
         <button class="search-clear" id="vehSearchClear">✕</button>
         <div class="autocomplete-list" id="vehAutocomplete"></div>
       </div>
-      <button class="search-btn" id="vehSearchBtn" title="Rechercher">🔍</button>
+      <button class="search-btn" id="vehSearchBtn">🔍</button>
       <button class="mic-btn" id="vehMic" title="Recherche vocale">◉</button>
     </div>
     <div class="chips" id="vehSiteChips"></div>
@@ -795,9 +873,7 @@ img { max-width: 100%; display: block; }
   <div class="container">
     <div class="section-header">
       <h2 class="section-title">Historique des rondes</h2>
-      <div class="section-actions">
-        <button class="btn btn-ghost btn-sm" id="btnHistRefresh">Rafraîchir</button>
-      </div>
+      <div class="section-actions"><button class="btn btn-ghost btn-sm" id="btnHistRefresh">Rafraîchir</button></div>
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -808,7 +884,6 @@ img { max-width: 100%; display: block; }
     <div class="list" id="histList"></div>
     <div class="empty-state hidden" id="histEmpty">
       <div class="es-title">Aucune ronde enregistrée</div>
-      <div class="es-sub">Terminez une ronde pour la voir apparaître ici</div>
     </div>
   </div>
 </section>
@@ -840,10 +915,7 @@ img { max-width: 100%; display: block; }
         <button class="btn btn-ghost btn-sm" id="btnManageSocietes">Gérer</button>
       </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">Filtrer</label>
-      <select class="select" id="socFilter"><option value="">Tous les clients</option></select>
-    </div>
+    <div class="form-group"><label class="form-label">Filtrer</label><select class="select" id="socFilter"><option value="">Tous les clients</option></select></div>
     <div id="socList"></div>
   </div>
 </section>
@@ -861,7 +933,6 @@ img { max-width: 100%; display: block; }
     <div id="mouvList"></div>
     <div class="empty-state hidden" id="mouvEmpty">
       <div class="es-title">Aucun mouvement détecté</div>
-      <div class="es-sub">Les mouvements apparaissent quand un véhicule change de site</div>
     </div>
   </div>
 </section>
@@ -873,9 +944,7 @@ img { max-width: 100%; display: block; }
       <div class="pin-icon">⬤</div>
       <h2 style="margin:0;font-size:1.15rem;font-weight:700">Accès Chef</h2>
       <p style="color:var(--text-dim);margin:0;font-size:0.82rem">Entrez le PIN à 4 chiffres</p>
-      <div class="pin-display" id="pinDots">
-        <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
-      </div>
+      <div class="pin-display" id="pinDots"><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div></div>
       <div class="pin-pad">
         <button class="pin-key" data-pin="1">1</button><button class="pin-key" data-pin="2">2</button><button class="pin-key" data-pin="3">3</button>
         <button class="pin-key" data-pin="4">4</button><button class="pin-key" data-pin="5">5</button><button class="pin-key" data-pin="6">6</button>
@@ -897,16 +966,9 @@ img { max-width: 100%; display: block; }
         <div class="stat-card"><span class="stat-label">Taux moyen 7j</span><span class="stat-value success" id="chef7Rate">0%</span></div>
         <div class="stat-card"><span class="stat-label">Manquants actuels</span><span class="stat-value danger" id="chefMissing">0</span></div>
       </div>
-      <div class="card">
-        <div class="card-title">Répartition par statut</div>
-        <div class="stats-grid" id="chefStatutStats"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Utilisateurs actifs aujourd'hui</div>
-        <div class="list" id="chefActiveUsers"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Statistiques 7 jours par site</div>
+      <div class="card"><div class="card-title">Répartition par statut</div><div class="stats-grid" id="chefStatutStats"></div></div>
+      <div class="card"><div class="card-title">Utilisateurs actifs aujourd'hui</div><div class="list" id="chefActiveUsers"></div></div>
+      <div class="card"><div class="card-title">Statistiques 7 jours par site</div>
         <div style="overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)">
           <table class="bilan-table"><thead><tr><th>Site</th><th>Rondes</th><th>Véhicules</th></tr></thead><tbody id="chefSiteStats"></tbody></table>
         </div>
@@ -938,10 +1000,7 @@ img { max-width: 100%; display: block; }
       </div>
     </div>
     <div id="galContent"></div>
-    <div class="empty-state hidden" id="galEmpty">
-      <div class="es-title">Aucune photo</div>
-      <div class="es-sub">Les photos ajoutées apparaîtront ici</div>
-    </div>
+    <div class="empty-state hidden" id="galEmpty"><div class="es-title">Aucune photo</div></div>
   </div>
 </section>
 
@@ -949,24 +1008,21 @@ img { max-width: 100%; display: block; }
 <section class="tab-content" id="tab-exports">
   <div class="container">
     <div class="section-header"><h2 class="section-title">Exports</h2></div>
-    <div class="card">
-      <div class="card-title">Excel</div>
+    <div class="card"><div class="card-title">Excel</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px">
         <button class="btn btn-success btn-sm" data-export="xls-presents">Présents</button>
         <button class="btn btn-danger btn-sm" data-export="xls-absents">Manquants</button>
         <button class="btn btn-blue btn-sm" data-export="xls-sites">Présents par site</button>
       </div>
     </div>
-    <div class="card">
-      <div class="card-title">PDF</div>
+    <div class="card"><div class="card-title">PDF</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px">
         <button class="btn btn-blue btn-sm" data-export="pdf-sites">Présents par site</button>
         <button class="btn btn-danger btn-sm" data-export="pdf-absents">Manquants</button>
         <button class="btn btn-warning btn-sm" data-export="pdf-global">Rapport global</button>
       </div>
     </div>
-    <div class="card">
-      <div class="card-title">Word</div>
+    <div class="card"><div class="card-title">Word</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px">
         <button class="btn btn-blue btn-sm" data-export="word-absent-s1">Manquants Source HR</button>
         <button class="btn btn-danger btn-sm" data-export="word-absent-s2">Manquants Source UM</button>
@@ -1008,7 +1064,7 @@ img { max-width: 100%; display: block; }
     <div class="section-header"><h2 class="section-title">Administration</h2></div>
     <div class="access-card">
       <h3 class="access-card-title">🔐 Sécurité</h3>
-      <p class="access-card-sub">Code d'accès de l'équipe et PIN administrateur.</p>
+      <p class="access-card-sub">Code d'accès et PIN administrateur.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn btn-primary btn-sm" id="btnChangeAccessCode">Changer le code</button>
         <button class="btn btn-warning btn-sm" id="btnChangeAdminPin">Changer le PIN</button>
@@ -1019,6 +1075,14 @@ img { max-width: 100%; display: block; }
     <div class="card" id="logsCard" style="display:none">
       <div class="card-title">Dernières connexions</div>
       <div id="loginLogsList"></div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--info)">
+      <div class="card-title">🔄 Pointages de la journée</div>
+      <p style="color:var(--text-dim);font-size:0.82rem;margin:0 0 14px">
+        Supprime tous les pointages du jour actuel. Utile pour repartir sur une base propre avant une nouvelle tournée.
+        Les véhicules resteront marqués comme trouvés jusqu'à ce que vous effaciez.
+      </p>
+      <button class="btn btn-blue btn-block" id="btnClearTodayPointages">🗑️ Effacer les pointages d'aujourd'hui</button>
     </div>
     <div class="card" style="border-left:4px solid var(--warning)">
       <div class="card-title">Zone dangereuse</div>
@@ -1117,14 +1181,8 @@ img { max-width: 100%; display: block; }
     <div class="modal-body">
       <p style="font-size:0.8rem;color:var(--text-dim);margin:0 0 8px">Véhicule : <strong id="photoChoiceImmat" style="color:var(--primary);font-family:var(--mono)">—</strong></p>
       <div class="photo-choice-grid">
-        <div class="photo-choice-btn" data-mode="camera">
-          <span class="pc-icon">📸</span>
-          <span class="pc-label">Prendre une photo</span>
-        </div>
-        <div class="photo-choice-btn" data-mode="gallery">
-          <span class="pc-icon">🖼️</span>
-          <span class="pc-label">Choisir dans la galerie</span>
-        </div>
+        <div class="photo-choice-btn" data-mode="camera"><span class="pc-icon">📸</span><span class="pc-label">Prendre une photo</span></div>
+        <div class="photo-choice-btn" data-mode="gallery"><span class="pc-icon">🖼️</span><span class="pc-label">Choisir dans la galerie</span></div>
       </div>
     </div>
   </div>
@@ -1288,7 +1346,7 @@ img { max-width: 100%; display: block; }
 
 <script>
 /* ============================================================
-   NTR TRACK v4.2 - Fixes bugs + statut véhicules
+   NTR TRACK v4.3 - Fixes site + Nouvel onglet Où est ?
    ============================================================ */
 
 const firebaseConfig = {
@@ -1307,7 +1365,7 @@ const DEFAULT_CLIENTS = ['BNETD'];
 const SOURCES = { source1: 'Source HR', source2: 'Source UM', custom: 'Ajout manuel' };
 const MOUVEMENT_CLIENTS = ['BNETD', 'Port Autonome'];
 const PAGE_SIZE = 50;
-const SESSION_KEY = 'ntr_session_token_v42';
+const SESSION_KEY = 'ntr_session_token_v43';
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000;
 
 const STATUTS = {
@@ -1344,7 +1402,8 @@ const state = {
   accessLogs: [],
   statutModalVehiculeId: null,
   statutModalSelected: '',
-  photoChoiceVehiculeId: null
+  photoChoiceVehiculeId: null,
+  whereSelectedVehiculeId: null
 };
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -1360,8 +1419,7 @@ function formatDateTimeFR(iso) { if (!iso) return '—'; const d = new Date(iso)
 function daysBetween(iso1, iso2 = nowIso()) { return Math.floor((new Date(iso2) - new Date(iso1)) / 86400000); }
 
 function toast(msg, type = 'info', title = '') {
-  const c = $('#toastContainer');
-  const el = document.createElement('div');
+  const c = $('#toastContainer'); const el = document.createElement('div');
   el.className = 'toast ' + type;
   el.innerHTML = `<div class="toast-content">${title ? `<div class="toast-title">${escapeHtml(title)}</div>` : ''}<div class="toast-msg">${escapeHtml(msg)}</div></div>`;
   c.appendChild(el);
@@ -1412,17 +1470,13 @@ $('#btnTheme').addEventListener('click', () => { const c = document.documentElem
 
 try { firebase.initializeApp(firebaseConfig); state.db = firebase.firestore(); try { state.db.settings({ cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED, merge: true }); } catch (e) {} } catch (e) { console.error('[Firebase]', e); }
 
-/* ============================================================
-   SESSION
-   ============================================================ */
+/* SESSION */
 function getSession() { try { const raw = localStorage.getItem(SESSION_KEY); if (!raw) return null; const data = JSON.parse(raw); if (!data.expires || data.expires < Date.now()) { localStorage.removeItem(SESSION_KEY); return null; } return data; } catch (e) { return null; } }
 function saveSession() { const data = { expires: Date.now() + SESSION_DURATION, createdAt: nowIso() }; localStorage.setItem(SESSION_KEY, JSON.stringify(data)); }
 function clearSession() { localStorage.removeItem(SESSION_KEY); }
 function isSessionValid() { const s = getSession(); return s && s.expires > Date.now(); }
 
-/* ============================================================
-   ACCÈS
-   ============================================================ */
+/* ACCÈS */
 async function loadAccessCode() {
   if (!state.db) return { code: 'NTR2026', adminPin: '9999' };
   try {
@@ -1453,20 +1507,17 @@ function listenAccessLogs() {
 function renderLoginLogs() {
   const c = $('#loginLogsList'); if (!c) return;
   if (!state.accessLogs.length) { c.innerHTML = '<div style="text-align:center;color:var(--text-mute);padding:14px;font-size:0.8rem">Aucune connexion enregistrée</div>'; return; }
-  c.innerHTML = state.accessLogs.map((l) => `<div class="login-log-item ${l.success ? 'success' : 'failed'}"><span class="ll-date">${formatDateTimeFR(l.timestamp)}</span><span class="ll-status ${l.success ? 'ok' : 'ko'}">${l.success ? '✅ Succès' : '❌ Échec'}</span><span class="ll-device">${escapeHtml((l.device || '').substring(0, 40))}</span></div>`).join('');
+  c.innerHTML = state.accessLogs.map((l) => `<div class="login-log-item ${l.success ? 'success' : 'failed'}"><span class="ll-date">${formatDateTimeFR(l.timestamp)}</span><span class="ll-status ${l.success ? 'ok' : 'ko'}">${l.success ? '✅' : '❌'}</span><span class="ll-device">${escapeHtml((l.device || '').substring(0, 40))}</span></div>`).join('');
 }
 
-/* ============================================================
-   LOGIN
-   ============================================================ */
+/* LOGIN */
 function checkCooldown() { if (state.loginCooldownUntil > Date.now()) return Math.ceil((state.loginCooldownUntil - Date.now()) / 1000); return 0; }
 async function attemptLogin(inputCode) {
   const cooldown = checkCooldown();
   if (cooldown > 0) { $('#loginError').textContent = `Trop de tentatives. Attendez ${cooldown}s`; return false; }
   if (!inputCode || inputCode.length < 4) { $('#loginError').textContent = 'Code trop court'; $('#loginInput').classList.add('shake'); setTimeout(() => $('#loginInput').classList.remove('shake'), 400); return false; }
   const codes = await loadAccessCode();
-  state.accessCode = codes.code;
-  state.adminPin = codes.adminPin;
+  state.accessCode = codes.code; state.adminPin = codes.adminPin;
   if (inputCode === state.accessCode) {
     state.loginAttempts = 0; state.loginAttemptsWindow = [];
     saveSession(); await logAccess(true, 'Code correct'); unlockApp(); return true;
@@ -1511,8 +1562,7 @@ $('#loginToggleView').addEventListener('click', () => {
 
 setTimeout(() => {
   ['#loginInput', '#adminPinInput'].forEach((sel) => {
-    const el = document.querySelector(sel);
-    if (!el) return;
+    const el = document.querySelector(sel); if (!el) return;
     const unlock = () => el.removeAttribute('readonly');
     el.addEventListener('focus', unlock, { once: true });
     el.addEventListener('touchstart', unlock, { once: true });
@@ -1520,14 +1570,11 @@ setTimeout(() => {
   });
 }, 300);
 
-/* ============================================================
-   PIN ADMIN
-   ============================================================ */
+/* PIN ADMIN */
 function requireAdminPin(reason, callback) {
   state.pendingAdminAction = callback;
   $('#adminPinReason').textContent = reason || 'Cette action est protégée.';
-  $('#adminPinInput').value = '';
-  $('#adminPinError').textContent = '';
+  $('#adminPinInput').value = ''; $('#adminPinError').textContent = '';
   const pinModal = $('#modalAdminPin');
   pinModal.classList.add('show');
   pinModal.style.zIndex = '2000';
@@ -1536,27 +1583,22 @@ function requireAdminPin(reason, callback) {
 function validateAdminPin() {
   const input = $('#adminPinInput').value.trim();
   if (input === state.adminPin) {
-    closeModal('modalAdminPin');
-    $('#modalAdminPin').style.zIndex = '';
+    closeModal('modalAdminPin'); $('#modalAdminPin').style.zIndex = '';
     toast('Accès autorisé', 'success');
-    const cb = state.pendingAdminAction;
-    state.pendingAdminAction = null;
+    const cb = state.pendingAdminAction; state.pendingAdminAction = null;
     if (typeof cb === 'function') setTimeout(cb, 200);
   } else {
     $('#adminPinError').textContent = 'PIN incorrect';
     $('#adminPinInput').classList.add('shake');
     setTimeout(() => $('#adminPinInput').classList.remove('shake'), 400);
-    $('#adminPinInput').value = '';
-    $('#adminPinInput').focus();
+    $('#adminPinInput').value = ''; $('#adminPinInput').focus();
   }
 }
 document.getElementById('adminPinValidate').onclick = validateAdminPin;
 document.getElementById('adminPinInput').onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); validateAdminPin(); } };
 document.getElementById('adminPinCancel').onclick = () => { state.pendingAdminAction = null; closeModal('modalAdminPin'); $('#modalAdminPin').style.zIndex = ''; };
 
-/* ============================================================
-   NAV
-   ============================================================ */
+/* NAV */
 $$('.nav-btn[data-tab]').forEach((btn) => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
 function switchTab(name) {
   $$('.nav-btn[data-tab]').forEach((b) => b.classList.toggle('active', b.dataset.tab === name));
@@ -1565,6 +1607,7 @@ function switchTab(name) {
   if (section) section.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (name === 'pointage') renderPointage();
+  if (name === 'ou-est') renderOuEst();
   if (name === 'manquants') renderManquants();
   if (name === 'vehicules') renderVehiculesList();
   if (name === 'historique') renderHistorique();
@@ -1577,9 +1620,7 @@ function switchTab(name) {
   if (name === 'admin') renderAdminInfo();
 }
 
-/* ============================================================
-   VOICE
-   ============================================================ */
+/* VOICE */
 function setupVoiceSearch(micId, inputId, cb) {
   const btn = $('#' + micId); const input = $('#' + inputId); if (!btn || !input) return;
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -1592,28 +1633,13 @@ function setupVoiceSearch(micId, inputId, cb) {
   r.onerror = (e) => { listening = false; btn.classList.remove('listening'); if (e.error === 'not-allowed') toast('Micro refusé', 'error'); };
   r.onresult = (e) => { let t = e.results[0][0].transcript || ''; t = t.replace(/[\s\-\.]/g, '').toUpperCase(); input.value = t; if (cb) cb(t); toast(`Détecté : ${t}`, 'success'); };
 }
-function playBeep() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator(); const gain = ctx.createGain();
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.frequency.value = 880; osc.type = 'sine'; gain.gain.value = 0.08;
-    osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.06);
-  } catch (e) {}
-}
+function playBeep() { try { const ctx = new (window.AudioContext || window.webkitAudioContext)(); const osc = ctx.createOscillator(); const gain = ctx.createGain(); osc.connect(gain); gain.connect(ctx.destination); osc.frequency.value = 880; osc.type = 'sine'; gain.gain.value = 0.08; osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.06); } catch (e) {} }
 
-/* ============================================================
-   USERS
-   ============================================================ */
+/* USERS */
 async function ensureUsers() {
   if (!state.db) return;
-  const ref = state.db.collection('utilisateurs');
-  const snap = await ref.get();
-  if (snap.empty) {
-    const batch = state.db.batch();
-    DEFAULT_USERS.forEach((nom) => batch.set(ref.doc(), { nom, actif: true, createdAt: nowIso() }));
-    await batch.commit();
-  }
+  const ref = state.db.collection('utilisateurs'); const snap = await ref.get();
+  if (snap.empty) { const batch = state.db.batch(); DEFAULT_USERS.forEach((nom) => batch.set(ref.doc(), { nom, actif: true, createdAt: nowIso() })); await batch.commit(); }
 }
 function listenUsers() {
   if (!state.db) return;
@@ -1655,22 +1681,14 @@ $('#addUserBtn').addEventListener('click', async () => {
   if (!nom) { toast('Nom requis', 'warning'); return; }
   if (state.utilisateurs.some((u) => u.nom.toLowerCase() === nom.toLowerCase())) { toast('Existe déjà', 'warning'); return; }
   await state.db.collection('utilisateurs').add({ nom, actif: true, createdAt: nowIso() });
-  $('#newUserNom').value = '';
-  toast(`Utilisateur ajouté : ${nom}`, 'success');
+  $('#newUserNom').value = ''; toast(`Utilisateur ajouté : ${nom}`, 'success');
 });
 
-/* ============================================================
-   CLIENTS
-   ============================================================ */
+/* CLIENTS */
 async function ensureClients() {
   if (!state.db) return;
-  const ref = state.db.collection('societes');
-  const snap = await ref.get();
-  if (snap.empty) {
-    const batch = state.db.batch();
-    DEFAULT_CLIENTS.forEach((nom) => batch.set(ref.doc(), { nom, actif: true, createdAt: nowIso() }));
-    await batch.commit();
-  }
+  const ref = state.db.collection('societes'); const snap = await ref.get();
+  if (snap.empty) { const batch = state.db.batch(); DEFAULT_CLIENTS.forEach((nom) => batch.set(ref.doc(), { nom, actif: true, createdAt: nowIso() })); await batch.commit(); }
 }
 function listenClients() {
   if (!state.db) return;
@@ -1705,14 +1723,11 @@ $('#addSocBtn').addEventListener('click', async () => {
   if (!nom) { toast('Nom requis', 'warning'); return; }
   if (state.clients.some((s) => s.nom.toLowerCase() === nom.toLowerCase())) { toast('Existe déjà', 'warning'); return; }
   await state.db.collection('societes').add({ nom, actif: true, createdAt: nowIso() });
-  $('#newSocNom').value = '';
-  toast(`Client ajouté : ${nom}`, 'success');
+  $('#newSocNom').value = ''; toast(`Client ajouté : ${nom}`, 'success');
 });
 $('#socFilter').addEventListener('change', (e) => { state.socFilter = e.target.value; renderSocietes(); });
 
-/* ============================================================
-   PIN CHEF
-   ============================================================ */
+/* PIN CHEF */
 async function getChefPin() {
   if (!state.db) return '1234';
   const doc = await state.db.collection('config').doc('chefPin').get();
@@ -1739,23 +1754,18 @@ async function validatePin() {
     $('#chefPinScreen').animate([{ transform: 'translateX(-8px)' }, { transform: 'translateX(8px)' }, { transform: 'translateX(0)' }], { duration: 260 });
   }
 }
-$('#chefLock').addEventListener('click', () => {
-  state.chefUnlocked = false; $('#chefDashboard').classList.add('hidden'); $('#chefPinScreen').classList.remove('hidden');
-  state.pinBuffer = ''; renderPinDots();
-});
+$('#chefLock').addEventListener('click', () => { state.chefUnlocked = false; $('#chefDashboard').classList.add('hidden'); $('#chefPinScreen').classList.remove('hidden'); state.pinBuffer = ''; renderPinDots(); });
 $('#btnPin').addEventListener('click', () => { $('#pinOld').value = ''; $('#pinNew').value = ''; $('#pinNew2').value = ''; openModal('modalPin'); });
 $('#pinSave').addEventListener('click', async () => {
   const o = $('#pinOld').value.trim(); const n = $('#pinNew').value.trim(); const n2 = $('#pinNew2').value.trim();
-  if (!/^\d{4}$/.test(n)) { toast('Le PIN doit contenir 4 chiffres', 'warning'); return; }
-  if (n !== n2) { toast('Les deux PIN ne correspondent pas', 'warning'); return; }
+  if (!/^\d{4}$/.test(n)) { toast('4 chiffres', 'warning'); return; }
+  if (n !== n2) { toast('Ne correspondent pas', 'warning'); return; }
   const cur = await getChefPin();
   if (o !== cur) { toast('Ancien PIN incorrect', 'error'); return; }
   await setChefPin(n); closeModal('modalPin'); toast('PIN Chef modifié', 'success');
 });
 
-/* ============================================================
-   VÉHICULES
-   ============================================================ */
+/* VÉHICULES */
 function listenVehicules() {
   if (!state.db) return;
   const unsub = state.db.collection('vehicules').orderBy('immat').onSnapshot((snap) => {
@@ -1763,31 +1773,50 @@ function listenVehicules() {
     applyVehFilters();
     renderAdminInfo();
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
+    if ($('#tab-ou-est').classList.contains('active')) renderOuEst();
     if ($('#tab-manquants').classList.contains('active')) renderManquants();
     if ($('#tab-galerie').classList.contains('active')) renderGalerie();
     if ($('#tab-mouvements').classList.contains('active')) renderMouvements();
-    updatePhotoMissingBanner();
-    updateSmartTabs();
-  }, (err) => { console.error('[vehicules]', err); toast('Erreur de chargement', 'error'); });
+    updatePhotoMissingBanner(); updateSmartTabs();
+  }, (err) => { console.error('[vehicules]', err); toast('Erreur', 'error'); });
   state.unsubscribers.push(unsub);
 }
 
-function getStatutVehicule(v) {
-  if (!v || !v.statut) return 'non-defini';
-  return STATUTS[v.statut] ? v.statut : 'non-defini';
-}
+function getStatutVehicule(v) { if (!v || !v.statut) return 'non-defini'; return STATUTS[v.statut] ? v.statut : 'non-defini'; }
 
 function renderStatutBadge(v, clickable = true) {
-  const statut = getStatutVehicule(v);
-  const s = STATUTS[statut];
-  const cls = s.cls;
-  const cursor = clickable ? 'pointer' : 'default';
-  return `<span class="statut-badge ${cls}" data-statut-veh="${v.id}" style="cursor:${cursor}">${s.icon} ${escapeHtml(s.label)}</span>`;
+  const statut = getStatutVehicule(v); const s = STATUTS[statut];
+  return `<span class="statut-badge ${s.cls}" data-statut-veh="${v.id}" style="cursor:${clickable ? 'pointer' : 'default'}">${s.icon} ${escapeHtml(s.label)}</span>`;
+}
+
+/* IMPORTANT : Site actuel du véhicule
+   Priorité :
+   1. Site du pointage le PLUS RÉCENT (parmi tous les pointages chargés)
+   2. Site stocké sur le véhicule
+*/
+function getSiteActuel(vehicule) {
+  if (!vehicule) return null;
+  // Chercher le pointage le plus récent pour ce véhicule
+  const pointagesVehicule = state.pointages.filter((p) => p.vehiculeId === vehicule.id && p.site);
+  if (pointagesVehicule.length) {
+    // Trier par timestamp décroissant
+    const sorted = pointagesVehicule.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    return sorted[0].site;
+  }
+  // Fallback : site stocké sur le véhicule
+  if (vehicule.site) return vehicule.site;
+  return null;
+}
+
+/* Badge site visible */
+function renderSiteBadge(vehicule) {
+  const site = getSiteActuel(vehicule);
+  if (site) return `<span class="site-badge known">📍 ${escapeHtml(site)}</span>`;
+  return `<span class="site-badge unknown">📍 Non pointé</span>`;
 }
 
 function applyVehFilters() {
-  const f = state.vehFilters;
-  const q = normalizeImmat(f.search);
+  const f = state.vehFilters; const q = normalizeImmat(f.search);
   let filtered = state.vehicules.filter((v) => {
     const siteActuel = getSiteActuel(v);
     if (f.site && siteActuel !== f.site) return false;
@@ -1806,17 +1835,16 @@ function applyVehFilters() {
     if (s === 'immat_desc') return (b.immat || '').localeCompare(a.immat || '');
     if (s === 'marque') return (a.marque || '').localeCompare(b.marque || '');
     if (s === 'client') return (a.client || '').localeCompare(b.client || '');
+    if (s === 'site') return (getSiteActuel(a) || 'zzz').localeCompare(getSiteActuel(b) || 'zzz');
     if (s === 'date') return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
     if (s === 'lastSeen') return new Date(b.lastSeen || 0) - new Date(a.lastSeen || 0);
     return 0;
   });
-  state.vehiculesFiltered = filtered;
-  state.pageVeh = 1;
+  state.vehiculesFiltered = filtered; state.pageVeh = 1;
   renderVehiculesList();
   const cnt = $('#vehCount'); if (cnt) cnt.textContent = filtered.length;
 }
 
-/* RECHERCHE VÉHICULES - FIX BUG */
 const vehSearchInput = $('#vehSearch');
 const vehSearchClear = $('#vehSearchClear');
 const vehAutoList = $('#vehAutocomplete');
@@ -1826,53 +1854,36 @@ function executeVehSearch() {
   const q = vehSearchInput.value.trim();
   state.vehFilters.search = q;
   applyVehFilters();
-  if (!q) { toast('Entrez une immatriculation à rechercher', 'info'); return; }
+  if (!q) return;
   const count = state.vehiculesFiltered.length;
   if (count === 0) toast(`Aucun véhicule trouvé pour "${q}"`, 'warning');
-  else if (count === 1) toast(`1 véhicule trouvé pour "${q}"`, 'success');
-  else toast(`${count} véhicules trouvés pour "${q}"`, 'success');
+  else if (count === 1) toast(`1 véhicule trouvé`, 'success');
+  else toast(`${count} véhicules trouvés`, 'success');
 }
-
 vehSearchBtn.addEventListener('click', executeVehSearch);
 vehSearchInput.addEventListener('input', (e) => {
-  const v = e.target.value;
-  state.vehFilters.search = v;
+  const v = e.target.value; state.vehFilters.search = v;
   vehSearchClear.classList.toggle('show', v.length > 0);
-  showAutocomplete(v);
-  applyVehFilters();
+  showAutocomplete(v); applyVehFilters();
 });
-vehSearchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') { e.preventDefault(); vehSearchBtn.click(); }
-});
-vehSearchClear.addEventListener('click', () => {
-  vehSearchInput.value = '';
-  state.vehFilters.search = '';
-  vehSearchClear.classList.remove('show');
-  vehAutoList.classList.remove('show');
-  applyVehFilters();
-});
+vehSearchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); vehSearchBtn.click(); } });
+vehSearchClear.addEventListener('click', () => { vehSearchInput.value = ''; state.vehFilters.search = ''; vehSearchClear.classList.remove('show'); vehAutoList.classList.remove('show'); applyVehFilters(); });
 
 function showAutocomplete(query) {
   const q = normalizeImmat(query);
   if (!q) { vehAutoList.classList.remove('show'); return; }
   const matches = state.vehicules.filter((v) => normalizeImmat(v.immat).includes(q)).slice(0, 12);
-  if (!matches.length) {
-    vehAutoList.innerHTML = `<div style="padding:14px;text-align:center;color:var(--text-mute);font-size:0.8rem">Aucun résultat</div>`;
-    vehAutoList.classList.add('show');
-    return;
-  }
+  if (!matches.length) { vehAutoList.innerHTML = `<div style="padding:14px;text-align:center;color:var(--text-mute);font-size:0.8rem">Aucun résultat</div>`; vehAutoList.classList.add('show'); return; }
   vehAutoList.innerHTML = matches.map((v) => {
-    const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
-    return `<div class="autocomplete-item" data-id="${v.id}"><span class="ac-immat">${escapeHtml(v.immat)}</span><span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')} · ${escapeHtml(v.site || '—')}</span><span class="ac-status ${pointed ? 'present' : 'absent'}">${pointed ? 'Trouvé' : 'Manquant'}</span></div>`;
+    const site = getSiteActuel(v);
+    return `<div class="autocomplete-item" data-id="${v.id}"><span class="ac-immat">${escapeHtml(v.immat)}</span><span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')} ${site ? '· 📍 ' + escapeHtml(site) : ''}</span><span class="ac-status ${site ? 'present' : 'absent'}">${site || 'Non pointé'}</span></div>`;
   }).join('');
   vehAutoList.classList.add('show');
   $$('.autocomplete-item', vehAutoList).forEach((item) => item.addEventListener('click', () => {
     const v = state.vehicules.find((x) => x.id === item.dataset.id);
     if (!v) return;
-    vehSearchInput.value = v.immat;
-    state.vehFilters.search = v.immat;
-    vehAutoList.classList.remove('show');
-    applyVehFilters();
+    vehSearchInput.value = v.immat; state.vehFilters.search = v.immat;
+    vehAutoList.classList.remove('show'); applyVehFilters();
   }));
 }
 document.addEventListener('click', (e) => { if (!e.target.closest('.search-input-wrap')) vehAutoList.classList.remove('show'); });
@@ -1891,18 +1902,19 @@ function renderVehiculesList() {
     const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
     const srcLabel = SOURCES[v.source] || v.source || '—';
     const isC = v.source === 'custom' || v.isCustom;
-    const siteActuel = getSiteActuel(v);
+    const site = getSiteActuel(v);
     return `<div class="vehicle-card ${pointed ? 'present' : 'absent'}">
       <div class="vehicle-card-main">
-        <div class="vehicle-card-immat">${escapeHtml(v.immat)}
+        <div class="vehicle-card-immat">${escapeHtml(v.immat)}</div>
+        <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+          ${renderSiteBadge(v)}
           <span class="badge ${isC ? 'badge-blue' : 'badge-muted'}">${escapeHtml(srcLabel)}</span>
-          ${siteActuel ? `<span class="badge badge-muted">${escapeHtml(siteActuel)}</span>` : ''}
           ${renderStatutBadge(v, true)}
         </div>
-        <div class="vehicle-card-info">
+        <div class="vehicle-card-info" style="margin-top:8px">
           ${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
           ${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}
-          ${v.refCommande ? `<span>Réf. ${escapeHtml(v.refCommande)}</span>` : ''}
+          ${v.lastSeen ? `<span>Dernière vue : ${formatDateFR(v.lastSeen)}</span>` : ''}
         </div>
       </div>
       <div class="list-item-actions">
@@ -1922,10 +1934,7 @@ function renderVehiculesList() {
       toast('Véhicule supprimé', 'success');
     });
   }));
-  $$('[data-statut-veh]', list).forEach((b) => b.addEventListener('click', (e) => {
-    e.stopPropagation();
-    openStatutModal(b.dataset.statutVeh);
-  }));
+  $$('[data-statut-veh]', list).forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); openStatutModal(b.dataset.statutVeh); }));
 }
 $('#vehLoadMore').addEventListener('click', () => { state.pageVeh++; renderVehiculesList(); });
 
@@ -1972,19 +1981,13 @@ $('#vehSave').addEventListener('click', async () => {
   const immat = normalizeImmat($('#vehImmat').value);
   if (!immat) { toast('Immatriculation obligatoire', 'warning'); return; }
   const id = $('#vehId').value;
-  if (!id && state.vehicules.find((v) => normalizeImmat(v.immat) === immat)) { toast('Cette immatriculation existe déjà', 'warning'); return; }
+  if (!id && state.vehicules.find((v) => normalizeImmat(v.immat) === immat)) { toast('Existe déjà', 'warning'); return; }
   const siteValue = $('#vehSite').value;
-  const statutValue = $('#vehStatut').value || 'non-defini';
   const data = {
-    immat,
-    marque: $('#vehMarque').value.trim(),
-    modele: $('#vehModele').value.trim(),
-    site: siteValue,
-    client: $('#vehClient').value,
-    refCommande: $('#vehRef').value.trim(),
-    typeMaintenance: $('#vehType').value.trim(),
-    statut: statutValue,
-    present: false
+    immat, marque: $('#vehMarque').value.trim(), modele: $('#vehModele').value.trim(),
+    site: siteValue, client: $('#vehClient').value,
+    refCommande: $('#vehRef').value.trim(), typeMaintenance: $('#vehType').value.trim(),
+    statut: $('#vehStatut').value || 'non-defini', present: false
   };
   showLoading('Enregistrement...');
   try {
@@ -1994,30 +1997,12 @@ $('#vehSave').addEventListener('click', async () => {
       await state.db.collection('vehicules').doc(id).update({ ...data, updatedAt: nowIso() });
       toast('Véhicule modifié', 'success');
     } else {
-      // Créer le véhicule
       const newDocRef = await state.db.collection('vehicules').add({ ...data, source: 'custom', isCustom: true, lastSeen: null, createdAt: nowIso() });
-      // Si un site est renseigné → pointage automatique
       if (siteValue) {
-        const userNom = state.currentUser || 'Ajout manuel';
-        await state.db.collection('vehicules').doc(newDocRef.id).update({
-          present: true,
-          lastSeen: nowIso(),
-          site: siteValue
-        });
-        await state.db.collection('pointages').add({
-          vehiculeId: newDocRef.id,
-          immat: immat,
-          userNom: userNom,
-          site: siteValue,
-          timestamp: nowIso(),
-          jour: todayKeyShort(),
-          createdAt: nowIso(),
-          autoPointage: true
-        });
-        toast(`Véhicule ajouté et pointé à ${siteValue}`, 'success');
-      } else {
-        toast('Véhicule ajouté', 'success');
-      }
+        await state.db.collection('vehicules').doc(newDocRef.id).update({ present: true, lastSeen: nowIso(), site: siteValue });
+        await state.db.collection('pointages').add({ vehiculeId: newDocRef.id, immat: immat, userNom: state.currentUser || 'Ajout manuel', site: siteValue, timestamp: nowIso(), jour: todayKeyShort(), createdAt: nowIso(), autoPointage: true });
+        toast(`Ajouté et pointé à ${siteValue}`, 'success');
+      } else toast('Véhicule ajouté', 'success');
     }
     closeModal('modalVehicule');
   } catch (err) { toast('Erreur : ' + err.message, 'error'); }
@@ -2028,53 +2013,40 @@ async function uploadToCloudinary(file) {
   const fd = new FormData();
   fd.append('file', file); fd.append('upload_preset', CLOUDINARY.preset); fd.append('folder', 'ntr-garage');
   const res = await fetch(CLOUDINARY.uploadUrl, { method: 'POST', body: fd });
-  if (!res.ok) throw new Error('Upload Cloudinary échoué');
+  if (!res.ok) throw new Error('Upload échoué');
   return (await res.json()).secure_url;
 }
 
-/* ============================================================
-   MODALE PHOTO CHOIX (camera ou galerie)
-   ============================================================ */
+/* PHOTO CHOICE */
 function openPhotoChoiceModal(vehId) {
-  const v = state.vehicules.find((x) => x.id === vehId);
-  if (!v) return;
+  const v = state.vehicules.find((x) => x.id === vehId); if (!v) return;
   state.photoChoiceVehiculeId = vehId;
   $('#photoChoiceImmat').textContent = v.immat;
   openModal('modalPhotoChoice');
 }
 $$('.photo-choice-btn').forEach((btn) => btn.addEventListener('click', async () => {
-  const mode = btn.dataset.mode;
-  const vehId = state.photoChoiceVehiculeId;
-  closeModal('modalPhotoChoice');
-  if (!vehId) return;
+  const mode = btn.dataset.mode; const vehId = state.photoChoiceVehiculeId;
+  closeModal('modalPhotoChoice'); if (!vehId) return;
   await prendrePhotoVehiculeMode(vehId, mode);
 }));
 
 async function prendrePhotoVehiculeMode(vehId, mode) {
-  const v = state.vehicules.find((x) => x.id === vehId);
-  if (!v) return;
+  const v = state.vehicules.find((x) => x.id === vehId); if (!v) return;
   const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = 'image/*';
+  input.type = 'file'; input.accept = 'image/*';
   if (mode === 'camera') input.capture = 'environment';
   input.onchange = async (ev) => {
-    const file = ev.target.files[0];
-    if (!file) return;
-    showLoading('Upload en cours...');
+    const file = ev.target.files[0]; if (!file) return;
+    showLoading('Upload...');
     try {
       const url = await uploadToCloudinary(file);
       await state.db.collection('vehicules').doc(vehId).update({ photo: url, photoUpdatedAt: nowIso() });
-      hideLoading();
-      toast(`Photo ajoutée pour ${v.immat}`, 'success');
-    } catch (err) { hideLoading(); toast('Erreur upload : ' + err.message, 'error'); }
+      hideLoading(); toast(`Photo ajoutée pour ${v.immat}`, 'success');
+    } catch (err) { hideLoading(); toast('Erreur : ' + err.message, 'error'); }
   };
   input.click();
 }
-
-async function prendrePhotoVehicule(vehId) {
-  // Ouvre la modale de choix (camera / galerie)
-  openPhotoChoiceModal(vehId);
-}
+async function prendrePhotoVehicule(vehId) { openPhotoChoiceModal(vehId); }
 
 function updatePhotoMissingBanner() {
   const banner = $('#photoMissingBanner'); if (!banner) return;
@@ -2084,40 +2056,25 @@ function updatePhotoMissingBanner() {
   if (missing.length > 0) banner.classList.remove('hidden'); else banner.classList.add('hidden');
 }
 
-/* ============================================================
-   MODALE STATUT
-   ============================================================ */
+/* STATUT */
 function openStatutModal(vehId) {
-  const v = state.vehicules.find((x) => x.id === vehId);
-  if (!v) return;
+  const v = state.vehicules.find((x) => x.id === vehId); if (!v) return;
   state.statutModalVehiculeId = vehId;
   state.statutModalSelected = getStatutVehicule(v);
   $('#statutImmat').textContent = v.immat;
-  renderStatutOptions();
-  openModal('modalStatut');
+  renderStatutOptions(); openModal('modalStatut');
 }
-function renderStatutOptions() {
-  $$('#statutOptions .statut-option').forEach((el) => {
-    el.classList.toggle('selected', el.dataset.value === state.statutModalSelected);
-  });
-}
-$$('#statutOptions .statut-option').forEach((el) => el.addEventListener('click', () => {
-  state.statutModalSelected = el.dataset.value;
-  renderStatutOptions();
-}));
+function renderStatutOptions() { $$('#statutOptions .statut-option').forEach((el) => el.classList.toggle('selected', el.dataset.value === state.statutModalSelected)); }
+$$('#statutOptions .statut-option').forEach((el) => el.addEventListener('click', () => { state.statutModalSelected = el.dataset.value; renderStatutOptions(); }));
 $('#statutSave').addEventListener('click', async () => {
-  const vehId = state.statutModalVehiculeId;
-  if (!vehId) return;
+  const vehId = state.statutModalVehiculeId; if (!vehId) return;
   try {
     await state.db.collection('vehicules').doc(vehId).update({ statut: state.statutModalSelected, updatedAt: nowIso() });
-    closeModal('modalStatut');
-    toast('Statut mis à jour', 'success');
+    closeModal('modalStatut'); toast('Statut mis à jour', 'success');
   } catch (e) { toast('Erreur : ' + e.message, 'error'); }
 });
 
-/* ============================================================
-   POINTAGES
-   ============================================================ */
+/* POINTAGES */
 function listenPointages() {
   if (!state.db) return;
   const today = todayKeyShort();
@@ -2129,7 +2086,9 @@ function listenPointages() {
     state.lastPointageCount = newPointages.length;
     aggregatePointages();
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
+    if ($('#tab-ou-est').classList.contains('active')) renderOuEst();
     if ($('#tab-manquants').classList.contains('active')) renderManquants();
+    if ($('#tab-vehicules').classList.contains('active')) applyVehFilters();
     renderAutruiSection();
     updatePhotoMissingBanner();
     if (prevCount > 0 && newPointages.length > prevCount) {
@@ -2138,15 +2097,34 @@ function listenPointages() {
       if (others.length && document.visibilityState === 'visible') {
         const first = others[0];
         if (others.length === 1) toast(`${first.userNom} vient de pointer ${first.immat} à ${first.site}`, 'info');
-        else toast(`${others.length} nouveaux pointages par vos collègues`, 'info');
+        else toast(`${others.length} nouveaux pointages`, 'info');
       }
     }
   }, (err) => console.warn('[pointages]', err));
   state.unsubscribers.push(unsub);
 }
+
+/* IMPORTANT : Charger aussi les pointages récents (30 derniers jours) pour la mémoire locale */
+function listenPointagesHistory() {
+  if (!state.db) return;
+  const since = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
+  const ref = state.db.collection('pointages').where('jour', '>=', since).orderBy('jour', 'desc');
+  const unsub = ref.onSnapshot((snap) => {
+    const allPointages = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    // Fusionner avec les pointages du jour (pour éviter les doublons)
+    const map = new Map();
+    allPointages.forEach((p) => map.set(p.id, p));
+    state.pointages.forEach((p) => map.set(p.id, p));
+    state.pointages = Array.from(map.values());
+    aggregatePointages();
+    if ($('#tab-ou-est').classList.contains('active')) renderOuEst();
+    if ($('#tab-vehicules').classList.contains('active')) applyVehFilters();
+  }, (err) => console.warn('[pointagesHistory]', err));
+  state.unsubscribers.push(unsub);
+}
+
 function aggregatePointages() {
-  state.myPointages = new Map();
-  state.otherPointages = new Map();
+  state.myPointages = new Map(); state.otherPointages = new Map();
   const user = state.currentUser || '';
   state.pointages.forEach((p) => {
     if (p.userNom === user) {
@@ -2161,14 +2139,7 @@ function aggregatePointages() {
 function getPointageOfficiel(vehiculeId) {
   const all = state.pointages.filter((p) => p.vehiculeId === vehiculeId);
   if (!all.length) return null;
-  return all.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0];
-}
-function getSiteActuel(vehicule) {
-  if (!vehicule) return null;
-  const officiel = getPointageOfficiel(vehicule.id);
-  if (officiel && officiel.site) return officiel.site;
-  if (vehicule.site) return vehicule.site;
-  return null;
+  return all.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
 }
 
 function renderPointage() {
@@ -2186,7 +2157,7 @@ function renderPointage() {
   const pageItems = items.slice(0, shown);
   if (!total) {
     list.innerHTML = '';
-    if (empty) { empty.classList.remove('hidden'); empty.querySelector('.es-title').textContent = search ? 'Aucun véhicule trouvé' : (state.pointageStatus === 'pending' ? 'Tout est pointé' : 'Aucun véhicule'); }
+    if (empty) { empty.classList.remove('hidden'); empty.querySelector('.es-title').textContent = search ? 'Aucun véhicule trouvé' : 'Aucun véhicule'; }
     if (pag) pag.classList.add('hidden');
   } else {
     if (empty) empty.classList.add('hidden');
@@ -2200,13 +2171,9 @@ function renderPointage() {
       return `<div class="pointage-item ${mine ? 'pointed' : ''} ${recent ? 'recent' : ''}" data-veh="${v.id}">
         <div class="pi-check">${mine ? '✓' : ''}</div>
         <div class="pi-main">
-          <div class="pi-immat">${escapeHtml(v.immat)}
-            ${mine ? '<span class="pi-mine">Mon pointage</span>' : ''}
-            ${others.length ? `<span class="pi-multi">+${others.length}</span>` : ''}
-          </div>
+          <div class="pi-immat">${escapeHtml(v.immat)}${mine ? '<span class="pi-mine">Mon pointage</span>' : ''}${others.length ? `<span class="pi-multi">+${others.length}</span>` : ''}</div>
           <div class="pi-info">
             ${v.marque || v.modele ? `<span>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
-            ${v.client ? `<span>Client : ${escapeHtml(v.client)}</span>` : ''}
             ${renderStatutBadge(v, true)}
           </div>
         </div>
@@ -2217,41 +2184,33 @@ function renderPointage() {
     if (pag) { if (shown < total) { pag.classList.remove('hidden'); $('#pointagePgInfo').textContent = `${shown} sur ${total}`; } else pag.classList.add('hidden'); }
     $$('.pointage-item', list).forEach((item) => item.addEventListener('click', (e) => {
       if (e.target.closest('[data-photo-veh]') || e.target.closest('[data-statut-veh]')) return;
-      e.stopPropagation();
-      handlePointage(item.dataset.veh);
+      e.stopPropagation(); handlePointage(item.dataset.veh);
     }));
     $$('[data-photo-veh]', list).forEach((btn) => btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const vehId = btn.dataset.photoVeh;
-      const v = state.vehicules.find((x) => x.id === vehId);
-      if (!v) return;
-      if (v.photo && v.photo.length > 0) openLightbox(vehId);
-      else prendrePhotoVehicule(vehId);
+      e.stopPropagation(); const vehId = btn.dataset.photoVeh;
+      const v = state.vehicules.find((x) => x.id === vehId); if (!v) return;
+      if (v.photo && v.photo.length > 0) openLightbox(vehId); else prendrePhotoVehicule(vehId);
     }));
-    $$('[data-statut-veh]', list).forEach((btn) => btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openStatutModal(btn.dataset.statutVeh);
-    }));
+    $$('[data-statut-veh]', list).forEach((btn) => btn.addEventListener('click', (e) => { e.stopPropagation(); openStatutModal(btn.dataset.statutVeh); }));
   }
-  updatePointageCounters();
-  updatePhotoMissingBanner();
+  updatePointageCounters(); updatePhotoMissingBanner();
 }
 $('#pointageLoadMore').addEventListener('click', () => { state.pagePointage++; renderPointage(); });
 function updatePointageCounters() {
   const total = state.vehicules.length;
   const mine = state.myPointages.size;
-  const uniqueVehicules = new Set(state.pointages.map((p) => p.vehiculeId));
+  const uniqueVehicules = new Set(state.pointages.filter((p) => p.jour === todayKeyShort()).map((p) => p.vehiculeId));
   const global = uniqueVehicules.size;
   const counterMine = $('#pointageCounterMine'); const counterGlobal = $('#pointageCounterGlobal');
   if (counterMine) counterMine.textContent = `Moi : ${mine}`;
   if (counterGlobal) { counterGlobal.textContent = `Équipe : ${global} / ${total}`; counterGlobal.classList.toggle('done', total > 0 && global === total); }
   const btnTerminer = $('#btnTerminer'); if (btnTerminer) btnTerminer.classList.toggle('show', global > 0);
 }
+
 async function handlePointage(vehId) {
-  if (!state.currentUser) { toast('Sélectionnez un utilisateur dans le header', 'warning'); return; }
-  if (!state.pointageSite) { toast('Sélectionnez un site avant de pointer', 'warning'); return; }
-  const v = state.vehicules.find((x) => x.id === vehId);
-  if (!v) return;
+  if (!state.currentUser) { toast('Sélectionnez un utilisateur', 'warning'); return; }
+  if (!state.pointageSite) { toast('Sélectionnez un site', 'warning'); return; }
+  const v = state.vehicules.find((x) => x.id === vehId); if (!v) return;
   const isMine = state.myPointages.has(vehId);
   state.pointageRecent[vehId] = Date.now();
   try {
@@ -2260,16 +2219,14 @@ async function handlePointage(vehId) {
       for (const p of toDelete) await state.db.collection('pointages').doc(p.id).delete();
       toast(`${v.immat} démarqué`, 'info');
     } else {
-      const lastSite = v.site;
-      const newSite = state.pointageSite;
+      const lastSite = v.site; const newSite = state.pointageSite;
       if (lastSite && lastSite !== newSite) {
         try { await state.db.collection('mouvements').add({ vehiculeId: vehId, immat: v.immat, fromSite: lastSite, toSite: newSite, userNom: state.currentUser, timestamp: nowIso(), jour: todayKeyShort() }); } catch (e) {}
       }
       await state.db.collection('pointages').add({ vehiculeId: vehId, immat: v.immat, userNom: state.currentUser, site: newSite, timestamp: nowIso(), jour: todayKeyShort(), createdAt: nowIso() });
+      await state.db.collection('vehicules').doc(vehId).update({ present: true, lastSeen: nowIso(), site: newSite });
       toast(`${v.immat} trouvé à ${newSite}`, 'success');
       try { playBeep(); } catch (e) {}
-      const officiel = getPointageOfficiel(vehId);
-      if (!officiel) await state.db.collection('vehicules').doc(vehId).update({ present: true, lastSeen: nowIso(), site: newSite });
     }
     setTimeout(() => { delete state.pointageRecent[vehId]; }, 2000);
   } catch (err) { toast('Erreur : ' + err.message, 'error'); }
@@ -2278,34 +2235,19 @@ $('#pointageSite').addEventListener('change', (e) => { state.pointageSite = e.ta
 $$('#pointageStatusChips .chip').forEach((chip) => {
   chip.addEventListener('click', () => {
     $$('#pointageStatusChips .chip').forEach((c) => c.classList.remove('active'));
-    chip.classList.add('active');
-    state.pointageStatus = chip.dataset.pstatus;
-    state.pagePointage = 1;
-    renderPointage();
+    chip.classList.add('active'); state.pointageStatus = chip.dataset.pstatus; state.pagePointage = 1; renderPointage();
   });
 });
-$('#pointageSearch').addEventListener('input', (e) => {
-  $('#pointageClear').classList.toggle('show', e.target.value.length > 0);
-  showPointageAutocomplete(e.target.value);
-  state.pagePointage = 1;
-  renderPointage();
-});
+$('#pointageSearch').addEventListener('input', (e) => { $('#pointageClear').classList.toggle('show', e.target.value.length > 0); showPointageAutocomplete(e.target.value); state.pagePointage = 1; renderPointage(); });
 $('#pointageSearch').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); executePointageSearch(); } });
 $('#pointageSearchBtn').addEventListener('click', executePointageSearch);
 function executePointageSearch() {
-  const q = $('#pointageSearch').value.trim();
-  state.pagePointage = 1;
-  renderPointage();
-  if (q) {
-    const count = state.vehicules.filter((v) => normalizeImmat(v.immat).includes(normalizeImmat(q))).length;
-    if (count === 0) toast(`Aucun véhicule trouvé pour "${q}"`, 'warning');
-    else toast(`${count} véhicule(s) trouvé(s)`, 'success');
-  }
+  const q = $('#pointageSearch').value.trim(); state.pagePointage = 1; renderPointage();
+  if (q) { const count = state.vehicules.filter((v) => normalizeImmat(v.immat).includes(normalizeImmat(q))).length; if (count === 0) toast(`Aucun véhicule`, 'warning'); else toast(`${count} trouvé(s)`, 'success'); }
 }
 $('#pointageClear').addEventListener('click', () => { $('#pointageSearch').value = ''; $('#pointageClear').classList.remove('show'); $('#pointageAutocomplete').classList.remove('show'); state.pagePointage = 1; renderPointage(); });
 function showPointageAutocomplete(query) {
-  const q = normalizeImmat(query);
-  const l = $('#pointageAutocomplete');
+  const q = normalizeImmat(query); const l = $('#pointageAutocomplete');
   if (!q) { l.classList.remove('show'); return; }
   const matches = state.vehicules.filter((v) => normalizeImmat(v.immat).includes(q)).slice(0, 12);
   if (!matches.length) { l.classList.remove('show'); return; }
@@ -2315,11 +2257,8 @@ function showPointageAutocomplete(query) {
   }).join('');
   l.classList.add('show');
   $$('.autocomplete-item', l).forEach((item) => item.addEventListener('click', () => {
-    const v = state.vehicules.find((x) => x.id === item.dataset.id);
-    if (!v) return;
-    $('#pointageSearch').value = v.immat;
-    l.classList.remove('show');
-    handlePointage(v.id);
+    const v = state.vehicules.find((x) => x.id === item.dataset.id); if (!v) return;
+    $('#pointageSearch').value = v.immat; l.classList.remove('show'); handlePointage(v.id);
   }));
 }
 document.addEventListener('click', (e) => { if (!e.target.closest('#pointageSearch') && !e.target.closest('#pointageAutocomplete')) $('#pointageAutocomplete').classList.remove('show'); });
@@ -2327,7 +2266,7 @@ document.addEventListener('click', (e) => { if (!e.target.closest('#pointageSear
 function renderAutruiSection() {
   const list = $('#autruiList'); const count = $('#autruiCount'); if (!list) return;
   const byUser = {}; const me = state.currentUser;
-  state.pointages.forEach((p) => {
+  state.pointages.filter((p) => p.jour === todayKeyShort()).forEach((p) => {
     if (p.userNom === me) return;
     if (!byUser[p.userNom]) byUser[p.userNom] = { count: 0, sites: new Set() };
     byUser[p.userNom].count++; byUser[p.userNom].sites.add(p.site);
@@ -2340,115 +2279,180 @@ function renderAutruiSection() {
 document.addEventListener('click', (e) => { const header = e.target.closest('#autruiHeader'); if (header) header.parentElement.classList.toggle('open'); });
 
 /* ============================================================
-   PHOTO SÉRIE
+   NOUVEL ONGLET : OÙ EST ?
    ============================================================ */
-let photoSerieQueue = []; let photoSerieIndex = 0;
-function openPhotoSerie() {
-  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  photoSerieQueue = state.vehicules.filter((v) => pointedIds.has(v.id) && !v.photo).sort((a, b) => a.immat.localeCompare(b.immat));
-  photoSerieIndex = 0;
-  if (!photoSerieQueue.length) { toast('Aucun véhicule à photographier', 'success'); return; }
-  openModal('modalPhotoSerie');
-  updatePhotoSerieView();
-}
-function updatePhotoSerieView() {
-  const total = photoSerieQueue.length; const current = photoSerieIndex;
-  const pct = total ? Math.round((current / total) * 100) : 0;
-  $('#photoSerieProgress').textContent = `${current} / ${total}`;
-  $('#photoSerieBar').style.width = pct + '%';
-  if (current >= total) {
-    $('#photoSerieImmat').textContent = '✓'; $('#photoSerieInfo').textContent = 'Toutes les photos ont été prises';
-    $('#photoSerieSite').textContent = ''; $('#photoSeriePreview').innerHTML = '';
-    $('#photoSeriePrendre').classList.add('hidden'); $('#photoSerieSuivant').classList.add('hidden');
-    setTimeout(() => { closeModal('modalPhotoSerie'); toast(`${total} photo(s) ajoutée(s)`, 'success'); }, 1200);
+function renderOuEst() {
+  const q = normalizeImmat($('#whereSearch').value);
+  const result = $('#whereResult'); const empty = $('#whereEmpty');
+  if (!result) return;
+  if (!q) {
+    result.innerHTML = ''; if (empty) empty.classList.remove('hidden'); return;
+  }
+  if (empty) empty.classList.add('hidden');
+  const v = state.vehicules.find((x) => normalizeImmat(x.immat) === q);
+  if (!v) {
+    result.innerHTML = `<div class="where-result-card"><div class="empty-state"><div class="es-ico">🔍</div><div class="es-title">Aucun véhicule trouvé</div><div class="es-sub">L'immatriculation "${escapeHtml(q)}" n'existe pas dans la base</div></div></div>`;
     return;
   }
-  const v = photoSerieQueue[current];
-  $('#photoSerieImmat').textContent = v.immat;
-  $('#photoSerieInfo').textContent = [v.marque, v.modele].filter(Boolean).join(' ') || '—';
-  $('#photoSerieSite').textContent = v.site || '—';
-  $('#photoSeriePreview').innerHTML = '';
-  $('#photoSeriePrendre').classList.remove('hidden');
-  $('#photoSerieSuivant').classList.add('hidden');
+  renderWhereResult(v);
 }
-$('#btnPhotoSerie').addEventListener('click', openPhotoSerie);
-$('#photoSeriePrendre').addEventListener('click', () => {
-  const v = photoSerieQueue[photoSerieIndex]; if (!v) return;
-  const input = document.createElement('input');
-  input.type = 'file'; input.accept = 'image/*';
-  input.onchange = async (ev) => {
-    const file = ev.target.files[0]; if (!file) return;
-    showLoading('Upload en cours...');
-    try {
-      const url = await uploadToCloudinary(file);
-      await state.db.collection('vehicules').doc(v.id).update({ photo: url, photoUpdatedAt: nowIso() });
-      hideLoading();
-      $('#photoSeriePreview').innerHTML = `<img src="${url}" style="width:100%;border-radius:6px">`;
-      $('#photoSeriePrendre').classList.add('hidden'); $('#photoSerieSuivant').classList.remove('hidden');
-      toast(`Photo ajoutée : ${v.immat}`, 'success');
-    } catch (err) { hideLoading(); toast('Erreur upload : ' + err.message, 'error'); }
-  };
-  input.click();
-});
-$('#photoSerieSuivant').addEventListener('click', () => { photoSerieIndex++; updatePhotoSerieView(); });
 
-/* ============================================================
-   RÉCAP
-   ============================================================ */
-$('#btnTerminer').addEventListener('click', () => { renderRecapModal(); openModal('modalRecap'); });
-function computeRondeStats() {
-  const all = state.vehicules; const total = all.length;
-  const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  const found = all.filter((v) => pointedIds.has(v.id));
-  const manquants = all.filter((v) => !pointedIds.has(v.id));
-  const bySource = {};
-  ['source1', 'source2', 'custom'].forEach((src) => {
-    const allSrc = all.filter((v) => v.source === src); const foundSrc = found.filter((v) => v.source === src); const missSrc = manquants.filter((v) => v.source === src);
-    if (allSrc.length > 0) bySource[src] = { total: allSrc.length, found: foundSrc.length, manquants: missSrc.length, taux: allSrc.length ? Math.round((foundSrc.length / allSrc.length) * 100) : 0 };
+function renderWhereResult(v) {
+  const result = $('#whereResult'); if (!result) return;
+  const siteActuel = getSiteActuel(v);
+  const dernierPointage = getPointageOfficiel(v.id);
+  const pointagesVehicule = state.pointages
+    .filter((p) => p.vehiculeId === v.id)
+    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+    .slice(0, 20);
+  const mouvementsVehicule = state.mouvements
+    .filter((m) => m.vehiculeId === v.id)
+    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+    .slice(0, 20);
+  const statut = STATUTS[getStatutVehicule(v)];
+
+  const photoHtml = v.photo
+    ? `<img src="${escapeHtml(v.photo)}" class="wh-photo" alt="">`
+    : `<div class="wh-photo">🚗</div>`;
+
+  const siteBoxHtml = siteActuel
+    ? `<div class="where-site-box">
+        <div class="ws-icon">📍</div>
+        <div class="ws-text">
+          <div class="ws-label">Site actuel</div>
+          <div class="ws-value">${escapeHtml(siteActuel)}</div>
+          ${dernierPointage ? `<div class="ws-sub">Vu le ${formatDateTimeFR(dernierPointage.timestamp)} par ${escapeHtml(dernierPointage.userNom)}</div>` : ''}
+        </div>
+      </div>`
+    : `<div class="where-site-box not-found">
+        <div class="ws-icon">❓</div>
+        <div class="ws-text">
+          <div class="ws-label">Site actuel</div>
+          <div class="ws-value">Non pointé</div>
+          <div class="ws-sub">Ce véhicule n'a jamais été pointé ou ses pointages ont été effacés</div>
+        </div>
+      </div>`;
+
+  const timelineItems = [];
+  pointagesVehicule.forEach((p) => {
+    timelineItems.push({
+      date: p.timestamp,
+      type: 'pointage',
+      html: `📍 Pointé à <strong>${escapeHtml(p.site)}</strong> par ${escapeHtml(p.userNom)}`
+    });
   });
-  const bySite = {};
-  found.forEach((v) => { const s = getSiteActuel(v) || '— Sans site —'; if (!bySite[s]) bySite[s] = 0; bySite[s]++; });
-  const byUser = {};
-  state.pointages.forEach((p) => { if (!byUser[p.userNom]) byUser[p.userNom] = 0; byUser[p.userNom]++; });
-  return { total, found: found.length, manquants: manquants.length, tauxGlobal: total ? Math.round((found.length / total) * 100) : 0, bySource, bySite, byUser, sitesVisited: Object.keys(bySite).filter((s) => s !== '— Sans site —') };
-}
-function renderRecapModal() {
-  const s = computeRondeStats(); const now = new Date();
-  const heure = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); const date = now.toLocaleDateString('fr-FR');
-  const sourcesTags = Object.entries(s.bySource).map(([src, data]) => `<span class="rs-tag">${escapeHtml(SOURCES[src] || src)} : ${data.found}/${data.total}</span>`).join('');
-  const sourceRows = Object.entries(s.bySource).map(([src, data]) => { const label = SOURCES[src] || src; return `<tr><td><strong>${escapeHtml(label)}</strong></td><td>${data.total}</td><td style="color:var(--success)">${data.found}</td><td style="color:var(--danger)">${data.manquants}</td><td>${data.taux}%</td></tr>`; }).join('');
-  const siteRows = Object.entries(s.bySite).sort((a, b) => b[1] - a[1]).map(([site, count]) => { const pct = s.found ? Math.round((count / s.found) * 100) : 0; return `<tr><td><strong>${escapeHtml(site)}</strong></td><td style="color:var(--success)">${count}</td><td>${pct}%</td></tr>`; }).join('') || '<tr><td colspan="3" style="text-align:center;color:var(--text-mute);padding:14px">Aucun véhicule pointé</td></tr>';
-  const userRows = Object.entries(s.byUser).sort((a, b) => b[1] - a[1]).map(([nom, count]) => `<tr><td>${escapeHtml(nom)}</td><td style="color:var(--primary)">${count}</td></tr>`).join('');
-  $('#recapBody').innerHTML = `
-    <div class="recap-hero"><p class="rh-number">${s.found} / ${s.total}</p><p class="rh-label">Véhicules trouvés</p><div class="recap-sources">${sourcesTags}</div></div>
-    <div class="recap-grid"><div class="recap-card"><div class="rc-num">${s.total}</div><div class="rc-label">Total attendus</div></div><div class="recap-card success"><div class="rc-num">${s.found}</div><div class="rc-label">Trouvés (${s.tauxGlobal}%)</div></div><div class="recap-card danger"><div class="rc-num">${s.manquants}</div><div class="rc-label">Manquants</div></div></div>
-    <div class="card"><div class="card-title">Bilan par source</div><table class="bilan-table"><thead><tr><th>Source</th><th>Total</th><th>Trouvés</th><th>Manquants</th><th>Taux</th></tr></thead><tbody>${sourceRows || '<tr><td colspan="5" style="text-align:center;color:var(--text-mute);padding:14px">Aucune donnée</td></tr>'}</tbody></table></div>
-    <div class="card"><div class="card-title">Répartition par site</div><table class="bilan-table"><thead><tr><th>Site</th><th>Véhicules</th><th>Part</th></tr></thead><tbody>${siteRows}</tbody></table></div>
-    ${userRows ? `<div class="card"><div class="card-title">Contribution par utilisateur</div><table class="bilan-table"><thead><tr><th>Utilisateur</th><th>Pointages</th></tr></thead><tbody>${userRows}</tbody></table></div>` : ''}
-    <div class="card" style="background:var(--bg-3)"><div style="font-size:0.78rem;color:var(--text-dim);line-height:1.8"><div>Ronde effectuée par : <strong style="color:var(--text)">${escapeHtml(state.currentUser || '—')}</strong></div><div>Date : ${date} à ${heure}</div></div></div>`;
-}
-$('#recapShowManquants').addEventListener('click', () => { closeModal('modalRecap'); switchTab('manquants'); });
-$('#recapExportPdf').addEventListener('click', () => exportRecapPDF(computeRondeStats()));
-$('#recapTerminer').addEventListener('click', async () => {
-  const s = computeRondeStats();
-  const ok = await confirmDialog('Terminer la ronde ?', `${s.found} trouvés sur ${s.total}`);
-  if (!ok) return;
-  showLoading('Enregistrement...');
-  try {
-    const now = nowIso();
-    const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-    const found = state.vehicules.filter((v) => pointedIds.has(v.id));
-    const snapshot = found.map((v) => { const ps = state.pointages.filter((p) => p.vehiculeId === v.id); const first = ps.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))[0]; return { id: v.id, immat: v.immat, marque: v.marque || '', modele: v.modele || '', client: v.client || '', site: first?.site || v.site || '', present: true }; });
-    await state.db.collection('rondes').add({ date: todayKey(), heureDebut: now, heureFin: now, effectueePar: state.currentUser || '—', site: s.sitesVisited.join(', ') || '—', note: '', statut: 'terminee', mode: 'ronde_collaborative', vehicules: found.map((v) => v.id), vehiculesSnapshot: snapshot, dureeSecondes: null, stats: { total: s.total, presents: s.found, absents: s.manquants, taux: s.tauxGlobal, sitesVisites: s.sitesVisited.length, repartitionSites: s.bySite, contributions: s.byUser }, createdAt: now });
-    hideLoading(); closeModal('modalRecap');
-    toast(`Ronde enregistrée · ${s.found}/${s.total}`, 'success');
-    renderPointage();
-  } catch (err) { hideLoading(); toast('Erreur : ' + err.message, 'error'); }
-});
+  mouvementsVehicule.forEach((m) => {
+    timelineItems.push({
+      date: m.timestamp,
+      type: 'mouvement',
+      html: `🔄 Déplacé de <strong>${escapeHtml(m.fromSite)}</strong> → <strong style="color:var(--primary)">${escapeHtml(m.toSite)}</strong> par ${escapeHtml(m.userNom)}`
+    });
+  });
+  timelineItems.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-/* ============================================================
-   MANQUANTS
-   ============================================================ */
+  const timelineHtml = timelineItems.length
+    ? `<div class="card"><div class="card-title">📜 Historique (${timelineItems.length})</div><div class="timeline">${timelineItems.slice(0, 20).map((it) => `<div class="timeline-item"><div class="timeline-date">${formatDateTimeFR(it.date)}</div><div class="timeline-content">${it.html}</div></div>`).join('')}</div></div>`
+    : `<div class="card"><div class="card-title">📜 Historique</div><div style="text-align:center;color:var(--text-mute);padding:14px;font-size:0.82rem">Aucun historique</div></div>`;
+
+  result.innerHTML = `
+    <div class="where-result-card">
+      <div class="where-hero">
+        ${photoHtml}
+        <div class="wh-info">
+          <div class="wh-immat">${escapeHtml(v.immat)}</div>
+          <div class="wh-details">
+            ${v.marque || v.modele ? `<span>🚘 ${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
+            ${v.client ? `<span>👤 ${escapeHtml(v.client)}</span>` : ''}
+            ${v.refCommande ? `<span>🔖 Réf. ${escapeHtml(v.refCommande)}</span>` : ''}
+          </div>
+          <div style="margin-top:10px">${renderStatutBadge(v, true)}</div>
+        </div>
+      </div>
+
+      ${siteBoxHtml}
+
+      <div class="where-info-grid">
+        <div class="where-info-item">
+          <div class="wii-label">Source</div>
+          <div class="wii-value">${escapeHtml(SOURCES[v.source] || v.source || '—')}</div>
+        </div>
+        <div class="where-info-item">
+          <div class="wii-label">Type maintenance</div>
+          <div class="wii-value">${escapeHtml(v.typeMaintenance || '—')}</div>
+        </div>
+        <div class="where-info-item">
+          <div class="wii-label">Dernière vue</div>
+          <div class="wii-value">${v.lastSeen ? formatDateFR(v.lastSeen) : 'Jamais'}</div>
+        </div>
+        <div class="where-info-item">
+          <div class="wii-label">Ajouté le</div>
+          <div class="wii-value">${v.createdAt ? formatDateFR(v.createdAt) : '—'}</div>
+        </div>
+      </div>
+
+      <div class="where-actions">
+        ${v.photo ? `<button class="btn btn-primary btn-sm" id="whereViewPhoto">📸 Voir la photo</button>` : ''}
+        <button class="btn btn-blue btn-sm" id="whereGoToVehicle">📋 Voir dans la liste</button>
+        <button class="btn btn-warning btn-sm" id="whereChangeStatut">${statut.icon} Changer statut</button>
+      </div>
+    </div>
+    ${timelineHtml}
+  `;
+
+  // Bind actions
+  const photoBtn = $('#whereViewPhoto');
+  if (photoBtn) photoBtn.addEventListener('click', () => openLightbox(v.id));
+  const goBtn = $('#whereGoToVehicle');
+  if (goBtn) goBtn.addEventListener('click', () => {
+    $('#vehSearch').value = v.immat;
+    state.vehFilters.search = v.immat;
+    $('#vehSearchClear').classList.add('show');
+    applyVehFilters();
+    switchTab('vehicules');
+  });
+  const stBtn = $('#whereChangeStatut');
+  if (stBtn) stBtn.addEventListener('click', () => openStatutModal(v.id));
+}
+
+const whereSearchInput = $('#whereSearch');
+const whereSearchClear = $('#whereSearchClear');
+const whereAutoList = $('#whereAutocomplete');
+const whereSearchBtn = $('#whereSearchBtn');
+
+function executeWhereSearch() {
+  renderOuEst();
+  const q = whereSearchInput.value.trim();
+  if (q) { const v = state.vehicules.find((x) => normalizeImmat(x.immat) === normalizeImmat(q)); if (!v) toast(`Aucun véhicule "${q}"`, 'warning'); }
+}
+whereSearchBtn.addEventListener('click', executeWhereSearch);
+whereSearchInput.addEventListener('input', (e) => {
+  const v = e.target.value;
+  whereSearchClear.classList.toggle('show', v.length > 0);
+  showWhereAutocomplete(v);
+  renderOuEst();
+});
+whereSearchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); whereSearchBtn.click(); } });
+whereSearchClear.addEventListener('click', () => { whereSearchInput.value = ''; whereSearchClear.classList.remove('show'); whereAutoList.classList.remove('show'); renderOuEst(); });
+
+function showWhereAutocomplete(query) {
+  const q = normalizeImmat(query); if (!q) { whereAutoList.classList.remove('show'); return; }
+  const matches = state.vehicules.filter((v) => normalizeImmat(v.immat).includes(q)).slice(0, 12);
+  if (!matches.length) { whereAutoList.classList.remove('show'); return; }
+  whereAutoList.innerHTML = matches.map((v) => {
+    const site = getSiteActuel(v);
+    return `<div class="autocomplete-item" data-id="${v.id}"><span class="ac-immat">${escapeHtml(v.immat)}</span><span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}</span><span class="ac-status ${site ? 'present' : 'absent'}">${site ? '📍 ' + escapeHtml(site) : 'Non pointé'}</span></div>`;
+  }).join('');
+  whereAutoList.classList.add('show');
+  $$('.autocomplete-item', whereAutoList).forEach((item) => item.addEventListener('click', () => {
+    const v = state.vehicules.find((x) => x.id === item.dataset.id); if (!v) return;
+    whereSearchInput.value = v.immat; whereAutoList.classList.remove('show'); renderOuEst();
+  }));
+}
+document.addEventListener('click', (e) => { if (!e.target.closest('#whereSearch') && !e.target.closest('#whereAutocomplete')) whereAutoList.classList.remove('show'); });
+
+setupVoiceSearch('whereMic', 'whereSearch', (text) => { renderOuEst(); toast(`Recherche : ${text}`, 'success'); });
+
+/* MANQUANTS */
 function renderManquants() {
   const filter = state.manquantsFilterSource || '';
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
@@ -2477,162 +2481,104 @@ $('#btnManquantsExportXls').addEventListener('click', () => {
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   let list = state.vehicules.filter((v) => !pointedIds.has(v.id));
   if (state.manquantsFilterSource) list = list.filter((v) => v.source === state.manquantsFilterSource);
-  if (!list.length) { toast('Aucun véhicule manquant', 'warning'); return; }
+  if (!list.length) { toast('Aucun manquant', 'warning'); return; }
   const rows = list.map((v) => ({ 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '', 'Source': SOURCES[v.source] || v.source || '' }));
   exportExcel(rows, `NTR_Manquants_${todayKey()}.xlsx`, 'Manquants');
 });
 
-/* ============================================================
-   GALERIE PAR SITE (option A)
-   ============================================================ */
+/* GALERIE */
 let galSelectionMode = false; let galSelected = new Set();
-
 async function downloadPhotoFromGallery(vehId, immatSafe) {
-  const v = state.vehicules.find((x) => x.id === vehId);
-  if (!v || !v.photo) { toast('Photo introuvable', 'warning'); return; }
+  const v = state.vehicules.find((x) => x.id === vehId); if (!v || !v.photo) return;
   try {
-    const res = await fetch(v.photo, { mode: 'cors' });
-    const blob = await res.blob();
+    const res = await fetch(v.photo, { mode: 'cors' }); const blob = await res.blob();
     const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg';
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url; a.download = `NTR_${immatSafe || v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 2000);
-    toast(`Photo de ${v.immat} téléchargée`, 'success');
-  } catch (err) { window.open(v.photo, '_blank'); toast('Ouverture dans un nouvel onglet', 'info'); }
+    toast(`Photo téléchargée`, 'success');
+  } catch (err) { window.open(v.photo, '_blank'); }
 }
-function toggleGalSelectionMode() {
-  galSelectionMode = !galSelectionMode;
-  if (!galSelectionMode) galSelected.clear();
-  const btn = $('#btnGalSelectToggle');
-  if (btn) btn.textContent = galSelectionMode ? 'Annuler la sélection' : 'Sélectionner';
-  renderGalerie();
-}
+function toggleGalSelectionMode() { galSelectionMode = !galSelectionMode; if (!galSelectionMode) galSelected.clear(); const btn = $('#btnGalSelectToggle'); if (btn) btn.textContent = galSelectionMode ? 'Annuler' : 'Sélectionner'; renderGalerie(); }
 async function downloadSelectedPhotos() {
   if (!galSelected.size) return;
   const photos = [...galSelected].map((id) => state.vehicules.find((v) => v.id === id)).filter((v) => v && v.photo);
-  if (!photos.length) { toast('Aucune photo', 'warning'); return; }
-  showLoading(`Téléchargement de ${photos.length} photo(s)...`);
+  if (!photos.length) return;
+  showLoading(`Téléchargement...`);
   let done = 0;
   for (const v of photos) {
     try {
-      const res = await fetch(v.photo, { mode: 'cors' });
-      const blob = await res.blob();
+      const res = await fetch(v.photo, { mode: 'cors' }); const blob = await res.blob();
       const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg';
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = `NTR_${v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 2000);
-      done++;
-      $('#loadingText').textContent = `Téléchargement ${done}/${photos.length}...`;
+      done++; $('#loadingText').textContent = `${done}/${photos.length}...`;
       await new Promise((r) => setTimeout(r, 400));
     } catch (e) {}
   }
-  hideLoading(); toast(`${done} photo(s) téléchargée(s)`, 'success'); galSelected.clear(); renderGalerie();
+  hideLoading(); toast(`${done} photo(s)`, 'success'); galSelected.clear(); renderGalerie();
 }
 async function downloadAllPhotosOfSite() {
   const site = $('#galSiteFilter').value;
-  const list = state.vehicules.filter((v) => v.photo && (!site || v.site === site));
+  const list = state.vehicules.filter((v) => v.photo && (!site || getSiteActuel(v) === site));
   if (!list.length) { toast('Aucune photo', 'warning'); return; }
-  showLoading(`Téléchargement de ${list.length} photo(s)...`);
+  showLoading(`Téléchargement...`);
   let done = 0;
   for (const v of list) {
     try {
-      const res = await fetch(v.photo, { mode: 'cors' });
-      const blob = await res.blob();
+      const res = await fetch(v.photo, { mode: 'cors' }); const blob = await res.blob();
       const ext = blob.type.includes('png') ? 'png' : blob.type.includes('webp') ? 'webp' : 'jpg';
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = `NTR_${v.immat.replace(/[^A-Z0-9]/gi, '_')}_${todayKey()}.${ext}`;
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 2000);
-      done++;
-      $('#loadingText').textContent = `Téléchargement ${done}/${list.length}...`;
+      done++; $('#loadingText').textContent = `${done}/${list.length}...`;
       await new Promise((r) => setTimeout(r, 400));
     } catch (e) {}
   }
-  hideLoading(); toast(`${done} photo(s) téléchargée(s)`, 'success');
+  hideLoading(); toast(`${done} photo(s)`, 'success');
 }
 function updateGalSelectionInfo() {
   const info = $('#galSelectionInfo'); if (!info) return;
   if (!galSelectionMode) { info.classList.add('hidden'); return; }
-  info.classList.remove('hidden');
-  $('#galSelectionCount').textContent = galSelected.size;
+  info.classList.remove('hidden'); $('#galSelectionCount').textContent = galSelected.size;
   const hasSel = galSelected.size > 0;
   $('#galSelectionDownload').classList.toggle('hidden', !hasSel);
   $('#galSelectionClear').classList.toggle('hidden', !hasSel);
 }
-
 function renderGalerie() {
   const siteFilter = $('#galSiteFilter').value;
   const photoFilter = $('#galPhotoFilter') ? $('#galPhotoFilter').value : '';
   let base;
-  if (photoFilter === 'without') {
-    const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-    base = state.vehicules.filter((v) => pointedIds.has(v.id) && !v.photo);
-  } else {
-    base = state.vehicules.filter((v) => v.photo && v.photo.length > 0);
-  }
+  if (photoFilter === 'without') { const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId)); base = state.vehicules.filter((v) => pointedIds.has(v.id) && !v.photo); }
+  else { base = state.vehicules.filter((v) => v.photo && v.photo.length > 0); }
   const content = $('#galContent'); const e = $('#galEmpty');
   if (!content) return;
   updateGalSelectionInfo();
   if (!base.length) { content.innerHTML = ''; if (e) e.classList.remove('hidden'); return; }
   if (e) e.classList.add('hidden');
-
-  // GROUPEMENT PAR SITE
   const groups = {};
-  base.forEach((v) => {
-    const site = getSiteActuel(v) || '— Sans site —';
-    if (!groups[site]) groups[site] = [];
-    groups[site].push(v);
-  });
-
-  // Filtre site si sélectionné
+  base.forEach((v) => { const site = getSiteActuel(v) || '— Sans site —'; if (!groups[site]) groups[site] = []; groups[site].push(v); });
   let siteKeys = Object.keys(groups).sort();
   if (siteFilter) siteKeys = siteKeys.filter((s) => s === siteFilter);
-
   if (!siteKeys.length) { content.innerHTML = ''; if (e) e.classList.remove('hidden'); return; }
-
   content.innerHTML = siteKeys.map((site) => {
     const items = groups[site].sort((a, b) => a.immat.localeCompare(b.immat));
     const isPhotoMode = photoFilter !== 'without';
-    return `
-      <div class="gal-site-section">
-        <div class="gal-site-header">
-          <span class="gsh-icon">📍</span>
-          <span class="gsh-name">${escapeHtml(site)}</span>
-          <span class="gsh-count">${items.length} photo${items.length > 1 ? 's' : ''}</span>
-        </div>
-        <div class="gallery-grid">
-          ${items.map((v) => {
-            if (!isPhotoMode) {
-              return `<div class="gallery-item" data-photo-veh="${v.id}" style="background:var(--bg-3)"><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:10px;text-align:center"><div style="font-size:2rem;color:var(--warning);margin-bottom:8px">📷</div><div style="font-family:var(--mono);font-weight:700;font-size:0.9rem;color:var(--primary)">${escapeHtml(v.immat)}</div><div style="font-size:0.7rem;color:var(--text-dim);margin-top:4px">${escapeHtml(getSiteActuel(v) || '—')}</div></div><div class="gi-photo-status missing">MANQUANTE</div></div>`;
-            }
-            const selected = galSelected.has(v.id);
-            const immatSafe = escapeHtml(v.immat.replace(/[^A-Z0-9]/gi, '_'));
-            const datePhoto = v.photoUpdatedAt ? formatDateFR(v.photoUpdatedAt) : (v.lastSeen ? formatDateFR(v.lastSeen) : '—');
-            return `<div class="gallery-item ${selected ? 'selected' : ''}" data-photo="${v.id}">
-              <img src="${escapeHtml(v.photo)}" loading="lazy">
-              <div class="gi-photo-status ok">OK</div>
-              <div class="gi-checkbox ${galSelectionMode ? 'show' : ''}" data-select="${v.id}">✓</div>
-              <div class="gi-actions">
-                <button class="gi-btn" data-dl="${v.id}" data-dl-immat="${immatSafe}">⬇</button>
-                <button class="gi-btn gi-btn-delete" data-del-photo="${v.id}">✕</button>
-              </div>
-              <div class="gallery-overlay">
-                <div class="gi-immat">${escapeHtml(v.immat)}</div>
-                <div>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</div>
-                <div class="gi-date">📅 ${datePhoto}</div>
-              </div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>
-    `;
+    return `<div class="gal-site-section"><div class="gal-site-header"><span class="gsh-icon">📍</span><span class="gsh-name">${escapeHtml(site)}</span><span class="gsh-count">${items.length} photo${items.length > 1 ? 's' : ''}</span></div><div class="gallery-grid">${items.map((v) => {
+      if (!isPhotoMode) return `<div class="gallery-item" data-photo-veh="${v.id}" style="background:var(--bg-3)"><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:10px;text-align:center"><div style="font-size:2rem;color:var(--warning);margin-bottom:8px">📷</div><div style="font-family:var(--mono);font-weight:700;font-size:0.9rem;color:var(--primary)">${escapeHtml(v.immat)}</div><div style="font-size:0.7rem;color:var(--text-dim);margin-top:4px">${escapeHtml(getSiteActuel(v) || '—')}</div></div><div class="gi-photo-status missing">MANQUANTE</div></div>`;
+      const selected = galSelected.has(v.id);
+      const immatSafe = escapeHtml(v.immat.replace(/[^A-Z0-9]/gi, '_'));
+      const datePhoto = v.photoUpdatedAt ? formatDateFR(v.photoUpdatedAt) : (v.lastSeen ? formatDateFR(v.lastSeen) : '—');
+      return `<div class="gallery-item ${selected ? 'selected' : ''}" data-photo="${v.id}"><img src="${escapeHtml(v.photo)}" loading="lazy"><div class="gi-photo-status ok">OK</div><div class="gi-checkbox ${galSelectionMode ? 'show' : ''}" data-select="${v.id}">✓</div><div class="gi-actions"><button class="gi-btn" data-dl="${v.id}" data-dl-immat="${immatSafe}">⬇</button><button class="gi-btn gi-btn-delete" data-del-photo="${v.id}">✕</button></div><div class="gallery-overlay"><div class="gi-immat">${escapeHtml(v.immat)}</div><div>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</div><div class="gi-date">📅 ${datePhoto}</div></div></div>`;
+    }).join('')}</div></div>`;
   }).join('');
-
   $$('[data-photo]', content).forEach((item) => item.addEventListener('click', (e) => {
     if (e.target.closest('.gi-btn') || e.target.closest('.gi-checkbox')) return;
     if (galSelectionMode) { const id = item.dataset.photo; if (galSelected.has(id)) galSelected.delete(id); else galSelected.add(id); renderGalerie(); }
@@ -2641,15 +2587,11 @@ function renderGalerie() {
   $$('[data-select]', content).forEach((cb) => cb.addEventListener('click', (e) => { e.stopPropagation(); const id = cb.dataset.select; if (galSelected.has(id)) galSelected.delete(id); else galSelected.add(id); renderGalerie(); }));
   $$('[data-dl]', content).forEach((btn) => btn.addEventListener('click', (e) => { e.stopPropagation(); downloadPhotoFromGallery(btn.dataset.dl, btn.dataset.dlImmat); }));
   $$('[data-del-photo]', content).forEach((btn) => btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const id = btn.dataset.delPhoto;
-    const v = state.vehicules.find((x) => x.id === id);
-    if (!v) return;
+    e.stopPropagation(); const id = btn.dataset.delPhoto;
+    const v = state.vehicules.find((x) => x.id === id); if (!v) return;
     requireAdminPin(`Supprimer la photo de ${v.immat}`, async () => {
-      const ok = await confirmDialog('Supprimer la photo ?', `Photo de <strong>${escapeHtml(v.immat)}</strong> ?`);
-      if (!ok) return;
-      await state.db.collection('vehicules').doc(id).update({ photo: '' });
-      toast('Photo supprimée', 'success');
+      const ok = await confirmDialog('Supprimer ?', `Photo de <strong>${escapeHtml(v.immat)}</strong> ?`);
+      if (!ok) return; await state.db.collection('vehicules').doc(id).update({ photo: '' }); toast('Photo supprimée', 'success');
     });
   }));
   $$('[data-photo-veh]', content).forEach((i) => i.addEventListener('click', (e) => { if (e.target.closest('.gi-btn')) return; prendrePhotoVehicule(i.dataset.photoVeh); }));
@@ -2662,34 +2604,29 @@ $('#galSelectionClear') && $('#galSelectionClear').addEventListener('click', () 
 $('#galSelectionDownload') && $('#galSelectionDownload').addEventListener('click', downloadSelectedPhotos);
 
 function openLightbox(id) {
-  const v = state.vehicules.find((x) => x.id === id);
-  if (!v || !v.photo) return;
+  const v = state.vehicules.find((x) => x.id === id); if (!v || !v.photo) return;
   $('#lightboxImg').src = v.photo;
   const immatSafe = v.immat.replace(/[^A-Z0-9]/gi, '_');
   $('#lightboxDownload').onclick = (e) => { e.preventDefault(); downloadPhotoFromGallery(id, immatSafe); };
   $('#lightboxDelete').dataset.vehId = id;
   const info = $('#lightboxInfo');
-  if (info) info.innerHTML = `<div><span class="li-immat">${escapeHtml(v.immat)}</span></div><div>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}</div>${getSiteActuel(v) ? `<div>${escapeHtml(getSiteActuel(v))}</div>` : ''}`;
+  if (info) info.innerHTML = `<div><span class="li-immat">${escapeHtml(v.immat)}</span></div><div>${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}</div>${getSiteActuel(v) ? `<div>📍 ${escapeHtml(getSiteActuel(v))}</div>` : ''}`;
   $('#lightbox').classList.add('show');
 }
 $('#lightboxClose').addEventListener('click', () => $('#lightbox').classList.remove('show'));
 $('#lightbox').addEventListener('click', (e) => { if (e.target.id === 'lightbox') $('#lightbox').classList.remove('show'); });
 $('#lightboxDelete').addEventListener('click', () => {
   const id = $('#lightboxDelete').dataset.vehId;
-  const v = state.vehicules.find((x) => x.id === id);
-  if (!v) return;
+  const v = state.vehicules.find((x) => x.id === id); if (!v) return;
   requireAdminPin(`Supprimer la photo de ${v.immat}`, async () => {
-    const ok = await confirmDialog('Supprimer la photo ?', `Photo de <strong>${escapeHtml(v.immat)}</strong> ?`);
+    const ok = await confirmDialog('Supprimer ?', `Photo de <strong>${escapeHtml(v.immat)}</strong> ?`);
     if (!ok) return;
     await state.db.collection('vehicules').doc(id).update({ photo: '' });
-    $('#lightbox').classList.remove('show');
-    toast('Photo supprimée', 'success');
+    $('#lightbox').classList.remove('show'); toast('Photo supprimée', 'success');
   });
 });
 
-/* ============================================================
-   CLIENTS (vue groupée)
-   ============================================================ */
+/* CLIENTS */
 function renderSocietes() {
   const filter = state.socFilter || '';
   const c = $('#socList'); if (!c) return;
@@ -2701,13 +2638,11 @@ function renderSocietes() {
   c.innerHTML = disp.map((soc) => {
     const vs = g[soc];
     const alerts = vs.filter((v) => !v.lastSeen || daysBetween(v.lastSeen) > 30);
-    return `<div class="card"><div class="section-header" style="margin-bottom:10px"><h3 class="section-title" style="font-size:0.95rem">${escapeHtml(soc)} <span class="badge badge-muted">${vs.length}</span></h3>${alerts.length ? `<span class="badge badge-warning">${alerts.length} alerte(s)</span>` : ''}</div><div class="list">${vs.slice(0, 50).map((v) => { const nv = !v.lastSeen; const j = v.lastSeen ? daysBetween(v.lastSeen) : null; const a = nv || j > 30; return `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub"><span>${escapeHtml(getSiteActuel(v) || '—')}</span>${v.lastSeen ? `<span>Vu il y a ${j}j</span>` : `<span style="color:var(--warning)">Jamais vu</span>`}</div></div>${a ? '<span class="badge badge-warning">Alerte</span>' : '<span class="badge badge-success">OK</span>'}</div>`; }).join('')}</div></div>`;
+    return `<div class="card"><div class="section-header" style="margin-bottom:10px"><h3 class="section-title" style="font-size:0.95rem">${escapeHtml(soc)} <span class="badge badge-muted">${vs.length}</span></h3>${alerts.length ? `<span class="badge badge-warning">${alerts.length} alerte(s)</span>` : ''}</div><div class="list">${vs.slice(0, 50).map((v) => { const nv = !v.lastSeen; const j = v.lastSeen ? daysBetween(v.lastSeen) : null; const a = nv || j > 30; const site = getSiteActuel(v); return `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub"><span>📍 ${escapeHtml(site || 'Non pointé')}</span>${v.lastSeen ? `<span>Vu il y a ${j}j</span>` : `<span style="color:var(--warning)">Jamais vu</span>`}</div></div>${a ? '<span class="badge badge-warning">Alerte</span>' : '<span class="badge badge-success">OK</span>'}</div>`; }).join('')}</div></div>`;
   }).join('');
 }
 
-/* ============================================================
-   VOICE SEARCH
-   ============================================================ */
+/* VOICE SEARCH */
 setupVoiceSearch('pointageMic', 'pointageSearch', (text) => {
   const exact = state.vehicules.find((v) => normalizeImmat(v.immat) === text);
   if (exact) { handlePointage(exact.id); $('#pointageSearch').value = ''; $('#pointageClear').classList.remove('show'); }
@@ -2715,16 +2650,14 @@ setupVoiceSearch('pointageMic', 'pointageSearch', (text) => {
 });
 setupVoiceSearch('vehMic', 'vehSearch', (t) => { state.vehFilters.search = t; $('#vehSearchClear').classList.add('show'); applyVehFilters(); });
 
-/* ============================================================
-   EXPORTS
-   ============================================================ */
+/* EXPORTS */
 function exportExcel(rows, filename, sheet) {
   if (!rows || !rows.length) { toast('Aucune donnée', 'warning'); return; }
   const ws = XLSX.utils.json_to_sheet(rows);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, (sheet || 'Export').slice(0, 30));
   XLSX.writeFile(wb, filename);
-  toast('Fichier Excel téléchargé', 'success');
+  toast('Excel téléchargé', 'success');
 }
 function vehToRow(v) {
   const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
@@ -2736,8 +2669,7 @@ $('#btnExportVehXls').addEventListener('click', () => {
   exportExcel(rows, `NTR_Vehicules_${todayKey()}.xlsx`, 'Vehicules');
 });
 document.addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-export]');
-  if (!btn) return;
+  const btn = e.target.closest('[data-export]'); if (!btn) return;
   const type = btn.dataset.export;
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   if (type === 'xls-presents') { const p = state.vehicules.filter((v) => pointedIds.has(v.id)); exportExcel(p.map(vehToRow), `NTR_Trouves_${todayKey()}.xlsx`, 'Trouves'); }
@@ -2767,7 +2699,7 @@ function exportPDFSites() {
   const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
   doc.setFillColor(11, 17, 32); doc.rect(0, 0, 297, 20, 'F');
   doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
-  doc.text('NTR TRACK - VEHICULES PRESENTS PAR SITE', 14, 10);
+  doc.text('NTR TRACK - PRESENTS PAR SITE', 14, 10);
   doc.setFontSize(9); doc.setFont(undefined, 'normal');
   doc.text(`Genere le ${new Date().toLocaleString('fr-FR')}`, 283, 13, { align: 'right' });
   doc.setTextColor(0, 0, 0);
@@ -2782,31 +2714,29 @@ function exportPDFSites() {
     if (y > 180) { doc.addPage(); y = 20; }
     doc.setFillColor(37, 48, 68); doc.rect(14, y - 5, 269, 8, 'F');
     doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'bold');
-    doc.text(`${site} - ${vs.length} vehicule(s)`, 16, y);
+    doc.text(`${site} - ${vs.length}`, 16, y);
     doc.setTextColor(0, 0, 0); y += 4;
-    doc.autoTable({ startY: y, head: [['N°', 'Immatriculation', 'Client', 'Marque', 'Modele', 'Statut']], body: vs.map((v, i) => [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || '', STATUTS[getStatutVehicule(v)].label]), theme: 'striped', headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 9 }, styles: { fontSize: 8.5, cellPadding: 2 }, columnStyles: { 0: { cellWidth: 12, halign: 'center' } }, margin: { left: 14, right: 14 } });
+    doc.autoTable({ startY: y, head: [['N°', 'Immat', 'Client', 'Marque', 'Modele', 'Statut']], body: vs.map((v, i) => [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || '', STATUTS[getStatutVehicule(v)].label]), theme: 'striped', headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 9 }, styles: { fontSize: 8.5, cellPadding: 2 }, margin: { left: 14, right: 14 } });
     y = doc.lastAutoTable.finalY + 8;
   });
   if (!hasData) { toast('Aucun véhicule trouvé', 'warning'); return; }
-  doc.save(`NTR_Trouves_Par_Site_${todayKey()}.pdf`);
-  toast('PDF téléchargé', 'success');
+  doc.save(`NTR_Trouves_Par_Site_${todayKey()}.pdf`); toast('PDF téléchargé', 'success');
 }
 function exportPDFAbsents() {
   const { jsPDF } = window.jspdf;
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   const absents = state.vehicules.filter((v) => !pointedIds.has(v.id));
-  if (!absents.length) { toast('Aucun véhicule manquant', 'warning'); return; }
+  if (!absents.length) { toast('Aucun absent', 'warning'); return; }
   const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
   doc.setFillColor(220, 38, 38); doc.rect(0, 0, 297, 20, 'F');
   doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
-  doc.text('NTR TRACK - VEHICULES MANQUANTS', 14, 10);
+  doc.text('NTR TRACK - MANQUANTS', 14, 10);
   doc.setFontSize(9); doc.setFont(undefined, 'normal');
-  doc.text(`${absents.length} vehicule(s)`, 14, 16);
+  doc.text(`${absents.length}`, 14, 16);
   doc.text(`Genere le ${new Date().toLocaleString('fr-FR')}`, 283, 13, { align: 'right' });
   doc.setTextColor(0, 0, 0);
-  doc.autoTable({ startY: 28, head: [['N°', 'Immatriculation', 'Client', 'Marque', 'Modele', 'Statut']], body: absents.map((v, i) => [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || '', STATUTS[getStatutVehicule(v)].label]), theme: 'striped', headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 9 }, styles: { fontSize: 8.5, cellPadding: 2 }, margin: { left: 14, right: 14 } });
-  doc.save(`NTR_Manquants_${todayKey()}.pdf`);
-  toast('PDF téléchargé', 'success');
+  doc.autoTable({ startY: 28, head: [['N°', 'Immat', 'Client', 'Marque', 'Modele', 'Statut']], body: absents.map((v, i) => [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || '', STATUTS[getStatutVehicule(v)].label]), theme: 'striped', headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 9 }, styles: { fontSize: 8.5, cellPadding: 2 }, margin: { left: 14, right: 14 } });
+  doc.save(`NTR_Manquants_${todayKey()}.pdf`); toast('PDF téléchargé', 'success');
 }
 function exportPDFGlobal() {
   const { jsPDF } = window.jspdf;
@@ -2823,10 +2753,8 @@ function exportPDFGlobal() {
   const taux = t ? Math.round((p / t) * 100) : 0;
   doc.setFontSize(11); doc.setFont(undefined, 'bold'); doc.text('Synthese', 14, 32);
   doc.setFont(undefined, 'normal'); doc.setFontSize(10);
-  doc.text(`Total : ${t}`, 14, 40); doc.text(`Trouves : ${p}`, 14, 46);
-  doc.text(`Manquants : ${a}`, 14, 52); doc.text(`Taux : ${taux}%`, 14, 58);
-  doc.save(`NTR_Rapport_${todayKey()}.pdf`);
-  toast('PDF téléchargé', 'success');
+  doc.text(`Total : ${t} | Trouves : ${p} | Manquants : ${a} | Taux : ${taux}%`, 14, 44);
+  doc.save(`NTR_Rapport_${todayKey()}.pdf`); toast('PDF téléchargé', 'success');
 }
 function exportRecapPDF(s) {
   if (!s) return;
@@ -2835,16 +2763,11 @@ function exportRecapPDF(s) {
   doc.setFillColor(11, 17, 32); doc.rect(0, 0, 210, 26, 'F');
   doc.setTextColor(255, 255, 255); doc.setFontSize(15); doc.setFont(undefined, 'bold');
   doc.text('NTR TRACK - RAPPORT DE RONDE', 14, 12);
-  doc.setTextColor(0, 0, 0);
-  doc.setFontSize(11); doc.setFont(undefined, 'bold');
-  doc.text('Synthese globale', 14, 36);
-  doc.setFont(undefined, 'normal'); doc.setFontSize(10);
+  doc.setTextColor(0, 0, 0); doc.setFontSize(11);
   doc.text(`Total : ${s.total} | Trouves : ${s.found} (${s.tauxGlobal}%) | Manquants : ${s.manquants}`, 14, 46);
-  doc.save(`NTR_Rapport_Ronde_${todayKey()}.pdf`);
-  toast('PDF téléchargé', 'success');
+  doc.save(`NTR_Rapport_Ronde_${todayKey()}.pdf`); toast('PDF téléchargé', 'success');
 }
 $('#btnRapportHebdo').addEventListener('click', () => {
-  const since7 = Date.now() - 7 * 86400000;
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   const found = state.vehicules.filter((v) => pointedIds.has(v.id));
   const manquants = state.vehicules.filter((v) => !pointedIds.has(v.id));
@@ -2859,42 +2782,35 @@ $('#btnRapportHebdo').addEventListener('click', () => {
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(13); doc.setFont(undefined, 'bold'); doc.text('Synthese', 14, 45);
   doc.setFontSize(11); doc.setFont(undefined, 'normal');
-  doc.text(`Taux global : ${taux}%`, 14, 55);
-  doc.text(`Trouves : ${found.length}`, 14, 62);
-  doc.text(`Manquants : ${manquants.length}`, 14, 69);
-  doc.save(`NTR_Rapport_Hebdo_${todayKey()}.pdf`);
-  toast('Rapport hebdo téléchargé', 'success');
+  doc.text(`Taux global : ${taux}% | Trouves : ${found.length} | Manquants : ${manquants.length}`, 14, 55);
+  doc.save(`NTR_Rapport_Hebdo_${todayKey()}.pdf`); toast('Rapport téléchargé', 'success');
 });
 async function exportAbsentsWord(source) {
-  if (typeof docx === 'undefined') { toast('docx non chargé', 'error'); return; }
+  if (typeof docx === 'undefined') return;
   const srcLabel = source === 'source1' ? 'Source HR' : 'Source UM';
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   const vehicles = state.vehicules.filter((v) => !pointedIds.has(v.id) && v.source === source);
-  if (!vehicles.length) { toast(`Aucun manquant dans ${srcLabel}`, 'warning'); return; }
+  if (!vehicles.length) { toast(`Aucun manquant`, 'warning'); return; }
   try {
     const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType } = docx;
-    const rows = [new TableRow({ children: ['N°', 'Immatriculation', 'Client', 'Marque', 'Modele', 'Statut'].map((h) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: h, bold: true, size: 22 })], alignment: AlignmentType.CENTER })] })) })];
-    vehicles.forEach((v, i) => { rows.push(new TableRow({ children: [String(i + 1), v.immat || '', v.client || '', v.marque || '', v.modele || '', STATUTS[getStatutVehicule(v)].label].map((txt) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: txt, size: 22 })], alignment: AlignmentType.CENTER })] })) })); });
-    const doc = new Document({ sections: [{ children: [
-      new Paragraph({ children: [new TextRun({ text: `MANQUANTS - ${srcLabel}`, bold: true, size: 32, font: 'Arial' })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
-      new Paragraph({ children: [new TextRun({ text: `Total : ${vehicles.length}`, size: 22, font: 'Arial' })], spacing: { after: 400 } }),
-      new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } })
-    ] }] });
+    const rows = [new TableRow({ children: ['N°', 'Immat', 'Client', 'Marque', 'Statut'].map((h) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: h, bold: true, size: 22 })], alignment: AlignmentType.CENTER })] })) })];
+    vehicles.forEach((v, i) => { rows.push(new TableRow({ children: [String(i + 1), v.immat || '', v.client || '', v.marque || '', STATUTS[getStatutVehicule(v)].label].map((txt) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: txt, size: 22 })], alignment: AlignmentType.CENTER })] })) })); });
+    const doc = new Document({ sections: [{ children: [new Paragraph({ children: [new TextRun({ text: `MANQUANTS - ${srcLabel}`, bold: true, size: 32, font: 'Arial' })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }), new Paragraph({ children: [new TextRun({ text: `Total : ${vehicles.length}`, size: 22 })], spacing: { after: 400 } }), new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } })] }] });
     const blob = await Packer.toBlob(doc);
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
     a.download = `Manquants_${srcLabel.replace(/\s/g, '_')}_${todayKey()}.docx`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    toast(`${vehicles.length} manquants exportes`, 'success');
-  } catch (e) { toast('Erreur : ' + e.message, 'error'); }
+    toast(`${vehicles.length} exportes`, 'success');
+  } catch (e) { toast('Erreur', 'error'); }
 }
 async function exportPresentsWord() {
-  if (typeof docx === 'undefined') { toast('docx non chargé', 'error'); return; }
+  if (typeof docx === 'undefined') return;
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
   const vehicles = state.vehicules.filter((v) => pointedIds.has(v.id));
   if (!vehicles.length) { toast('Aucun present', 'warning'); return; }
   try {
     const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType } = docx;
-    const rows = [new TableRow({ children: ['Site', 'N°', 'Immatriculation', 'Client', 'Marque', 'Statut'].map((h) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: h, bold: true, size: 22 })], alignment: AlignmentType.CENTER })] })) })];
+    const rows = [new TableRow({ children: ['Site', 'N°', 'Immat', 'Client', 'Marque', 'Statut'].map((h) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: h, bold: true, size: 22 })], alignment: AlignmentType.CENTER })] })) })];
     let idx = 0;
     SITES.forEach((site) => {
       const vs = vehicles.filter((v) => getSiteActuel(v) === site);
@@ -2902,24 +2818,18 @@ async function exportPresentsWord() {
       rows.push(new TableRow({ children: [new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: site, bold: true, size: 22 })], alignment: AlignmentType.CENTER })], columnSpan: 6 })] }));
       vs.forEach((v) => { idx++; rows.push(new TableRow({ children: ['', String(idx), v.immat || '', v.client || '', v.marque || '', STATUTS[getStatutVehicule(v)].label].map((txt) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: txt, size: 22 })], alignment: AlignmentType.CENTER })] })) })); });
     });
-    const doc = new Document({ sections: [{ children: [
-      new Paragraph({ children: [new TextRun({ text: 'VEHICULES PRESENTS PAR SITE', bold: true, size: 32, font: 'Arial' })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
-      new Paragraph({ children: [new TextRun({ text: `Total : ${vehicles.length}`, size: 22, font: 'Arial' })], spacing: { after: 400 } }),
-      new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } })
-    ] }] });
+    const doc = new Document({ sections: [{ children: [new Paragraph({ children: [new TextRun({ text: 'PRESENTS PAR SITE', bold: true, size: 32 })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }), new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } })] }] });
     const blob = await Packer.toBlob(doc);
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
     a.download = `Trouves_Par_Site_${todayKey()}.docx`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    toast(`${vehicles.length} presents exportes`, 'success');
-  } catch (e) { toast('Erreur : ' + e.message, 'error'); }
+    toast(`${vehicles.length} exportes`, 'success');
+  } catch (e) { toast('Erreur', 'error'); }
 }
 
-/* ============================================================
-   ATTESTATION
-   ============================================================ */
+/* ATTESTATION */
 $('#attGenerate').addEventListener('click', async () => {
-  if (typeof docx === 'undefined') { toast('docx non chargé', 'error'); return; }
+  if (typeof docx === 'undefined') return;
   const immat = $('#attImmat').value.trim().toUpperCase();
   const marque = $('#attMarque').value.trim();
   const modele = $('#attModele').value.trim();
@@ -2948,26 +2858,24 @@ $('#attGenerate').addEventListener('click', async () => {
   toast('Attestation generee', 'success');
 });
 
-/* ============================================================
-   WIPE
-   ============================================================ */
+/* WIPE */
 async function wipeBySource(source) {
   const list = state.vehicules.filter((v) => v.source === source);
   if (!list.length) { toast('Aucun véhicule', 'info'); return; }
-  const ok = await confirmDialog(`Vider ${SOURCES[source]} ?`, `Supprimer <strong>${list.length}</strong> véhicule(s) ?`);
+  const ok = await confirmDialog(`Vider ${SOURCES[source]} ?`, `Supprimer <strong>${list.length}</strong> ?`);
   if (!ok) return;
   showLoading('Suppression...');
   try {
     const bs = 400;
     for (let i = 0; i < list.length; i += bs) { const b = state.db.batch(); list.slice(i, i + bs).forEach((v) => b.delete(state.db.collection('vehicules').doc(v.id))); await b.commit(); }
-    toast(`${list.length} véhicule(s) supprimé(s)`, 'success');
-  } catch (e) { toast('Erreur : ' + e.message, 'error'); } finally { hideLoading(); }
+    toast(`${list.length} supprimé(s)`, 'success');
+  } catch (e) { toast('Erreur', 'error'); } finally { hideLoading(); }
 }
 $('#btnWipeHR').addEventListener('click', () => { requireAdminPin('Vider Source HR', () => wipeBySource('source1')); });
 $('#btnWipeUM').addEventListener('click', () => { requireAdminPin('Vider Source UM', () => wipeBySource('source2')); });
 $('#btnWipeAll').addEventListener('click', () => {
   requireAdminPin('Vider TOUT', async () => {
-    const ok1 = await confirmDialog('Vider TOUT ? (1/2)', `Suppression de tout.`);
+    const ok1 = await confirmDialog('Vider TOUT ? (1/2)', `Tout supprimer ?`);
     if (!ok1) return;
     const ok2 = await confirmDialog('CONFIRMATION (2/2)', 'IRREVERSIBLE.');
     if (!ok2) return;
@@ -2978,16 +2886,30 @@ $('#btnWipeAll').addEventListener('click', () => {
       for (let i = 0; i < state.rondes.length; i += bs) { const b = state.db.batch(); state.rondes.slice(i, i + bs).forEach((r) => b.delete(state.db.collection('rondes').doc(r.id))); await b.commit(); }
       for (let i = 0; i < state.pointages.length; i += bs) { const b = state.db.batch(); state.pointages.slice(i, i + bs).forEach((p) => b.delete(state.db.collection('pointages').doc(p.id))); await b.commit(); }
       toast('Tout supprimé', 'success');
-    } catch (e) { toast('Erreur : ' + e.message, 'error'); } finally { hideLoading(); }
+    } catch (e) { toast('Erreur', 'error'); } finally { hideLoading(); }
   });
 });
 
-/* ============================================================
-   IMPORT EXCEL
-   ============================================================ */
+/* CLEAR TODAY POINTAGES */
+$('#btnClearTodayPointages').addEventListener('click', () => {
+  requireAdminPin('Effacer les pointages d\'aujourd\'hui', async () => {
+    const today = todayKeyShort();
+    const todaysPointages = state.pointages.filter((p) => p.jour === today);
+    if (!todaysPointages.length) { toast('Aucun pointage aujourd\'hui', 'info'); return; }
+    const ok = await confirmDialog('Confirmer ?', `Supprimer <strong>${todaysPointages.length}</strong> pointage(s) du jour ?<br><br>Les véhicules resteront marqués comme trouvés.`);
+    if (!ok) return;
+    showLoading('Suppression...');
+    try {
+      const bs = 400;
+      for (let i = 0; i < todaysPointages.length; i += bs) { const b = state.db.batch(); todaysPointages.slice(i, i + bs).forEach((p) => b.delete(state.db.collection('pointages').doc(p.id))); await b.commit(); }
+      toast(`${todaysPointages.length} pointage(s) supprimé(s)`, 'success');
+    } catch (e) { toast('Erreur', 'error'); } finally { hideLoading(); }
+  });
+});
+
+/* IMPORT EXCEL */
 function openImportForSource(source) {
-  $('#importSource').value = source;
-  $('#importFile').value = '';
+  $('#importSource').value = source; $('#importFile').value = '';
   $('#importProgressWrap').style.display = 'none';
   openModal('modalImport');
   setTimeout(() => $('#importFile').click(), 200);
@@ -2995,18 +2917,17 @@ function openImportForSource(source) {
 $('#btnImportHR').addEventListener('click', () => openImportForSource('source1'));
 $('#btnImportUM').addEventListener('click', () => openImportForSource('source2'));
 $('#importRun').addEventListener('click', async () => {
-  const source = $('#importSource').value;
-  const file = $('#importFile').files[0];
+  const source = $('#importSource').value; const file = $('#importFile').files[0];
   if (!source) { toast('Source requise', 'warning'); return; }
   if (!file) { toast('Fichier requis', 'warning'); return; }
-  const importTimeout = setTimeout(() => { hideLoading(); toast('Import interrompu', 'error'); }, 60000);
+  const importTimeout = setTimeout(() => { hideLoading(); toast('Timeout', 'error'); }, 60000);
   const cleanup = () => { clearTimeout(importTimeout); hideLoading(); };
   showLoading('Lecture...');
   try {
     const buf = await file.arrayBuffer();
     const wb = XLSX.read(buf, { type: 'array' });
     const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
-    if (!rows.length) { toast('Fichier vide', 'warning'); cleanup(); return; }
+    if (!rows.length) { toast('Vide', 'warning'); cleanup(); return; }
     const mapField = (row, keys) => {
       for (const k of Object.keys(row)) {
         const kk = k.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, '');
@@ -3020,41 +2941,38 @@ $('#importRun').addEventListener('click', async () => {
       if (!immat) return;
       parsed.push({ immat, client: mapField(row, ['client', 'societe', 'society', 'company']), marque: mapField(row, ['marque']), modele: mapField(row, ['modele', 'model']), refCommande: mapField(row, ['reference', 'refcommande', 'ref']), typeMaintenance: mapField(row, ['typemaintenance', 'maintenance', 'type']) });
     });
-    if (!parsed.length) { cleanup(); await confirmDialog('Aucune immatriculation', 'Il faut une colonne "Immatriculation".', false); return; }
+    if (!parsed.length) { cleanup(); await confirmDialog('Aucune immat', 'Il faut une colonne Immatriculation', false); return; }
     const srcLabel = SOURCES[source];
     const existing = state.vehicules.filter((v) => v.source === source);
     cleanup();
-    const ok = await confirmDialog('Importer ?', `Source : <strong>${srcLabel}</strong><br>Fichier : <strong>${parsed.length}</strong><br>Actuels : <strong>${existing.length}</strong><br>Remplacement.`, false);
+    const ok = await confirmDialog('Importer ?', `Source : <strong>${srcLabel}</strong><br>Fichier : <strong>${parsed.length}</strong><br>Actuels : <strong>${existing.length}</strong>`, false);
     if (!ok) return;
-    showLoading(`Import 0/${parsed.length}...`);
+    showLoading(`Import...`);
     $('#importProgressWrap').style.display = 'block';
     const bs = 400;
     if (existing.length) { for (let i = 0; i < existing.length; i += bs) { const b = state.db.batch(); existing.slice(i, i + bs).forEach((v) => b.delete(state.db.collection('vehicules').doc(v.id))); await b.commit(); } }
-    let totalAjt = 0;
+    let total = 0;
     for (let i = 0; i < parsed.length; i += bs) {
-      const b = state.db.batch();
-      const chunk = parsed.slice(i, i + bs);
+      const b = state.db.batch(); const chunk = parsed.slice(i, i + bs);
       chunk.forEach((v) => b.set(state.db.collection('vehicules').doc(), { ...v, present: false, statut: 'non-defini', source, isCustom: false, lastSeen: null, createdAt: nowIso() }));
       await b.commit();
-      totalAjt += chunk.length;
-      $('#importProgressBar').style.width = Math.round((totalAjt / parsed.length) * 100) + '%';
-      $('#importStatus').textContent = `${totalAjt} / ${parsed.length}`;
+      total += chunk.length;
+      $('#importProgressBar').style.width = Math.round((total / parsed.length) * 100) + '%';
+      $('#importStatus').textContent = `${total} / ${parsed.length}`;
     }
     cleanup(); closeModal('modalImport');
-    toast(`${parsed.length} véhicules importés`, 'success', 'Import réussi');
+    toast(`${parsed.length} importés`, 'success');
     switchTab('vehicules'); state.vehFilters.source = source; renderVehChips(); applyVehFilters();
   } catch (err) { cleanup(); toast('Erreur : ' + err.message, 'error'); }
 });
 
-/* ============================================================
-   ADMIN
-   ============================================================ */
+/* ADMIN */
 function renderAdminInfo() {
   const u = $('#adminUserCount'); if (u) u.textContent = state.utilisateurs.length;
   const s = $('#adminSocCount'); if (s) s.textContent = state.clients.length;
   const v = $('#adminVehCount'); if (v) v.textContent = state.vehicules.length;
   const r = $('#adminRondeCount'); if (r) r.textContent = state.rondes.length;
-  const p = $('#adminPointageCount'); if (p) p.textContent = state.pointages.length;
+  const p = $('#adminPointageCount'); if (p) p.textContent = state.pointages.filter((pt) => pt.jour === todayKeyShort()).length;
 }
 function updateOnlineStatus() {
   const s = $('#headerStatus'); const l = $('#headerStatusLabel'); if (!s) return;
@@ -3066,46 +2984,36 @@ window.addEventListener('offline', () => { updateOnlineStatus(); toast('Hors lig
 updateOnlineStatus();
 
 $('#btnLogout').addEventListener('click', async () => {
-  const ok = await confirmDialog('Se déconnecter ?', 'Vous devrez entrer le code à nouveau.');
+  const ok = await confirmDialog('Se déconnecter ?', '');
   if (!ok) return;
-  await logAccess(true, 'Déconnexion');
-  lockApp();
+  await logAccess(true, 'Déconnexion'); lockApp();
 });
 $('#btnSession').addEventListener('click', async () => {
   const s = getSession();
   const exp = s ? new Date(s.expires).toLocaleString('fr-FR') : '—';
-  const ok = await confirmDialog('Se déconnecter ?', `Session jusqu'au <strong>${exp}</strong>.<br>Se déconnecter ?`);
+  const ok = await confirmDialog('Se déconnecter ?', `Session jusqu'au <strong>${exp}</strong>.`);
   if (!ok) return;
-  await logAccess(true, 'Déconnexion');
-  lockApp();
+  await logAccess(true, 'Déconnexion'); lockApp();
 });
 $('#btnChangeAccessCode').addEventListener('click', () => {
-  requireAdminPin('Changer le code d\'accès', () => {
-    $('#changeAccessOld').value = ''; $('#changeAccessNew').value = ''; $('#changeAccessNew2').value = '';
-    openModal('modalChangeAccess');
-  });
+  requireAdminPin('Changer le code', () => { $('#changeAccessOld').value = ''; $('#changeAccessNew').value = ''; $('#changeAccessNew2').value = ''; openModal('modalChangeAccess'); });
 });
 $('#changeAccessSave').addEventListener('click', async () => {
   const o = $('#changeAccessOld').value.trim(); const n = $('#changeAccessNew').value.trim(); const n2 = $('#changeAccessNew2').value.trim();
-  if (o !== state.accessCode) { toast('Code actuel incorrect', 'error'); return; }
+  if (o !== state.accessCode) { toast('Code incorrect', 'error'); return; }
   if (n.length < 6) { toast('Min 6 caractères', 'warning'); return; }
-  if (n !== n2) { toast('Les codes ne correspondent pas', 'warning'); return; }
-  await saveAccessCode(n, undefined); state.accessCode = n; closeModal('modalChangeAccess');
-  toast('Code modifié', 'success');
+  if (n !== n2) { toast('Ne correspondent pas', 'warning'); return; }
+  await saveAccessCode(n, undefined); state.accessCode = n; closeModal('modalChangeAccess'); toast('Code modifié', 'success');
 });
 $('#btnChangeAdminPin').addEventListener('click', () => {
-  requireAdminPin('Changer le PIN Admin', () => {
-    $('#changePinOld').value = ''; $('#changePinNew').value = ''; $('#changePinNew2').value = '';
-    openModal('modalChangeAdminPin');
-  });
+  requireAdminPin('Changer le PIN Admin', () => { $('#changePinOld').value = ''; $('#changePinNew').value = ''; $('#changePinNew2').value = ''; openModal('modalChangeAdminPin'); });
 });
 $('#changeAdminPinSave').addEventListener('click', async () => {
   const o = $('#changePinOld').value.trim(); const n = $('#changePinNew').value.trim(); const n2 = $('#changePinNew2').value.trim();
-  if (o !== state.adminPin) { toast('PIN actuel incorrect', 'error'); return; }
+  if (o !== state.adminPin) { toast('PIN incorrect', 'error'); return; }
   if (!/^\d{4}$/.test(n)) { toast('4 chiffres', 'warning'); return; }
-  if (n !== n2) { toast('Les PIN ne correspondent pas', 'warning'); return; }
-  await saveAccessCode(undefined, n); state.adminPin = n; closeModal('modalChangeAdminPin');
-  toast('PIN Admin modifié', 'success');
+  if (n !== n2) { toast('Ne correspondent pas', 'warning'); return; }
+  await saveAccessCode(undefined, n); state.adminPin = n; closeModal('modalChangeAdminPin'); toast('PIN Admin modifié', 'success');
 });
 $('#btnViewLogs').addEventListener('click', () => {
   const card = $('#logsCard');
@@ -3113,9 +3021,7 @@ $('#btnViewLogs').addEventListener('click', () => {
   if (card.style.display === 'block') renderLoginLogs();
 });
 
-/* ============================================================
-   RONDES
-   ============================================================ */
+/* RONDES */
 function listenRondes() {
   if (!state.db) return;
   const unsub = state.db.collection('rondes').orderBy('heureDebut', 'desc').onSnapshot((snap) => {
@@ -3148,28 +3054,21 @@ function openRondeDetail(id) {
   state.currentRondeDetail = r;
   $('#rdTitle').textContent = `Ronde du ${formatDateFR(r.heureDebut)} — ${r.site}`;
   const s = r.stats || {}; const presents = r.vehiculesSnapshot || [];
-  $('#rdBody').innerHTML = `
-    <div class="stats-grid"><div class="stat-card"><span class="stat-label">Total</span><span class="stat-value">${s.total ?? '—'}</span></div><div class="stat-card"><span class="stat-label">Trouvés</span><span class="stat-value success">${s.presents ?? presents.length}</span></div><div class="stat-card"><span class="stat-label">Manquants</span><span class="stat-value danger">${s.absents ?? 0}</span></div><div class="stat-card"><span class="stat-label">Taux</span><span class="stat-value primary">${s.taux ?? 0}%</span></div></div>
-    <div class="card"><div class="card-title">Informations</div><div style="font-size:0.82rem;line-height:1.8"><div>Par : <strong>${escapeHtml(r.effectueePar)}</strong></div><div>Date : ${formatDateTimeFR(r.heureDebut)}</div></div></div>
-    <div class="card"><div class="card-title">Véhicules trouvés (${presents.length})</div>${presents.length ? `<div class="list">${presents.slice(0, 100).map((v) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}${v.site ? ' · ' + escapeHtml(v.site) : ''}</div></div></div>`).join('')}</div>` : 'Aucun'}</div>`;
+  $('#rdBody').innerHTML = `<div class="stats-grid"><div class="stat-card"><span class="stat-label">Total</span><span class="stat-value">${s.total ?? '—'}</span></div><div class="stat-card"><span class="stat-label">Trouvés</span><span class="stat-value success">${s.presents ?? presents.length}</span></div><div class="stat-card"><span class="stat-label">Manquants</span><span class="stat-value danger">${s.absents ?? 0}</span></div><div class="stat-card"><span class="stat-label">Taux</span><span class="stat-value primary">${s.taux ?? 0}%</span></div></div><div class="card"><div class="card-title">Informations</div><div style="font-size:0.82rem;line-height:1.8"><div>Par : <strong>${escapeHtml(r.effectueePar)}</strong></div><div>Date : ${formatDateTimeFR(r.heureDebut)}</div></div></div><div class="card"><div class="card-title">Véhicules trouvés (${presents.length})</div>${presents.length ? `<div class="list">${presents.slice(0, 100).map((v) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title" style="font-family:var(--mono);color:var(--primary)">${escapeHtml(v.immat)}</div><div class="list-item-sub">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}${v.site ? ' · ' + escapeHtml(v.site) : ''}</div></div></div>`).join('')}</div>` : 'Aucun'}</div>`;
   openModal('modalRondeDetail');
 }
 $('#rdDelete').addEventListener('click', () => {
   if (!state.currentRondeDetail) return;
-  const rondeId = state.currentRondeDetail.id;
-  const rondeDate = state.currentRondeDetail.heureDebut;
+  const rondeId = state.currentRondeDetail.id; const rondeDate = state.currentRondeDetail.heureDebut;
   requireAdminPin(`Supprimer la ronde du ${formatDateFR(rondeDate)}`, async () => {
-    const ok = await confirmDialog('Supprimer la ronde ?', 'Cette action est irréversible.');
+    const ok = await confirmDialog('Supprimer ?', 'Irréversible.');
     if (!ok) return;
     await state.db.collection('rondes').doc(rondeId).delete();
-    closeModal('modalRondeDetail');
-    toast('Ronde supprimée', 'success');
+    closeModal('modalRondeDetail'); toast('Ronde supprimée', 'success');
   });
 });
 
-/* ============================================================
-   ARCHIVES
-   ============================================================ */
+/* ARCHIVES */
 function renderArchives() {
   const c = $('#archivesList'); if (!c) return;
   const rondes = state.rondes.filter((r) => r.statut !== 'en_cours');
@@ -3187,9 +3086,7 @@ function renderArchives() {
   $$('.archive-month', c).forEach((m) => m.addEventListener('click', () => { state.histFilterMonth = m.dataset.ym; switchTab('historique'); renderHistorique(); }));
 }
 
-/* ============================================================
-   GRAPHIQUES
-   ============================================================ */
+/* GRAPHIQUES */
 function renderGraphiques() {
   const c1 = $('#chartPresence'); const c2 = $('#chartSites'); if (!c1 || !c2) return;
   let rondes = state.rondes.filter((r) => r.statut !== 'en_cours').sort((a, b) => (a.heureDebut || '').localeCompare(b.heureDebut || ''));
@@ -3205,12 +3102,10 @@ function renderGraphiques() {
   r7.forEach((r) => { const rep = r.stats?.repartitionSites || {}; Object.entries(rep).forEach(([s, c]) => { if (!bySite[s]) bySite[s] = 0; bySite[s] += c; }); });
   const siteLabels = Object.keys(bySite); const siteCounts = siteLabels.map((s) => bySite[s]);
   if (state.chartSites) state.chartSites.destroy();
-  state.chartSites = new Chart(c2, { type: 'bar', data: { labels: siteLabels.length ? siteLabels : ['Aucune donnée'], datasets: [{ label: 'Véhicules trouvés', data: siteCounts.length ? siteCounts : [0], backgroundColor: '#10b981' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { ticks: { color: txtColor } }, y: { beginAtZero: true, ticks: { color: txtColor } } } } });
+  state.chartSites = new Chart(c2, { type: 'bar', data: { labels: siteLabels.length ? siteLabels : ['Aucune'], datasets: [{ label: 'Trouvés', data: siteCounts.length ? siteCounts : [0], backgroundColor: '#10b981' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: txtColor } } }, scales: { x: { ticks: { color: txtColor } }, y: { beginAtZero: true, ticks: { color: txtColor } } } } });
 }
 
-/* ============================================================
-   MOUVEMENTS
-   ============================================================ */
+/* MOUVEMENTS */
 function renderMouvements() {
   const c = $('#mouvList'); const e = $('#mouvEmpty'); if (!c) return;
   const q = normalizeImmat($('#mouvSearch').value);
@@ -3240,9 +3135,7 @@ function listenMouvements() {
   state.unsubscribers.push(unsub);
 }
 
-/* ============================================================
-   CHEF
-   ============================================================ */
+/* CHEF */
 function renderChef() {
   if (state.chefUnlocked) { $('#chefPinScreen').classList.add('hidden'); $('#chefDashboard').classList.remove('hidden'); renderChefDashboard(); }
   else { $('#chefPinScreen').classList.remove('hidden'); $('#chefDashboard').classList.add('hidden'); state.pinBuffer = ''; renderPinDots(); }
@@ -3259,21 +3152,13 @@ function renderChefDashboard() {
   $('#chef7Rate').textContent = (t ? Math.round((p / t) * 100) : 0) + '%';
   const pointedIds = new Set(state.pointages.map((pt) => pt.vehiculeId));
   $('#chefMissing').textContent = state.vehicules.filter((v) => !pointedIds.has(v.id)).length;
-
-  // Stats par statut
   const byStatut = {};
   Object.keys(STATUTS).forEach((k) => byStatut[k] = 0);
   state.vehicules.forEach((v) => { const s = getStatutVehicule(v); byStatut[s] = (byStatut[s] || 0) + 1; });
   const statutStats = $('#chefStatutStats');
-  if (statutStats) {
-    statutStats.innerHTML = Object.entries(STATUTS).map(([k, v]) => `<div class="stat-card"><span class="stat-label">${v.icon} ${escapeHtml(v.label)}</span><span class="stat-value">${byStatut[k] || 0}</span></div>`).join('');
-  }
-
+  if (statutStats) statutStats.innerHTML = Object.entries(STATUTS).map(([k, v]) => `<div class="stat-card"><span class="stat-label">${v.icon} ${escapeHtml(v.label)}</span><span class="stat-value">${byStatut[k] || 0}</span></div>`).join('');
   const byUser = {};
-  state.pointages.forEach((pt) => {
-    if (!byUser[pt.userNom]) byUser[pt.userNom] = { count: 0, sites: new Set() };
-    byUser[pt.userNom].count++; byUser[pt.userNom].sites.add(pt.site);
-  });
+  state.pointages.filter((pt) => pt.jour === today).forEach((pt) => { if (!byUser[pt.userNom]) byUser[pt.userNom] = { count: 0, sites: new Set() }; byUser[pt.userNom].count++; byUser[pt.userNom].sites.add(pt.site); });
   const users = Object.entries(byUser).sort((a, b) => b[1].count - a[1].count);
   $('#chefActiveUsers').innerHTML = users.length ? users.map(([nom, d]) => `<div class="list-item"><div class="list-item-main"><div class="list-item-title">${escapeHtml(nom)}</div><div class="list-item-sub"><span>${d.count} véhicule(s)</span></div></div><span class="badge badge-success">Actif</span></div>`).join('') : 'Aucun';
   const bySite = {};
@@ -3282,9 +3167,7 @@ function renderChefDashboard() {
   $('#chefSiteStats').innerHTML = rows.length ? rows.join('') : `<tr><td colspan="3" style="text-align:center;padding:14px">Aucune donnée</td></tr>`;
 }
 
-/* ============================================================
-   MASQUAGE INTELLIGENT
-   ============================================================ */
+/* MASQUAGE */
 function updateSmartTabs() {
   const navMouv = $('#navMouvements'); const navArch = $('#navArchives'); const navGraph = $('#navGraphiques');
   if (state.mouvements.length > 0) navMouv.classList.remove('hidden'); else navMouv.classList.add('hidden');
@@ -3293,14 +3176,12 @@ function updateSmartTabs() {
   if (state.rondes.length >= 5) navGraph.classList.remove('hidden'); else navGraph.classList.add('hidden');
 }
 
-/* ============================================================
-   PWA
-   ============================================================ */
+/* PWA */
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; $('#btnInstall').classList.remove('hidden'); if (localStorage.getItem('ntr_install_dismissed') !== '1') $('#installBanner').classList.add('show'); });
-window.addEventListener('appinstalled', () => { deferredPrompt = null; $('#btnInstall').classList.add('hidden'); $('#installBanner').classList.remove('show'); toast('Application installée', 'success'); });
+window.addEventListener('appinstalled', () => { deferredPrompt = null; $('#btnInstall').classList.add('hidden'); $('#installBanner').classList.remove('show'); toast('Installée', 'success'); });
 async function doInstall() {
-  if (!deferredPrompt) { const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent); if (isIOS) toast('Sur iPhone : Partager → "Sur l\'écran d\'accueil"', 'info'); else toast('Menu navigateur → "Installer l\'application"', 'info'); return; }
+  if (!deferredPrompt) { const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent); if (isIOS) toast('Sur iPhone : Partager → "Sur l\'écran d\'accueil"', 'info'); else toast('Menu navigateur → "Installer"', 'info'); return; }
   deferredPrompt.prompt();
   const { outcome } = await deferredPrompt.userChoice;
   if (outcome === 'accepted') toast('Installée', 'success');
@@ -3316,44 +3197,40 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { $$('.modal-overlay.show').forEach((m) => m.classList.remove('show')); $('#lightbox').classList.remove('show'); }
 });
 
-/* ============================================================
-   MIGRATION
-   ============================================================ */
+/* MIGRATION */
 async function migrateStatut() {
   if (!state.db) return;
   try {
     const snap = await state.db.collection('vehicules').get();
-    const batch = state.db.batch();
-    let count = 0;
+    const batch = state.db.batch(); let count = 0;
     snap.docs.forEach((doc) => { const v = doc.data(); if (!v.statut) { batch.update(doc.ref, { statut: 'non-defini' }); count++; } });
-    if (count > 0) { await batch.commit(); console.log(`[Migration] ${count} statuts initialisés`); }
+    if (count > 0) await batch.commit();
   } catch (e) { console.warn('[Migration]', e); }
 }
 async function migrateSocieteToClient() {
   if (!state.db) return;
   try {
     const snap = await state.db.collection('vehicules').get();
-    const batch = state.db.batch();
-    let count = 0;
+    const batch = state.db.batch(); let count = 0;
     snap.docs.forEach((doc) => { const v = doc.data(); if (v.societe && !v.client) { batch.update(doc.ref, { client: v.societe }); count++; } });
-    if (count > 0) { await batch.commit(); }
+    if (count > 0) await batch.commit();
   } catch (e) { console.warn('[Migration]', e); }
 }
 
-/* ============================================================
-   INIT
-   ============================================================ */
+/* INIT */
 async function init() {
   if (!state.appUnlocked) return;
   showLoading('Demarrage...');
   try {
     fillSiteSelects(); renderVehChips(); renderUserSelectors(); renderVehiculesList();
-    renderAdminInfo(); renderPointage(); renderAutruiSection(); updateSmartTabs();
+    renderAdminInfo(); renderPointage(); renderAutruiSection(); renderOuEst(); updateSmartTabs();
   } catch (e) { console.warn('[init]', e); }
   hideLoading();
   if (!state.db) { toast('Firebase indisponible', 'error'); return; }
   try {
-    listenUsers(); listenClients(); listenVehicules(); listenRondes(); listenPointages(); listenMouvements(); listenAccessLogs();
+    listenUsers(); listenClients(); listenVehicules(); listenRondes();
+    listenPointages(); listenPointagesHistory();
+    listenMouvements(); listenAccessLogs();
     const withTimeout = (promise, ms = 10000) => Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej(new Error('Timeout')), ms))]);
     await withTimeout(Promise.all([ensureUsers(), ensureClients()]), 10000);
     await withTimeout(getChefPin(), 6000);
@@ -3364,21 +3241,10 @@ async function init() {
 }
 window.addEventListener('beforeunload', () => { state.unsubscribers.forEach((u) => { try { u(); } catch (e) {} }); });
 
-/* ============================================================
-   BOOT
-   ============================================================ */
 async function bootApp() {
-  if (state.db) {
-    try { const codes = await loadAccessCode(); state.accessCode = codes.code; state.adminPin = codes.adminPin; } catch (e) {}
-  }
-  if (isSessionValid()) {
-    state.appUnlocked = true;
-    $('#loginScreen').classList.remove('show');
-    init();
-  } else {
-    $('#loginScreen').classList.add('show');
-    $('#loginInput').focus();
-  }
+  if (state.db) { try { const codes = await loadAccessCode(); state.accessCode = codes.code; state.adminPin = codes.adminPin; } catch (e) {} }
+  if (isSessionValid()) { state.appUnlocked = true; $('#loginScreen').classList.remove('show'); init(); }
+  else { $('#loginScreen').classList.add('show'); $('#loginInput').focus(); }
 }
 bootApp();
 </script>
