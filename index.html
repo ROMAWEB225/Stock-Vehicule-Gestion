@@ -1796,15 +1796,24 @@ function renderStatutBadge(v, clickable = true) {
 */
 function getSiteActuel(vehicule) {
   if (!vehicule) return null;
-  // Chercher le pointage le plus récent pour ce véhicule
+  
+  // 1. Chercher dans les pointages de l'historique (le plus récent)
   const pointagesVehicule = state.pointages.filter((p) => p.vehiculeId === vehicule.id && p.site);
   if (pointagesVehicule.length) {
-    // Trier par timestamp décroissant
     const sorted = pointagesVehicule.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     return sorted[0].site;
   }
-  // Fallback : site stocké sur le véhicule
+  
+  // 2. Fallback : site stocké sur le véhicule (mis à jour lors du dernier pointage)
   if (vehicule.site) return vehicule.site;
+  
+  // 3. Fallback final : chercher dans les mouvements (au cas où)
+  const mouvVehicule = state.mouvements.filter((m) => m.vehiculeId === vehicule.id);
+  if (mouvVehicule.length) {
+    const sorted = mouvVehicule.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    return sorted[0].toSite;
+  }
+  
   return null;
 }
 
@@ -2080,26 +2089,30 @@ function listenPointages() {
   const today = todayKeyShort();
   const ref = state.db.collection('pointages').where('jour', '==', today);
   const unsub = ref.onSnapshot((snap) => {
-    const newPointages = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-    const prevCount = state.lastPointageCount;
-    state.pointages = newPointages;
-    state.lastPointageCount = newPointages.length;
+    const todayPointages = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    
+    // Fusionner : garder les pointages historiques + ajouter/mettre à jour les pointages du jour
+    const map = new Map();
+    // 1. Ajouter tous les pointages déjà en mémoire
+    state.pointages.forEach((p) => map.set(p.id, p));
+    // 2. Remplacer par les pointages du jour (version fraîche)
+    todayPointages.forEach((p) => map.set(p.id, p));
+    // 3. Supprimer les pointages du jour qui auraient été supprimés entre temps
+    const todayIds = new Set(todayPointages.map((p) => p.id));
+    Array.from(map.keys()).forEach((id) => {
+      const p = map.get(id);
+      if (p.jour === today && !todayIds.has(id)) map.delete(id);
+    });
+    
+    state.pointages = Array.from(map.values());
     aggregatePointages();
+    
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
     if ($('#tab-ou-est').classList.contains('active')) renderOuEst();
     if ($('#tab-manquants').classList.contains('active')) renderManquants();
     if ($('#tab-vehicules').classList.contains('active')) applyVehFilters();
     renderAutruiSection();
     updatePhotoMissingBanner();
-    if (prevCount > 0 && newPointages.length > prevCount) {
-      const added = newPointages.slice(prevCount);
-      const others = added.filter((p) => p.userNom !== state.currentUser);
-      if (others.length && document.visibilityState === 'visible') {
-        const first = others[0];
-        if (others.length === 1) toast(`${first.userNom} vient de pointer ${first.immat} à ${first.site}`, 'info');
-        else toast(`${others.length} nouveaux pointages`, 'info');
-      }
-    }
   }, (err) => console.warn('[pointages]', err));
   state.unsubscribers.push(unsub);
 }
@@ -2107,18 +2120,26 @@ function listenPointages() {
 /* IMPORTANT : Charger aussi les pointages récents (30 derniers jours) pour la mémoire locale */
 function listenPointagesHistory() {
   if (!state.db) return;
-  const since = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
-  const ref = state.db.collection('pointages').where('jour', '>=', since).orderBy('jour', 'desc');
+  // Charger les pointages des 60 derniers jours
+  const since = new Date(Date.now() - 60 * 86400000).toISOString().slice(0, 10);
+  const ref = state.db.collection('pointages').where('jour', '>=', since).orderBy('jour', 'desc').limit(5000);
   const unsub = ref.onSnapshot((snap) => {
-    const allPointages = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-    // Fusionner avec les pointages du jour (pour éviter les doublons)
+    const historyPointages = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    
+    // Fusionner avec les pointages du jour en gardant TOUS les pointages
     const map = new Map();
-    allPointages.forEach((p) => map.set(p.id, p));
-    state.pointages.forEach((p) => map.set(p.id, p));
+    // 1. Ajouter l'historique (60 jours)
+    historyPointages.forEach((p) => map.set(p.id, p));
+    // 2. Ajouter les pointages du jour (écrase si même id, sinon ajoute)
+    state.pointages.filter((p) => p.jour === todayKeyShort()).forEach((p) => map.set(p.id, p));
+    
     state.pointages = Array.from(map.values());
     aggregatePointages();
+    
     if ($('#tab-ou-est').classList.contains('active')) renderOuEst();
     if ($('#tab-vehicules').classList.contains('active')) applyVehFilters();
+    if ($('#tab-pointage').classList.contains('active')) renderPointage();
+    console.log(`[Pointages] ${state.pointages.length} pointages en mémoire (60 derniers jours)`);
   }, (err) => console.warn('[pointagesHistory]', err));
   state.unsubscribers.push(unsub);
 }
