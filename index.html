@@ -193,7 +193,6 @@ img { max-width: 100%; display: block; }
 .badge-muted { background: var(--bg-3); color: var(--text-dim); }
 .badge-gray { background: rgba(148, 163, 184, 0.15); color: var(--gray); }
 
-/* SITE BADGE - Nouveau style bien visible */
 .site-badge {
   display: inline-flex;
   align-items: center;
@@ -267,7 +266,6 @@ img { max-width: 100%; display: block; }
 .pointage-item .pi-photo-missing { animation: pulse-photo 2s ease-in-out infinite; }
 @keyframes pulse-photo { 0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.6); } 50% { box-shadow: 0 0 0 6px rgba(251, 191, 36, 0); } }
 
-/* STATUT BADGE */
 .statut-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 12px; font-size: 0.65rem; font-weight: 600; white-space: nowrap; cursor: pointer; border: 1px solid transparent; }
 .statut-badge:hover { transform: scale(1.05); }
 .statut-badge.non-defini { background: rgba(148, 163, 184, 0.12); color: var(--gray); border-color: rgba(148, 163, 184, 0.3); }
@@ -290,6 +288,7 @@ img { max-width: 100%; display: block; }
 
 .pointage-hint { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; font-size: 0.78rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 14px; }
 .pointage-hint strong { color: var(--text); font-weight: 600; }
+.pointage-hint code { background: var(--bg-3); padding: 2px 6px; border-radius: 4px; font-family: var(--mono); font-size: 0.72rem; color: var(--primary); }
 
 .pagination-bar { display: flex; justify-content: center; align-items: center; gap: 12px; padding: 16px 0; }
 .pagination-bar .pg-info { font-size: 0.75rem; color: var(--text-dim); font-weight: 500; }
@@ -370,7 +369,6 @@ img { max-width: 100%; display: block; }
 .toast-title { font-weight: 600; margin-bottom: 3px; }
 .toast-msg { color: var(--text-dim); font-size: 0.74rem; }
 
-/* GALERIE PAR SITE */
 .gal-site-section { margin-bottom: 24px; }
 .gal-site-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; font-weight: 600; font-size: 0.9rem; }
 .gal-site-header .gsh-icon { font-size: 1.1rem; }
@@ -484,118 +482,165 @@ img { max-width: 100%; display: block; }
 .photo-choice-btn .pc-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
 .photo-choice-btn .pc-label { font-size: 0.8rem; font-weight: 600; }
 
-/* OU EST - NOUVEAU */
-.where-result-card {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 16px;
-}
-.where-hero {
+/* OU EST */
+.where-result-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
+.where-hero { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+.where-hero .wh-photo { width: 90px; height: 90px; border-radius: var(--radius); object-fit: cover; border: 2px solid var(--primary); flex-shrink: 0; background: var(--bg-3); display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+.where-hero .wh-info { flex: 1; min-width: 0; }
+.where-hero .wh-immat { font-family: var(--mono); font-weight: 700; font-size: 1.6rem; color: var(--primary); letter-spacing: 1px; margin-bottom: 6px; }
+.where-hero .wh-details { font-size: 0.82rem; color: var(--text-dim); display: flex; flex-wrap: wrap; gap: 12px; }
+.where-site-box { display: flex; align-items: center; gap: 16px; padding: 18px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05)); border: 2px solid var(--primary); border-radius: var(--radius); margin-bottom: 16px; }
+.where-site-box.not-found { background: rgba(148, 163, 184, 0.1); border-color: var(--gray); }
+.where-site-box .ws-icon { font-size: 2.5rem; }
+.where-site-box .ws-text { flex: 1; min-width: 0; }
+.where-site-box .ws-label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; }
+.where-site-box .ws-value { font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-top: 4px; line-height: 1.2; }
+.where-site-box.not-found .ws-value { color: var(--gray); }
+.where-site-box .ws-sub { font-size: 0.78rem; color: var(--text-dim); margin-top: 6px; }
+.where-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.where-info-item { background: var(--bg-3); border-radius: var(--radius-sm); padding: 12px 14px; }
+.where-info-item .wii-label { font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px; }
+.where-info-item .wii-value { font-size: 0.9rem; font-weight: 600; color: var(--text); word-break: break-word; }
+.where-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+
+/* UPLOAD RAFALE */
+.rafale-step { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.rafale-progress {
   display: flex;
   align-items: center;
-  gap: 18px;
-  margin-bottom: 18px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--border);
+  gap: 12px;
+  padding: 12px 0;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
-.where-hero .wh-photo {
-  width: 90px;
-  height: 90px;
-  border-radius: var(--radius);
-  object-fit: cover;
-  border: 2px solid var(--primary);
-  flex-shrink: 0;
+.rafale-progress #rafaleCounter {
+  color: var(--primary);
+  min-width: 60px;
+  font-family: var(--mono);
+}
+.rafale-progress #rafaleUploadCounter {
+  color: var(--primary);
+  min-width: 60px;
+  font-family: var(--mono);
+}
+
+.rafale-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 14px;
+}
+@media (max-width: 640px) {
+  .rafale-layout { grid-template-columns: 1fr; }
+}
+
+.rafale-photo-wrap {
+  aspect-ratio: 1;
   background: var(--bg-3);
+  border-radius: var(--radius);
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  border: 1px solid var(--border-light);
 }
-.where-hero .wh-info { flex: 1; min-width: 0; }
-.where-hero .wh-immat {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 1.6rem;
-  color: var(--primary);
-  letter-spacing: 1px;
-  margin-bottom: 6px;
+.rafale-photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
-.where-hero .wh-details {
-  font-size: 0.82rem;
-  color: var(--text-dim);
+
+.rafale-form {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.where-site-box {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
-  border: 2px solid var(--primary);
-  border-radius: var(--radius);
-  margin-bottom: 16px;
-}
-.where-site-box.not-found {
-  background: rgba(148, 163, 184, 0.1);
-  border-color: var(--gray);
-}
-.where-site-box .ws-icon { font-size: 2.5rem; }
-.where-site-box .ws-text { flex: 1; min-width: 0; }
-.where-site-box .ws-label {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  font-weight: 600;
-}
-.where-site-box .ws-value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-top: 4px;
-  line-height: 1.2;
-}
-.where-site-box.not-found .ws-value { color: var(--gray); }
-.where-site-box .ws-sub {
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  margin-top: 6px;
-}
-.where-info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  flex-direction: column;
   gap: 10px;
-  margin-bottom: 16px;
 }
-.where-info-item {
+
+.rafale-filename {
+  font-size: 0.7rem;
+  color: var(--text-mute);
+  font-family: var(--mono);
+  padding: 6px 10px;
   background: var(--bg-3);
   border-radius: var(--radius-sm);
-  padding: 12px 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.where-info-item .wii-label {
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-.where-info-item .wii-value {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text);
-  word-break: break-word;
-}
-.where-actions {
+
+.rafale-suggestion {
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
-  margin-top: 8px;
+  gap: 6px;
+  margin-top: 4px;
 }
+.rafale-suggestion .rs-chip {
+  padding: 5px 10px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  font-size: 0.72rem;
+  font-family: var(--mono);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.rafale-suggestion .rs-chip:hover {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.rafale-suggestion .rs-chip .rs-reason {
+  font-size: 0.6rem;
+  color: var(--text-mute);
+  font-family: var(--font);
+  margin-left: 4px;
+}
+
+.rafale-match-info {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+.rafale-match-info.ok {
+  background: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+.rafale-match-info.warn {
+  background: rgba(251, 191, 36, 0.12);
+  color: var(--warning);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+}
+.rafale-match-info.err {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--danger);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+}
+.rafale-match-info:empty { display: none; }
+
+.rafale-upload-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--bg-3);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+}
+.rafale-upload-item.done { border-left: 3px solid var(--success); }
+.rafale-upload-item.error { border-left: 3px solid var(--danger); }
+.rafale-upload-item .rui-immat {
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--primary);
+  min-width: 100px;
+}
+.rafale-upload-item .rui-status { flex: 1; color: var(--text-dim); }
 
 @media (max-width: 768px) {
   .container { padding: 12px; }
@@ -988,6 +1033,7 @@ img { max-width: 100%; display: block; }
           <option value="">Avec photo</option>
           <option value="without">Sans photo (pointés)</option>
         </select>
+        <button class="btn btn-success btn-sm" id="btnRafale">⚡ Upload rafale</button>
         <button class="btn btn-ghost btn-sm" id="btnGalSelectToggle">Sélectionner</button>
         <button class="btn btn-primary btn-sm" id="btnGalDownloadAll">⬇ Tout télécharger</button>
       </div>
@@ -1301,6 +1347,82 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
+<!-- MODALE UPLOAD RAFALE -->
+<div class="modal-overlay" id="modalRafale">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title">⚡ Upload rafale — <span id="rafaleSiteLabel">Tous sites</span></h3>
+      <button class="modal-close" data-close="modalRafale">✕</button>
+    </div>
+    <div class="modal-body" id="rafaleBody">
+      <!-- ÉTAPE 1 : Sélection -->
+      <div id="rafaleStep1" class="rafale-step">
+        <div class="pointage-hint">
+          <strong>Comment ça marche :</strong> sélectionne plusieurs photos d'un coup. 
+          L'app va te demander de valider l'immatriculation pour chacune. 
+          Si tes photos sont déjà nommées <code>AA565TG01.jpg</code>, la reconnaissance est automatique !
+        </div>
+        <div style="text-align:center;padding:40px 20px;border:2px dashed var(--border-light);border-radius:var(--radius);margin-top:14px">
+          <div style="font-size:3rem;margin-bottom:12px">📸</div>
+          <div style="font-size:1rem;font-weight:600;margin-bottom:8px">Sélectionne tes photos</div>
+          <div style="font-size:0.8rem;color:var(--text-dim);margin-bottom:16px">Tu peux en prendre 50 d'un coup, on gère</div>
+          <input type="file" id="rafaleInput" accept="image/*" multiple style="display:none">
+          <button class="btn btn-primary btn-lg" id="rafalePickBtn">📁 Choisir les photos</button>
+          <button class="btn btn-ghost btn-lg" id="rafaleCameraBtn" style="margin-left:8px">📷 Prendre une photo</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 2 : Validation rapide -->
+      <div id="rafaleStep2" class="rafale-step hidden">
+        <div class="rafale-progress">
+          <span id="rafaleCounter">0 / 0</span>
+          <div style="flex:1;height:6px;background:var(--bg-3);border-radius:3px;overflow:hidden">
+            <div id="rafaleBar" style="height:100%;background:var(--primary);width:0%;transition:width 0.3s"></div>
+          </div>
+          <span id="rafaleRemaining" style="font-size:0.75rem;color:var(--text-dim)"></span>
+        </div>
+        <div class="rafale-layout">
+          <div class="rafale-photo-wrap">
+            <img id="rafalePhoto" src="" alt="">
+          </div>
+          <div class="rafale-form">
+            <div class="rafale-filename" id="rafaleFilename">—</div>
+            <label class="form-label">Immatriculation <span class="req">*</span></label>
+            <input type="text" class="input" id="rafaleImmat" placeholder="AA565TG01" 
+                   style="text-transform:uppercase;font-family:var(--mono);font-size:1.2rem;text-align:center;padding:14px"
+                   autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false">
+            <div id="rafaleSuggestion" class="rafale-suggestion"></div>
+            <div id="rafaleMatchInfo" class="rafale-match-info"></div>
+            <div style="display:flex;gap:8px;margin-top:14px">
+              <button class="btn btn-ghost" id="rafaleSkip">Passer</button>
+              <button class="btn btn-primary" id="rafaleValidate" style="flex:1">✓ Valider</button>
+            </div>
+            <button class="btn btn-ghost btn-sm btn-block" id="rafaleStop" style="margin-top:8px">Arrêter et uploader ce qui est fait</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 3 : Upload en cours -->
+      <div id="rafaleStep3" class="rafale-step hidden">
+        <div style="text-align:center;padding:30px">
+          <div style="font-size:3rem;margin-bottom:12px">☁️</div>
+          <div style="font-size:1.1rem;font-weight:600" id="rafaleUploadLabel">Upload en cours...</div>
+          <div class="rafale-progress" style="margin-top:20px">
+            <span id="rafaleUploadCounter">0 / 0</span>
+            <div style="flex:1;height:6px;background:var(--bg-3);border-radius:3px;overflow:hidden">
+              <div id="rafaleUploadBar" style="height:100%;background:var(--primary);width:0%;transition:width 0.3s"></div>
+            </div>
+          </div>
+          <div id="rafaleUploadList" style="margin-top:20px;max-height:200px;overflow-y:auto;text-align:left"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" id="rafaleFooter">
+      <button class="btn btn-ghost" data-close="modalRafale">Fermer</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modalRecap">
   <div class="modal modal-lg">
     <div class="modal-header"><h3 class="modal-title">Récapitulatif de la ronde</h3><button class="modal-close" data-close="modalRecap">✕</button></div>
@@ -1346,7 +1468,7 @@ img { max-width: 100%; display: block; }
 
 <script>
 /* ============================================================
-   NTR TRACK v4.3 - Fixes site + Nouvel onglet Où est ?
+   NTR TRACK v4.4 - Ajout Upload Rafale Photos
    ============================================================ */
 
 const firebaseConfig = {
@@ -1365,7 +1487,7 @@ const DEFAULT_CLIENTS = ['BNETD'];
 const SOURCES = { source1: 'Source HR', source2: 'Source UM', custom: 'Ajout manuel' };
 const MOUVEMENT_CLIENTS = ['BNETD', 'Port Autonome'];
 const PAGE_SIZE = 50;
-const SESSION_KEY = 'ntr_session_token_v43';
+const SESSION_KEY = 'ntr_session_token_v44';
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000;
 
 const STATUTS = {
@@ -1789,35 +1911,22 @@ function renderStatutBadge(v, clickable = true) {
   return `<span class="statut-badge ${s.cls}" data-statut-veh="${v.id}" style="cursor:${clickable ? 'pointer' : 'default'}">${s.icon} ${escapeHtml(s.label)}</span>`;
 }
 
-/* IMPORTANT : Site actuel du véhicule
-   Priorité :
-   1. Site du pointage le PLUS RÉCENT (parmi tous les pointages chargés)
-   2. Site stocké sur le véhicule
-*/
 function getSiteActuel(vehicule) {
   if (!vehicule) return null;
-  
-  // 1. Chercher dans les pointages de l'historique (le plus récent)
   const pointagesVehicule = state.pointages.filter((p) => p.vehiculeId === vehicule.id && p.site);
   if (pointagesVehicule.length) {
     const sorted = pointagesVehicule.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     return sorted[0].site;
   }
-  
-  // 2. Fallback : site stocké sur le véhicule (mis à jour lors du dernier pointage)
   if (vehicule.site) return vehicule.site;
-  
-  // 3. Fallback final : chercher dans les mouvements (au cas où)
   const mouvVehicule = state.mouvements.filter((m) => m.vehiculeId === vehicule.id);
   if (mouvVehicule.length) {
     const sorted = mouvVehicule.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     return sorted[0].toSite;
   }
-  
   return null;
 }
 
-/* Badge site visible */
 function renderSiteBadge(vehicule) {
   const site = getSiteActuel(vehicule);
   if (site) return `<span class="site-badge known">📍 ${escapeHtml(site)}</span>`;
@@ -1911,7 +2020,6 @@ function renderVehiculesList() {
     const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
     const srcLabel = SOURCES[v.source] || v.source || '—';
     const isC = v.source === 'custom' || v.isCustom;
-    const site = getSiteActuel(v);
     return `<div class="vehicle-card ${pointed ? 'present' : 'absent'}">
       <div class="vehicle-card-main">
         <div class="vehicle-card-immat">${escapeHtml(v.immat)}</div>
@@ -2090,23 +2198,16 @@ function listenPointages() {
   const ref = state.db.collection('pointages').where('jour', '==', today);
   const unsub = ref.onSnapshot((snap) => {
     const todayPointages = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-    
-    // Fusionner : garder les pointages historiques + ajouter/mettre à jour les pointages du jour
     const map = new Map();
-    // 1. Ajouter tous les pointages déjà en mémoire
     state.pointages.forEach((p) => map.set(p.id, p));
-    // 2. Remplacer par les pointages du jour (version fraîche)
     todayPointages.forEach((p) => map.set(p.id, p));
-    // 3. Supprimer les pointages du jour qui auraient été supprimés entre temps
     const todayIds = new Set(todayPointages.map((p) => p.id));
     Array.from(map.keys()).forEach((id) => {
       const p = map.get(id);
       if (p.jour === today && !todayIds.has(id)) map.delete(id);
     });
-    
     state.pointages = Array.from(map.values());
     aggregatePointages();
-    
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
     if ($('#tab-ou-est').classList.contains('active')) renderOuEst();
     if ($('#tab-manquants').classList.contains('active')) renderManquants();
@@ -2117,29 +2218,20 @@ function listenPointages() {
   state.unsubscribers.push(unsub);
 }
 
-/* IMPORTANT : Charger aussi les pointages récents (30 derniers jours) pour la mémoire locale */
 function listenPointagesHistory() {
   if (!state.db) return;
-  // Charger les pointages des 60 derniers jours
   const since = new Date(Date.now() - 60 * 86400000).toISOString().slice(0, 10);
   const ref = state.db.collection('pointages').where('jour', '>=', since).orderBy('jour', 'desc').limit(5000);
   const unsub = ref.onSnapshot((snap) => {
     const historyPointages = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-    
-    // Fusionner avec les pointages du jour en gardant TOUS les pointages
     const map = new Map();
-    // 1. Ajouter l'historique (60 jours)
     historyPointages.forEach((p) => map.set(p.id, p));
-    // 2. Ajouter les pointages du jour (écrase si même id, sinon ajoute)
     state.pointages.filter((p) => p.jour === todayKeyShort()).forEach((p) => map.set(p.id, p));
-    
     state.pointages = Array.from(map.values());
     aggregatePointages();
-    
     if ($('#tab-ou-est').classList.contains('active')) renderOuEst();
     if ($('#tab-vehicules').classList.contains('active')) applyVehFilters();
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
-    console.log(`[Pointages] ${state.pointages.length} pointages en mémoire (60 derniers jours)`);
   }, (err) => console.warn('[pointagesHistory]', err));
   state.unsubscribers.push(unsub);
 }
@@ -2299,9 +2391,7 @@ function renderAutruiSection() {
 }
 document.addEventListener('click', (e) => { const header = e.target.closest('#autruiHeader'); if (header) header.parentElement.classList.toggle('open'); });
 
-/* ============================================================
-   NOUVEL ONGLET : OÙ EST ?
-   ============================================================ */
+/* OÙ EST */
 function renderOuEst() {
   const q = normalizeImmat($('#whereSearch').value);
   const result = $('#whereResult'); const empty = $('#whereEmpty');
@@ -2312,7 +2402,7 @@ function renderOuEst() {
   if (empty) empty.classList.add('hidden');
   const v = state.vehicules.find((x) => normalizeImmat(x.immat) === q);
   if (!v) {
-    result.innerHTML = `<div class="where-result-card"><div class="empty-state"><div class="es-ico">🔍</div><div class="es-title">Aucun véhicule trouvé</div><div class="es-sub">L'immatriculation "${escapeHtml(q)}" n'existe pas dans la base</div></div></div>`;
+    result.innerHTML = `<div class="where-result-card"><div class="empty-state"><div class="es-title">Aucun véhicule trouvé</div><div class="es-sub">L'immatriculation "${escapeHtml(q)}" n'existe pas dans la base</div></div></div>`;
     return;
   }
   renderWhereResult(v);
@@ -2420,7 +2510,6 @@ function renderWhereResult(v) {
     ${timelineHtml}
   `;
 
-  // Bind actions
   const photoBtn = $('#whereViewPhoto');
   if (photoBtn) photoBtn.addEventListener('click', () => openLightbox(v.id));
   const goBtn = $('#whereGoToVehicle');
@@ -2646,6 +2735,368 @@ $('#lightboxDelete').addEventListener('click', () => {
     $('#lightbox').classList.remove('show'); toast('Photo supprimée', 'success');
   });
 });
+
+/* ============================================================
+   UPLOAD RAFALE DE PHOTOS
+   ============================================================ */
+
+const rafale = {
+  queue: [],
+  currentIndex: 0,
+  uploading: false,
+  siteFilter: '',
+  stats: { ok: 0, error: 0, skipped: 0 }
+};
+
+document.getElementById('btnRafale').addEventListener('click', () => {
+  if (!state.currentUser) { toast('Sélectionne un utilisateur d\'abord', 'warning'); return; }
+  resetRafale();
+  const site = document.getElementById('galSiteFilter').value;
+  document.getElementById('rafaleSiteLabel').textContent = site || 'Tous sites';
+  rafale.siteFilter = site;
+  openModal('modalRafale');
+});
+
+function resetRafale() {
+  rafale.queue.forEach((item) => item.previewUrl && URL.revokeObjectURL(item.previewUrl));
+  rafale.queue = [];
+  rafale.currentIndex = 0;
+  rafale.uploading = false;
+  rafale.stats = { ok: 0, error: 0, skipped: 0 };
+  document.getElementById('rafaleStep1').classList.remove('hidden');
+  document.getElementById('rafaleStep2').classList.add('hidden');
+  document.getElementById('rafaleStep3').classList.add('hidden');
+  const input = document.getElementById('rafaleInput');
+  if (input) input.value = '';
+  const list = document.getElementById('rafaleUploadList');
+  if (list) list.innerHTML = '';
+  const counter = document.getElementById('rafaleUploadCounter');
+  if (counter) counter.textContent = '0 / 0';
+  const bar = document.getElementById('rafaleUploadBar');
+  if (bar) bar.style.width = '0%';
+}
+
+document.getElementById('rafalePickBtn').addEventListener('click', () => {
+  const input = document.getElementById('rafaleInput');
+  input.removeAttribute('capture');
+  input.click();
+});
+
+document.getElementById('rafaleCameraBtn').addEventListener('click', () => {
+  const input = document.getElementById('rafaleInput');
+  input.setAttribute('capture', 'environment');
+  input.click();
+});
+
+document.getElementById('rafaleInput').addEventListener('change', (e) => {
+  const files = Array.from(e.target.files || []);
+  if (!files.length) return;
+  addFilesToRafale(files);
+});
+
+function addFilesToRafale(files) {
+  const validFiles = files.filter((f) => f.type.startsWith('image/'));
+  if (!validFiles.length) { toast('Aucune image valide', 'warning'); return; }
+
+  validFiles.forEach((file) => {
+    const immatFromName = extractImmatFromFilename(file.name);
+    rafale.queue.push({
+      file,
+      immatDetected: immatFromName,
+      immatFinal: immatFromName || '',
+      vehiculeId: null,
+      previewUrl: URL.createObjectURL(file),
+      status: 'pending'
+    });
+  });
+
+  toast(`${validFiles.length} photo(s) chargée(s)`, 'success');
+  rafale.currentIndex = 0;
+  document.getElementById('rafaleStep1').classList.add('hidden');
+  document.getElementById('rafaleStep2').classList.remove('hidden');
+  showRafalePhoto();
+}
+
+function extractImmatFromFilename(filename) {
+  const base = filename.replace(/\.[^.]+$/, '');
+  const cleaned = base.replace(/[\s\-_\.]/g, '').toUpperCase();
+  
+  const patterns = [
+    /^([A-Z]{2}\d{3,4}[A-Z]{2}\d{2})$/,
+    /^([A-Z]{2}\d{3,4}[A-Z]{1,2})$/,
+    /^(\d{3,4}[A-Z]{2}\d{2})$/,
+    /^([A-Z]{2}\d{4,5})$/,
+  ];
+  
+  for (const p of patterns) {
+    const m = cleaned.match(p);
+    if (m) return m[1];
+  }
+  
+  if (/^[A-Z0-9]{5,12}$/.test(cleaned)) return cleaned;
+  
+  return '';
+}
+
+function showRafalePhoto() {
+  const total = rafale.queue.length;
+  const done = rafale.currentIndex;
+  const item = rafale.queue[rafale.currentIndex];
+  
+  if (!item) { startRafaleUpload(); return; }
+
+  document.getElementById('rafaleCounter').textContent = `${done + 1} / ${total}`;
+  document.getElementById('rafaleRemaining').textContent = `${total - done} restante(s)`;
+  document.getElementById('rafaleBar').style.width = Math.round((done / total) * 100) + '%';
+  document.getElementById('rafalePhoto').src = item.previewUrl;
+  document.getElementById('rafaleFilename').textContent = item.file.name;
+  
+  const immatInput = document.getElementById('rafaleImmat');
+  immatInput.value = item.immatFinal || '';
+  
+  renderRafaleSuggestions(item);
+  updateRafaleMatchInfo(item);
+  
+  setTimeout(() => immatInput.focus(), 100);
+}
+
+function renderRafaleSuggestions(item) {
+  const container = document.getElementById('rafaleSuggestion');
+  const suggestions = [];
+  const seen = new Set();
+
+  if (item.immatDetected) {
+    const v = state.vehicules.find((x) => normalizeImmat(x.immat) === item.immatDetected);
+    suggestions.push({
+      immat: item.immatDetected,
+      reason: v ? '📁 nom + connu' : '📁 nom',
+      vehiculeId: v ? v.id : null
+    });
+    seen.add(item.immatDetected);
+  }
+
+  const today = todayKeyShort();
+  const myToday = state.pointages
+    .filter((p) => p.userNom === state.currentUser && p.jour === today)
+    .map((p) => p.vehiculeId);
+  
+  myToday.forEach((vid) => {
+    const v = state.vehicules.find((x) => x.id === vid);
+    if (!v || seen.has(v.immat)) return;
+    if (v.photo && v.photo.length > 0) return;
+    suggestions.push({ immat: v.immat, reason: '✅ pointé aujourd\'hui', vehiculeId: v.id });
+    seen.add(v.immat);
+  });
+
+  if (rafale.siteFilter) {
+    state.vehicules
+      .filter((v) => getSiteActuel(v) === rafale.siteFilter && (!v.photo || !v.photo.length))
+      .slice(0, 5)
+      .forEach((v) => {
+        if (seen.has(v.immat)) return;
+        suggestions.push({ immat: v.immat, reason: '📍 même site', vehiculeId: v.id });
+        seen.add(v.immat);
+      });
+  }
+
+  const typed = normalizeImmat(document.getElementById('rafaleImmat').value);
+  if (typed && typed.length >= 3) {
+    state.vehicules.forEach((v) => {
+      if (seen.has(v.immat)) return;
+      if (normalizeImmat(v.immat).includes(typed) || typed.includes(normalizeImmat(v.immat))) {
+        suggestions.push({ immat: v.immat, reason: '🔍 correspondance', vehiculeId: v.id });
+        seen.add(v.immat);
+      }
+    });
+  }
+
+  const top = suggestions.slice(0, 6);
+  if (!top.length) { container.innerHTML = ''; return; }
+
+  container.innerHTML = top.map((s) => 
+    `<span class="rs-chip" data-immat="${escapeHtml(s.immat)}" data-vehid="${s.vehiculeId || ''}">
+      ${escapeHtml(s.immat)}<span class="rs-reason">${escapeHtml(s.reason)}</span>
+    </span>`
+  ).join('');
+
+  container.querySelectorAll('.rs-chip').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      document.getElementById('rafaleImmat').value = chip.dataset.immat;
+      updateRafaleMatchInfo(item);
+      renderRafaleSuggestions(item);
+    });
+  });
+}
+
+function updateRafaleMatchInfo(item) {
+  const info = document.getElementById('rafaleMatchInfo');
+  const immat = normalizeImmat(document.getElementById('rafaleImmat').value);
+  
+  if (!immat) { info.className = 'rafale-match-info'; info.innerHTML = ''; return; }
+  
+  const v = state.vehicules.find((x) => normalizeImmat(x.immat) === immat);
+  
+  if (!v) {
+    info.className = 'rafale-match-info err';
+    info.innerHTML = `❌ <strong>${escapeHtml(immat)}</strong> introuvable dans la base.<br><span style="font-size:0.72rem">Vérifie la saisie.</span>`;
+    return;
+  }
+  
+  item.vehiculeId = v.id;
+  item.immatFinal = v.immat;
+  
+  const hasPhoto = v.photo && v.photo.length > 0;
+  const site = getSiteActuel(v);
+  
+  if (hasPhoto) {
+    info.className = 'rafale-match-info warn';
+    info.innerHTML = `⚠️ <strong>${escapeHtml(v.immat)}</strong> a déjà une photo.<br><span style="font-size:0.72rem">Elle sera remplacée. Site : ${escapeHtml(site || '—')}</span>`;
+  } else {
+    info.className = 'rafale-match-info ok';
+    info.innerHTML = `✅ <strong>${escapeHtml(v.immat)}</strong> — ${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}<br><span style="font-size:0.72rem">📍 ${escapeHtml(site || 'Non pointé')} · ${escapeHtml(SOURCES[v.source] || '—')}</span>`;
+  }
+}
+
+document.getElementById('rafaleImmat').addEventListener('input', () => {
+  const item = rafale.queue[rafale.currentIndex];
+  if (!item) return;
+  updateRafaleMatchInfo(item);
+  renderRafaleSuggestions(item);
+});
+
+document.getElementById('rafaleImmat').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    document.getElementById('rafaleValidate').click();
+  }
+});
+
+document.getElementById('rafaleValidate').addEventListener('click', () => {
+  const item = rafale.queue[rafale.currentIndex];
+  if (!item) return;
+  const immat = normalizeImmat(document.getElementById('rafaleImmat').value);
+  const v = state.vehicules.find((x) => normalizeImmat(x.immat) === immat);
+  
+  if (!v) { toast('Immatriculation introuvable', 'warning'); return; }
+  
+  item.immatFinal = v.immat;
+  item.vehiculeId = v.id;
+  item.status = 'ready';
+  rafale.currentIndex++;
+  showRafalePhoto();
+});
+
+document.getElementById('rafaleSkip').addEventListener('click', () => {
+  const item = rafale.queue[rafale.currentIndex];
+  if (!item) return;
+  item.status = 'skipped';
+  rafale.stats.skipped++;
+  rafale.currentIndex++;
+  showRafalePhoto();
+});
+
+document.getElementById('rafaleStop').addEventListener('click', () => {
+  for (let i = rafale.currentIndex; i < rafale.queue.length; i++) {
+    if (rafale.queue[i].status === 'pending') {
+      rafale.queue[i].status = 'skipped';
+      rafale.stats.skipped++;
+    }
+  }
+  startRafaleUpload();
+});
+
+async function startRafaleUpload() {
+  const ready = rafale.queue.filter((it) => it.status === 'ready');
+  
+  document.getElementById('rafaleStep2').classList.add('hidden');
+  document.getElementById('rafaleStep3').classList.remove('hidden');
+  
+  if (!ready.length) {
+    document.getElementById('rafaleUploadLabel').textContent = 'Aucune photo à uploader';
+    document.getElementById('rafaleUploadCounter').textContent = `0 / 0`;
+    return;
+  }
+  
+  rafale.uploading = true;
+  document.getElementById('rafaleUploadLabel').textContent = `Upload de ${ready.length} photo(s)...`;
+  const list = document.getElementById('rafaleUploadList');
+  list.innerHTML = ready.map((it) => 
+    `<div class="rafale-upload-item" id="rui-${it.vehiculeId}">
+      <span class="rui-immat">${escapeHtml(it.immatFinal)}</span>
+      <span class="rui-status">En attente...</span>
+    </div>`
+  ).join('');
+
+  let done = 0;
+  const total = ready.length;
+  
+  for (const item of ready) {
+    const row = document.getElementById(`rui-${item.vehiculeId}`);
+    const statusEl = row ? row.querySelector('.rui-status') : null;
+    if (statusEl) statusEl.textContent = '⏳ Upload Cloudinary...';
+    
+    try {
+      const url = await uploadToCloudinary(item.file);
+      if (statusEl) statusEl.textContent = '💾 Enregistrement...';
+      
+      await state.db.collection('vehicules').doc(item.vehiculeId).update({
+        photo: url,
+        photoUpdatedAt: nowIso(),
+        photoSource: 'rafale'
+      });
+      
+      const today = todayKeyShort();
+      const alreadyPointed = state.pointages.some(
+        (p) => p.vehiculeId === item.vehiculeId && p.jour === today
+      );
+      
+      if (!alreadyPointed && rafale.siteFilter) {
+        await state.db.collection('pointages').add({
+          vehiculeId: item.vehiculeId,
+          immat: item.immatFinal,
+          userNom: state.currentUser,
+          site: rafale.siteFilter,
+          timestamp: nowIso(),
+          jour: today,
+          createdAt: nowIso(),
+          autoPointage: 'rafale-photo'
+        });
+        await state.db.collection('vehicules').doc(item.vehiculeId).update({
+          present: true,
+          lastSeen: nowIso(),
+          site: rafale.siteFilter
+        });
+        if (statusEl) statusEl.textContent = '✅ Uploadé + pointé';
+      } else {
+        if (statusEl) statusEl.textContent = '✅ Uploadé';
+      }
+      
+      if (row) row.classList.add('done');
+      rafale.stats.ok++;
+    } catch (err) {
+      if (statusEl) statusEl.textContent = '❌ ' + err.message;
+      if (row) row.classList.add('error');
+      rafale.stats.error++;
+    }
+    
+    done++;
+    document.getElementById('rafaleUploadCounter').textContent = `${done} / ${total}`;
+    document.getElementById('rafaleUploadBar').style.width = Math.round((done / total) * 100) + '%';
+  }
+  
+  rafale.uploading = false;
+  document.getElementById('rafaleUploadLabel').textContent = '✨ Terminé !';
+  const summary = document.createElement('div');
+  summary.style.cssText = 'margin-top:16px;padding:14px;background:var(--bg-3);border-radius:var(--radius);font-size:0.82rem';
+  summary.innerHTML = `
+    <div>✅ <strong>${rafale.stats.ok}</strong> photo(s) uploadée(s)</div>
+    ${rafale.stats.error ? `<div>❌ <strong>${rafale.stats.error}</strong> erreur(s)</div>` : ''}
+    ${rafale.stats.skipped ? `<div>⏭ <strong>${rafale.stats.skipped}</strong> passée(s)</div>` : ''}
+  `;
+  list.appendChild(summary);
+  
+  if (rafale.stats.ok > 0) toast(`${rafale.stats.ok} photo(s) uploadée(s)`, 'success');
+}
 
 /* CLIENTS */
 function renderSocietes() {
