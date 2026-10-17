@@ -9,8 +9,8 @@
 <title>NTR Track — Stock Véhicules</title>
 
 <link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
-<link rel="apple-touch-icon" href="android-chrome-192x192.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDAgNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMTAiIGZpbGw9IiMxMGI5ODEiLz48cGF0aCBkPSJNMTAgMjYgTDE0IDE2IEwyNiAxNiBMMzAgMjYgWiIgZmlsbD0iIzBiMTEyMCIgb3BhY2l0eT0iMC45Ii8+PGNpcmNsZSBjeD0iMTUiIGN5PSIyNyIgcj0iMi41IiBmaWxsPSIjMGIxMTIwIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIyNyIgcj0iMi41IiBmaWxsPSIjMGIxMTIwIi8+PHBhdGggZD0iTTE4IDE5IEwyMCAxOSBMMjAgMjMgTDIyIDIzIiBzdHJva2U9IiMxMGI5ODEiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDAgNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMTAiIGZpbGw9IiMxMGI5ODEiLz48cGF0aCBkPSJNMTAgMjYgTDE0IDE2IEwyNiAxNiBMMzAgMjYgWiIgZmlsbD0iIzBiMTEyMCIgb3BhY2l0eT0iMC45Ii8+PGNpcmNsZSBjeD0iMTUiIGN5PSIyNyIgcj0iMi41IiBmaWxsPSIjMGIxMTIwIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIyNyIgcj0iMi41IiBmaWxsPSIjMGIxMTIwIi8+PHBhdGggZD0iTTE4IDE5IEwyMCAxOSBMMjAgMjMgTDIyIDIzIiBzdHJva2U9IiMxMGI5ODEiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=">
 
 <style>
 :root {
@@ -193,27 +193,9 @@ img { max-width: 100%; display: block; }
 .badge-muted { background: var(--bg-3); color: var(--text-dim); }
 .badge-gray { background: rgba(148, 163, 184, 0.15); color: var(--gray); }
 
-.site-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  white-space: nowrap;
-  border: 1px solid transparent;
-}
-.site-badge.known {
-  background: rgba(16, 185, 129, 0.15);
-  color: var(--primary);
-  border-color: rgba(16, 185, 129, 0.4);
-}
-.site-badge.unknown {
-  background: rgba(148, 163, 184, 0.12);
-  color: var(--gray);
-  border-color: rgba(148, 163, 184, 0.3);
-}
+.site-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; white-space: nowrap; border: 1px solid transparent; }
+.site-badge.known { background: rgba(16, 185, 129, 0.15); color: var(--primary); border-color: rgba(16, 185, 129, 0.4); }
+.site-badge.unknown { background: rgba(148, 163, 184, 0.12); color: var(--gray); border-color: rgba(148, 163, 184, 0.3); }
 
 .list { display: flex; flex-direction: column; gap: 8px; }
 .list-item { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
@@ -506,140 +488,27 @@ img { max-width: 100%; display: block; }
 /* UPLOAD RAFALE */
 .rafale-step { animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-.rafale-progress {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-.rafale-progress #rafaleCounter {
-  color: var(--primary);
-  min-width: 60px;
-  font-family: var(--mono);
-}
-.rafale-progress #rafaleUploadCounter {
-  color: var(--primary);
-  min-width: 60px;
-  font-family: var(--mono);
-}
-
-.rafale-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 14px;
-}
-@media (max-width: 640px) {
-  .rafale-layout { grid-template-columns: 1fr; }
-}
-
-.rafale-photo-wrap {
-  aspect-ratio: 1;
-  background: var(--bg-3);
-  border-radius: var(--radius);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--border-light);
-}
-.rafale-photo-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.rafale-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.rafale-filename {
-  font-size: 0.7rem;
-  color: var(--text-mute);
-  font-family: var(--mono);
-  padding: 6px 10px;
-  background: var(--bg-3);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.rafale-suggestion {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 4px;
-}
-.rafale-suggestion .rs-chip {
-  padding: 5px 10px;
-  background: var(--bg-3);
-  border: 1px solid var(--border-light);
-  border-radius: 14px;
-  font-size: 0.72rem;
-  font-family: var(--mono);
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-}
-.rafale-suggestion .rs-chip:hover {
-  background: var(--primary-soft);
-  border-color: var(--primary);
-  color: var(--primary);
-}
-.rafale-suggestion .rs-chip .rs-reason {
-  font-size: 0.6rem;
-  color: var(--text-mute);
-  font-family: var(--font);
-  margin-left: 4px;
-}
-
-.rafale-match-info {
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 0.78rem;
-  line-height: 1.5;
-}
-.rafale-match-info.ok {
-  background: var(--primary-soft);
-  color: var(--primary);
-  border: 1px solid rgba(16, 185, 129, 0.4);
-}
-.rafale-match-info.warn {
-  background: rgba(251, 191, 36, 0.12);
-  color: var(--warning);
-  border: 1px solid rgba(251, 191, 36, 0.4);
-}
-.rafale-match-info.err {
-  background: rgba(248, 113, 113, 0.12);
-  color: var(--danger);
-  border: 1px solid rgba(248, 113, 113, 0.4);
-}
+.rafale-progress { display: flex; align-items: center; gap: 12px; padding: 12px 0; font-size: 0.8rem; font-weight: 600; }
+.rafale-progress #rafaleCounter, .rafale-progress #rafaleUploadCounter { color: var(--primary); min-width: 60px; font-family: var(--mono); }
+.rafale-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 14px; }
+@media (max-width: 640px) { .rafale-layout { grid-template-columns: 1fr; } }
+.rafale-photo-wrap { aspect-ratio: 1; background: var(--bg-3); border-radius: var(--radius); overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-light); }
+.rafale-photo-wrap img { width: 100%; height: 100%; object-fit: contain; }
+.rafale-form { display: flex; flex-direction: column; gap: 10px; }
+.rafale-filename { font-size: 0.7rem; color: var(--text-mute); font-family: var(--mono); padding: 6px 10px; background: var(--bg-3); border-radius: var(--radius-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rafale-suggestion { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.rafale-suggestion .rs-chip { padding: 5px 10px; background: var(--bg-3); border: 1px solid var(--border-light); border-radius: 14px; font-size: 0.72rem; font-family: var(--mono); font-weight: 600; cursor: pointer; transition: var(--transition); }
+.rafale-suggestion .rs-chip:hover { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+.rafale-suggestion .rs-chip .rs-reason { font-size: 0.6rem; color: var(--text-mute); font-family: var(--font); margin-left: 4px; }
+.rafale-match-info { padding: 10px 12px; border-radius: var(--radius-sm); font-size: 0.78rem; line-height: 1.5; }
+.rafale-match-info.ok { background: var(--primary-soft); color: var(--primary); border: 1px solid rgba(16, 185, 129, 0.4); }
+.rafale-match-info.warn { background: rgba(251, 191, 36, 0.12); color: var(--warning); border: 1px solid rgba(251, 191, 36, 0.4); }
+.rafale-match-info.err { background: rgba(248, 113, 113, 0.12); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.4); }
 .rafale-match-info:empty { display: none; }
-
-.rafale-upload-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  background: var(--bg-3);
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  margin-bottom: 6px;
-}
+.rafale-upload-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--bg-3); border-radius: var(--radius-sm); font-size: 0.75rem; margin-bottom: 6px; }
 .rafale-upload-item.done { border-left: 3px solid var(--success); }
 .rafale-upload-item.error { border-left: 3px solid var(--danger); }
-.rafale-upload-item .rui-immat {
-  font-family: var(--mono);
-  font-weight: 700;
-  color: var(--primary);
-  min-width: 100px;
-}
+.rafale-upload-item .rui-immat { font-family: var(--mono); font-weight: 700; color: var(--primary); min-width: 100px; }
 .rafale-upload-item .rui-status { flex: 1; color: var(--text-dim); }
 
 @media (max-width: 768px) {
@@ -1355,7 +1224,6 @@ img { max-width: 100%; display: block; }
       <button class="modal-close" data-close="modalRafale">✕</button>
     </div>
     <div class="modal-body" id="rafaleBody">
-      <!-- ÉTAPE 1 : Sélection -->
       <div id="rafaleStep1" class="rafale-step">
         <div class="pointage-hint">
           <strong>Comment ça marche :</strong> sélectionne plusieurs photos d'un coup. 
@@ -1372,7 +1240,6 @@ img { max-width: 100%; display: block; }
         </div>
       </div>
 
-      <!-- ÉTAPE 2 : Validation rapide -->
       <div id="rafaleStep2" class="rafale-step hidden">
         <div class="rafale-progress">
           <span id="rafaleCounter">0 / 0</span>
@@ -1402,7 +1269,6 @@ img { max-width: 100%; display: block; }
         </div>
       </div>
 
-      <!-- ÉTAPE 3 : Upload en cours -->
       <div id="rafaleStep3" class="rafale-step hidden">
         <div style="text-align:center;padding:30px">
           <div style="font-size:3rem;margin-bottom:12px">☁️</div>
@@ -1467,9 +1333,7 @@ img { max-width: 100%; display: block; }
 <script src="https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js"></script>
 
 <script>
-/* ============================================================
-   NTR TRACK v4.4 - Ajout Upload Rafale Photos
-   ============================================================ */
+/* NTR TRACK v4.5 - Fix bouton Terminer + icônes PWA */
 
 const firebaseConfig = {
   apiKey: "AIzaSyAxfEpi-NERVExxVYD2EmH7JppiIQDwWOM",
@@ -1485,9 +1349,8 @@ const SITES = ['Garage HR 1', 'Garage HR 2', 'Garage UM', 'Garage UNICARS', 'Gar
 const DEFAULT_USERS = ['Romaric Tanoh', 'Joel Kouassi', 'Sylvin', 'Noel Aka', 'Coulibaly', 'Mohamed'];
 const DEFAULT_CLIENTS = ['BNETD'];
 const SOURCES = { source1: 'Source HR', source2: 'Source UM', custom: 'Ajout manuel' };
-const MOUVEMENT_CLIENTS = ['BNETD', 'Port Autonome'];
 const PAGE_SIZE = 50;
-const SESSION_KEY = 'ntr_session_token_v44';
+const SESSION_KEY = 'ntr_session_token_v45';
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000;
 
 const STATUTS = {
@@ -1507,6 +1370,7 @@ const state = {
   currentUser: localStorage.getItem('ntr_user') || '',
   chefUnlocked: false, pinBuffer: '',
   pointageSite: '', pointageStatus: 'all', pointageRecent: {},
+  pointageStartTime: null,
   manquantsFilterSource: '',
   histFilterUser: '', histFilterMonth: '',
   socFilter: '',
@@ -1515,17 +1379,15 @@ const state = {
   pageVeh: 1, pageManquants: 1, pagePointage: 1,
   currentRondeDetail: null,
   unsubscribers: [],
-  lastPointageCount: 0,
   chartPresence: null, chartSites: null,
   appUnlocked: false,
   accessCode: 'NTR2026', adminPin: '9999',
   loginAttempts: 0, loginCooldownUntil: 0, loginAttemptsWindow: [],
-  pendingAdminAction: null, adminPinBuffer: '',
+  pendingAdminAction: null,
   accessLogs: [],
   statutModalVehiculeId: null,
   statutModalSelected: '',
-  photoChoiceVehiculeId: null,
-  whereSelectedVehiculeId: null
+  photoChoiceVehiculeId: null
 };
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -2126,12 +1988,33 @@ $('#vehSave').addEventListener('click', async () => {
   finally { hideLoading(); }
 });
 
-async function uploadToCloudinary(file) {
-  const fd = new FormData();
-  fd.append('file', file); fd.append('upload_preset', CLOUDINARY.preset); fd.append('folder', 'ntr-garage');
-  const res = await fetch(CLOUDINARY.uploadUrl, { method: 'POST', body: fd });
-  if (!res.ok) throw new Error('Upload échoué');
-  return (await res.json()).secure_url;
+/* UPLOAD Cloudinary avec retry */
+async function uploadToCloudinary(file, maxRetries = 2) {
+  let lastError;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('upload_preset', CLOUDINARY.preset);
+      fd.append('folder', 'ntr-garage');
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      const res = await fetch(CLOUDINARY.uploadUrl, { method: 'POST', body: fd, signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (!res.ok) {
+        const errTxt = await res.text().catch(() => '');
+        throw new Error(`Upload HTTP ${res.status}: ${errTxt.substring(0, 100)}`);
+      }
+      const json = await res.json();
+      if (!json.secure_url) throw new Error('URL Cloudinary manquante');
+      return json.secure_url;
+    } catch (err) {
+      lastError = err;
+      console.warn(`[Cloudinary] Tentative ${attempt + 1}/${maxRetries + 1} échouée:`, err.message);
+      if (attempt < maxRetries) await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+    }
+  }
+  throw new Error(`Upload échoué après ${maxRetries + 1} tentatives: ${lastError.message}. Vérifie ta connexion Internet et le preset Cloudinary "stock_vehicules" (doit être en mode "Unsigned").`);
 }
 
 /* PHOTO CHOICE */
@@ -2344,7 +2227,13 @@ async function handlePointage(vehId) {
     setTimeout(() => { delete state.pointageRecent[vehId]; }, 2000);
   } catch (err) { toast('Erreur : ' + err.message, 'error'); }
 }
-$('#pointageSite').addEventListener('change', (e) => { state.pointageSite = e.target.value; state.pointageRecent = {}; state.pagePointage = 1; renderPointage(); });
+$('#pointageSite').addEventListener('change', (e) => {
+  state.pointageSite = e.target.value;
+  state.pointageRecent = {};
+  state.pagePointage = 1;
+  if (!state.pointageStartTime) state.pointageStartTime = nowIso();
+  renderPointage();
+});
 $$('#pointageStatusChips .chip').forEach((chip) => {
   chip.addEventListener('click', () => {
     $$('#pointageStatusChips .chip').forEach((c) => c.classList.remove('active'));
@@ -2390,6 +2279,174 @@ function renderAutruiSection() {
   list.innerHTML = users.map((nom) => { const d = byUser[nom]; return `<div class="autrui-user"><span class="au-nom">${escapeHtml(nom)}</span><span class="au-count">${d.count} véhicule(s)</span><span class="au-sites">${[...d.sites].map((s) => escapeHtml(s)).join(', ')}</span></div>`; }).join('');
 }
 document.addEventListener('click', (e) => { const header = e.target.closest('#autruiHeader'); if (header) header.parentElement.classList.toggle('open'); });
+
+/* ============================================================
+   ✅ NOUVEAU : BOUTON TERMINER LA RONDE (v4.5)
+   ============================================================ */
+$('#btnTerminer').addEventListener('click', ouvrirRecapRonde);
+
+function ouvrirRecapRonde() {
+  const site = state.pointageSite;
+  if (!site) { toast('Sélectionne un site d\'abord', 'warning'); return; }
+  if (!state.currentUser) { toast('Sélectionne un utilisateur', 'warning'); return; }
+  const today = todayKeyShort();
+  const pointagesDuJour = state.pointages.filter((p) => p.jour === today);
+  if (!pointagesDuJour.length) { toast('Aucun pointage à terminer', 'info'); return; }
+
+  // Stats globales
+  const total = state.vehicules.length;
+  const pointedIds = new Set(pointagesDuJour.map((p) => p.vehiculeId));
+  const presents = pointedIds.size;
+  const absents = total - presents;
+  const taux = total > 0 ? Math.round((presents / total) * 100) : 0;
+
+  // Repartition par site
+  const repartitionSites = {};
+  pointagesDuJour.forEach((p) => {
+    if (!p.site) return;
+    repartitionSites[p.site] = (repartitionSites[p.site] || 0) + 1;
+  });
+
+  // Snapshot des véhicules trouvés
+  const vehiculesSnapshot = state.vehicules
+    .filter((v) => pointedIds.has(v.id))
+    .map((v) => ({
+      immat: v.immat,
+      marque: v.marque || '',
+      modele: v.modele || '',
+      client: v.client || '',
+      statut: getStatutVehicule(v),
+      site: pointagesDuJour.find((p) => p.vehiculeId === v.id)?.site || v.site || ''
+    }));
+
+  // Utilisateurs ayant participé
+  const usersDuJour = [...new Set(pointagesDuJour.map((p) => p.userNom))];
+
+  const recapBody = $('#recapBody');
+  recapBody.innerHTML = `
+    <div class="recap-hero">
+      <div class="rh-number">${presents}</div>
+      <div class="rh-label">Véhicules trouvés sur ${total}</div>
+      <div class="recap-sources">
+        <span class="rs-tag">${presents} présents</span>
+        <span class="rs-tag">${absents} manquants</span>
+        <span class="rs-tag">${taux}% de réussite</span>
+      </div>
+    </div>
+
+    <div class="recap-grid">
+      <div class="recap-card success">
+        <div class="rc-num">${presents}</div>
+        <div class="rc-label">Présents</div>
+      </div>
+      <div class="recap-card danger">
+        <div class="rc-num">${absents}</div>
+        <div class="rc-label">Manquants</div>
+      </div>
+      <div class="recap-card">
+        <div class="rc-num">${usersDuJour.length}</div>
+        <div class="rc-label">Utilisateur(s)</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📍 Répartition par site</div>
+      <table class="bilan-table">
+        <thead><tr><th>Site</th><th>Véhicules pointés</th></tr></thead>
+        <tbody>
+          ${Object.entries(repartitionSites).sort((a, b) => b[1] - a[1]).map(([s, c]) =>
+            `<tr><td>${escapeHtml(s)}</td><td><strong>${c}</strong></td></tr>`
+          ).join('') || '<tr><td colspan="2" style="text-align:center;color:var(--text-mute)">Aucune répartition</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">👥 Utilisateurs participants</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        ${usersDuJour.map((u) => `<span class="badge badge-primary">${escapeHtml(u)}</span>`).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📅 Ronde du ${formatDateFR(today)}</div>
+      <div style="font-size:0.82rem;color:var(--text-dim);line-height:1.8">
+        <div>Site principal : <strong>${escapeHtml(site)}</strong></div>
+        <div>Début : ${state.pointageStartTime ? formatDateTimeFR(state.pointageStartTime) : '—'}</div>
+        <div>Fin : ${formatDateTimeFR(nowIso())}</div>
+        <div>Total pointages : <strong>${pointagesDuJour.length}</strong></div>
+      </div>
+    </div>
+  `;
+
+  // Store temporaire pour l'enregistrement
+  state.pendingRonde = {
+    site,
+    heureDebut: state.pointageStartTime || nowIso(),
+    heureFin: nowIso(),
+    effectueePar: state.currentUser,
+    statut: 'terminee',
+    stats: { total, presents, absents, taux, repartitionSites },
+    vehiculesSnapshot,
+    utilisateurs: usersDuJour,
+    createdAt: nowIso()
+  };
+
+  openModal('modalRecap');
+}
+
+/* Bouton "Terminer et enregistrer" dans la modale recap */
+$('#recapTerminer').addEventListener('click', async () => {
+  if (!state.pendingRonde) { toast('Aucune ronde à enregistrer', 'warning'); return; }
+  const btn = $('#recapTerminer');
+  btn.disabled = true; btn.textContent = 'Enregistrement...';
+  showLoading('Enregistrement de la ronde...');
+  try {
+    await state.db.collection('rondes').add(state.pendingRonde);
+    toast(`Ronde enregistrée : ${state.pendingRonde.stats.presents}/${state.pendingRonde.stats.total}`, 'success');
+    state.pendingRonde = null;
+    state.pointageStartTime = null;
+    closeModal('modalRecap');
+    // Rafraîchir
+    if ($('#tab-historique').classList.contains('active')) renderHistorique();
+  } catch (err) {
+    console.error('[Ronde]', err);
+    toast('Erreur : ' + err.message, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Terminer et enregistrer';
+    hideLoading();
+  }
+});
+
+/* Bouton "Voir les manquants" */
+$('#recapShowManquants').addEventListener('click', () => {
+  closeModal('modalRecap');
+  switchTab('manquants');
+});
+
+/* Bouton "Export PDF" de la modale recap */
+$('#recapExportPdf').addEventListener('click', () => {
+  if (!state.pendingRonde) { toast('Aucune ronde à exporter', 'warning'); return; }
+  const r = state.pendingRonde;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  doc.setFillColor(11, 17, 32); doc.rect(0, 0, 210, 26, 'F');
+  doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
+  doc.text('NTR TRACK - RAPPORT DE RONDE', 14, 11);
+  doc.setFontSize(9); doc.setFont(undefined, 'normal');
+  doc.text(`Généré le ${new Date().toLocaleString('fr-FR')}`, 14, 18);
+  doc.setTextColor(0, 0, 0);
+  doc.setFontSize(11); doc.setFont(undefined, 'bold');
+  doc.text(`Site : ${r.site}`, 14, 38);
+  doc.setFont(undefined, 'normal'); doc.setFontSize(10);
+  doc.text(`Utilisateur : ${r.effectueePar}`, 14, 45);
+  doc.text(`Début : ${formatDateTimeFR(r.heureDebut)}`, 14, 52);
+  doc.text(`Fin : ${formatDateTimeFR(r.heureFin)}`, 14, 59);
+  doc.setFont(undefined, 'bold');
+  doc.text(`Total : ${r.stats.total} | Présents : ${r.stats.presents} | Manquants : ${r.stats.absents} | Taux : ${r.stats.taux}%`, 14, 70);
+  doc.save(`NTR_Ronde_${todayKey()}.pdf`);
+  toast('PDF téléchargé', 'success');
+});
 
 /* OÙ EST */
 function renderOuEst() {
@@ -2736,17 +2793,8 @@ $('#lightboxDelete').addEventListener('click', () => {
   });
 });
 
-/* ============================================================
-   UPLOAD RAFALE DE PHOTOS
-   ============================================================ */
-
-const rafale = {
-  queue: [],
-  currentIndex: 0,
-  uploading: false,
-  siteFilter: '',
-  stats: { ok: 0, error: 0, skipped: 0 }
-};
+/* UPLOAD RAFALE */
+const rafale = { queue: [], currentIndex: 0, uploading: false, siteFilter: '', stats: { ok: 0, error: 0, skipped: 0 } };
 
 document.getElementById('btnRafale').addEventListener('click', () => {
   if (!state.currentUser) { toast('Sélectionne un utilisateur d\'abord', 'warning'); return; }
@@ -2759,35 +2807,25 @@ document.getElementById('btnRafale').addEventListener('click', () => {
 
 function resetRafale() {
   rafale.queue.forEach((item) => item.previewUrl && URL.revokeObjectURL(item.previewUrl));
-  rafale.queue = [];
-  rafale.currentIndex = 0;
-  rafale.uploading = false;
+  rafale.queue = []; rafale.currentIndex = 0; rafale.uploading = false;
   rafale.stats = { ok: 0, error: 0, skipped: 0 };
   document.getElementById('rafaleStep1').classList.remove('hidden');
   document.getElementById('rafaleStep2').classList.add('hidden');
   document.getElementById('rafaleStep3').classList.add('hidden');
-  const input = document.getElementById('rafaleInput');
-  if (input) input.value = '';
-  const list = document.getElementById('rafaleUploadList');
-  if (list) list.innerHTML = '';
-  const counter = document.getElementById('rafaleUploadCounter');
-  if (counter) counter.textContent = '0 / 0';
-  const bar = document.getElementById('rafaleUploadBar');
-  if (bar) bar.style.width = '0%';
+  const input = document.getElementById('rafaleInput'); if (input) input.value = '';
+  const list = document.getElementById('rafaleUploadList'); if (list) list.innerHTML = '';
+  const counter = document.getElementById('rafaleUploadCounter'); if (counter) counter.textContent = '0 / 0';
+  const bar = document.getElementById('rafaleUploadBar'); if (bar) bar.style.width = '0%';
 }
 
 document.getElementById('rafalePickBtn').addEventListener('click', () => {
   const input = document.getElementById('rafaleInput');
-  input.removeAttribute('capture');
-  input.click();
+  input.removeAttribute('capture'); input.click();
 });
-
 document.getElementById('rafaleCameraBtn').addEventListener('click', () => {
   const input = document.getElementById('rafaleInput');
-  input.setAttribute('capture', 'environment');
-  input.click();
+  input.setAttribute('capture', 'environment'); input.click();
 });
-
 document.getElementById('rafaleInput').addEventListener('change', (e) => {
   const files = Array.from(e.target.files || []);
   if (!files.length) return;
@@ -2797,19 +2835,13 @@ document.getElementById('rafaleInput').addEventListener('change', (e) => {
 function addFilesToRafale(files) {
   const validFiles = files.filter((f) => f.type.startsWith('image/'));
   if (!validFiles.length) { toast('Aucune image valide', 'warning'); return; }
-
   validFiles.forEach((file) => {
     const immatFromName = extractImmatFromFilename(file.name);
     rafale.queue.push({
-      file,
-      immatDetected: immatFromName,
-      immatFinal: immatFromName || '',
-      vehiculeId: null,
-      previewUrl: URL.createObjectURL(file),
-      status: 'pending'
+      file, immatDetected: immatFromName, immatFinal: immatFromName || '',
+      vehiculeId: null, previewUrl: URL.createObjectURL(file), status: 'pending'
     });
   });
-
   toast(`${validFiles.length} photo(s) chargée(s)`, 'success');
   rafale.currentIndex = 0;
   document.getElementById('rafaleStep1').classList.add('hidden');
@@ -2820,21 +2852,14 @@ function addFilesToRafale(files) {
 function extractImmatFromFilename(filename) {
   const base = filename.replace(/\.[^.]+$/, '');
   const cleaned = base.replace(/[\s\-_\.]/g, '').toUpperCase();
-  
   const patterns = [
     /^([A-Z]{2}\d{3,4}[A-Z]{2}\d{2})$/,
     /^([A-Z]{2}\d{3,4}[A-Z]{1,2})$/,
     /^(\d{3,4}[A-Z]{2}\d{2})$/,
     /^([A-Z]{2}\d{4,5})$/,
   ];
-  
-  for (const p of patterns) {
-    const m = cleaned.match(p);
-    if (m) return m[1];
-  }
-  
+  for (const p of patterns) { const m = cleaned.match(p); if (m) return m[1]; }
   if (/^[A-Z0-9]{5,12}$/.test(cleaned)) return cleaned;
-  
   return '';
 }
 
@@ -2842,44 +2867,29 @@ function showRafalePhoto() {
   const total = rafale.queue.length;
   const done = rafale.currentIndex;
   const item = rafale.queue[rafale.currentIndex];
-  
   if (!item) { startRafaleUpload(); return; }
-
   document.getElementById('rafaleCounter').textContent = `${done + 1} / ${total}`;
   document.getElementById('rafaleRemaining').textContent = `${total - done} restante(s)`;
   document.getElementById('rafaleBar').style.width = Math.round((done / total) * 100) + '%';
   document.getElementById('rafalePhoto').src = item.previewUrl;
   document.getElementById('rafaleFilename').textContent = item.file.name;
-  
   const immatInput = document.getElementById('rafaleImmat');
   immatInput.value = item.immatFinal || '';
-  
   renderRafaleSuggestions(item);
   updateRafaleMatchInfo(item);
-  
   setTimeout(() => immatInput.focus(), 100);
 }
 
 function renderRafaleSuggestions(item) {
   const container = document.getElementById('rafaleSuggestion');
-  const suggestions = [];
-  const seen = new Set();
-
+  const suggestions = []; const seen = new Set();
   if (item.immatDetected) {
     const v = state.vehicules.find((x) => normalizeImmat(x.immat) === item.immatDetected);
-    suggestions.push({
-      immat: item.immatDetected,
-      reason: v ? '📁 nom + connu' : '📁 nom',
-      vehiculeId: v ? v.id : null
-    });
+    suggestions.push({ immat: item.immatDetected, reason: v ? '📁 nom + connu' : '📁 nom', vehiculeId: v ? v.id : null });
     seen.add(item.immatDetected);
   }
-
   const today = todayKeyShort();
-  const myToday = state.pointages
-    .filter((p) => p.userNom === state.currentUser && p.jour === today)
-    .map((p) => p.vehiculeId);
-  
+  const myToday = state.pointages.filter((p) => p.userNom === state.currentUser && p.jour === today).map((p) => p.vehiculeId);
   myToday.forEach((vid) => {
     const v = state.vehicules.find((x) => x.id === vid);
     if (!v || seen.has(v.immat)) return;
@@ -2887,18 +2897,13 @@ function renderRafaleSuggestions(item) {
     suggestions.push({ immat: v.immat, reason: '✅ pointé aujourd\'hui', vehiculeId: v.id });
     seen.add(v.immat);
   });
-
   if (rafale.siteFilter) {
-    state.vehicules
-      .filter((v) => getSiteActuel(v) === rafale.siteFilter && (!v.photo || !v.photo.length))
-      .slice(0, 5)
-      .forEach((v) => {
-        if (seen.has(v.immat)) return;
-        suggestions.push({ immat: v.immat, reason: '📍 même site', vehiculeId: v.id });
-        seen.add(v.immat);
-      });
+    state.vehicules.filter((v) => getSiteActuel(v) === rafale.siteFilter && (!v.photo || !v.photo.length)).slice(0, 5).forEach((v) => {
+      if (seen.has(v.immat)) return;
+      suggestions.push({ immat: v.immat, reason: '📍 même site', vehiculeId: v.id });
+      seen.add(v.immat);
+    });
   }
-
   const typed = normalizeImmat(document.getElementById('rafaleImmat').value);
   if (typed && typed.length >= 3) {
     state.vehicules.forEach((v) => {
@@ -2909,16 +2914,9 @@ function renderRafaleSuggestions(item) {
       }
     });
   }
-
   const top = suggestions.slice(0, 6);
   if (!top.length) { container.innerHTML = ''; return; }
-
-  container.innerHTML = top.map((s) => 
-    `<span class="rs-chip" data-immat="${escapeHtml(s.immat)}" data-vehid="${s.vehiculeId || ''}">
-      ${escapeHtml(s.immat)}<span class="rs-reason">${escapeHtml(s.reason)}</span>
-    </span>`
-  ).join('');
-
+  container.innerHTML = top.map((s) => `<span class="rs-chip" data-immat="${escapeHtml(s.immat)}" data-vehid="${s.vehiculeId || ''}">${escapeHtml(s.immat)}<span class="rs-reason">${escapeHtml(s.reason)}</span></span>`).join('');
   container.querySelectorAll('.rs-chip').forEach((chip) => {
     chip.addEventListener('click', () => {
       document.getElementById('rafaleImmat').value = chip.dataset.immat;
@@ -2931,23 +2929,16 @@ function renderRafaleSuggestions(item) {
 function updateRafaleMatchInfo(item) {
   const info = document.getElementById('rafaleMatchInfo');
   const immat = normalizeImmat(document.getElementById('rafaleImmat').value);
-  
   if (!immat) { info.className = 'rafale-match-info'; info.innerHTML = ''; return; }
-  
   const v = state.vehicules.find((x) => normalizeImmat(x.immat) === immat);
-  
   if (!v) {
     info.className = 'rafale-match-info err';
     info.innerHTML = `❌ <strong>${escapeHtml(immat)}</strong> introuvable dans la base.<br><span style="font-size:0.72rem">Vérifie la saisie.</span>`;
     return;
   }
-  
-  item.vehiculeId = v.id;
-  item.immatFinal = v.immat;
-  
+  item.vehiculeId = v.id; item.immatFinal = v.immat;
   const hasPhoto = v.photo && v.photo.length > 0;
   const site = getSiteActuel(v);
-  
   if (hasPhoto) {
     info.className = 'rafale-match-info warn';
     info.innerHTML = `⚠️ <strong>${escapeHtml(v.immat)}</strong> a déjà une photo.<br><span style="font-size:0.72rem">Elle sera remplacée. Site : ${escapeHtml(site || '—')}</span>`;
@@ -2958,119 +2949,64 @@ function updateRafaleMatchInfo(item) {
 }
 
 document.getElementById('rafaleImmat').addEventListener('input', () => {
-  const item = rafale.queue[rafale.currentIndex];
-  if (!item) return;
+  const item = rafale.queue[rafale.currentIndex]; if (!item) return;
   updateRafaleMatchInfo(item);
   renderRafaleSuggestions(item);
 });
-
 document.getElementById('rafaleImmat').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    document.getElementById('rafaleValidate').click();
-  }
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('rafaleValidate').click(); }
 });
-
 document.getElementById('rafaleValidate').addEventListener('click', () => {
-  const item = rafale.queue[rafale.currentIndex];
-  if (!item) return;
+  const item = rafale.queue[rafale.currentIndex]; if (!item) return;
   const immat = normalizeImmat(document.getElementById('rafaleImmat').value);
   const v = state.vehicules.find((x) => normalizeImmat(x.immat) === immat);
-  
   if (!v) { toast('Immatriculation introuvable', 'warning'); return; }
-  
-  item.immatFinal = v.immat;
-  item.vehiculeId = v.id;
-  item.status = 'ready';
-  rafale.currentIndex++;
-  showRafalePhoto();
+  item.immatFinal = v.immat; item.vehiculeId = v.id; item.status = 'ready';
+  rafale.currentIndex++; showRafalePhoto();
 });
-
 document.getElementById('rafaleSkip').addEventListener('click', () => {
-  const item = rafale.queue[rafale.currentIndex];
-  if (!item) return;
-  item.status = 'skipped';
-  rafale.stats.skipped++;
-  rafale.currentIndex++;
-  showRafalePhoto();
+  const item = rafale.queue[rafale.currentIndex]; if (!item) return;
+  item.status = 'skipped'; rafale.stats.skipped++;
+  rafale.currentIndex++; showRafalePhoto();
 });
-
 document.getElementById('rafaleStop').addEventListener('click', () => {
   for (let i = rafale.currentIndex; i < rafale.queue.length; i++) {
-    if (rafale.queue[i].status === 'pending') {
-      rafale.queue[i].status = 'skipped';
-      rafale.stats.skipped++;
-    }
+    if (rafale.queue[i].status === 'pending') { rafale.queue[i].status = 'skipped'; rafale.stats.skipped++; }
   }
   startRafaleUpload();
 });
 
 async function startRafaleUpload() {
   const ready = rafale.queue.filter((it) => it.status === 'ready');
-  
   document.getElementById('rafaleStep2').classList.add('hidden');
   document.getElementById('rafaleStep3').classList.remove('hidden');
-  
   if (!ready.length) {
     document.getElementById('rafaleUploadLabel').textContent = 'Aucune photo à uploader';
     document.getElementById('rafaleUploadCounter').textContent = `0 / 0`;
     return;
   }
-  
   rafale.uploading = true;
   document.getElementById('rafaleUploadLabel').textContent = `Upload de ${ready.length} photo(s)...`;
   const list = document.getElementById('rafaleUploadList');
-  list.innerHTML = ready.map((it) => 
-    `<div class="rafale-upload-item" id="rui-${it.vehiculeId}">
-      <span class="rui-immat">${escapeHtml(it.immatFinal)}</span>
-      <span class="rui-status">En attente...</span>
-    </div>`
-  ).join('');
-
-  let done = 0;
-  const total = ready.length;
-  
+  list.innerHTML = ready.map((it) => `<div class="rafale-upload-item" id="rui-${it.vehiculeId}"><span class="rui-immat">${escapeHtml(it.immatFinal)}</span><span class="rui-status">En attente...</span></div>`).join('');
+  let done = 0; const total = ready.length;
   for (const item of ready) {
     const row = document.getElementById(`rui-${item.vehiculeId}`);
     const statusEl = row ? row.querySelector('.rui-status') : null;
     if (statusEl) statusEl.textContent = '⏳ Upload Cloudinary...';
-    
     try {
       const url = await uploadToCloudinary(item.file);
       if (statusEl) statusEl.textContent = '💾 Enregistrement...';
-      
-      await state.db.collection('vehicules').doc(item.vehiculeId).update({
-        photo: url,
-        photoUpdatedAt: nowIso(),
-        photoSource: 'rafale'
-      });
-      
+      await state.db.collection('vehicules').doc(item.vehiculeId).update({ photo: url, photoUpdatedAt: nowIso(), photoSource: 'rafale' });
       const today = todayKeyShort();
-      const alreadyPointed = state.pointages.some(
-        (p) => p.vehiculeId === item.vehiculeId && p.jour === today
-      );
-      
+      const alreadyPointed = state.pointages.some((p) => p.vehiculeId === item.vehiculeId && p.jour === today);
       if (!alreadyPointed && rafale.siteFilter) {
-        await state.db.collection('pointages').add({
-          vehiculeId: item.vehiculeId,
-          immat: item.immatFinal,
-          userNom: state.currentUser,
-          site: rafale.siteFilter,
-          timestamp: nowIso(),
-          jour: today,
-          createdAt: nowIso(),
-          autoPointage: 'rafale-photo'
-        });
-        await state.db.collection('vehicules').doc(item.vehiculeId).update({
-          present: true,
-          lastSeen: nowIso(),
-          site: rafale.siteFilter
-        });
+        await state.db.collection('pointages').add({ vehiculeId: item.vehiculeId, immat: item.immatFinal, userNom: state.currentUser, site: rafale.siteFilter, timestamp: nowIso(), jour: today, createdAt: nowIso(), autoPointage: 'rafale-photo' });
+        await state.db.collection('vehicules').doc(item.vehiculeId).update({ present: true, lastSeen: nowIso(), site: rafale.siteFilter });
         if (statusEl) statusEl.textContent = '✅ Uploadé + pointé';
       } else {
         if (statusEl) statusEl.textContent = '✅ Uploadé';
       }
-      
       if (row) row.classList.add('done');
       rafale.stats.ok++;
     } catch (err) {
@@ -3078,12 +3014,10 @@ async function startRafaleUpload() {
       if (row) row.classList.add('error');
       rafale.stats.error++;
     }
-    
     done++;
     document.getElementById('rafaleUploadCounter').textContent = `${done} / ${total}`;
     document.getElementById('rafaleUploadBar').style.width = Math.round((done / total) * 100) + '%';
   }
-  
   rafale.uploading = false;
   document.getElementById('rafaleUploadLabel').textContent = '✨ Terminé !';
   const summary = document.createElement('div');
@@ -3094,7 +3028,6 @@ async function startRafaleUpload() {
     ${rafale.stats.skipped ? `<div>⏭ <strong>${rafale.stats.skipped}</strong> passée(s)</div>` : ''}
   `;
   list.appendChild(summary);
-  
   if (rafale.stats.ok > 0) toast(`${rafale.stats.ok} photo(s) uploadée(s)`, 'success');
 }
 
@@ -3227,17 +3160,6 @@ function exportPDFGlobal() {
   doc.setFont(undefined, 'normal'); doc.setFontSize(10);
   doc.text(`Total : ${t} | Trouves : ${p} | Manquants : ${a} | Taux : ${taux}%`, 14, 44);
   doc.save(`NTR_Rapport_${todayKey()}.pdf`); toast('PDF téléchargé', 'success');
-}
-function exportRecapPDF(s) {
-  if (!s) return;
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  doc.setFillColor(11, 17, 32); doc.rect(0, 0, 210, 26, 'F');
-  doc.setTextColor(255, 255, 255); doc.setFontSize(15); doc.setFont(undefined, 'bold');
-  doc.text('NTR TRACK - RAPPORT DE RONDE', 14, 12);
-  doc.setTextColor(0, 0, 0); doc.setFontSize(11);
-  doc.text(`Total : ${s.total} | Trouves : ${s.found} (${s.tauxGlobal}%) | Manquants : ${s.manquants}`, 14, 46);
-  doc.save(`NTR_Rapport_Ronde_${todayKey()}.pdf`); toast('PDF téléchargé', 'success');
 }
 $('#btnRapportHebdo').addEventListener('click', () => {
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
@@ -3716,7 +3638,7 @@ window.addEventListener('beforeunload', () => { state.unsubscribers.forEach((u) 
 async function bootApp() {
   if (state.db) { try { const codes = await loadAccessCode(); state.accessCode = codes.code; state.adminPin = codes.adminPin; } catch (e) {} }
   if (isSessionValid()) { state.appUnlocked = true; $('#loginScreen').classList.remove('show'); init(); }
-  else { $('#loginScreen').classList.add('show'); $('#loginInput').focus(); }
+  else { $('#loginScreen').classList.show ? null : null; $('#loginScreen').classList.add('show'); $('#loginInput').focus(); }
 }
 bootApp();
 </script>
