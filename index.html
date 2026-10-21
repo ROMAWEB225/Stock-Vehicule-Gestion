@@ -3615,23 +3615,67 @@ async function migrateSocieteToClient() {
 async function init() {
   if (!state.appUnlocked) return;
   showLoading('Demarrage...');
+
+  // 1) Afficher l'interface IMMÉDIATEMENT (même sans données)
   try {
-    fillSiteSelects(); renderVehChips(); renderUserSelectors(); renderVehiculesList();
-    renderAdminInfo(); renderPointage(); renderAutruiSection(); renderOuEst(); updateSmartTabs();
-  } catch (e) { console.warn('[init]', e); }
+    fillSiteSelects();
+    renderVehChips();
+    renderUserSelectors();
+    renderVehiculesList();
+    renderAdminInfo();
+    renderPointage();
+    renderAutruiSection();
+    renderOuEst();
+    updateSmartTabs();
+  } catch (e) { console.warn('[init UI]', e); }
   hideLoading();
+
   if (!state.db) { toast('Firebase indisponible', 'error'); return; }
+
+  // 2) Lancer les listeners Firestore (ils vont se remplir tout seuls quand Firestore répond)
   try {
-    listenUsers(); listenClients(); listenVehicules(); listenRondes();
-    listenPointages(); listenPointagesHistory();
-    listenMouvements(); listenAccessLogs();
-    const withTimeout = (promise, ms = 10000) => Promise.race([promise, new Promise((_, rej) => setTimeout(() => rej(new Error('Timeout')), ms))]);
-    await withTimeout(Promise.all([ensureUsers(), ensureClients()]), 10000);
-    await withTimeout(getChefPin(), 6000);
-    await withTimeout(migrateSocieteToClient(), 5000);
-    await withTimeout(migrateStatut(), 5000);
-    toast('NTR Track prêt', 'success', 'Application');
-  } catch (err) { console.error('[init]', err); toast('Mode degrade', 'warning'); }
+    listenUsers();
+    listenClients();
+    listenVehicules();
+    listenRondes();
+    listenPointages();
+    listenPointagesHistory();
+    listenMouvements();
+    listenAccessLogs();
+  } catch (e) { console.warn('[listeners]', e); }
+
+  // 3) Tâches de fond NON bloquantes (avec timeout court + catch silencieux)
+  const safe = (fn, name) => {
+    Promise.resolve().then(fn).catch(e => console.warn(`[init ${name}]`, e.message));
+  };
+  safe(ensureUsers, 'ensureUsers');
+  safe(ensureClients, 'ensureClients');
+  safe(getChefPin, 'getChefPin');
+  safe(migrateSocieteToClient, 'migrateClient');
+  safe(migrateStatut, 'migrateStatut');
+
+  // 4) Message de statut après 3 secondes (selon ce qu'on a réussi à charger)
+  setTimeout(() => {
+    if (state.vehicules.length > 0) {
+      toast('NTR Track prêt', 'success', 'Application');
+    } else if (!navigator.onLine) {
+      toast('Mode hors-ligne — vérifie ta connexion', 'warning', 'Réseau');
+    } else {
+      toast('Synchronisation Firestore en cours...', 'info', 'Réseau');
+    }
+  }, 3000);
+
+  // 5) Surveiller quand Firestore répond (même après 10s)
+  const waitForData = setInterval(() => {
+    if (state.vehicules.length > 0 && !state.firstLoadToastShown) {
+      state.firstLoadToastShown = true;
+      clearInterval(waitForData);
+      toast(`${state.vehicules.length} véhicules chargés`, 'success', 'Synchronisé');
+    }
+  }, 2000);
+
+  // Arrêter le polling après 60 secondes max
+  setTimeout(() => clearInterval(waitForData), 60000);
 }
 window.addEventListener('beforeunload', () => { state.unsubscribers.forEach((u) => { try { u(); } catch (e) {} }); });
 
