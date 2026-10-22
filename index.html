@@ -952,22 +952,46 @@ img { max-width: 100%; display: block; }
   <div class="container">
     <div class="section-header"><h2 class="section-title">Attestation d'immobilisation</h2></div>
     <div class="card">
+
+      <!-- Numéro d'attestation (auto + modifiable) -->
+      <div class="form-group">
+        <label class="form-label">N° d'attestation <span class="req">*</span></label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="text" class="input" id="attNumero" placeholder="N°X/MOIS/ANNÉE" style="font-family:var(--mono);font-weight:600">
+          <button class="btn btn-ghost btn-sm" id="attRefreshNum" title="Prochain numéro" style="flex-shrink:0">⟳</button>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-mute);margin-top:4px">
+          Proposé automatiquement par mois · Modifiable manuellement si besoin
+        </div>
+      </div>
+
+      <!-- Immatriculation avec bouton de recherche auto-remplissage -->
+      <div class="form-group">
+        <label class="form-label">Immatriculation <span class="req">*</span></label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="text" class="input" id="attImmat" placeholder="AA565TG01" style="text-transform:uppercase;font-family:var(--mono);font-weight:600" autocomplete="off">
+          <button class="btn btn-primary btn-sm" id="attAutofill" title="Chercher le véhicule" style="flex-shrink:0;padding:9px 14px">🔍</button>
+        </div>
+        <div id="attAutofillInfo" style="font-size:0.72rem;margin-top:6px"></div>
+      </div>
+
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Immatriculation <span class="req">*</span></label><input type="text" class="input" id="attImmat" placeholder="AA565TG01" style="text-transform:uppercase" autocomplete="off"></div>
         <div class="form-group"><label class="form-label">Assuré</label><input type="text" class="input" id="attAssure" placeholder="Nom complet"></div>
+        <div class="form-group"><label class="form-label">Couleur</label><input type="text" class="input" id="attCouleur" placeholder="Blanc"></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Marque</label><input type="text" class="input" id="attMarque" placeholder="Toyota"></div>
         <div class="form-group"><label class="form-label">Modèle</label><input type="text" class="input" id="attModele" placeholder="Hilux"></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Couleur</label><input type="text" class="input" id="attCouleur" placeholder="Blanc"></div>
         <div class="form-group"><label class="form-label">Durée (jours)</label><input type="number" class="input" id="attDuree" placeholder="5" min="1"></div>
+        <div class="form-group"><label class="form-label">Couleur (texte imprimé)</label><input type="text" class="input" id="attCouleurText" placeholder="Auto = Couleur"></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Date début</label><input type="date" class="input" id="attDateDebut"></div>
         <div class="form-group"><label class="form-label">Date fin</label><input type="date" class="input" id="attDateFin"></div>
       </div>
+
       <button class="btn btn-primary btn-block btn-lg" id="attGenerate">Générer l'attestation Word</button>
     </div>
   </div>
@@ -1333,7 +1357,7 @@ img { max-width: 100%; display: block; }
 <script src="https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js"></script>
 
 <script>
-/* NTR TRACK v4.5 - Fix bouton Terminer + icônes PWA */
+/* NTR TRACK v4.8 - Attestation complète + Numéro auto + Pré-remplissage */
 
 const firebaseConfig = {
   apiKey: "AIzaSyAxfEpi-NERVExxVYD2EmH7JppiIQDwWOM",
@@ -1350,8 +1374,9 @@ const DEFAULT_USERS = ['Romaric Tanoh', 'Joel Kouassi', 'Sylvin', 'Noel Aka', 'C
 const DEFAULT_CLIENTS = ['BNETD'];
 const SOURCES = { source1: 'Source HR', source2: 'Source UM', custom: 'Ajout manuel' };
 const PAGE_SIZE = 50;
-const SESSION_KEY = 'ntr_session_token_v45';
+const SESSION_KEY = 'ntr_session_token_v48';
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000;
+const MOIS_NOMS_FR = ['JANVIER','FEVRIER','MARS','AVRIL','MAI','JUIN','JUILLET','AOUT','SEPTEMBRE','OCTOBRE','NOVEMBRE','DECEMBRE'];
 
 const STATUTS = {
   'non-defini': { label: 'Non défini', icon: '⚪', cls: 'non-defini' },
@@ -1387,7 +1412,9 @@ const state = {
   accessLogs: [],
   statutModalVehiculeId: null,
   statutModalSelected: '',
-  photoChoiceVehiculeId: null
+  photoChoiceVehiculeId: null,
+  pendingRonde: null,
+  firstLoadToastShown: false
 };
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -1602,6 +1629,7 @@ function switchTab(name) {
   if (name === 'chef') renderChef();
   if (name === 'galerie') renderGalerie();
   if (name === 'admin') renderAdminInfo();
+  if (name === 'attestation') setTimeout(() => rafraichirNumeroAttestation(), 200);
 }
 
 /* VOICE */
@@ -1988,7 +2016,6 @@ $('#vehSave').addEventListener('click', async () => {
   finally { hideLoading(); }
 });
 
-/* UPLOAD Cloudinary avec retry */
 async function uploadToCloudinary(file, maxRetries = 2) {
   let lastError;
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
@@ -2281,7 +2308,7 @@ function renderAutruiSection() {
 document.addEventListener('click', (e) => { const header = e.target.closest('#autruiHeader'); if (header) header.parentElement.classList.toggle('open'); });
 
 /* ============================================================
-   ✅ NOUVEAU : BOUTON TERMINER LA RONDE (v4.5)
+   BOUTON TERMINER LA RONDE
    ============================================================ */
 $('#btnTerminer').addEventListener('click', ouvrirRecapRonde);
 
@@ -2293,21 +2320,18 @@ function ouvrirRecapRonde() {
   const pointagesDuJour = state.pointages.filter((p) => p.jour === today);
   if (!pointagesDuJour.length) { toast('Aucun pointage à terminer', 'info'); return; }
 
-  // Stats globales
   const total = state.vehicules.length;
   const pointedIds = new Set(pointagesDuJour.map((p) => p.vehiculeId));
   const presents = pointedIds.size;
   const absents = total - presents;
   const taux = total > 0 ? Math.round((presents / total) * 100) : 0;
 
-  // Repartition par site
   const repartitionSites = {};
   pointagesDuJour.forEach((p) => {
     if (!p.site) return;
     repartitionSites[p.site] = (repartitionSites[p.site] || 0) + 1;
   });
 
-  // Snapshot des véhicules trouvés
   const vehiculesSnapshot = state.vehicules
     .filter((v) => pointedIds.has(v.id))
     .map((v) => ({
@@ -2319,7 +2343,6 @@ function ouvrirRecapRonde() {
       site: pointagesDuJour.find((p) => p.vehiculeId === v.id)?.site || v.site || ''
     }));
 
-  // Utilisateurs ayant participé
   const usersDuJour = [...new Set(pointagesDuJour.map((p) => p.userNom))];
 
   const recapBody = $('#recapBody');
@@ -2379,7 +2402,6 @@ function ouvrirRecapRonde() {
     </div>
   `;
 
-  // Store temporaire pour l'enregistrement
   state.pendingRonde = {
     site,
     heureDebut: state.pointageStartTime || nowIso(),
@@ -2395,7 +2417,6 @@ function ouvrirRecapRonde() {
   openModal('modalRecap');
 }
 
-/* Bouton "Terminer et enregistrer" dans la modale recap */
 $('#recapTerminer').addEventListener('click', async () => {
   if (!state.pendingRonde) { toast('Aucune ronde à enregistrer', 'warning'); return; }
   const btn = $('#recapTerminer');
@@ -2407,7 +2428,6 @@ $('#recapTerminer').addEventListener('click', async () => {
     state.pendingRonde = null;
     state.pointageStartTime = null;
     closeModal('modalRecap');
-    // Rafraîchir
     if ($('#tab-historique').classList.contains('active')) renderHistorique();
   } catch (err) {
     console.error('[Ronde]', err);
@@ -2418,13 +2438,11 @@ $('#recapTerminer').addEventListener('click', async () => {
   }
 });
 
-/* Bouton "Voir les manquants" */
 $('#recapShowManquants').addEventListener('click', () => {
   closeModal('modalRecap');
   switchTab('manquants');
 });
 
-/* Bouton "Export PDF" de la modale recap */
 $('#recapExportPdf').addEventListener('click', () => {
   if (!state.pendingRonde) { toast('Aucune ronde à exporter', 'warning'); return; }
   const r = state.pendingRonde;
@@ -3221,35 +3239,209 @@ async function exportPresentsWord() {
   } catch (e) { toast('Erreur', 'error'); }
 }
 
-/* ATTESTATION */
+/* ============================================================
+   ATTESTATION v4.8 — Numéro auto + Texte complet + Pré-remplissage
+   ============================================================ */
+
+function getMoisCleFR() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+}
+
+function formatNumAttestation(numero, dateRef = new Date()) {
+  const mois = MOIS_NOMS_FR[dateRef.getMonth()];
+  const annee = dateRef.getFullYear();
+  return `N°${numero}/${mois}/${annee}`;
+}
+
+async function getProchainNumeroAttestation() {
+  const moisCle = getMoisCleFR();
+  try {
+    const doc = await state.db.collection('config').doc('attestationCompteurs').get();
+    const data = doc.exists ? doc.data() : {};
+    const compteurActuel = data[moisCle] || 0;
+    return formatNumAttestation(compteurActuel + 1);
+  } catch (e) {
+    console.warn('[attestation] Lecture compteur impossible:', e);
+    return formatNumAttestation(1);
+  }
+}
+
+async function incrementerCompteurAttestation() {
+  const moisCle = getMoisCleFR();
+  try {
+    const docRef = state.db.collection('config').doc('attestationCompteurs');
+    const doc = await docRef.get();
+    const data = doc.exists ? doc.data() : {};
+    const compteurActuel = data[moisCle] || 0;
+    await docRef.set({ [moisCle]: compteurActuel + 1, updatedAt: nowIso() }, { merge: true });
+    return compteurActuel + 1;
+  } catch (e) {
+    console.warn('[attestation] Incrément compteur impossible:', e);
+    return null;
+  }
+}
+
+async function rafraichirNumeroAttestation() {
+  const input = $('#attNumero');
+  if (!input) return;
+  input.value = '...';
+  const num = await getProchainNumeroAttestation();
+  input.value = num;
+}
+
+async function autofillAttestation() {
+  const immatInput = $('#attImmat');
+  const info = $('#attAutofillInfo');
+  const immat = normalizeImmat(immatInput.value);
+  if (!immat) {
+    toast('Tape une immatriculation d\'abord', 'warning');
+    return;
+  }
+  if (info) info.innerHTML = '<span style="color:var(--text-mute)">Recherche en cours...</span>';
+  const v = state.vehicules.find((x) => normalizeImmat(x.immat) === immat);
+  if (!v) {
+    if (info) info.innerHTML = `<span style="color:var(--danger)">❌ <strong>${escapeHtml(immat)}</strong> introuvable dans la base</span>`;
+    toast('Véhicule introuvable', 'warning');
+    return;
+  }
+  if (v.marque) $('#attMarque').value = v.marque.toUpperCase();
+  if (v.modele) $('#attModele').value = v.modele.toUpperCase();
+  if (v.client) $('#attAssure').value = v.client.toUpperCase();
+  const siteActuel = getSiteActuel(v);
+  if (info) info.innerHTML = `
+    <div style="padding:8px 12px;background:var(--primary-soft);border:1px solid var(--primary);border-radius:var(--radius-sm);color:var(--primary)">
+      ✅ <strong>${escapeHtml(v.immat)}</strong> trouvé
+      ${v.marque || v.modele ? `— ${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}` : ''}
+      ${siteActuel ? `· 📍 ${escapeHtml(siteActuel)}` : ''}
+    </div>
+  `;
+  toast('Champs pré-remplis', 'success');
+}
+
+/* Événements attestation */
+const attRefreshBtn = $('#attRefreshNum');
+if (attRefreshBtn) attRefreshBtn.addEventListener('click', () => { rafraichirNumeroAttestation(); toast('Numéro recalculé', 'info'); });
+const attAutofillBtn = $('#attAutofill');
+if (attAutofillBtn) attAutofillBtn.addEventListener('click', autofillAttestation);
+const attImmatInput = $('#attImmat');
+if (attImmatInput) {
+  attImmatInput.addEventListener('blur', () => {
+    const immat = normalizeImmat(attImmatInput.value);
+    const marque = $('#attMarque');
+    if (immat.length >= 5 && marque && !marque.value) autofillAttestation();
+  });
+  attImmatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); autofillAttestation(); }
+  });
+}
+
+/* Pré-remplir le numéro au démarrage */
+setTimeout(() => { if (state.appUnlocked) rafraichirNumeroAttestation(); }, 4000);
+
+/* Génération de l'attestation */
 $('#attGenerate').addEventListener('click', async () => {
-  if (typeof docx === 'undefined') return;
+  if (typeof docx === 'undefined') { toast('Bibliothèque Word non chargée', 'error'); return; }
+
   const immat = $('#attImmat').value.trim().toUpperCase();
-  const marque = $('#attMarque').value.trim();
-  const modele = $('#attModele').value.trim();
-  const couleur = $('#attCouleur').value.trim();
-  const assure = $('#attAssure').value.trim();
+  const marque = $('#attMarque').value.trim().toUpperCase();
+  const modele = $('#attModele').value.trim().toUpperCase();
+  const couleurInput = $('#attCouleurText') ? $('#attCouleurText').value.trim() : '';
+  const couleurFallback = $('#attCouleur') ? $('#attCouleur').value.trim() : '';
+  const couleur = (couleurInput || couleurFallback).toUpperCase();
+  const assure = $('#attAssure').value.trim().toUpperCase();
   const duree = $('#attDuree').value.trim() || '5';
   const dateDebut = $('#attDateDebut').value;
   const dateFin = $('#attDateFin').value;
-  if (!immat || !marque || !modele || !couleur || !assure || !dateDebut || !dateFin) { toast('Tous les champs obligatoires', 'warning'); return; }
+  const numSaisi = $('#attNumero').value.trim();
+
+  if (!immat || !marque || !modele || !couleur || !assure || !dateDebut || !dateFin) {
+    toast('Tous les champs obligatoires', 'warning');
+    return;
+  }
+
+  const numUtilise = numSaisi || await getProchainNumeroAttestation();
+
   const { Document, Packer, Paragraph, TextRun, AlignmentType, convertInchesToTwip } = docx;
-  const moisNoms = ['JANVIER','FEVRIER','MARS','AVRIL','MAI','JUIN','JUILLET','AOUT','SEPTEMBRE','OCTOBRE','NOVEMBRE','DECEMBRE'];
-  const fmt = (d) => { const date = new Date(d + 'T00:00:00'); return `${date.getDate()} ${moisNoms[date.getMonth()]} ${date.getFullYear()}`; };
-  const num = `N°${String(Math.floor(Math.random() * 9000) + 1000)}/${moisNoms[new Date().getMonth()]}/${new Date().getFullYear()}`;
+  const fmt = (d) => {
+    const date = new Date(d + 'T00:00:00');
+    return `${date.getDate()} ${MOIS_NOMS_FR[date.getMonth()]} ${date.getFullYear()}`;
+  };
   const mk = (t, o = {}) => new TextRun({ text: t, size: 22, font: 'Arial', ...o });
-  const doc = new Document({ sections: [{ properties: { page: { margin: { top: convertInchesToTwip(0.8), bottom: convertInchesToTwip(0.8), left: convertInchesToTwip(1.2), right: convertInchesToTwip(1.2) } } }, children: [
-    new Paragraph({ children: [mk("ATTESTATION D'IMMOBILISATION", { bold: true, size: 28 })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
-    new Paragraph({ children: [mk(num, { bold: true, size: 24 })], alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
-    new Paragraph({ children: [mk("Nous soussignes entreprise "), mk("UNITED MOTORS", { bold: true }), mk(", attestons que le vehicule immatricule "), mk(immat, { bold: true }), mk(" de type "), mk(`${marque} ${modele}`, { bold: true }), mk(" de couleur "), mk(couleur, { bold: true }), mk(" appartenant a l'Assure "), mk(assure, { bold: true }), mk(", pour une duree de "), mk(`(${duree}) Jours ouvres`, { bold: true }), mk(", soit du "), mk(fmt(dateDebut), { bold: true }), mk(" au "), mk(fmt(dateFin) + ".", { bold: true })], alignment: AlignmentType.BOTH, spacing: { after: 400 } }),
-    new Paragraph({ children: [mk("Fait a Abidjan le " + fmt(new Date().toISOString().slice(0, 10)))], alignment: AlignmentType.RIGHT, spacing: { after: 600 } }),
-    new Paragraph({ children: [mk("Le Directeur des Operations", { bold: true })], alignment: AlignmentType.RIGHT })
-  ] }] });
+
+  const doc = new Document({
+    sections: [{
+      properties: {
+        page: { margin: { top: convertInchesToTwip(0.8), bottom: convertInchesToTwip(0.8), left: convertInchesToTwip(1.2), right: convertInchesToTwip(1.2) } }
+      },
+      children: [
+        new Paragraph({
+          children: [mk("ATTESTATION D'IMMOBILISATION DE VEHICULE", { bold: true, size: 30 })],
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 200 }
+        }),
+        new Paragraph({
+          children: [mk(numUtilise, { bold: true, size: 24 })],
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 500 }
+        }),
+        new Paragraph({
+          children: [
+            mk("Nous soussignés entreprise "),
+            mk("UNITED MOTORS", { bold: true }),
+            mk(", située à "),
+            mk("Marcory Zone 4 Bietry, Blvrd de Marseille, 30 BP 739 Abidjan 30", { bold: true }),
+            mk(", numéro de téléphone "),
+            mk("+225 07 88 88 88 24", { bold: true }),
+            mk(", attestons que le véhicule immatriculé "),
+            mk(immat, { bold: true }),
+            mk(" de type "),
+            mk(`${marque} ${modele}`, { bold: true }),
+            mk(" de couleur "),
+            mk(couleur, { bold: true }),
+            mk(" appartenant à l'Assuré "),
+            mk(assure, { bold: true }),
+            mk(" est admis dans notre garage pour des travaux suivant "),
+            mk("LE BON DE PRISE EN CHARGE ET LA FICHE D'EXPERTISE", { bold: true }),
+            mk(" pour une durée de "),
+            mk(`(${duree}) Jours ouvrés`, { bold: true }),
+            mk(", soit du "),
+            mk(fmt(dateDebut), { bold: true }),
+            mk(" au "),
+            mk(fmt(dateFin) + ".", { bold: true })
+          ],
+          alignment: AlignmentType.JUSTIFIED,
+          spacing: { after: 400 }
+        }),
+        new Paragraph({
+          children: [mk("En foi de quoi, la présente Attestation lui est établie pour servir et valoir ce que de droit.")],
+          alignment: AlignmentType.JUSTIFIED,
+          spacing: { after: 600 }
+        }),
+        new Paragraph({
+          children: [mk("Fait à Abidjan le " + fmt(new Date().toISOString().slice(0, 10)))],
+          alignment: AlignmentType.RIGHT,
+          spacing: { after: 600 }
+        }),
+        new Paragraph({
+          children: [mk("Le Directeur des Opérations", { bold: true })],
+          alignment: AlignmentType.RIGHT
+        })
+      ]
+    }]
+  });
+
   const blob = await Packer.toBlob(doc);
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
   a.download = `Attestation_${immat}_${todayKey()}.docx`;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  toast('Attestation generee', 'success');
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  toast('Attestation générée', 'success');
+
+  const nouveau = await incrementerCompteurAttestation();
+  if (nouveau) setTimeout(() => rafraichirNumeroAttestation(), 500);
 });
 
 /* WIPE */
@@ -3616,7 +3808,6 @@ async function init() {
   if (!state.appUnlocked) return;
   showLoading('Demarrage...');
 
-  // 1) Afficher l'interface IMMÉDIATEMENT (même sans données)
   try {
     fillSiteSelects();
     renderVehChips();
@@ -3632,7 +3823,6 @@ async function init() {
 
   if (!state.db) { toast('Firebase indisponible', 'error'); return; }
 
-  // 2) Lancer les listeners Firestore (ils vont se remplir tout seuls quand Firestore répond)
   try {
     listenUsers();
     listenClients();
@@ -3644,7 +3834,6 @@ async function init() {
     listenAccessLogs();
   } catch (e) { console.warn('[listeners]', e); }
 
-  // 3) Tâches de fond NON bloquantes (avec timeout court + catch silencieux)
   const safe = (fn, name) => {
     Promise.resolve().then(fn).catch(e => console.warn(`[init ${name}]`, e.message));
   };
@@ -3654,7 +3843,6 @@ async function init() {
   safe(migrateSocieteToClient, 'migrateClient');
   safe(migrateStatut, 'migrateStatut');
 
-  // 4) Message de statut après 3 secondes (selon ce qu'on a réussi à charger)
   setTimeout(() => {
     if (state.vehicules.length > 0) {
       toast('NTR Track prêt', 'success', 'Application');
@@ -3665,7 +3853,6 @@ async function init() {
     }
   }, 3000);
 
-  // 5) Surveiller quand Firestore répond (même après 10s)
   const waitForData = setInterval(() => {
     if (state.vehicules.length > 0 && !state.firstLoadToastShown) {
       state.firstLoadToastShown = true;
@@ -3674,7 +3861,6 @@ async function init() {
     }
   }, 2000);
 
-  // Arrêter le polling après 60 secondes max
   setTimeout(() => clearInterval(waitForData), 60000);
 }
 window.addEventListener('beforeunload', () => { state.unsubscribers.forEach((u) => { try { u(); } catch (e) {} }); });
@@ -3682,10 +3868,9 @@ window.addEventListener('beforeunload', () => { state.unsubscribers.forEach((u) 
 async function bootApp() {
   if (state.db) { try { const codes = await loadAccessCode(); state.accessCode = codes.code; state.adminPin = codes.adminPin; } catch (e) {} }
   if (isSessionValid()) { state.appUnlocked = true; $('#loginScreen').classList.remove('show'); init(); }
-  else { $('#loginScreen').classList.show ? null : null; $('#loginScreen').classList.add('show'); $('#loginInput').focus(); }
+  else { $('#loginScreen').classList.add('show'); $('#loginInput').focus(); }
 }
 bootApp();
 </script>
-
 </body>
 </html>
