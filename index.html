@@ -464,6 +464,124 @@ img { max-width: 100%; display: block; }
 .photo-choice-btn .pc-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
 .photo-choice-btn .pc-label { font-size: 0.8rem; font-weight: 600; }
 
+/* ============================================================
+   v4.9 — LISTES PAR SOURCE
+   ============================================================ */
+.liste-source-block {
+  margin-bottom: 24px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.liste-source-header {
+  padding: 14px 18px;
+  background: linear-gradient(135deg, var(--bg-3), var(--bg-2));
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.liste-source-header .lsh-icon { font-size: 1.3rem; }
+.liste-source-header .lsh-name {
+  flex: 1;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+}
+.liste-source-header .lsh-count {
+  background: var(--primary-soft);
+  color: var(--primary);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.liste-source-header .lsh-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.liste-site-block {
+  border-bottom: 1px solid var(--border);
+}
+.liste-site-block:last-child { border-bottom: none; }
+.liste-site-header {
+  padding: 10px 18px;
+  background: var(--bg-3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition);
+}
+.liste-site-header:hover { background: var(--bg-hover); }
+.liste-site-header .lsh-ico { font-size: 1rem; }
+.liste-site-header .lsh-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+.liste-site-header .lsh-badge {
+  background: var(--bg-2);
+  color: var(--text-dim);
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+.liste-site-header.alert {
+  background: rgba(251, 191, 36, 0.08);
+}
+.liste-site-header.alert .lsh-badge {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--warning);
+}
+.liste-site-body {
+  display: none;
+  padding: 10px 18px 14px;
+}
+.liste-site-block.open .liste-site-body { display: block; }
+
+.liste-vehicule-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+.liste-vehicule-row:last-child { border-bottom: none; }
+.liste-vehicule-row .lvr-immat {
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--primary);
+  min-width: 110px;
+}
+.liste-vehicule-row .lvr-info {
+  flex: 1;
+  color: var(--text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.liste-vehicule-row .lvr-statut {
+  flex-shrink: 0;
+}
+.liste-vehicule-row .lvr-lastseen {
+  font-size: 0.7rem;
+  color: var(--text-mute);
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .liste-vehicule-row { flex-wrap: wrap; }
+  .liste-vehicule-row .lvr-info { width: 100%; }
+}
+
 /* OU EST */
 .where-result-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
 .where-hero { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
@@ -604,6 +722,7 @@ img { max-width: 100%; display: block; }
   <button class="nav-btn" data-tab="ou-est">🔍 Où est ?</button>
   <button class="nav-btn" data-tab="manquants">Manquants</button>
   <button class="nav-btn" data-tab="vehicules">Véhicules</button>
+  <button class="nav-btn" data-tab="listes-source">📦 Par source</button>
   <button class="nav-btn" data-tab="historique">Historique</button>
   <button class="nav-btn hidden" data-tab="archives" id="navArchives">Archives</button>
   <button class="nav-btn hidden" data-tab="graphiques" id="navGraphiques">Graphiques</button>
@@ -725,6 +844,46 @@ img { max-width: 100%; display: block; }
     <div class="empty-state hidden" id="manquantsEmpty">
       <div class="es-title">Aucun véhicule manquant</div>
       <div class="es-sub">Tous les véhicules ont été pointés</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     ONGLET LISTES PAR SOURCE (v4.9)
+     ========================================================== -->
+<section class="tab-content" id="tab-listes-source">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">📦 Listes par source et par site</h2>
+      <div class="section-actions">
+        <button class="btn btn-ghost btn-sm" id="btnListesRefresh">🔄 Rafraîchir</button>
+      </div>
+    </div>
+    <div class="pointage-hint">
+      <strong>Vue croisée</strong> — Tous les véhicules groupés par <strong>source</strong> puis par <strong>site actuel</strong>. Les véhicules non pointés apparaissent à la fin de chaque source.
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Filtrer par source</label>
+        <select class="select" id="listesSourceFilter">
+          <option value="">Toutes les sources</option>
+          <option value="source1">Source HR</option>
+          <option value="source2">Source UM</option>
+          <option value="custom">Ajout manuel</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Filtrer par site</label>
+        <select class="select" id="listesSiteFilter">
+          <option value="">Tous les sites</option>
+        </select>
+      </div>
+    </div>
+    <div id="listesSourceContent"></div>
+    <div class="empty-state hidden" id="listesSourceEmpty">
+      <div class="es-ico" style="font-size:2.5rem;margin-bottom:10px">📦</div>
+      <div class="es-title">Aucun véhicule</div>
+      <div class="es-sub">Importe une source ou ajoute des véhicules</div>
     </div>
   </div>
 </section>
@@ -937,6 +1096,14 @@ img { max-width: 100%; display: block; }
         <button class="btn btn-warning btn-sm" data-export="pdf-global">Rapport global</button>
       </div>
     </div>
+    <div class="card">
+      <div class="card-title">📦 Par source et par site</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <button class="btn btn-success btn-sm" data-export="xls-source-site">Excel — Par source</button>
+        <button class="btn btn-blue btn-sm" data-export="pdf-source-site">PDF — Par source</button>
+        <button class="btn btn-primary btn-sm" data-export="word-source-site">Word — Par source</button>
+      </div>
+    </div>
     <div class="card"><div class="card-title">Word</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px">
         <button class="btn btn-blue btn-sm" data-export="word-absent-s1">Manquants Source HR</button>
@@ -952,8 +1119,6 @@ img { max-width: 100%; display: block; }
   <div class="container">
     <div class="section-header"><h2 class="section-title">Attestation d'immobilisation</h2></div>
     <div class="card">
-
-      <!-- Numéro d'attestation (auto + modifiable) -->
       <div class="form-group">
         <label class="form-label">N° d'attestation <span class="req">*</span></label>
         <div style="display:flex;gap:8px;align-items:center">
@@ -964,8 +1129,6 @@ img { max-width: 100%; display: block; }
           Proposé automatiquement par mois · Modifiable manuellement si besoin
         </div>
       </div>
-
-      <!-- Immatriculation avec bouton de recherche auto-remplissage -->
       <div class="form-group">
         <label class="form-label">Immatriculation <span class="req">*</span></label>
         <div style="display:flex;gap:8px;align-items:center">
@@ -974,7 +1137,6 @@ img { max-width: 100%; display: block; }
         </div>
         <div id="attAutofillInfo" style="font-size:0.72rem;margin-top:6px"></div>
       </div>
-
       <div class="form-row">
         <div class="form-group"><label class="form-label">Assuré</label><input type="text" class="input" id="attAssure" placeholder="Nom complet"></div>
         <div class="form-group"><label class="form-label">Couleur</label><input type="text" class="input" id="attCouleur" placeholder="Blanc"></div>
@@ -991,7 +1153,6 @@ img { max-width: 100%; display: block; }
         <div class="form-group"><label class="form-label">Date début</label><input type="date" class="input" id="attDateDebut"></div>
         <div class="form-group"><label class="form-label">Date fin</label><input type="date" class="input" id="attDateFin"></div>
       </div>
-
       <button class="btn btn-primary btn-block btn-lg" id="attGenerate">Générer l'attestation Word</button>
     </div>
   </div>
@@ -1356,8 +1517,10 @@ img { max-width: 100%; display: block; }
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js"></script>
 
-<script>
-/* NTR TRACK v4.8 - Attestation complète + Numéro auto + Pré-remplissage */
+<!-- ↓↓↓ LE SCRIPT JS EST DANS LA PARTIE 3/3 ↓↓↓ -->
+
+  /* NTR TRACK v4.9 — Ajout vue par source + exports Excel/PDF/Word */
+  <script>
 
 const firebaseConfig = {
   apiKey: "AIzaSyAxfEpi-NERVExxVYD2EmH7JppiIQDwWOM",
@@ -1414,7 +1577,11 @@ const state = {
   statutModalSelected: '',
   photoChoiceVehiculeId: null,
   pendingRonde: null,
-  firstLoadToastShown: false
+  firstLoadToastShown: false,
+  // v4.9 — vue par source
+  listesSourceFilter: '',
+  listesSiteFilter: '',
+  listesFiltersInitialized: false
 };
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -1621,6 +1788,7 @@ function switchTab(name) {
   if (name === 'ou-est') renderOuEst();
   if (name === 'manquants') renderManquants();
   if (name === 'vehicules') renderVehiculesList();
+  if (name === 'listes-source') renderListesSource();
   if (name === 'historique') renderHistorique();
   if (name === 'archives') renderArchives();
   if (name === 'graphiques') renderGraphiques();
@@ -1851,6 +2019,10 @@ function applyVehFilters() {
   state.vehiculesFiltered = filtered; state.pageVeh = 1;
   renderVehiculesList();
   const cnt = $('#vehCount'); if (cnt) cnt.textContent = filtered.length;
+  // v4.9 : rafraîchir la vue par source si active
+  if ($('#tab-listes-source') && $('#tab-listes-source').classList.contains('active')) {
+    renderListesSource();
+  }
 }
 
 const vehSearchInput = $('#vehSearch');
@@ -2122,6 +2294,7 @@ function listenPointages() {
     if ($('#tab-ou-est').classList.contains('active')) renderOuEst();
     if ($('#tab-manquants').classList.contains('active')) renderManquants();
     if ($('#tab-vehicules').classList.contains('active')) applyVehFilters();
+    if ($('#tab-listes-source').classList.contains('active')) renderListesSource();
     renderAutruiSection();
     updatePhotoMissingBanner();
   }, (err) => console.warn('[pointages]', err));
@@ -2142,6 +2315,7 @@ function listenPointagesHistory() {
     if ($('#tab-ou-est').classList.contains('active')) renderOuEst();
     if ($('#tab-vehicules').classList.contains('active')) applyVehFilters();
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
+    if ($('#tab-listes-source').classList.contains('active')) renderListesSource();
   }, (err) => console.warn('[pointagesHistory]', err));
   state.unsubscribers.push(unsub);
 }
@@ -3115,6 +3289,10 @@ document.addEventListener('click', (e) => {
   if (type === 'word-absent-s1') exportAbsentsWord('source1');
   if (type === 'word-absent-s2') exportAbsentsWord('source2');
   if (type === 'word-present-site') exportPresentsWord();
+  // v4.9 — nouveaux exports par source
+  if (type === 'xls-source-site') exportListesSourceExcelGlobal();
+  if (type === 'pdf-source-site') exportListesSourcePDFGlobal();
+  if (type === 'word-source-site') exportListesSourceWordGlobal();
 });
 
 function exportPDFSites() {
@@ -3240,206 +3418,612 @@ async function exportPresentsWord() {
 }
 
 /* ============================================================
-   ATTESTATION v4.8 — Numéro auto + Texte complet + Pré-remplissage
+   v4.9 — LISTES PAR SOURCE (rendu + exports Excel/PDF/Word)
    ============================================================ */
 
-function getMoisCleFR() {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+const LISTE_SOURCE_KEYS = ['source1', 'source2', 'custom'];
+
+function initListesSourceFilters() {
+  if (state.listesFiltersInitialized) return;
+  const siteSel = $('#listesSiteFilter');
+  if (siteSel && siteSel.options.length <= 1) {
+    SITES.forEach((s) => {
+      const opt = document.createElement('option');
+      opt.value = s; opt.textContent = s;
+      siteSel.appendChild(opt);
+    });
+  }
+  const srcSel = $('#listesSourceFilter');
+  if (srcSel) srcSel.value = state.listesSourceFilter || '';
+  if (siteSel) siteSel.value = state.listesSiteFilter || '';
+  state.listesFiltersInitialized = true;
 }
 
-function formatNumAttestation(numero, dateRef = new Date()) {
-  const mois = MOIS_NOMS_FR[dateRef.getMonth()];
-  const annee = dateRef.getFullYear();
-  return `N°${numero}/${mois}/${annee}`;
+function buildListesSourceData() {
+  const fSource = state.listesSourceFilter || '';
+  const fSite = state.listesSiteFilter || '';
+
+  let vehicules = state.vehicules.slice();
+  if (fSource) vehicules = vehicules.filter((v) => (v.source || 'custom') === fSource);
+
+  const sourcesMap = new Map();
+  LISTE_SOURCE_KEYS.forEach((k) => {
+    sourcesMap.set(k, { sourceKey: k, sourceLabel: SOURCES[k] || k, sitesMap: new Map(), nonPointes: [] });
+  });
+
+  vehicules.forEach((v) => {
+    const srcKey = LISTE_SOURCE_KEYS.includes(v.source) ? v.source : 'custom';
+    const entry = sourcesMap.get(srcKey);
+    const site = getSiteActuel(v);
+    if (!site) { entry.nonPointes.push(v); return; }
+    if (!entry.sitesMap.has(site)) entry.sitesMap.set(site, []);
+    entry.sitesMap.get(site).push(v);
+  });
+
+  const result = [];
+  for (const key of LISTE_SOURCE_KEYS) {
+    const entry = sourcesMap.get(key);
+    if (!entry) continue;
+    let sites = Array.from(entry.sitesMap.entries()).map(([siteName, vehicules]) => ({
+      siteName,
+      vehicules: vehicules.sort((a, b) => (a.immat || '').localeCompare(b.immat || ''))
+    }));
+    if (fSite) sites = sites.filter((s) => s.siteName === fSite);
+    const nonPointes = entry.nonPointes.sort((a, b) => (a.immat || '').localeCompare(b.immat || ''));
+    const totalSites = sites.reduce((acc, s) => acc + s.vehicules.length, 0);
+    const total = totalSites + (fSite ? 0 : nonPointes.length);
+    if (total === 0) continue;
+    result.push({
+      sourceKey: key,
+      sourceLabel: entry.sourceLabel,
+      sites: sites.sort((a, b) => a.siteName.localeCompare(b.siteName)),
+      nonPointes: fSite ? [] : nonPointes,
+      total
+    });
+  }
+  return result;
 }
 
+function renderListesSource() {
+  initListesSourceFilters();
+  const container = $('#listesSourceContent');
+  const empty = $('#listesSourceEmpty');
+  if (!container) return;
+
+  const data = buildListesSourceData();
+  if (!data.length) {
+    container.innerHTML = '';
+    if (empty) empty.classList.remove('hidden');
+    return;
+  }
+  if (empty) empty.classList.add('hidden');
+
+  container.innerHTML = data.map((src) => {
+    const iconSrc = src.sourceKey === 'source1' ? '🟦' : src.sourceKey === 'source2' ? '🟥' : '🟨';
+    const sitesHtml = src.sites.map((s) => `
+      <div class="liste-site-block open" data-site="${escapeHtml(s.siteName)}">
+        <div class="liste-site-header" data-toggle-site>
+          <span class="lsh-ico">📍</span>
+          <span class="lsh-name">${escapeHtml(s.siteName)}</span>
+          <span class="lsh-badge">${s.vehicules.length} véhicule(s)</span>
+        </div>
+        <div class="liste-site-body">
+          ${s.vehicules.map((v) => renderListeVehiculeRow(v)).join('')}
+        </div>
+      </div>
+    `).join('');
+
+    const nonPointesHtml = src.nonPointes.length ? `
+      <div class="liste-site-block open" data-site="__non__">
+        <div class="liste-site-header alert" data-toggle-site>
+          <span class="lsh-ico">⚠️</span>
+          <span class="lsh-name">Non pointés</span>
+          <span class="lsh-badge">${src.nonPointes.length} véhicule(s)</span>
+        </div>
+        <div class="liste-site-body">
+          ${src.nonPointes.map((v) => renderListeVehiculeRow(v)).join('')}
+        </div>
+      </div>
+    ` : '';
+
+    return `
+      <div class="liste-source-block" data-source-key="${src.sourceKey}">
+        <div class="liste-source-header">
+          <span class="lsh-icon">${iconSrc}</span>
+          <span class="lsh-name">${escapeHtml(src.sourceLabel)}</span>
+          <span class="lsh-count">${src.total} véhicule(s)</span>
+          <div class="lsh-actions">
+            <button class="btn btn-success btn-sm" data-export-source="xls" data-source-key="${src.sourceKey}">📊 Excel</button>
+            <button class="btn btn-blue btn-sm" data-export-source="pdf" data-source-key="${src.sourceKey}">📄 PDF</button>
+            <button class="btn btn-primary btn-sm" data-export-source="word" data-source-key="${src.sourceKey}">📝 Word</button>
+          </div>
+        </div>
+        ${sitesHtml}
+        ${nonPointesHtml}
+      </div>
+    `;
+  }).join('');
+
+  $$('[data-toggle-site]', container).forEach((h) => {
+    h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
+  });
+
+  $$('[data-export-source]', container).forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const fmt = btn.dataset.exportSource;
+      const srcKey = btn.dataset.sourceKey;
+      if (fmt === 'xls') exportListesSourceExcel(srcKey);
+      else if (fmt === 'pdf') exportListesSourcePDF(srcKey);
+      else if (fmt === 'word') exportListesSourceWord(srcKey);
+    });
+  });
+}
+
+function renderListeVehiculeRow(v) {
+  const statut = STATUTS[getStatutVehicule(v)];
+  const lastSeen = v.lastSeen ? formatDateFR(v.lastSeen) : '—';
+  return `
+    <div class="liste-vehicule-row">
+      <span class="lvr-immat">${escapeHtml(v.immat || '—')}</span>
+      <span class="lvr-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}${v.client ? ' · ' + escapeHtml(v.client) : ''}</span>
+      <span class="lvr-statut"><span class="statut-badge ${statut.cls}">${statut.icon} ${escapeHtml(statut.label)}</span></span>
+      <span class="lvr-lastseen">${escapeHtml(lastSeen)}</span>
+    </div>
+  `;
+}
+
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'listesSourceFilter') {
+    state.listesSourceFilter = e.target.value;
+    renderListesSource();
+  }
+  if (e.target.id === 'listesSiteFilter') {
+    state.listesSiteFilter = e.target.value;
+    renderListesSource();
+  }
+});
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'btnListesRefresh') {
+    renderListesSource();
+    toast('Vue par source rafraîchie', 'success');
+  }
+});
+
+function getListesSourceRows(sourceKey) {
+  const data = buildListesSourceData();
+  const src = data.find((s) => s.sourceKey === sourceKey);
+  if (!src) return null;
+  const rows = [];
+  src.sites.forEach((s) => {
+    s.vehicules.forEach((v) => {
+      rows.push({
+        sourceLabel: src.sourceLabel,
+        siteLabel: s.siteName,
+        immat: v.immat || '',
+        marque: v.marque || '',
+        modele: v.modele || '',
+        client: v.client || '',
+        statut: STATUTS[getStatutVehicule(v)].label,
+        lastSeen: v.lastSeen ? formatDateFR(v.lastSeen) : ''
+      });
+    });
+  });
+  src.nonPointes.forEach((v) => {
+    rows.push({
+      sourceLabel: src.sourceLabel,
+      siteLabel: '⚠️ Non pointés',
+      immat: v.immat || '',
+      marque: v.marque || '',
+      modele: v.modele || '',
+      client: v.client || '',
+      statut: STATUTS[getStatutVehicule(v)].label,
+      lastSeen: v.lastSeen ? formatDateFR(v.lastSeen) : ''
+    });
+  });
+  return { source: src, rows };
+}
+
+function exportListesSourceExcel(sourceKey) {
+  const payload = getListesSourceRows(sourceKey);
+  if (!payload || !payload.rows.length) { toast('Aucune donnée à exporter', 'warning'); return; }
+  const excelRows = payload.rows.map((r) => ({
+    'Source': r.sourceLabel,
+    'Site': r.siteLabel,
+    'Immatriculation': r.immat,
+    'Marque': r.marque,
+    'Modèle': r.modele,
+    'Client': r.client,
+    'Statut': r.statut,
+    'Dernière vue': r.lastSeen
+  }));
+  exportExcel(excelRows, `NTR_${sourceKey}_${todayKey()}.xlsx`, payload.source.sourceLabel.slice(0, 30));
+  toast(`Excel ${payload.source.sourceLabel} téléchargé`, 'success');
+}
+
+function exportListesSourcePDF(sourceKey) {
+  const payload = getListesSourceRows(sourceKey);
+  if (!payload || !payload.rows.length) { toast('Aucune donnée à exporter', 'warning'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const src = payload.source;
+
+  doc.setFillColor(11, 17, 32); doc.rect(0, 0, 210, 22, 'F');
+  doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
+  doc.text('NTR TRACK — ' + src.sourceLabel, 14, 10);
+  doc.setFontSize(9); doc.setFont(undefined, 'normal');
+  doc.text(`Généré le ${new Date().toLocaleString('fr-FR')} · ${src.total} véhicule(s)`, 14, 17);
+  doc.setTextColor(0, 0, 0);
+
+  let y = 30;
+  let isFirstSite = true;
+
+  src.sites.forEach((s) => {
+    if (!isFirstSite) y += 4;
+    isFirstSite = false;
+    if (y > 240) { doc.addPage(); y = 20; }
+    doc.setFillColor(37, 48, 68); doc.rect(14, y - 4, 182, 8, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'bold');
+    doc.text(`📍 ${s.siteName} — ${s.vehicules.length} véhicule(s)`, 16, y + 1.5);
+    doc.setTextColor(0, 0, 0);
+    y += 8;
+    doc.autoTable({
+      startY: y,
+      head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue']],
+      body: s.vehicules.map((v, i) => [
+        String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '',
+        STATUTS[getStatutVehicule(v)].label, v.lastSeen ? formatDateFR(v.lastSeen) : '—'
+      ]),
+      theme: 'striped',
+      headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 8 },
+      styles: { fontSize: 8, cellPadding: 1.8 },
+      margin: { left: 14, right: 14 }
+    });
+    y = doc.lastAutoTable.finalY + 6;
+  });
+
+  if (src.nonPointes.length) {
+    if (y > 220) { doc.addPage(); y = 20; }
+    y += 4;
+    doc.setFillColor(220, 38, 38); doc.rect(14, y - 4, 182, 8, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'bold');
+    doc.text(`⚠️ Non pointés — ${src.nonPointes.length} véhicule(s)`, 16, y + 1.5);
+    doc.setTextColor(0, 0, 0);
+    y += 8;
+    doc.autoTable({
+      startY: y,
+      head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut']],
+      body: src.nonPointes.map((v, i) => [
+        String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '',
+        STATUTS[getStatutVehicule(v)].label
+      ]),
+      theme: 'striped',
+      headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 8 },
+      styles: { fontSize: 8, cellPadding: 1.8 },
+      margin: { left: 14, right: 14 }
+    });
+  }
+
+  doc.save(`NTR_${sourceKey}_${todayKey()}.pdf`);
+  toast(`PDF ${src.sourceLabel} téléchargé`, 'success');
+}
+
+async function exportListesSourceWord(sourceKey) {
+  const payload = getListesSourceRows(sourceKey);
+  if (!payload || !payload.rows.length) { toast('Aucune donnée à exporter', 'warning'); return; }
+  if (typeof docx === 'undefined') { toast('Bibliothèque Word non chargée', 'error'); return; }
+  try {
+    const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType } = docx;
+    const src = payload.source;
+
+    const makeHeaderCell = (txt) => new TableCell({
+      children: [new Paragraph({ children: [new TextRun({ text: txt, bold: true, size: 20, color: 'FFFFFF' })], alignment: AlignmentType.CENTER })],
+      shading: { fill: '0B1120' }
+    });
+    const makeCell = (txt) => new TableCell({
+      children: [new Paragraph({ children: [new TextRun({ text: String(txt || ''), size: 20 })], alignment: AlignmentType.LEFT })]
+    });
+
+    const children = [
+      new Paragraph({
+        children: [new TextRun({ text: `NTR TRACK — ${src.sourceLabel}`, bold: true, size: 32 })],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 100 }
+      }),
+      new Paragraph({
+        children: [new TextRun({ text: `Généré le ${new Date().toLocaleString('fr-FR')} · ${src.total} véhicule(s)`, size: 20, italics: true })],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 300 }
+      })
+    ];
+
+    src.sites.forEach((s) => {
+      children.push(new Paragraph({
+        children: [new TextRun({ text: `📍 ${s.siteName} — ${s.vehicules.length} véhicule(s)`, bold: true, size: 24 })],
+        spacing: { before: 200, after: 100 }
+      }));
+      const rows = [new TableRow({
+        children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue'].map(makeHeaderCell),
+        tableHeader: true
+      })];
+      s.vehicules.forEach((v, i) => {
+        rows.push(new TableRow({
+          children: [
+            String(i + 1), v.immat || '', v.marque || '', v.modele || '',
+            v.client || '', STATUTS[getStatutVehicule(v)].label,
+            v.lastSeen ? formatDateFR(v.lastSeen) : '—'
+          ].map(makeCell)
+        }));
+      });
+      children.push(new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } }));
+    });
+
+    if (src.nonPointes.length) {
+      children.push(new Paragraph({
+        children: [new TextRun({ text: `⚠️ Non pointés — ${src.nonPointes.length} véhicule(s)`, bold: true, size: 24, color: 'DC2626' })],
+        spacing: { before: 300, after: 100 }
+      }));
+      const rows = [new TableRow({
+        children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut'].map(makeHeaderCell),
+        tableHeader: true
+      })];
+      src.nonPointes.forEach((v, i) => {
+        rows.push(new TableRow({
+          children: [
+            String(i + 1), v.immat || '', v.marque || '', v.modele || '',
+            v.client || '', STATUTS[getStatutVehicule(v)].label
+          ].map(makeCell)
+        }));
+      });
+      children.push(new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } }));
+    }
+
+    const doc = new Document({ sections: [{ children }] });
+    const blob = await Packer.toBlob(doc);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `NTR_${sourceKey}_${todayKey()}.docx`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    toast(`Word ${src.sourceLabel} téléchargé`, 'success');
+  } catch (e) {
+    console.error('[exportListesSourceWord]', e);
+    toast('Erreur export Word : ' + e.message, 'error');
+  }
+}
+
+/* Exports globaux */
+function exportListesSourceExcelGlobal() {
+  const data = buildListesSourceData();
+  if (!data.length) { toast('Aucune donnée', 'warning'); return; }
+  const rows = [];
+  data.forEach((src) => {
+    src.sites.forEach((s) => {
+      s.vehicules.forEach((v) => rows.push({
+        'Source': src.sourceLabel,
+        'Site': s.siteName,
+        'Immatriculation': v.immat || '',
+        'Marque': v.marque || '',
+        'Modèle': v.modele || '',
+        'Client': v.client || '',
+        'Statut': STATUTS[getStatutVehicule(v)].label,
+        'Dernière vue': v.lastSeen ? formatDateFR(v.lastSeen) : ''
+      }));
+    });
+    src.nonPointes.forEach((v) => rows.push({
+      'Source': src.sourceLabel,
+      'Site': '⚠️ Non pointés',
+      'Immatriculation': v.immat || '',
+      'Marque': v.marque || '',
+      'Modèle': v.modele || '',
+      'Client': v.client || '',
+      'Statut': STATUTS[getStatutVehicule(v)].label,
+      'Dernière vue': v.lastSeen ? formatDateFR(v.lastSeen) : ''
+    }));
+  });
+  exportExcel(rows, `NTR_ParSource_${todayKey()}.xlsx`, 'Par source');
+  toast('Excel global téléchargé', 'success');
+}
+
+function exportListesSourcePDFGlobal() {
+  const data = buildListesSourceData();
+  if (!data.length) { toast('Aucune donnée', 'warning'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  let firstPage = true;
+
+  data.forEach((src) => {
+    if (!firstPage) doc.addPage();
+    firstPage = false;
+
+    doc.setFillColor(11, 17, 32); doc.rect(0, 0, 210, 22, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
+    doc.text('NTR TRACK — ' + src.sourceLabel, 14, 10);
+    doc.setFontSize(9); doc.setFont(undefined, 'normal');
+    doc.text(`Généré le ${new Date().toLocaleString('fr-FR')} · ${src.total} véhicule(s)`, 14, 17);
+    doc.setTextColor(0, 0, 0);
+
+    let y = 30;
+    src.sites.forEach((s) => {
+      if (y > 240) { doc.addPage(); y = 20; }
+      doc.setFillColor(37, 48, 68); doc.rect(14, y - 4, 182, 8, 'F');
+      doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'bold');
+      doc.text(`📍 ${s.siteName} — ${s.vehicules.length} véhicule(s)`, 16, y + 1.5);
+      doc.setTextColor(0, 0, 0);
+      y += 8;
+      doc.autoTable({
+        startY: y,
+        head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue']],
+        body: s.vehicules.map((v, i) => [
+          String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '',
+          STATUTS[getStatutVehicule(v)].label, v.lastSeen ? formatDateFR(v.lastSeen) : '—'
+        ]),
+        theme: 'striped',
+        headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 8 },
+        styles: { fontSize: 8, cellPadding: 1.8 },
+        margin: { left: 14, right: 14 }
+      });
+      y = doc.lastAutoTable.finalY + 6;
+    });
+
+    if (src.nonPointes.length) {
+      if (y > 220) { doc.addPage(); y = 20; }
+      y += 4;
+      doc.setFillColor(220, 38, 38); doc.rect(14, y - 4, 182, 8, 'F');
+      doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'bold');
+      doc.text(`⚠️ Non pointés — ${src.nonPointes.length} véhicule(s)`, 16, y + 1.5);
+      doc.setTextColor(0, 0, 0);
+      y += 8;
+      doc.autoTable({
+        startY: y,
+        head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut']],
+        body: src.nonPointes.map((v, i) => [
+          String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '',
+          STATUTS[getStatutVehicule(v)].label
+        ]),
+        theme: 'striped',
+        headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 8 },
+        styles: { fontSize: 8, cellPadding: 1.8 },
+        margin: { left: 14, right: 14 }
+      });
+    }
+  });
+
+  doc.save(`NTR_ParSource_${todayKey()}.pdf`);
+  toast('PDF global téléchargé', 'success');
+}
+
+async function exportListesSourceWordGlobal() {
+  const data = buildListesSourceData();
+  if (!data.length) { toast('Aucune donnée', 'warning'); return; }
+  if (typeof docx === 'undefined') { toast('Bibliothèque Word non chargée', 'error'); return; }
+  try {
+    const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType, PageBreak } = docx;
+
+    const makeHeaderCell = (txt, color) => new TableCell({
+      children: [new Paragraph({ children: [new TextRun({ text: txt, bold: true, size: 20, color: 'FFFFFF' })], alignment: AlignmentType.CENTER })],
+      shading: { fill: color }
+    });
+    const makeCell = (txt) => new TableCell({
+      children: [new Paragraph({ children: [new TextRun({ text: String(txt || ''), size: 20 })] })]
+    });
+
+    const children = [];
+    data.forEach((src, idx) => {
+      if (idx > 0) children.push(new Paragraph({ children: [new PageBreak()] }));
+      children.push(new Paragraph({
+        children: [new TextRun({ text: `NTR TRACK — ${src.sourceLabel}`, bold: true, size: 32 })],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 100 }
+      }));
+      children.push(new Paragraph({
+        children: [new TextRun({ text: `Généré le ${new Date().toLocaleString('fr-FR')} · ${src.total} véhicule(s)`, size: 20, italics: true })],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 300 }
+      }));
+
+      src.sites.forEach((s) => {
+        children.push(new Paragraph({
+          children: [new TextRun({ text: `📍 ${s.siteName} — ${s.vehicules.length} véhicule(s)`, bold: true, size: 24 })],
+          spacing: { before: 200, after: 100 }
+        }));
+        const rows = [new TableRow({
+          children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue'].map((h) => makeHeaderCell(h, '0B1120')),
+          tableHeader: true
+        })];
+        s.vehicules.forEach((v, i) => {
+          rows.push(new TableRow({
+            children: [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label, v.lastSeen ? formatDateFR(v.lastSeen) : '—'].map(makeCell)
+          }));
+        });
+        children.push(new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } }));
+      });
+
+      if (src.nonPointes.length) {
+        children.push(new Paragraph({
+          children: [new TextRun({ text: `⚠️ Non pointés — ${src.nonPointes.length} véhicule(s)`, bold: true, size: 24, color: 'DC2626' })],
+          spacing: { before: 300, after: 100 }
+        }));
+        const rows = [new TableRow({
+          children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut'].map((h) => makeHeaderCell(h, 'DC2626')),
+          tableHeader: true
+        })];
+        src.nonPointes.forEach((v, i) => {
+          rows.push(new TableRow({
+            children: [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label].map(makeCell)
+          }));
+        });
+        children.push(new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } }));
+      }
+    });
+
+    const doc = new Document({ sections: [{ children }] });
+    const blob = await Packer.toBlob(doc);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `NTR_ParSource_${todayKey()}.docx`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    toast('Word global téléchargé', 'success');
+  } catch (e) {
+    console.error('[exportListesSourceWordGlobal]', e);
+    toast('Erreur export Word : ' + e.message, 'error');
+  }
+}
+
+/* ============================================================
+   ATTESTATION (inchangé)
+   ============================================================ */
+function getMoisCleFR() { const now = new Date(); return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`; }
+function formatNumAttestation(numero, dateRef = new Date()) { const mois = MOIS_NOMS_FR[dateRef.getMonth()]; const annee = dateRef.getFullYear(); return `N°${numero}/${mois}/${annee}`; }
 async function getProchainNumeroAttestation() {
   const moisCle = getMoisCleFR();
-  try {
-    const doc = await state.db.collection('config').doc('attestationCompteurs').get();
-    const data = doc.exists ? doc.data() : {};
-    const compteurActuel = data[moisCle] || 0;
-    return formatNumAttestation(compteurActuel + 1);
-  } catch (e) {
-    console.warn('[attestation] Lecture compteur impossible:', e);
-    return formatNumAttestation(1);
-  }
+  try { const doc = await state.db.collection('config').doc('attestationCompteurs').get(); const data = doc.exists ? doc.data() : {}; const compteurActuel = data[moisCle] || 0; return formatNumAttestation(compteurActuel + 1); } catch (e) { return formatNumAttestation(1); }
 }
-
 async function incrementerCompteurAttestation() {
   const moisCle = getMoisCleFR();
-  try {
-    const docRef = state.db.collection('config').doc('attestationCompteurs');
-    const doc = await docRef.get();
-    const data = doc.exists ? doc.data() : {};
-    const compteurActuel = data[moisCle] || 0;
-    await docRef.set({ [moisCle]: compteurActuel + 1, updatedAt: nowIso() }, { merge: true });
-    return compteurActuel + 1;
-  } catch (e) {
-    console.warn('[attestation] Incrément compteur impossible:', e);
-    return null;
-  }
+  try { const docRef = state.db.collection('config').doc('attestationCompteurs'); const doc = await docRef.get(); const data = doc.exists ? doc.data() : {}; const compteurActuel = data[moisCle] || 0; await docRef.set({ [moisCle]: compteurActuel + 1, updatedAt: nowIso() }, { merge: true }); return compteurActuel + 1; } catch (e) { return null; }
 }
-
-async function rafraichirNumeroAttestation() {
-  const input = $('#attNumero');
-  if (!input) return;
-  input.value = '...';
-  const num = await getProchainNumeroAttestation();
-  input.value = num;
-}
-
+async function rafraichirNumeroAttestation() { const input = $('#attNumero'); if (!input) return; input.value = '...'; const num = await getProchainNumeroAttestation(); input.value = num; }
 async function autofillAttestation() {
-  const immatInput = $('#attImmat');
-  const info = $('#attAutofillInfo');
+  const immatInput = $('#attImmat'); const info = $('#attAutofillInfo');
   const immat = normalizeImmat(immatInput.value);
-  if (!immat) {
-    toast('Tape une immatriculation d\'abord', 'warning');
-    return;
-  }
+  if (!immat) { toast('Tape une immatriculation d\'abord', 'warning'); return; }
   if (info) info.innerHTML = '<span style="color:var(--text-mute)">Recherche en cours...</span>';
   const v = state.vehicules.find((x) => normalizeImmat(x.immat) === immat);
-  if (!v) {
-    if (info) info.innerHTML = `<span style="color:var(--danger)">❌ <strong>${escapeHtml(immat)}</strong> introuvable dans la base</span>`;
-    toast('Véhicule introuvable', 'warning');
-    return;
-  }
+  if (!v) { if (info) info.innerHTML = `<span style="color:var(--danger)">❌ <strong>${escapeHtml(immat)}</strong> introuvable dans la base</span>`; toast('Véhicule introuvable', 'warning'); return; }
   if (v.marque) $('#attMarque').value = v.marque.toUpperCase();
   if (v.modele) $('#attModele').value = v.modele.toUpperCase();
   if (v.client) $('#attAssure').value = v.client.toUpperCase();
   const siteActuel = getSiteActuel(v);
-  if (info) info.innerHTML = `
-    <div style="padding:8px 12px;background:var(--primary-soft);border:1px solid var(--primary);border-radius:var(--radius-sm);color:var(--primary)">
-      ✅ <strong>${escapeHtml(v.immat)}</strong> trouvé
-      ${v.marque || v.modele ? `— ${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}` : ''}
-      ${siteActuel ? `· 📍 ${escapeHtml(siteActuel)}` : ''}
-    </div>
-  `;
+  if (info) info.innerHTML = `<div style="padding:8px 12px;background:var(--primary-soft);border:1px solid var(--primary);border-radius:var(--radius-sm);color:var(--primary)">✅ <strong>${escapeHtml(v.immat)}</strong> trouvé ${v.marque || v.modele ? `— ${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}` : ''}${siteActuel ? `· 📍 ${escapeHtml(siteActuel)}` : ''}</div>`;
   toast('Champs pré-remplis', 'success');
 }
-
-/* Événements attestation */
-const attRefreshBtn = $('#attRefreshNum');
-if (attRefreshBtn) attRefreshBtn.addEventListener('click', () => { rafraichirNumeroAttestation(); toast('Numéro recalculé', 'info'); });
-const attAutofillBtn = $('#attAutofill');
-if (attAutofillBtn) attAutofillBtn.addEventListener('click', autofillAttestation);
+const attRefreshBtn = $('#attRefreshNum'); if (attRefreshBtn) attRefreshBtn.addEventListener('click', () => { rafraichirNumeroAttestation(); toast('Numéro recalculé', 'info'); });
+const attAutofillBtn = $('#attAutofill'); if (attAutofillBtn) attAutofillBtn.addEventListener('click', autofillAttestation);
 const attImmatInput = $('#attImmat');
 if (attImmatInput) {
-  attImmatInput.addEventListener('blur', () => {
-    const immat = normalizeImmat(attImmatInput.value);
-    const marque = $('#attMarque');
-    if (immat.length >= 5 && marque && !marque.value) autofillAttestation();
-  });
-  attImmatInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') { e.preventDefault(); autofillAttestation(); }
-  });
+  attImmatInput.addEventListener('blur', () => { const immat = normalizeImmat(attImmatInput.value); const marque = $('#attMarque'); if (immat.length >= 5 && marque && !marque.value) autofillAttestation(); });
+  attImmatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); autofillAttestation(); } });
 }
-
-/* Pré-remplir le numéro au démarrage */
 setTimeout(() => { if (state.appUnlocked) rafraichirNumeroAttestation(); }, 4000);
-
-/* Génération de l'attestation */
 $('#attGenerate').addEventListener('click', async () => {
   if (typeof docx === 'undefined') { toast('Bibliothèque Word non chargée', 'error'); return; }
-
-  const immat = $('#attImmat').value.trim().toUpperCase();
-  const marque = $('#attMarque').value.trim().toUpperCase();
-  const modele = $('#attModele').value.trim().toUpperCase();
-  const couleurInput = $('#attCouleurText') ? $('#attCouleurText').value.trim() : '';
-  const couleurFallback = $('#attCouleur') ? $('#attCouleur').value.trim() : '';
-  const couleur = (couleurInput || couleurFallback).toUpperCase();
-  const assure = $('#attAssure').value.trim().toUpperCase();
-  const duree = $('#attDuree').value.trim() || '5';
-  const dateDebut = $('#attDateDebut').value;
-  const dateFin = $('#attDateFin').value;
-  const numSaisi = $('#attNumero').value.trim();
-
-  if (!immat || !marque || !modele || !couleur || !assure || !dateDebut || !dateFin) {
-    toast('Tous les champs obligatoires', 'warning');
-    return;
-  }
-
+  const immat = $('#attImmat').value.trim().toUpperCase(); const marque = $('#attMarque').value.trim().toUpperCase(); const modele = $('#attModele').value.trim().toUpperCase(); const couleurInput = $('#attCouleurText') ? $('#attCouleurText').value.trim() : ''; const couleurFallback = $('#attCouleur') ? $('#attCouleur').value.trim() : ''; const couleur = (couleurInput || couleurFallback).toUpperCase(); const assure = $('#attAssure').value.trim().toUpperCase(); const duree = $('#attDuree').value.trim() || '5'; const dateDebut = $('#attDateDebut').value; const dateFin = $('#attDateFin').value; const numSaisi = $('#attNumero').value.trim();
+  if (!immat || !marque || !modele || !couleur || !assure || !dateDebut || !dateFin) { toast('Tous les champs obligatoires', 'warning'); return; }
   const numUtilise = numSaisi || await getProchainNumeroAttestation();
-
   const { Document, Packer, Paragraph, TextRun, AlignmentType, convertInchesToTwip } = docx;
-  const fmt = (d) => {
-    const date = new Date(d + 'T00:00:00');
-    return `${date.getDate()} ${MOIS_NOMS_FR[date.getMonth()]} ${date.getFullYear()}`;
-  };
+  const fmt = (d) => { const date = new Date(d + 'T00:00:00'); return `${date.getDate()} ${MOIS_NOMS_FR[date.getMonth()]} ${date.getFullYear()}`; };
   const mk = (t, o = {}) => new TextRun({ text: t, size: 22, font: 'Arial', ...o });
-
-  const doc = new Document({
-    sections: [{
-      properties: {
-        page: { margin: { top: convertInchesToTwip(0.8), bottom: convertInchesToTwip(0.8), left: convertInchesToTwip(1.2), right: convertInchesToTwip(1.2) } }
-      },
-      children: [
-        new Paragraph({
-          children: [mk("ATTESTATION D'IMMOBILISATION DE VEHICULE", { bold: true, size: 30 })],
-          alignment: AlignmentType.CENTER,
-          spacing: { after: 200 }
-        }),
-        new Paragraph({
-          children: [mk(numUtilise, { bold: true, size: 24 })],
-          alignment: AlignmentType.CENTER,
-          spacing: { after: 500 }
-        }),
-        new Paragraph({
-          children: [
-            mk("Nous soussignés entreprise "),
-            mk("UNITED MOTORS", { bold: true }),
-            mk(", située à "),
-            mk("Marcory Zone 4 Bietry, Blvrd de Marseille, 30 BP 739 Abidjan 30", { bold: true }),
-            mk(", numéro de téléphone "),
-            mk("+225 07 88 88 88 24", { bold: true }),
-            mk(", attestons que le véhicule immatriculé "),
-            mk(immat, { bold: true }),
-            mk(" de type "),
-            mk(`${marque} ${modele}`, { bold: true }),
-            mk(" de couleur "),
-            mk(couleur, { bold: true }),
-            mk(" appartenant à l'Assuré "),
-            mk(assure, { bold: true }),
-            mk(" est admis dans notre garage pour des travaux suivant "),
-            mk("LE BON DE PRISE EN CHARGE ET LA FICHE D'EXPERTISE", { bold: true }),
-            mk(" pour une durée de "),
-            mk(`(${duree}) Jours ouvrés`, { bold: true }),
-            mk(", soit du "),
-            mk(fmt(dateDebut), { bold: true }),
-            mk(" au "),
-            mk(fmt(dateFin) + ".", { bold: true })
-          ],
-          alignment: AlignmentType.JUSTIFIED,
-          spacing: { after: 400 }
-        }),
-        new Paragraph({
-          children: [mk("En foi de quoi, la présente Attestation lui est établie pour servir et valoir ce que de droit.")],
-          alignment: AlignmentType.JUSTIFIED,
-          spacing: { after: 600 }
-        }),
-        new Paragraph({
-          children: [mk("Fait à Abidjan le " + fmt(new Date().toISOString().slice(0, 10)))],
-          alignment: AlignmentType.RIGHT,
-          spacing: { after: 600 }
-        }),
-        new Paragraph({
-          children: [mk("Le Directeur des Opérations", { bold: true })],
-          alignment: AlignmentType.RIGHT
-        })
-      ]
-    }]
-  });
-
+  const doc = new Document({ sections: [{ properties: { page: { margin: { top: convertInchesToTwip(0.8), bottom: convertInchesToTwip(0.8), left: convertInchesToTwip(1.2), right: convertInchesToTwip(1.2) } } }, children: [
+    new Paragraph({ children: [mk("ATTESTATION D'IMMOBILISATION DE VEHICULE", { bold: true, size: 30 })], alignment: AlignmentType.CENTER, spacing: { after: 200 } }),
+    new Paragraph({ children: [mk(numUtilise, { bold: true, size: 24 })], alignment: AlignmentType.CENTER, spacing: { after: 500 } }),
+    new Paragraph({ children: [mk("Nous soussignés entreprise "), mk("UNITED MOTORS", { bold: true }), mk(", située à "), mk("Marcory Zone 4 Bietry, Blvrd de Marseille, 30 BP 739 Abidjan 30", { bold: true }), mk(", numéro de téléphone "), mk("+225 07 88 88 88 24", { bold: true }), mk(", attestons que le véhicule immatriculé "), mk(immat, { bold: true }), mk(" de type "), mk(`${marque} ${modele}`, { bold: true }), mk(" de couleur "), mk(couleur, { bold: true }), mk(" appartenant à l'Assuré "), mk(assure, { bold: true }), mk(" est admis dans notre garage pour des travaux suivant "), mk("LE BON DE PRISE EN CHARGE ET LA FICHE D'EXPERTISE", { bold: true }), mk(" pour une durée de "), mk(`(${duree}) Jours ouvrés`, { bold: true }), mk(", soit du "), mk(fmt(dateDebut), { bold: true }), mk(" au "), mk(fmt(dateFin) + ".", { bold: true })], alignment: AlignmentType.JUSTIFIED, spacing: { after: 400 } }),
+    new Paragraph({ children: [mk("En foi de quoi, la présente Attestation lui est établie pour servir et valoir ce que de droit.")], alignment: AlignmentType.JUSTIFIED, spacing: { after: 600 } }),
+    new Paragraph({ children: [mk("Fait à Abidjan le " + fmt(new Date().toISOString().slice(0, 10)))], alignment: AlignmentType.RIGHT, spacing: { after: 600 } }),
+    new Paragraph({ children: [mk("Le Directeur des Opérations", { bold: true })], alignment: AlignmentType.RIGHT })
+  ] }] });
   const blob = await Packer.toBlob(doc);
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `Attestation_${immat}_${todayKey()}.docx`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `Attestation_${immat}_${todayKey()}.docx`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
   toast('Attestation générée', 'success');
-
   const nouveau = await incrementerCompteurAttestation();
   if (nouveau) setTimeout(() => rafraichirNumeroAttestation(), 500);
 });
@@ -3451,11 +4035,7 @@ async function wipeBySource(source) {
   const ok = await confirmDialog(`Vider ${SOURCES[source]} ?`, `Supprimer <strong>${list.length}</strong> ?`);
   if (!ok) return;
   showLoading('Suppression...');
-  try {
-    const bs = 400;
-    for (let i = 0; i < list.length; i += bs) { const b = state.db.batch(); list.slice(i, i + bs).forEach((v) => b.delete(state.db.collection('vehicules').doc(v.id))); await b.commit(); }
-    toast(`${list.length} supprimé(s)`, 'success');
-  } catch (e) { toast('Erreur', 'error'); } finally { hideLoading(); }
+  try { const bs = 400; for (let i = 0; i < list.length; i += bs) { const b = state.db.batch(); list.slice(i, i + bs).forEach((v) => b.delete(state.db.collection('vehicules').doc(v.id))); await b.commit(); } toast(`${list.length} supprimé(s)`, 'success'); } catch (e) { toast('Erreur', 'error'); } finally { hideLoading(); }
 }
 $('#btnWipeHR').addEventListener('click', () => { requireAdminPin('Vider Source HR', () => wipeBySource('source1')); });
 $('#btnWipeUM').addEventListener('click', () => { requireAdminPin('Vider Source UM', () => wipeBySource('source2')); });
@@ -3485,21 +4065,12 @@ $('#btnClearTodayPointages').addEventListener('click', () => {
     const ok = await confirmDialog('Confirmer ?', `Supprimer <strong>${todaysPointages.length}</strong> pointage(s) du jour ?<br><br>Les véhicules resteront marqués comme trouvés.`);
     if (!ok) return;
     showLoading('Suppression...');
-    try {
-      const bs = 400;
-      for (let i = 0; i < todaysPointages.length; i += bs) { const b = state.db.batch(); todaysPointages.slice(i, i + bs).forEach((p) => b.delete(state.db.collection('pointages').doc(p.id))); await b.commit(); }
-      toast(`${todaysPointages.length} pointage(s) supprimé(s)`, 'success');
-    } catch (e) { toast('Erreur', 'error'); } finally { hideLoading(); }
+    try { const bs = 400; for (let i = 0; i < todaysPointages.length; i += bs) { const b = state.db.batch(); todaysPointages.slice(i, i + bs).forEach((p) => b.delete(state.db.collection('pointages').doc(p.id))); await b.commit(); } toast(`${todaysPointages.length} pointage(s) supprimé(s)`, 'success'); } catch (e) { toast('Erreur', 'error'); } finally { hideLoading(); }
   });
 });
 
 /* IMPORT EXCEL */
-function openImportForSource(source) {
-  $('#importSource').value = source; $('#importFile').value = '';
-  $('#importProgressWrap').style.display = 'none';
-  openModal('modalImport');
-  setTimeout(() => $('#importFile').click(), 200);
-}
+function openImportForSource(source) { $('#importSource').value = source; $('#importFile').value = ''; $('#importProgressWrap').style.display = 'none'; openModal('modalImport'); setTimeout(() => $('#importFile').click(), 200); }
 $('#btnImportHR').addEventListener('click', () => openImportForSource('source1'));
 $('#btnImportUM').addEventListener('click', () => openImportForSource('source2'));
 $('#importRun').addEventListener('click', async () => {
@@ -3514,13 +4085,7 @@ $('#importRun').addEventListener('click', async () => {
     const wb = XLSX.read(buf, { type: 'array' });
     const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
     if (!rows.length) { toast('Vide', 'warning'); cleanup(); return; }
-    const mapField = (row, keys) => {
-      for (const k of Object.keys(row)) {
-        const kk = k.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, '');
-        for (const target of keys) { if (kk.includes(target)) return String(row[k]).trim(); }
-      }
-      return '';
-    };
+    const mapField = (row, keys) => { for (const k of Object.keys(row)) { const kk = k.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, ''); for (const target of keys) { if (kk.includes(target)) return String(row[k]).trim(); } } return ''; };
     const parsed = [];
     rows.forEach((row) => {
       const immat = normalizeImmat(mapField(row, ['immatriculation', 'immat']));
@@ -3569,21 +4134,9 @@ window.addEventListener('online', () => { updateOnlineStatus(); toast('Connexion
 window.addEventListener('offline', () => { updateOnlineStatus(); toast('Hors ligne', 'warning'); });
 updateOnlineStatus();
 
-$('#btnLogout').addEventListener('click', async () => {
-  const ok = await confirmDialog('Se déconnecter ?', '');
-  if (!ok) return;
-  await logAccess(true, 'Déconnexion'); lockApp();
-});
-$('#btnSession').addEventListener('click', async () => {
-  const s = getSession();
-  const exp = s ? new Date(s.expires).toLocaleString('fr-FR') : '—';
-  const ok = await confirmDialog('Se déconnecter ?', `Session jusqu'au <strong>${exp}</strong>.`);
-  if (!ok) return;
-  await logAccess(true, 'Déconnexion'); lockApp();
-});
-$('#btnChangeAccessCode').addEventListener('click', () => {
-  requireAdminPin('Changer le code', () => { $('#changeAccessOld').value = ''; $('#changeAccessNew').value = ''; $('#changeAccessNew2').value = ''; openModal('modalChangeAccess'); });
-});
+$('#btnLogout').addEventListener('click', async () => { const ok = await confirmDialog('Se déconnecter ?', ''); if (!ok) return; await logAccess(true, 'Déconnexion'); lockApp(); });
+$('#btnSession').addEventListener('click', async () => { const s = getSession(); const exp = s ? new Date(s.expires).toLocaleString('fr-FR') : '—'; const ok = await confirmDialog('Se déconnecter ?', `Session jusqu'au <strong>${exp}</strong>.`); if (!ok) return; await logAccess(true, 'Déconnexion'); lockApp(); });
+$('#btnChangeAccessCode').addEventListener('click', () => { requireAdminPin('Changer le code', () => { $('#changeAccessOld').value = ''; $('#changeAccessNew').value = ''; $('#changeAccessNew2').value = ''; openModal('modalChangeAccess'); }); });
 $('#changeAccessSave').addEventListener('click', async () => {
   const o = $('#changeAccessOld').value.trim(); const n = $('#changeAccessNew').value.trim(); const n2 = $('#changeAccessNew2').value.trim();
   if (o !== state.accessCode) { toast('Code incorrect', 'error'); return; }
@@ -3591,9 +4144,7 @@ $('#changeAccessSave').addEventListener('click', async () => {
   if (n !== n2) { toast('Ne correspondent pas', 'warning'); return; }
   await saveAccessCode(n, undefined); state.accessCode = n; closeModal('modalChangeAccess'); toast('Code modifié', 'success');
 });
-$('#btnChangeAdminPin').addEventListener('click', () => {
-  requireAdminPin('Changer le PIN Admin', () => { $('#changePinOld').value = ''; $('#changePinNew').value = ''; $('#changePinNew2').value = ''; openModal('modalChangeAdminPin'); });
-});
+$('#btnChangeAdminPin').addEventListener('click', () => { requireAdminPin('Changer le PIN Admin', () => { $('#changePinOld').value = ''; $('#changePinNew').value = ''; $('#changePinNew2').value = ''; openModal('modalChangeAdminPin'); }); });
 $('#changeAdminPinSave').addEventListener('click', async () => {
   const o = $('#changePinOld').value.trim(); const n = $('#changePinNew').value.trim(); const n2 = $('#changePinNew2').value.trim();
   if (o !== state.adminPin) { toast('PIN incorrect', 'error'); return; }
@@ -3601,11 +4152,7 @@ $('#changeAdminPinSave').addEventListener('click', async () => {
   if (n !== n2) { toast('Ne correspondent pas', 'warning'); return; }
   await saveAccessCode(undefined, n); state.adminPin = n; closeModal('modalChangeAdminPin'); toast('PIN Admin modifié', 'success');
 });
-$('#btnViewLogs').addEventListener('click', () => {
-  const card = $('#logsCard');
-  card.style.display = card.style.display === 'none' ? 'block' : 'none';
-  if (card.style.display === 'block') renderLoginLogs();
-});
+$('#btnViewLogs').addEventListener('click', () => { const card = $('#logsCard'); card.style.display = card.style.display === 'none' ? 'block' : 'none'; if (card.style.display === 'block') renderLoginLogs(); });
 
 /* RONDES */
 function listenRondes() {
@@ -3646,12 +4193,7 @@ function openRondeDetail(id) {
 $('#rdDelete').addEventListener('click', () => {
   if (!state.currentRondeDetail) return;
   const rondeId = state.currentRondeDetail.id; const rondeDate = state.currentRondeDetail.heureDebut;
-  requireAdminPin(`Supprimer la ronde du ${formatDateFR(rondeDate)}`, async () => {
-    const ok = await confirmDialog('Supprimer ?', 'Irréversible.');
-    if (!ok) return;
-    await state.db.collection('rondes').doc(rondeId).delete();
-    closeModal('modalRondeDetail'); toast('Ronde supprimée', 'success');
-  });
+  requireAdminPin(`Supprimer la ronde du ${formatDateFR(rondeDate)}`, async () => { const ok = await confirmDialog('Supprimer ?', 'Irréversible.'); if (!ok) return; await state.db.collection('rondes').doc(rondeId).delete(); closeModal('modalRondeDetail'); toast('Ronde supprimée', 'success'); });
 });
 
 /* ARCHIVES */
@@ -3786,28 +4328,17 @@ document.addEventListener('keydown', (e) => {
 /* MIGRATION */
 async function migrateStatut() {
   if (!state.db) return;
-  try {
-    const snap = await state.db.collection('vehicules').get();
-    const batch = state.db.batch(); let count = 0;
-    snap.docs.forEach((doc) => { const v = doc.data(); if (!v.statut) { batch.update(doc.ref, { statut: 'non-defini' }); count++; } });
-    if (count > 0) await batch.commit();
-  } catch (e) { console.warn('[Migration]', e); }
+  try { const snap = await state.db.collection('vehicules').get(); const batch = state.db.batch(); let count = 0; snap.docs.forEach((doc) => { const v = doc.data(); if (!v.statut) { batch.update(doc.ref, { statut: 'non-defini' }); count++; } }); if (count > 0) await batch.commit(); } catch (e) { console.warn('[Migration]', e); }
 }
 async function migrateSocieteToClient() {
   if (!state.db) return;
-  try {
-    const snap = await state.db.collection('vehicules').get();
-    const batch = state.db.batch(); let count = 0;
-    snap.docs.forEach((doc) => { const v = doc.data(); if (v.societe && !v.client) { batch.update(doc.ref, { client: v.societe }); count++; } });
-    if (count > 0) await batch.commit();
-  } catch (e) { console.warn('[Migration]', e); }
+  try { const snap = await state.db.collection('vehicules').get(); const batch = state.db.batch(); let count = 0; snap.docs.forEach((doc) => { const v = doc.data(); if (v.societe && !v.client) { batch.update(doc.ref, { client: v.societe }); count++; } }); if (count > 0) await batch.commit(); } catch (e) { console.warn('[Migration]', e); }
 }
 
 /* INIT */
 async function init() {
   if (!state.appUnlocked) return;
   showLoading('Demarrage...');
-
   try {
     fillSiteSelects();
     renderVehChips();
@@ -3818,25 +4349,18 @@ async function init() {
     renderAutruiSection();
     renderOuEst();
     updateSmartTabs();
+    initListesSourceFilters();
   } catch (e) { console.warn('[init UI]', e); }
   hideLoading();
 
   if (!state.db) { toast('Firebase indisponible', 'error'); return; }
 
   try {
-    listenUsers();
-    listenClients();
-    listenVehicules();
-    listenRondes();
-    listenPointages();
-    listenPointagesHistory();
-    listenMouvements();
-    listenAccessLogs();
+    listenUsers(); listenClients(); listenVehicules(); listenRondes();
+    listenPointages(); listenPointagesHistory(); listenMouvements(); listenAccessLogs();
   } catch (e) { console.warn('[listeners]', e); }
 
-  const safe = (fn, name) => {
-    Promise.resolve().then(fn).catch(e => console.warn(`[init ${name}]`, e.message));
-  };
+  const safe = (fn, name) => { Promise.resolve().then(fn).catch(e => console.warn(`[init ${name}]`, e.message)); };
   safe(ensureUsers, 'ensureUsers');
   safe(ensureClients, 'ensureClients');
   safe(getChefPin, 'getChefPin');
@@ -3844,13 +4368,9 @@ async function init() {
   safe(migrateStatut, 'migrateStatut');
 
   setTimeout(() => {
-    if (state.vehicules.length > 0) {
-      toast('NTR Track prêt', 'success', 'Application');
-    } else if (!navigator.onLine) {
-      toast('Mode hors-ligne — vérifie ta connexion', 'warning', 'Réseau');
-    } else {
-      toast('Synchronisation Firestore en cours...', 'info', 'Réseau');
-    }
+    if (state.vehicules.length > 0) toast('NTR Track prêt', 'success', 'Application');
+    else if (!navigator.onLine) toast('Mode hors-ligne — vérifie ta connexion', 'warning', 'Réseau');
+    else toast('Synchronisation Firestore en cours...', 'info', 'Réseau');
   }, 3000);
 
   const waitForData = setInterval(() => {
@@ -3860,7 +4380,6 @@ async function init() {
       toast(`${state.vehicules.length} véhicules chargés`, 'success', 'Synchronisé');
     }
   }, 2000);
-
   setTimeout(() => clearInterval(waitForData), 60000);
 }
 window.addEventListener('beforeunload', () => { state.unsubscribers.forEach((u) => { try { u(); } catch (e) {} }); });
