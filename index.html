@@ -464,123 +464,48 @@ img { max-width: 100%; display: block; }
 .photo-choice-btn .pc-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
 .photo-choice-btn .pc-label { font-size: 0.8rem; font-weight: 600; }
 
-/* ============================================================
-   v4.9 — LISTES PAR SOURCE
-   ============================================================ */
-.liste-source-block {
-  margin-bottom: 24px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.liste-source-header {
-  padding: 14px 18px;
-  background: linear-gradient(135deg, var(--bg-3), var(--bg-2));
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
+/* LISTES PAR SOURCE */
+.liste-source-block { margin-bottom: 24px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.liste-source-header { padding: 14px 18px; background: linear-gradient(135deg, var(--bg-3), var(--bg-2)); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .liste-source-header .lsh-icon { font-size: 1.3rem; }
-.liste-source-header .lsh-name {
-  flex: 1;
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--text);
-}
-.liste-source-header .lsh-count {
-  background: var(--primary-soft);
-  color: var(--primary);
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.72rem;
-  font-weight: 700;
-}
-.liste-source-header .lsh-actions {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.liste-site-block {
-  border-bottom: 1px solid var(--border);
-}
+.liste-source-header .lsh-name { flex: 1; font-weight: 700; font-size: 1rem; color: var(--text); }
+.liste-source-header .lsh-count { background: var(--primary-soft); color: var(--primary); padding: 4px 12px; border-radius: 12px; font-size: 0.72rem; font-weight: 700; }
+.liste-source-header .lsh-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.liste-site-block { border-bottom: 1px solid var(--border); }
 .liste-site-block:last-child { border-bottom: none; }
-.liste-site-header {
-  padding: 10px 18px;
-  background: var(--bg-3);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  user-select: none;
-  transition: background var(--transition);
-}
+.liste-site-header { padding: 10px 18px; background: var(--bg-3); display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; transition: background var(--transition); }
 .liste-site-header:hover { background: var(--bg-hover); }
 .liste-site-header .lsh-ico { font-size: 1rem; }
-.liste-site-header .lsh-name {
-  flex: 1;
-  font-weight: 600;
-  font-size: 0.88rem;
-  color: var(--text);
-}
-.liste-site-header .lsh-badge {
-  background: var(--bg-2);
-  color: var(--text-dim);
-  padding: 3px 10px;
-  border-radius: 10px;
-  font-size: 0.68rem;
-  font-weight: 700;
-}
-.liste-site-header.alert {
-  background: rgba(251, 191, 36, 0.08);
-}
-.liste-site-header.alert .lsh-badge {
-  background: rgba(251, 191, 36, 0.15);
-  color: var(--warning);
-}
-.liste-site-body {
-  display: none;
-  padding: 10px 18px 14px;
-}
+.liste-site-header .lsh-name { flex: 1; font-weight: 600; font-size: 0.88rem; color: var(--text); }
+.liste-site-header .lsh-badge { background: var(--bg-2); color: var(--text-dim); padding: 3px 10px; border-radius: 10px; font-size: 0.68rem; font-weight: 700; }
+.liste-site-header.alert { background: rgba(251, 191, 36, 0.08); }
+.liste-site-header.alert .lsh-badge { background: rgba(251, 191, 36, 0.15); color: var(--warning); }
+.liste-site-body { display: none; padding: 10px 18px 14px; }
 .liste-site-block.open .liste-site-body { display: block; }
-
-.liste-vehicule-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.82rem;
-}
+.liste-vehicule-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
 .liste-vehicule-row:last-child { border-bottom: none; }
-.liste-vehicule-row .lvr-immat {
-  font-family: var(--mono);
-  font-weight: 700;
-  color: var(--primary);
-  min-width: 110px;
-}
-.liste-vehicule-row .lvr-info {
-  flex: 1;
-  color: var(--text-dim);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.liste-vehicule-row .lvr-statut {
-  flex-shrink: 0;
-}
-.liste-vehicule-row .lvr-lastseen {
-  font-size: 0.7rem;
-  color: var(--text-mute);
-  flex-shrink: 0;
-}
+.liste-vehicule-row .lvr-immat { font-family: var(--mono); font-weight: 700; color: var(--primary); min-width: 110px; }
+.liste-vehicule-row .lvr-info { flex: 1; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.liste-vehicule-row .lvr-statut { flex-shrink: 0; }
+.liste-vehicule-row .lvr-lastseen { font-size: 0.7rem; color: var(--text-mute); flex-shrink: 0; }
 @media (max-width: 640px) {
   .liste-vehicule-row { flex-wrap: wrap; }
   .liste-vehicule-row .lvr-info { width: 100%; }
 }
+
+/* v4.10 — Ajouts manuels : badge inactif */
+.badge-inactif { background: rgba(94, 113, 133, 0.25); color: var(--text-mute); font-size: 0.6rem; padding: 2px 6px; border-radius: 6px; font-weight: 600; margin-left: 6px; }
+.reprendre-banner { background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), var(--bg-2)); border: 1px solid var(--warning); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.reprendre-banner .rb-icon { font-size: 1.4rem; }
+.reprendre-banner .rb-text { flex: 1; font-size: 0.82rem; font-weight: 500; }
+.reprendre-banner .rb-text strong { color: var(--warning); font-weight: 700; }
+
+.ajout-manuel-stat { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--bg-3); border-radius: var(--radius-sm); font-size: 0.8rem; margin-bottom: 8px; }
+.ajout-manuel-stat .ams-label { font-weight: 600; }
+.ajout-manuel-stat .ams-value { font-weight: 700; font-size: 1.1rem; }
+.ajout-manuel-stat.actifs .ams-value { color: var(--success); }
+.ajout-manuel-stat.inactifs .ams-value { color: var(--text-mute); }
+.ajout-manuel-stat.recurrents .ams-value { color: var(--warning); }
 
 /* OU EST */
 .where-result-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
@@ -826,7 +751,7 @@ img { max-width: 100%; display: block; }
       <h2 class="section-title">Véhicules manquants <span class="badge badge-danger" id="manquantsCount">0</span></h2>
       <div class="section-actions"><button class="btn btn-ghost btn-sm" id="btnManquantsExportXls">Export Excel</button></div>
     </div>
-    <div class="pointage-hint"><strong>Véhicules non pointés</strong> — Ces véhicules n'ont pas été trouvés lors de la dernière ronde.</div>
+    <div class="pointage-hint"><strong>Véhicules non pointés</strong> — Ces véhicules n'ont pas été trouvés lors de la dernière ronde. <em style="color:var(--text-mute)">Les ajouts manuels inactifs (anciens non re-pointés) sont exclus de cette liste.</em></div>
     <div class="form-group">
       <label class="form-label">Filtrer par source</label>
       <select class="select" id="manquantsSourceFilter">
@@ -848,9 +773,7 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- ==========================================================
-     ONGLET LISTES PAR SOURCE (v4.9)
-     ========================================================== -->
+<!-- ONGLET LISTES PAR SOURCE -->
 <section class="tab-content" id="tab-listes-source">
   <div class="container">
     <div class="section-header">
@@ -862,6 +785,7 @@ img { max-width: 100%; display: block; }
     <div class="pointage-hint">
       <strong>Vue croisée</strong> — Tous les véhicules groupés par <strong>source</strong> puis par <strong>site actuel</strong>. Les véhicules non pointés apparaissent à la fin de chaque source.
     </div>
+    <div id="reprendreAjoutsBanner"></div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Filtrer par source</label>
@@ -1185,6 +1109,18 @@ img { max-width: 100%; display: block; }
       <button class="btn btn-blue btn-block" id="btnClearTodayPointages">🗑️ Effacer les pointages d'aujourd'hui</button>
     </div>
     <div class="card" style="border-left:4px solid var(--warning)">
+      <div class="card-title">📦 Ajouts manuels</div>
+      <p style="color:var(--text-dim);font-size:0.82rem;margin:0 0 14px">
+        Les <strong>ajouts manuels</strong> sont des véhicules que vous créez à la volée (pas d'import HR/UM).
+        Pour ne pas fausser les calculs d'une nouvelle ronde, l'app ne compte <strong>que les ajouts manuels actifs</strong> (ajoutés ou re-pointés aujourd'hui).
+      </p>
+      <div id="ajoutManuelAdminStats"></div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+        <button class="btn btn-primary btn-block" id="btnReprendreRecurrentsAdmin">🔁 Reprendre les récurrents</button>
+        <button class="btn btn-warning btn-block" id="btnWipeAnciensAjouts">🗑️ Effacer les ajouts manuels antérieurs</button>
+      </div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--warning)">
       <div class="card-title">Zone dangereuse</div>
       <p style="color:var(--text-dim);font-size:0.82rem;margin:0 0 14px">Ces actions sont irréversibles.</p>
       <div style="display:flex;flex-direction:column;gap:10px">
@@ -1506,6 +1442,37 @@ img { max-width: 100%; display: block; }
   </div>
 </div>
 
+<!-- v4.10 — Modale "Reprendre les ajouts manuels" -->
+<div class="modal-overlay" id="modalReprendre">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title">🔁 Reprendre les ajouts manuels</h3>
+      <button class="modal-close" data-close="modalReprendre">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="pointage-hint">
+        <strong>Principe :</strong> les véhicules listés ci-dessous vont recevoir un <strong>pointage du jour</strong> au site choisi.
+        Ils redeviendront ainsi <strong>actifs</strong> pour la ronde en cours. Aucune donnée n'est supprimée.
+      </div>
+      <div class="form-group">
+        <label class="form-label">Site à appliquer <span class="req">*</span></label>
+        <select class="select" id="reprendreSiteSelect"></select>
+        <div style="font-size:0.7rem;color:var(--text-mute);margin-top:4px">
+          💡 Chaque véhicule garde son site d'origine s'il en a un. Ce sélecteur sert de <strong>fallback</strong> pour les véhicules sans site connu.
+        </div>
+      </div>
+      <div style="font-size:0.8rem;margin-bottom:8px">
+        <strong id="reprendreCount">0</strong> véhicule(s) à reprendre :
+      </div>
+      <div id="reprendreList" style="max-height:280px;overflow-y:auto;background:var(--bg-3);border-radius:var(--radius-sm);padding:8px"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-close="modalReprendre">Annuler</button>
+      <button class="btn btn-primary" id="reprendreValider">✓ Reprendre maintenant</button>
+    </div>
+  </div>
+</div>
+
 <div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><div class="loading-text" id="loadingText">Chargement...</div></div>
 <div class="toast-container" id="toastContainer"></div>
 
@@ -1517,10 +1484,8 @@ img { max-width: 100%; display: block; }
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@8.0.0/build/index.min.js"></script>
 
-<!-- ↓↓↓ LE SCRIPT JS EST DANS LA PARTIE 3/3 ↓↓↓ -->
-
-  
-  <script>
+<script>
+/* NTR TRACK v4.10 — Filtrage intelligent des ajouts manuels */
 
 const firebaseConfig = {
   apiKey: "AIzaSyAxfEpi-NERVExxVYD2EmH7JppiIQDwWOM",
@@ -1540,6 +1505,8 @@ const PAGE_SIZE = 50;
 const SESSION_KEY = 'ntr_session_token_v48';
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000;
 const MOIS_NOMS_FR = ['JANVIER','FEVRIER','MARS','AVRIL','MAI','JUIN','JUILLET','AOUT','SEPTEMBRE','OCTOBRE','NOVEMBRE','DECEMBRE'];
+const SEUIL_RECURRENT = 3;          // v4.10 — nb de pointages sur 7j pour considérer un ajout manuel "récurrent"
+const FENETRE_RECURRENT_JOURS = 7;  // v4.10 — fenêtre d'analyse
 
 const STATUTS = {
   'non-defini': { label: 'Non défini', icon: '⚪', cls: 'non-defini' },
@@ -1578,10 +1545,12 @@ const state = {
   photoChoiceVehiculeId: null,
   pendingRonde: null,
   firstLoadToastShown: false,
-  // v4.9 — vue par source
   listesSourceFilter: '',
   listesSiteFilter: '',
-  listesFiltersInitialized: false
+  listesFiltersInitialized: false,
+  // v4.10 — Reprendre les ajouts manuels
+  reprendreSelection: [],
+  reprendreMode: 'veille'
 };
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -1595,6 +1564,7 @@ function todayKeyShort() { return new Date().toISOString().slice(0, 10); }
 function formatDateFR(iso) { if (!iso) return '—'; const d = new Date(iso); if (isNaN(d)) return iso; return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }); }
 function formatDateTimeFR(iso) { if (!iso) return '—'; const d = new Date(iso); if (isNaN(d)) return iso; return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); }
 function daysBetween(iso1, iso2 = nowIso()) { return Math.floor((new Date(iso2) - new Date(iso1)) / 86400000); }
+function startOfToday() { const d = new Date(); d.setHours(0, 0, 0, 0); return d.getTime(); }
 
 function toast(msg, type = 'info', title = '') {
   const c = $('#toastContainer'); const el = document.createElement('div');
@@ -1648,7 +1618,91 @@ $('#btnTheme').addEventListener('click', () => { const c = document.documentElem
 
 try { firebase.initializeApp(firebaseConfig); state.db = firebase.firestore(); try { state.db.settings({ cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED, merge: true }); } catch (e) {} } catch (e) { console.error('[Firebase]', e); }
 
-/* SESSION */
+/* ============================================================
+   v4.10 — LOGIQUE AJOUTS MANUELS ACTIFS / INACTIFS
+   ============================================================ */
+
+/**
+ * Détermine si un ajout manuel est "actif" pour la ronde en cours.
+ * Actif = ajouté aujourd'hui OU pointé aujourd'hui OU lastSeen aujourd'hui.
+ * (=> l'astuce "décocher + recocher" crée un pointage du jour, donc reste actif)
+ */
+function isAjoutManuelActif(v) {
+  if (!v || v.source !== 'custom') return true; // non concerné
+  const today0 = startOfToday();
+  // 1. Ajouté aujourd'hui
+  if (v.createdAt && new Date(v.createdAt).getTime() >= today0) return true;
+  // 2. lastSeen aujourd'hui (mise à jour lors du pointage)
+  if (v.lastSeen && new Date(v.lastSeen).getTime() >= today0) return true;
+  // 3. Au moins un pointage du jour sur ce véhicule
+  const today = todayKeyShort();
+  const aPointageAujourdhui = state.pointages.some((p) => p.vehiculeId === v.id && p.jour === today);
+  if (aPointageAujourdhui) return true;
+  return false;
+}
+
+/** Renvoie true si le véhicule est un ajout manuel inactif (à exclure des calculs) */
+function isAjoutManuelInactif(v) { return v && v.source === 'custom' && !isAjoutManuelActif(v); }
+
+/** Liste tous les ajouts manuels inactifs (anciens non re-pointés) */
+function getAjoutsManuelsInactifs() {
+  return state.vehicules.filter((v) => isAjoutManuelInactif(v));
+}
+
+/** Liste tous les ajouts manuels actifs */
+function getAjoutsManuelsActifs() {
+  return state.vehicules.filter((v) => v.source === 'custom' && isAjoutManuelActif(v));
+}
+
+/**
+ * Détecte les ajouts manuels "récurrents" = pointés au moins SEUIL_RECURRENT fois
+ * sur les FENETRE_RECURRENT_JOURS derniers jours.
+ */
+function getAjoutsManuelsRecurrents() {
+  const since = Date.now() - FENETRE_RECURRENT_JOURS * 86400000;
+  const counts = new Map();
+  state.pointages.forEach((p) => {
+    if (new Date(p.timestamp).getTime() < since) return;
+    counts.set(p.vehiculeId, (counts.get(p.vehiculeId) || 0) + 1);
+  });
+  const result = [];
+  counts.forEach((count, vehiculeId) => {
+    if (count < SEUIL_RECURRENT) return;
+    const v = state.vehicules.find((x) => x.id === vehiculeId);
+    if (v && v.source === 'custom' && isAjoutManuelInactif(v)) {
+      result.push({ vehicule: v, count });
+    }
+  });
+  return result.sort((a, b) => b.count - a.count);
+}
+
+/**
+ * Compte les véhicules par type pour les statistiques Admin.
+ */
+function computeAjoutsManuelsStats() {
+  const all = state.vehicules.filter((v) => v.source === 'custom');
+  const actifs = all.filter(isAjoutManuelActif);
+  const inactifs = all.filter((v) => !isAjoutManuelActif(v));
+  const recurrents = getAjoutsManuelsRecurrents();
+  return { total: all.length, actifs: actifs.length, inactifs: inactifs.length, recurrents: recurrents.length };
+}
+
+/** Liste des ajouts manuels inactifs qui ont été pointés hier (pour le bouton "Reprendre") */
+function getAjoutsManuelsDeLaVeille() {
+  const hier = new Date(); hier.setDate(hier.getDate() - 1); hier.setHours(0, 0, 0, 0);
+  const hierFin = new Date(hier); hierFin.setHours(23, 59, 59, 999);
+  const hierDebut = hier.getTime(); const hierFinMs = hierFin.getTime();
+  const idsPointesHier = new Set();
+  state.pointages.forEach((p) => {
+    const t = new Date(p.timestamp).getTime();
+    if (t >= hierDebut && t <= hierFinMs) idsPointesHier.add(p.vehiculeId);
+  });
+  return state.vehicules.filter((v) => v.source === 'custom' && isAjoutManuelInactif(v) && idsPointesHier.has(v.id));
+}
+
+/* ============================================================
+   SESSION
+   ============================================================ */
 function getSession() { try { const raw = localStorage.getItem(SESSION_KEY); if (!raw) return null; const data = JSON.parse(raw); if (!data.expires || data.expires < Date.now()) { localStorage.removeItem(SESSION_KEY); return null; } return data; } catch (e) { return null; } }
 function saveSession() { const data = { expires: Date.now() + SESSION_DURATION, createdAt: nowIso() }; localStorage.setItem(SESSION_KEY, JSON.stringify(data)); }
 function clearSession() { localStorage.removeItem(SESSION_KEY); }
@@ -1796,7 +1850,7 @@ function switchTab(name) {
   if (name === 'mouvements') renderMouvements();
   if (name === 'chef') renderChef();
   if (name === 'galerie') renderGalerie();
-  if (name === 'admin') renderAdminInfo();
+  if (name === 'admin') { renderAdminInfo(); renderAjoutsManuelsAdminStats(); }
   if (name === 'attestation') setTimeout(() => rafraichirNumeroAttestation(), 200);
 }
 
@@ -1952,11 +2006,13 @@ function listenVehicules() {
     state.vehicules = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
     applyVehFilters();
     renderAdminInfo();
+    renderAjoutsManuelsAdminStats();
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
     if ($('#tab-ou-est').classList.contains('active')) renderOuEst();
     if ($('#tab-manquants').classList.contains('active')) renderManquants();
     if ($('#tab-galerie').classList.contains('active')) renderGalerie();
     if ($('#tab-mouvements').classList.contains('active')) renderMouvements();
+    if ($('#tab-listes-source').classList.contains('active')) renderListesSource();
     updatePhotoMissingBanner(); updateSmartTabs();
   }, (err) => { console.error('[vehicules]', err); toast('Erreur', 'error'); });
   state.unsubscribers.push(unsub);
@@ -2019,7 +2075,6 @@ function applyVehFilters() {
   state.vehiculesFiltered = filtered; state.pageVeh = 1;
   renderVehiculesList();
   const cnt = $('#vehCount'); if (cnt) cnt.textContent = filtered.length;
-  // v4.9 : rafraîchir la vue par source si active
   if ($('#tab-listes-source') && $('#tab-listes-source').classList.contains('active')) {
     renderListesSource();
   }
@@ -2082,9 +2137,10 @@ function renderVehiculesList() {
     const pointed = state.pointages.some((p) => p.vehiculeId === v.id);
     const srcLabel = SOURCES[v.source] || v.source || '—';
     const isC = v.source === 'custom' || v.isCustom;
-    return `<div class="vehicle-card ${pointed ? 'present' : 'absent'}">
+    const inactif = isAjoutManuelInactif(v);
+    return `<div class="vehicle-card ${pointed ? 'present' : 'absent'}" style="${inactif ? 'opacity:0.65' : ''}">
       <div class="vehicle-card-main">
-        <div class="vehicle-card-immat">${escapeHtml(v.immat)}</div>
+        <div class="vehicle-card-immat">${escapeHtml(v.immat)}${inactif ? '<span class="badge-inactif">inactif</span>' : ''}</div>
         <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">
           ${renderSiteBadge(v)}
           <span class="badge ${isC ? 'badge-blue' : 'badge-muted'}">${escapeHtml(srcLabel)}</span>
@@ -2137,6 +2193,7 @@ function fillSiteSelects() {
   const vehSite = $('#vehSite'); if (vehSite) vehSite.innerHTML = `<option value="">— Site —</option>${opts}`;
   const pointageSite = $('#pointageSite'); if (pointageSite) pointageSite.innerHTML = `<option value="">— Site —</option>${opts}`;
   const galSite = $('#galSiteFilter'); if (galSite) galSite.innerHTML = `<option value="">Tous les sites</option>${opts}`;
+  const reprendreSite = $('#reprendreSiteSelect'); if (reprendreSite) reprendreSite.innerHTML = opts;
 }
 function openVehiculeModal(id = null) {
   const v = id ? state.vehicules.find((x) => x.id === id) : null;
@@ -2295,6 +2352,7 @@ function listenPointages() {
     if ($('#tab-manquants').classList.contains('active')) renderManquants();
     if ($('#tab-vehicules').classList.contains('active')) applyVehFilters();
     if ($('#tab-listes-source').classList.contains('active')) renderListesSource();
+    if ($('#tab-admin').classList.contains('active')) renderAjoutsManuelsAdminStats();
     renderAutruiSection();
     updatePhotoMissingBanner();
   }, (err) => console.warn('[pointages]', err));
@@ -2315,7 +2373,9 @@ function listenPointagesHistory() {
     if ($('#tab-ou-est').classList.contains('active')) renderOuEst();
     if ($('#tab-vehicules').classList.contains('active')) applyVehFilters();
     if ($('#tab-pointage').classList.contains('active')) renderPointage();
+    if ($('#tab-manquants').classList.contains('active')) renderManquants();
     if ($('#tab-listes-source').classList.contains('active')) renderListesSource();
+    if ($('#tab-admin').classList.contains('active')) renderAjoutsManuelsAdminStats();
   }, (err) => console.warn('[pointagesHistory]', err));
   state.unsubscribers.push(unsub);
 }
@@ -2339,13 +2399,19 @@ function getPointageOfficiel(vehiculeId) {
   return all.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
 }
 
+/* v4.10 — Total véhicules "comptables" (exclut les ajouts manuels inactifs) */
+function getVehiculesComptables() {
+  return state.vehicules.filter((v) => !isAjoutManuelInactif(v));
+}
+
 function renderPointage() {
   const list = $('#pointageList'); const empty = $('#pointageEmpty'); const pag = $('#pointagePagination');
   if (!list) return;
   const site = state.pointageSite;
   const label = $('#pointageSiteLabel'); if (label) label.textContent = site || '— Choisir un site —';
   const search = normalizeImmat($('#pointageSearch').value);
-  let items = state.vehicules.slice().sort((a, b) => a.immat.localeCompare(b.immat));
+  // v4.10 — on n'affiche que les véhicules comptables dans le pointage (les inactifs sont cachés)
+  let items = getVehiculesComptables().slice().sort((a, b) => a.immat.localeCompare(b.immat));
   if (search) items = items.filter((v) => normalizeImmat(v.immat).includes(search));
   if (state.pointageStatus === 'pending') items = items.filter((v) => !state.myPointages.has(v.id));
   if (state.pointageStatus === 'pointed') items = items.filter((v) => state.myPointages.has(v.id));
@@ -2394,7 +2460,8 @@ function renderPointage() {
 }
 $('#pointageLoadMore').addEventListener('click', () => { state.pagePointage++; renderPointage(); });
 function updatePointageCounters() {
-  const total = state.vehicules.length;
+  // v4.10 — le total ne compte QUE les véhicules comptables (exclut ajouts manuels inactifs)
+  const total = getVehiculesComptables().length;
   const mine = state.myPointages.size;
   const uniqueVehicules = new Set(state.pointages.filter((p) => p.jour === todayKeyShort()).map((p) => p.vehiculeId));
   const global = uniqueVehicules.size;
@@ -2420,6 +2487,7 @@ async function handlePointage(vehId) {
       if (lastSite && lastSite !== newSite) {
         try { await state.db.collection('mouvements').add({ vehiculeId: vehId, immat: v.immat, fromSite: lastSite, toSite: newSite, userNom: state.currentUser, timestamp: nowIso(), jour: todayKeyShort() }); } catch (e) {}
       }
+      // v4.10 — le pointage met à jour lastSeen => l'ajout manuel redevient "actif" (astuce décocher+recocher)
       await state.db.collection('pointages').add({ vehiculeId: vehId, immat: v.immat, userNom: state.currentUser, site: newSite, timestamp: nowIso(), jour: todayKeyShort(), createdAt: nowIso() });
       await state.db.collection('vehicules').doc(vehId).update({ present: true, lastSeen: nowIso(), site: newSite });
       toast(`${v.immat} trouvé à ${newSite}`, 'success');
@@ -2446,13 +2514,13 @@ $('#pointageSearch').addEventListener('keydown', (e) => { if (e.key === 'Enter')
 $('#pointageSearchBtn').addEventListener('click', executePointageSearch);
 function executePointageSearch() {
   const q = $('#pointageSearch').value.trim(); state.pagePointage = 1; renderPointage();
-  if (q) { const count = state.vehicules.filter((v) => normalizeImmat(v.immat).includes(normalizeImmat(q))).length; if (count === 0) toast(`Aucun véhicule`, 'warning'); else toast(`${count} trouvé(s)`, 'success'); }
+  if (q) { const count = getVehiculesComptables().filter((v) => normalizeImmat(v.immat).includes(normalizeImmat(q))).length; if (count === 0) toast(`Aucun véhicule`, 'warning'); else toast(`${count} trouvé(s)`, 'success'); }
 }
 $('#pointageClear').addEventListener('click', () => { $('#pointageSearch').value = ''; $('#pointageClear').classList.remove('show'); $('#pointageAutocomplete').classList.remove('show'); state.pagePointage = 1; renderPointage(); });
 function showPointageAutocomplete(query) {
   const q = normalizeImmat(query); const l = $('#pointageAutocomplete');
   if (!q) { l.classList.remove('show'); return; }
-  const matches = state.vehicules.filter((v) => normalizeImmat(v.immat).includes(q)).slice(0, 12);
+  const matches = getVehiculesComptables().filter((v) => normalizeImmat(v.immat).includes(q)).slice(0, 12);
   if (!matches.length) { l.classList.remove('show'); return; }
   l.innerHTML = matches.map((v) => {
     const mine = state.myPointages.has(v.id);
@@ -2482,7 +2550,7 @@ function renderAutruiSection() {
 document.addEventListener('click', (e) => { const header = e.target.closest('#autruiHeader'); if (header) header.parentElement.classList.toggle('open'); });
 
 /* ============================================================
-   BOUTON TERMINER LA RONDE
+   BOUTON TERMINER LA RONDE (v4.10 — stats corrigées)
    ============================================================ */
 $('#btnTerminer').addEventListener('click', ouvrirRecapRonde);
 
@@ -2494,19 +2562,24 @@ function ouvrirRecapRonde() {
   const pointagesDuJour = state.pointages.filter((p) => p.jour === today);
   if (!pointagesDuJour.length) { toast('Aucun pointage à terminer', 'info'); return; }
 
-  const total = state.vehicules.length;
+  // v4.10 — total basé sur les véhicules comptables uniquement
+  const comptables = getVehiculesComptables();
+  const total = comptables.length;
   const pointedIds = new Set(pointagesDuJour.map((p) => p.vehiculeId));
-  const presents = pointedIds.size;
+  const comptablesIds = new Set(comptables.map((v) => v.id));
+  const presentsComptables = [...pointedIds].filter((id) => comptablesIds.has(id)).length;
+  const presents = presentsComptables;
   const absents = total - presents;
   const taux = total > 0 ? Math.round((presents / total) * 100) : 0;
 
   const repartitionSites = {};
   pointagesDuJour.forEach((p) => {
     if (!p.site) return;
+    if (!comptablesIds.has(p.vehiculeId)) return;
     repartitionSites[p.site] = (repartitionSites[p.site] || 0) + 1;
   });
 
-  const vehiculesSnapshot = state.vehicules
+  const vehiculesSnapshot = comptables
     .filter((v) => pointedIds.has(v.id))
     .map((v) => ({
       immat: v.immat,
@@ -2670,10 +2743,16 @@ function renderWhereResult(v) {
     .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
     .slice(0, 20);
   const statut = STATUTS[getStatutVehicule(v)];
+  const inactif = isAjoutManuelInactif(v);
 
   const photoHtml = v.photo
     ? `<img src="${escapeHtml(v.photo)}" class="wh-photo" alt="">`
     : `<div class="wh-photo">🚗</div>`;
+
+  const inactifBanner = inactif ? `
+    <div style="padding:10px 14px;background:rgba(94,113,133,0.15);border:1px solid var(--text-mute);border-radius:var(--radius-sm);font-size:0.78rem;color:var(--text-dim);margin-bottom:14px">
+      ⚠️ <strong>Ajout manuel inactif</strong> — Ce véhicule n'a pas été pointé aujourd'hui. Il n'est pas compté dans la ronde en cours.
+    </div>` : '';
 
   const siteBoxHtml = siteActuel
     ? `<div class="where-site-box">
@@ -2695,18 +2774,10 @@ function renderWhereResult(v) {
 
   const timelineItems = [];
   pointagesVehicule.forEach((p) => {
-    timelineItems.push({
-      date: p.timestamp,
-      type: 'pointage',
-      html: `📍 Pointé à <strong>${escapeHtml(p.site)}</strong> par ${escapeHtml(p.userNom)}`
-    });
+    timelineItems.push({ date: p.timestamp, type: 'pointage', html: `📍 Pointé à <strong>${escapeHtml(p.site)}</strong> par ${escapeHtml(p.userNom)}` });
   });
   mouvementsVehicule.forEach((m) => {
-    timelineItems.push({
-      date: m.timestamp,
-      type: 'mouvement',
-      html: `🔄 Déplacé de <strong>${escapeHtml(m.fromSite)}</strong> → <strong style="color:var(--primary)">${escapeHtml(m.toSite)}</strong> par ${escapeHtml(m.userNom)}`
-    });
+    timelineItems.push({ date: m.timestamp, type: 'mouvement', html: `🔄 Déplacé de <strong>${escapeHtml(m.fromSite)}</strong> → <strong style="color:var(--primary)">${escapeHtml(m.toSite)}</strong> par ${escapeHtml(m.userNom)}` });
   });
   timelineItems.sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -2719,7 +2790,7 @@ function renderWhereResult(v) {
       <div class="where-hero">
         ${photoHtml}
         <div class="wh-info">
-          <div class="wh-immat">${escapeHtml(v.immat)}</div>
+          <div class="wh-immat">${escapeHtml(v.immat)}${inactif ? '<span class="badge-inactif">inactif</span>' : ''}</div>
           <div class="wh-details">
             ${v.marque || v.modele ? `<span>🚘 ${escapeHtml([v.marque, v.modele].filter(Boolean).join(' '))}</span>` : ''}
             ${v.client ? `<span>👤 ${escapeHtml(v.client)}</span>` : ''}
@@ -2728,28 +2799,14 @@ function renderWhereResult(v) {
           <div style="margin-top:10px">${renderStatutBadge(v, true)}</div>
         </div>
       </div>
-
+      ${inactifBanner}
       ${siteBoxHtml}
-
       <div class="where-info-grid">
-        <div class="where-info-item">
-          <div class="wii-label">Source</div>
-          <div class="wii-value">${escapeHtml(SOURCES[v.source] || v.source || '—')}</div>
-        </div>
-        <div class="where-info-item">
-          <div class="wii-label">Type maintenance</div>
-          <div class="wii-value">${escapeHtml(v.typeMaintenance || '—')}</div>
-        </div>
-        <div class="where-info-item">
-          <div class="wii-label">Dernière vue</div>
-          <div class="wii-value">${v.lastSeen ? formatDateFR(v.lastSeen) : 'Jamais'}</div>
-        </div>
-        <div class="where-info-item">
-          <div class="wii-label">Ajouté le</div>
-          <div class="wii-value">${v.createdAt ? formatDateFR(v.createdAt) : '—'}</div>
-        </div>
+        <div class="where-info-item"><div class="wii-label">Source</div><div class="wii-value">${escapeHtml(SOURCES[v.source] || v.source || '—')}</div></div>
+        <div class="where-info-item"><div class="wii-label">Type maintenance</div><div class="wii-value">${escapeHtml(v.typeMaintenance || '—')}</div></div>
+        <div class="where-info-item"><div class="wii-label">Dernière vue</div><div class="wii-value">${v.lastSeen ? formatDateFR(v.lastSeen) : 'Jamais'}</div></div>
+        <div class="where-info-item"><div class="wii-label">Ajouté le</div><div class="wii-value">${v.createdAt ? formatDateFR(v.createdAt) : '—'}</div></div>
       </div>
-
       <div class="where-actions">
         ${v.photo ? `<button class="btn btn-primary btn-sm" id="whereViewPhoto">📸 Voir la photo</button>` : ''}
         <button class="btn btn-blue btn-sm" id="whereGoToVehicle">📋 Voir dans la liste</button>
@@ -2758,19 +2815,9 @@ function renderWhereResult(v) {
     </div>
     ${timelineHtml}
   `;
-
-  const photoBtn = $('#whereViewPhoto');
-  if (photoBtn) photoBtn.addEventListener('click', () => openLightbox(v.id));
-  const goBtn = $('#whereGoToVehicle');
-  if (goBtn) goBtn.addEventListener('click', () => {
-    $('#vehSearch').value = v.immat;
-    state.vehFilters.search = v.immat;
-    $('#vehSearchClear').classList.add('show');
-    applyVehFilters();
-    switchTab('vehicules');
-  });
-  const stBtn = $('#whereChangeStatut');
-  if (stBtn) stBtn.addEventListener('click', () => openStatutModal(v.id));
+  const photoBtn = $('#whereViewPhoto'); if (photoBtn) photoBtn.addEventListener('click', () => openLightbox(v.id));
+  const goBtn = $('#whereGoToVehicle'); if (goBtn) goBtn.addEventListener('click', () => { $('#vehSearch').value = v.immat; state.vehFilters.search = v.immat; $('#vehSearchClear').classList.add('show'); applyVehFilters(); switchTab('vehicules'); });
+  const stBtn = $('#whereChangeStatut'); if (stBtn) stBtn.addEventListener('click', () => openStatutModal(v.id));
 }
 
 const whereSearchInput = $('#whereSearch');
@@ -2784,12 +2831,7 @@ function executeWhereSearch() {
   if (q) { const v = state.vehicules.find((x) => normalizeImmat(x.immat) === normalizeImmat(q)); if (!v) toast(`Aucun véhicule "${q}"`, 'warning'); }
 }
 whereSearchBtn.addEventListener('click', executeWhereSearch);
-whereSearchInput.addEventListener('input', (e) => {
-  const v = e.target.value;
-  whereSearchClear.classList.toggle('show', v.length > 0);
-  showWhereAutocomplete(v);
-  renderOuEst();
-});
+whereSearchInput.addEventListener('input', (e) => { const v = e.target.value; whereSearchClear.classList.toggle('show', v.length > 0); showWhereAutocomplete(v); renderOuEst(); });
 whereSearchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); whereSearchBtn.click(); } });
 whereSearchClear.addEventListener('click', () => { whereSearchInput.value = ''; whereSearchClear.classList.remove('show'); whereAutoList.classList.remove('show'); renderOuEst(); });
 
@@ -2799,7 +2841,8 @@ function showWhereAutocomplete(query) {
   if (!matches.length) { whereAutoList.classList.remove('show'); return; }
   whereAutoList.innerHTML = matches.map((v) => {
     const site = getSiteActuel(v);
-    return `<div class="autocomplete-item" data-id="${v.id}"><span class="ac-immat">${escapeHtml(v.immat)}</span><span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}</span><span class="ac-status ${site ? 'present' : 'absent'}">${site ? '📍 ' + escapeHtml(site) : 'Non pointé'}</span></div>`;
+    const inactif = isAjoutManuelInactif(v);
+    return `<div class="autocomplete-item" data-id="${v.id}"><span class="ac-immat">${escapeHtml(v.immat)}${inactif ? '<span class="badge-inactif">inactif</span>' : ''}</span><span class="ac-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}</span><span class="ac-status ${site ? 'present' : 'absent'}">${site ? '📍 ' + escapeHtml(site) : 'Non pointé'}</span></div>`;
   }).join('');
   whereAutoList.classList.add('show');
   $$('.autocomplete-item', whereAutoList).forEach((item) => item.addEventListener('click', () => {
@@ -2808,14 +2851,14 @@ function showWhereAutocomplete(query) {
   }));
 }
 document.addEventListener('click', (e) => { if (!e.target.closest('#whereSearch') && !e.target.closest('#whereAutocomplete')) whereAutoList.classList.remove('show'); });
-
 setupVoiceSearch('whereMic', 'whereSearch', (text) => { renderOuEst(); toast(`Recherche : ${text}`, 'success'); });
 
-/* MANQUANTS */
+/* MANQUANTS (v4.10 — exclut les ajouts manuels inactifs) */
 function renderManquants() {
   const filter = state.manquantsFilterSource || '';
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  let list = state.vehicules.filter((v) => !pointedIds.has(v.id));
+  // v4.10 — on part des comptables (exclut inactifs)
+  let list = getVehiculesComptables().filter((v) => !pointedIds.has(v.id));
   if (filter) list = list.filter((v) => v.source === filter);
   const cntEl = $('#manquantsCount'); if (cntEl) cntEl.textContent = list.length;
   const c = $('#manquantsList'); const e = $('#manquantsEmpty'); const pag = $('#manquantsPagination');
@@ -2838,14 +2881,128 @@ $('#manquantsLoadMore').addEventListener('click', () => { state.pageManquants++;
 $('#manquantsSourceFilter').addEventListener('change', (e) => { state.manquantsFilterSource = e.target.value; state.pageManquants = 1; renderManquants(); });
 $('#btnManquantsExportXls').addEventListener('click', () => {
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  let list = state.vehicules.filter((v) => !pointedIds.has(v.id));
+  let list = getVehiculesComptables().filter((v) => !pointedIds.has(v.id));
   if (state.manquantsFilterSource) list = list.filter((v) => v.source === state.manquantsFilterSource);
   if (!list.length) { toast('Aucun manquant', 'warning'); return; }
   const rows = list.map((v) => ({ 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '', 'Source': SOURCES[v.source] || v.source || '' }));
   exportExcel(rows, `NTR_Manquants_${todayKey()}.xlsx`, 'Manquants');
 });
 
-/* GALERIE */
+/* ============================================================
+   v4.10 — PANNEAU ADMIN AJOUTS MANUELS
+   ============================================================ */
+function renderAjoutsManuelsAdminStats() {
+  const container = $('#ajoutManuelAdminStats'); if (!container) return;
+  const stats = computeAjoutsManuelsStats();
+  container.innerHTML = `
+    <div class="ajout-manuel-stat actifs"><span class="ams-label">✅ Actifs (ajoutés/re-pointés aujourd'hui)</span><span class="ams-value">${stats.actifs}</span></div>
+    <div class="ajout-manuel-stat inactifs"><span class="ams-label">⏸️ Inactifs (anciens non re-pointés)</span><span class="ams-value">${stats.inactifs}</span></div>
+    <div class="ajout-manuel-stat recurrents"><span class="ams-label">🔁 Récurrents (pointés ≥ ${SEUIL_RECURRENT} fois sur ${FENETRE_RECURRENT_JOURS}j)</span><span class="ams-value">${stats.recurrents}</span></div>
+    <div style="font-size:0.72rem;color:var(--text-mute);margin-top:8px">Total ajouts manuels en base : <strong>${stats.total}</strong></div>
+  `;
+  const btnRec = $('#btnReprendreRecurrentsAdmin');
+  if (btnRec) {
+    btnRec.disabled = stats.recurrents === 0;
+    btnRec.textContent = stats.recurrents > 0 ? `🔁 Reprendre les ${stats.recurrents} récurrents` : '🔁 Aucun récurrent';
+  }
+}
+
+$('#btnReprendreRecurrentsAdmin') && $('#btnReprendreRecurrentsAdmin').addEventListener('click', () => {
+  const recurrents = getAjoutsManuelsRecurrents();
+  if (!recurrents.length) { toast('Aucun ajout manuel récurrent détecté', 'info'); return; }
+  openReprendreModal(recurrents.map((r) => r.vehicule), 'recurrents');
+});
+
+$('#btnWipeAnciensAjouts') && $('#btnWipeAnciensAjouts').addEventListener('click', () => {
+  requireAdminPin('Effacer les ajouts manuels antérieurs', wipeAnciensAjoutsManuels);
+});
+
+async function wipeAnciensAjoutsManuels() {
+  const inactifs = getAjoutsManuelsInactifs();
+  if (!inactifs.length) { toast('Aucun ajout manuel inactif à supprimer', 'info'); return; }
+  const ok = await confirmDialog(
+    'Effacer les ajouts manuels inactifs ?',
+    `<strong>${inactifs.length}</strong> ajout(s) manuel(s) inactif(s) seront supprimés définitivement.<br><br>
+     <em>Rappel : les véhicules qui ont été re-pointés aujourd'hui ne sont PAS concernés.</em>`
+  );
+  if (!ok) return;
+  showLoading('Suppression...');
+  try {
+    const bs = 400;
+    for (let i = 0; i < inactifs.length; i += bs) {
+      const b = state.db.batch();
+      inactifs.slice(i, i + bs).forEach((v) => b.delete(state.db.collection('vehicules').doc(v.id)));
+      await b.commit();
+    }
+    toast(`${inactifs.length} ajout(s) manuel(s) inactif(s) supprimé(s)`, 'success');
+    renderAjoutsManuelsAdminStats();
+  } catch (e) { toast('Erreur : ' + e.message, 'error'); } finally { hideLoading(); }
+}
+
+/* ============================================================
+   v4.10 — MODALE "REPRENDRE LES AJOUTS MANUELS"
+   ============================================================ */
+function openReprendreModal(vehicules, mode) {
+  if (!vehicules.length) { toast('Aucun véhicule à reprendre', 'info'); return; }
+  state.reprendreSelection = vehicules;
+  state.reprendreMode = mode || 'veille';
+  const siteSel = $('#reprendreSiteSelect');
+  if (siteSel) siteSel.value = state.pointageSite || SITES[0];
+  const count = $('#reprendreCount');
+  if (count) count.textContent = vehicules.length;
+  const list = $('#reprendreList');
+  if (list) {
+    list.innerHTML = vehicules.map((v) => {
+      const site = getSiteActuel(v);
+      return `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:0.8rem">
+        <span style="font-family:var(--mono);font-weight:700;color:var(--primary);min-width:100px">${escapeHtml(v.immat)}</span>
+        <span style="flex:1;color:var(--text-dim)">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}</span>
+        <span class="badge badge-muted">${site ? '📍 ' + escapeHtml(site) : '—'}</span>
+      </div>`;
+    }).join('');
+  }
+  openModal('modalReprendre');
+}
+
+$('#reprendreValider') && $('#reprendreValider').addEventListener('click', async () => {
+  const vehicules = state.reprendreSelection;
+  if (!vehicules.length) return;
+  const fallbackSite = $('#reprendreSiteSelect').value;
+  if (!fallbackSite) { toast('Choisissez un site', 'warning'); return; }
+  if (!state.currentUser) { toast('Sélectionnez un utilisateur en haut', 'warning'); return; }
+  const ok = await confirmDialog(
+    'Confirmer la reprise ?',
+    `<strong>${vehicules.length}</strong> véhicule(s) seront pointés au site <strong>${escapeHtml(fallbackSite)}</strong> (ou à leur site d'origine s'il est connu).<br><br>Ils redeviendront actifs pour la ronde en cours.`,
+    false
+  );
+  if (!ok) return;
+  closeModal('modalReprendre');
+  showLoading(`Reprise de ${vehicules.length} véhicule(s)...`);
+  const today = todayKeyShort();
+  let done = 0; let errors = 0;
+  for (const v of vehicules) {
+    try {
+      const siteOrigine = getSiteActuel(v) || fallbackSite;
+      const lastSite = v.site;
+      if (lastSite && lastSite !== siteOrigine) {
+        try { await state.db.collection('mouvements').add({ vehiculeId: v.id, immat: v.immat, fromSite: lastSite, toSite: siteOrigine, userNom: state.currentUser, timestamp: nowIso(), jour: today, motif: 'reprise-ajout-manuel' }); } catch (e) {}
+      }
+      await state.db.collection('pointages').add({ vehiculeId: v.id, immat: v.immat, userNom: state.currentUser, site: siteOrigine, timestamp: nowIso(), jour: today, createdAt: nowIso(), autoPointage: 'reprise' });
+      await state.db.collection('vehicules').doc(v.id).update({ present: true, lastSeen: nowIso(), site: siteOrigine });
+      done++;
+      $('#loadingText').textContent = `${done}/${vehicules.length}...`;
+    } catch (e) { errors++; console.warn('[reprendre]', v.immat, e.message); }
+  }
+  hideLoading();
+  toast(`${done} véhicule(s) repris${errors ? `, ${errors} erreur(s)` : ''}`, errors ? 'warning' : 'success');
+  renderAjoutsManuelsAdminStats();
+  if ($('#tab-listes-source').classList.contains('active')) renderListesSource();
+  if ($('#tab-pointage').classList.contains('active')) renderPointage();
+});
+
+/* ============================================================
+   GALERIE
+   ============================================================ */
 let galSelectionMode = false; let galSelected = new Set();
 async function downloadPhotoFromGallery(vehId, immatSafe) {
   const v = state.vehicules.find((x) => x.id === vehId); if (!v || !v.photo) return;
@@ -3029,10 +3186,7 @@ function addFilesToRafale(files) {
   if (!validFiles.length) { toast('Aucune image valide', 'warning'); return; }
   validFiles.forEach((file) => {
     const immatFromName = extractImmatFromFilename(file.name);
-    rafale.queue.push({
-      file, immatDetected: immatFromName, immatFinal: immatFromName || '',
-      vehiculeId: null, previewUrl: URL.createObjectURL(file), status: 'pending'
-    });
+    rafale.queue.push({ file, immatDetected: immatFromName, immatFinal: immatFromName || '', vehiculeId: null, previewUrl: URL.createObjectURL(file), status: 'pending' });
   });
   toast(`${validFiles.length} photo(s) chargée(s)`, 'success');
   rafale.currentIndex = 0;
@@ -3044,12 +3198,7 @@ function addFilesToRafale(files) {
 function extractImmatFromFilename(filename) {
   const base = filename.replace(/\.[^.]+$/, '');
   const cleaned = base.replace(/[\s\-_\.]/g, '').toUpperCase();
-  const patterns = [
-    /^([A-Z]{2}\d{3,4}[A-Z]{2}\d{2})$/,
-    /^([A-Z]{2}\d{3,4}[A-Z]{1,2})$/,
-    /^(\d{3,4}[A-Z]{2}\d{2})$/,
-    /^([A-Z]{2}\d{4,5})$/,
-  ];
+  const patterns = [/^([A-Z]{2}\d{3,4}[A-Z]{2}\d{2})$/, /^([A-Z]{2}\d{3,4}[A-Z]{1,2})$/, /^(\d{3,4}[A-Z]{2}\d{2})$/, /^([A-Z]{2}\d{4,5})$/];
   for (const p of patterns) { const m = cleaned.match(p); if (m) return m[1]; }
   if (/^[A-Z0-9]{5,12}$/.test(cleaned)) return cleaned;
   return '';
@@ -3123,21 +3272,12 @@ function updateRafaleMatchInfo(item) {
   const immat = normalizeImmat(document.getElementById('rafaleImmat').value);
   if (!immat) { info.className = 'rafale-match-info'; info.innerHTML = ''; return; }
   const v = state.vehicules.find((x) => normalizeImmat(x.immat) === immat);
-  if (!v) {
-    info.className = 'rafale-match-info err';
-    info.innerHTML = `❌ <strong>${escapeHtml(immat)}</strong> introuvable dans la base.<br><span style="font-size:0.72rem">Vérifie la saisie.</span>`;
-    return;
-  }
+  if (!v) { info.className = 'rafale-match-info err'; info.innerHTML = `❌ <strong>${escapeHtml(immat)}</strong> introuvable dans la base.<br><span style="font-size:0.72rem">Vérifie la saisie.</span>`; return; }
   item.vehiculeId = v.id; item.immatFinal = v.immat;
   const hasPhoto = v.photo && v.photo.length > 0;
   const site = getSiteActuel(v);
-  if (hasPhoto) {
-    info.className = 'rafale-match-info warn';
-    info.innerHTML = `⚠️ <strong>${escapeHtml(v.immat)}</strong> a déjà une photo.<br><span style="font-size:0.72rem">Elle sera remplacée. Site : ${escapeHtml(site || '—')}</span>`;
-  } else {
-    info.className = 'rafale-match-info ok';
-    info.innerHTML = `✅ <strong>${escapeHtml(v.immat)}</strong> — ${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}<br><span style="font-size:0.72rem">📍 ${escapeHtml(site || 'Non pointé')} · ${escapeHtml(SOURCES[v.source] || '—')}</span>`;
-  }
+  if (hasPhoto) { info.className = 'rafale-match-info warn'; info.innerHTML = `⚠️ <strong>${escapeHtml(v.immat)}</strong> a déjà une photo.<br><span style="font-size:0.72rem">Elle sera remplacée. Site : ${escapeHtml(site || '—')}</span>`; }
+  else { info.className = 'rafale-match-info ok'; info.innerHTML = `✅ <strong>${escapeHtml(v.immat)}</strong> — ${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}<br><span style="font-size:0.72rem">📍 ${escapeHtml(site || 'Non pointé')} · ${escapeHtml(SOURCES[v.source] || '—')}</span>`; }
 }
 
 document.getElementById('rafaleImmat').addEventListener('input', () => {
@@ -3196,9 +3336,7 @@ async function startRafaleUpload() {
         await state.db.collection('pointages').add({ vehiculeId: item.vehiculeId, immat: item.immatFinal, userNom: state.currentUser, site: rafale.siteFilter, timestamp: nowIso(), jour: today, createdAt: nowIso(), autoPointage: 'rafale-photo' });
         await state.db.collection('vehicules').doc(item.vehiculeId).update({ present: true, lastSeen: nowIso(), site: rafale.siteFilter });
         if (statusEl) statusEl.textContent = '✅ Uploadé + pointé';
-      } else {
-        if (statusEl) statusEl.textContent = '✅ Uploadé';
-      }
+      } else { if (statusEl) statusEl.textContent = '✅ Uploadé'; }
       if (row) row.classList.add('done');
       rafale.stats.ok++;
     } catch (err) {
@@ -3214,11 +3352,7 @@ async function startRafaleUpload() {
   document.getElementById('rafaleUploadLabel').textContent = '✨ Terminé !';
   const summary = document.createElement('div');
   summary.style.cssText = 'margin-top:16px;padding:14px;background:var(--bg-3);border-radius:var(--radius);font-size:0.82rem';
-  summary.innerHTML = `
-    <div>✅ <strong>${rafale.stats.ok}</strong> photo(s) uploadée(s)</div>
-    ${rafale.stats.error ? `<div>❌ <strong>${rafale.stats.error}</strong> erreur(s)</div>` : ''}
-    ${rafale.stats.skipped ? `<div>⏭ <strong>${rafale.stats.skipped}</strong> passée(s)</div>` : ''}
-  `;
+  summary.innerHTML = `<div>✅ <strong>${rafale.stats.ok}</strong> photo(s) uploadée(s)</div>${rafale.stats.error ? `<div>❌ <strong>${rafale.stats.error}</strong> erreur(s)</div>` : ''}${rafale.stats.skipped ? `<div>⏭ <strong>${rafale.stats.skipped}</strong> passée(s)</div>` : ''}`;
   list.appendChild(summary);
   if (rafale.stats.ok > 0) toast(`${rafale.stats.ok} photo(s) uploadée(s)`, 'success');
 }
@@ -3269,12 +3403,12 @@ document.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-export]'); if (!btn) return;
   const type = btn.dataset.export;
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  if (type === 'xls-presents') { const p = state.vehicules.filter((v) => pointedIds.has(v.id)); exportExcel(p.map(vehToRow), `NTR_Trouves_${todayKey()}.xlsx`, 'Trouves'); }
-  if (type === 'xls-absents') { const a = state.vehicules.filter((v) => !pointedIds.has(v.id)); exportExcel(a.map(vehToRow), `NTR_Manquants_${todayKey()}.xlsx`, 'Manquants'); }
+  if (type === 'xls-presents') { const p = getVehiculesComptables().filter((v) => pointedIds.has(v.id)); exportExcel(p.map(vehToRow), `NTR_Trouves_${todayKey()}.xlsx`, 'Trouves'); }
+  if (type === 'xls-absents') { const a = getVehiculesComptables().filter((v) => !pointedIds.has(v.id)); exportExcel(a.map(vehToRow), `NTR_Manquants_${todayKey()}.xlsx`, 'Manquants'); }
   if (type === 'xls-sites') {
     const rows = [];
     SITES.forEach((site) => {
-      const vs = state.vehicules.filter((v) => pointedIds.has(v.id) && getSiteActuel(v) === site);
+      const vs = getVehiculesComptables().filter((v) => pointedIds.has(v.id) && getSiteActuel(v) === site);
       if (!vs.length) return;
       rows.push({ 'SITE': site, 'Immatriculation': '', 'Marque': '', 'Modele': '', 'Client': '' });
       vs.forEach((v) => rows.push({ 'SITE': '', 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modele': v.modele || '', 'Client': v.client || '' }));
@@ -3289,7 +3423,6 @@ document.addEventListener('click', (e) => {
   if (type === 'word-absent-s1') exportAbsentsWord('source1');
   if (type === 'word-absent-s2') exportAbsentsWord('source2');
   if (type === 'word-present-site') exportPresentsWord();
-  // v4.9 — nouveaux exports par source
   if (type === 'xls-source-site') exportListesSourceExcelGlobal();
   if (type === 'pdf-source-site') exportListesSourcePDFGlobal();
   if (type === 'word-source-site') exportListesSourceWordGlobal();
@@ -3305,7 +3438,7 @@ function exportPDFSites() {
   doc.text(`Genere le ${new Date().toLocaleString('fr-FR')}`, 283, 13, { align: 'right' });
   doc.setTextColor(0, 0, 0);
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  const presents = state.vehicules.filter((v) => pointedIds.has(v.id));
+  const presents = getVehiculesComptables().filter((v) => pointedIds.has(v.id));
   if (!presents.length) { toast('Aucun véhicule trouvé', 'warning'); return; }
   let y = 28; let hasData = false;
   SITES.forEach((site) => {
@@ -3326,7 +3459,7 @@ function exportPDFSites() {
 function exportPDFAbsents() {
   const { jsPDF } = window.jspdf;
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  const absents = state.vehicules.filter((v) => !pointedIds.has(v.id));
+  const absents = getVehiculesComptables().filter((v) => !pointedIds.has(v.id));
   if (!absents.length) { toast('Aucun absent', 'warning'); return; }
   const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
   doc.setFillColor(220, 38, 38); doc.rect(0, 0, 297, 20, 'F');
@@ -3349,8 +3482,9 @@ function exportPDFGlobal() {
   doc.text('Rapport global', 14, 16);
   doc.setTextColor(0, 0, 0);
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  const p = state.vehicules.filter((v) => pointedIds.has(v.id)).length;
-  const t = state.vehicules.length; const a = t - p;
+  const comptables = getVehiculesComptables();
+  const p = comptables.filter((v) => pointedIds.has(v.id)).length;
+  const t = comptables.length; const a = t - p;
   const taux = t ? Math.round((p / t) * 100) : 0;
   doc.setFontSize(11); doc.setFont(undefined, 'bold'); doc.text('Synthese', 14, 32);
   doc.setFont(undefined, 'normal'); doc.setFontSize(10);
@@ -3359,9 +3493,10 @@ function exportPDFGlobal() {
 }
 $('#btnRapportHebdo').addEventListener('click', () => {
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  const found = state.vehicules.filter((v) => pointedIds.has(v.id));
-  const manquants = state.vehicules.filter((v) => !pointedIds.has(v.id));
-  const taux = state.vehicules.length ? Math.round((found.length / state.vehicules.length) * 100) : 0;
+  const comptables = getVehiculesComptables();
+  const found = comptables.filter((v) => pointedIds.has(v.id));
+  const manquants = comptables.filter((v) => !pointedIds.has(v.id));
+  const taux = comptables.length ? Math.round((found.length / comptables.length) * 100) : 0;
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   doc.setFillColor(11, 17, 32); doc.rect(0, 0, 210, 30, 'F');
@@ -3379,7 +3514,7 @@ async function exportAbsentsWord(source) {
   if (typeof docx === 'undefined') return;
   const srcLabel = source === 'source1' ? 'Source HR' : 'Source UM';
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  const vehicles = state.vehicules.filter((v) => !pointedIds.has(v.id) && v.source === source);
+  const vehicles = getVehiculesComptables().filter((v) => !pointedIds.has(v.id) && v.source === source);
   if (!vehicles.length) { toast(`Aucun manquant`, 'warning'); return; }
   try {
     const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType } = docx;
@@ -3396,7 +3531,7 @@ async function exportAbsentsWord(source) {
 async function exportPresentsWord() {
   if (typeof docx === 'undefined') return;
   const pointedIds = new Set(state.pointages.map((p) => p.vehiculeId));
-  const vehicles = state.vehicules.filter((v) => pointedIds.has(v.id));
+  const vehicles = getVehiculesComptables().filter((v) => pointedIds.has(v.id));
   if (!vehicles.length) { toast('Aucun present', 'warning'); return; }
   try {
     const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType } = docx;
@@ -3418,20 +3553,15 @@ async function exportPresentsWord() {
 }
 
 /* ============================================================
-   v4.9 — LISTES PAR SOURCE (rendu + exports Excel/PDF/Word)
+   LISTES PAR SOURCE (v4.9 + v4.10 badges inactif)
    ============================================================ */
-
 const LISTE_SOURCE_KEYS = ['source1', 'source2', 'custom'];
 
 function initListesSourceFilters() {
   if (state.listesFiltersInitialized) return;
   const siteSel = $('#listesSiteFilter');
   if (siteSel && siteSel.options.length <= 1) {
-    SITES.forEach((s) => {
-      const opt = document.createElement('option');
-      opt.value = s; opt.textContent = s;
-      siteSel.appendChild(opt);
-    });
+    SITES.forEach((s) => { const opt = document.createElement('option'); opt.value = s; opt.textContent = s; siteSel.appendChild(opt); });
   }
   const srcSel = $('#listesSourceFilter');
   if (srcSel) srcSel.value = state.listesSourceFilter || '';
@@ -3442,15 +3572,10 @@ function initListesSourceFilters() {
 function buildListesSourceData() {
   const fSource = state.listesSourceFilter || '';
   const fSite = state.listesSiteFilter || '';
-
   let vehicules = state.vehicules.slice();
   if (fSource) vehicules = vehicules.filter((v) => (v.source || 'custom') === fSource);
-
   const sourcesMap = new Map();
-  LISTE_SOURCE_KEYS.forEach((k) => {
-    sourcesMap.set(k, { sourceKey: k, sourceLabel: SOURCES[k] || k, sitesMap: new Map(), nonPointes: [] });
-  });
-
+  LISTE_SOURCE_KEYS.forEach((k) => { sourcesMap.set(k, { sourceKey: k, sourceLabel: SOURCES[k] || k, sitesMap: new Map(), nonPointes: [] }); });
   vehicules.forEach((v) => {
     const srcKey = LISTE_SOURCE_KEYS.includes(v.source) ? v.source : 'custom';
     const entry = sourcesMap.get(srcKey);
@@ -3459,27 +3584,17 @@ function buildListesSourceData() {
     if (!entry.sitesMap.has(site)) entry.sitesMap.set(site, []);
     entry.sitesMap.get(site).push(v);
   });
-
   const result = [];
   for (const key of LISTE_SOURCE_KEYS) {
     const entry = sourcesMap.get(key);
     if (!entry) continue;
-    let sites = Array.from(entry.sitesMap.entries()).map(([siteName, vehicules]) => ({
-      siteName,
-      vehicules: vehicules.sort((a, b) => (a.immat || '').localeCompare(b.immat || ''))
-    }));
+    let sites = Array.from(entry.sitesMap.entries()).map(([siteName, vehicules]) => ({ siteName, vehicules: vehicules.sort((a, b) => (a.immat || '').localeCompare(b.immat || '')) }));
     if (fSite) sites = sites.filter((s) => s.siteName === fSite);
     const nonPointes = entry.nonPointes.sort((a, b) => (a.immat || '').localeCompare(b.immat || ''));
     const totalSites = sites.reduce((acc, s) => acc + s.vehicules.length, 0);
     const total = totalSites + (fSite ? 0 : nonPointes.length);
     if (total === 0) continue;
-    result.push({
-      sourceKey: key,
-      sourceLabel: entry.sourceLabel,
-      sites: sites.sort((a, b) => a.siteName.localeCompare(b.siteName)),
-      nonPointes: fSite ? [] : nonPointes,
-      total
-    });
+    result.push({ sourceKey: key, sourceLabel: entry.sourceLabel, sites: sites.sort((a, b) => a.siteName.localeCompare(b.siteName)), nonPointes: fSite ? [] : nonPointes, total });
   }
   return result;
 }
@@ -3490,12 +3605,11 @@ function renderListesSource() {
   const empty = $('#listesSourceEmpty');
   if (!container) return;
 
+  // v4.10 — Bannière "Reprendre"
+  renderReprendreBanner();
+
   const data = buildListesSourceData();
-  if (!data.length) {
-    container.innerHTML = '';
-    if (empty) empty.classList.remove('hidden');
-    return;
-  }
+  if (!data.length) { container.innerHTML = ''; if (empty) empty.classList.remove('hidden'); return; }
   if (empty) empty.classList.add('hidden');
 
   container.innerHTML = data.map((src) => {
@@ -3507,12 +3621,8 @@ function renderListesSource() {
           <span class="lsh-name">${escapeHtml(s.siteName)}</span>
           <span class="lsh-badge">${s.vehicules.length} véhicule(s)</span>
         </div>
-        <div class="liste-site-body">
-          ${s.vehicules.map((v) => renderListeVehiculeRow(v)).join('')}
-        </div>
-      </div>
-    `).join('');
-
+        <div class="liste-site-body">${s.vehicules.map((v) => renderListeVehiculeRow(v)).join('')}</div>
+      </div>`).join('');
     const nonPointesHtml = src.nonPointes.length ? `
       <div class="liste-site-block open" data-site="__non__">
         <div class="liste-site-header alert" data-toggle-site>
@@ -3520,12 +3630,8 @@ function renderListesSource() {
           <span class="lsh-name">Non pointés</span>
           <span class="lsh-badge">${src.nonPointes.length} véhicule(s)</span>
         </div>
-        <div class="liste-site-body">
-          ${src.nonPointes.map((v) => renderListeVehiculeRow(v)).join('')}
-        </div>
-      </div>
-    ` : '';
-
+        <div class="liste-site-body">${src.nonPointes.map((v) => renderListeVehiculeRow(v)).join('')}</div>
+      </div>` : '';
     return `
       <div class="liste-source-block" data-source-key="${src.sourceKey}">
         <div class="liste-source-header">
@@ -3540,18 +3646,13 @@ function renderListesSource() {
         </div>
         ${sitesHtml}
         ${nonPointesHtml}
-      </div>
-    `;
+      </div>`;
   }).join('');
 
-  $$('[data-toggle-site]', container).forEach((h) => {
-    h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
-  });
-
+  $$('[data-toggle-site]', container).forEach((h) => { h.addEventListener('click', () => h.parentElement.classList.toggle('open')); });
   $$('[data-export-source]', container).forEach((btn) => {
     btn.addEventListener('click', () => {
-      const fmt = btn.dataset.exportSource;
-      const srcKey = btn.dataset.sourceKey;
+      const fmt = btn.dataset.exportSource; const srcKey = btn.dataset.sourceKey;
       if (fmt === 'xls') exportListesSourceExcel(srcKey);
       else if (fmt === 'pdf') exportListesSourcePDF(srcKey);
       else if (fmt === 'word') exportListesSourceWord(srcKey);
@@ -3559,34 +3660,47 @@ function renderListesSource() {
   });
 }
 
+/* v4.10 — Bannière "Reprendre" dans vue Par source */
+function renderReprendreBanner() {
+  const container = $('#reprendreAjoutsBanner'); if (!container) return;
+  const deLaVeille = getAjoutsManuelsDeLaVeille();
+  const recurrents = getAjoutsManuelsRecurrents();
+  const suggestions = new Set();
+  const all = [];
+  deLaVeille.forEach((v) => { if (!suggestions.has(v.id)) { suggestions.add(v.id); all.push(v); } });
+  recurrents.forEach((r) => { if (!suggestions.has(r.vehicule.id)) { suggestions.add(r.vehicule.id); all.push(r.vehicule); } });
+  if (!all.length) { container.innerHTML = ''; return; }
+  container.innerHTML = `
+    <div class="reprendre-banner">
+      <span class="rb-icon">🔁</span>
+      <div class="rb-text">
+        <strong>${all.length}</strong> ajout(s) manuel(s) à reprendre (pointés hier ou récurrents)
+      </div>
+      <button class="btn btn-primary btn-sm" id="btnReprendreBanner">Reprendre tout</button>
+    </div>`;
+  const btn = $('#btnReprendreBanner');
+  if (btn) btn.addEventListener('click', () => openReprendreModal(all, 'veille+recurrents'));
+}
+
 function renderListeVehiculeRow(v) {
   const statut = STATUTS[getStatutVehicule(v)];
   const lastSeen = v.lastSeen ? formatDateFR(v.lastSeen) : '—';
+  const inactif = isAjoutManuelInactif(v);
   return `
-    <div class="liste-vehicule-row">
-      <span class="lvr-immat">${escapeHtml(v.immat || '—')}</span>
+    <div class="liste-vehicule-row" style="${inactif ? 'opacity:0.7' : ''}">
+      <span class="lvr-immat">${escapeHtml(v.immat || '—')}${inactif ? '<span class="badge-inactif">inactif</span>' : ''}</span>
       <span class="lvr-info">${escapeHtml([v.marque, v.modele].filter(Boolean).join(' ') || '—')}${v.client ? ' · ' + escapeHtml(v.client) : ''}</span>
       <span class="lvr-statut"><span class="statut-badge ${statut.cls}">${statut.icon} ${escapeHtml(statut.label)}</span></span>
       <span class="lvr-lastseen">${escapeHtml(lastSeen)}</span>
-    </div>
-  `;
+    </div>`;
 }
 
 document.addEventListener('change', (e) => {
-  if (e.target.id === 'listesSourceFilter') {
-    state.listesSourceFilter = e.target.value;
-    renderListesSource();
-  }
-  if (e.target.id === 'listesSiteFilter') {
-    state.listesSiteFilter = e.target.value;
-    renderListesSource();
-  }
+  if (e.target.id === 'listesSourceFilter') { state.listesSourceFilter = e.target.value; renderListesSource(); }
+  if (e.target.id === 'listesSiteFilter') { state.listesSiteFilter = e.target.value; renderListesSource(); }
 });
 document.addEventListener('click', (e) => {
-  if (e.target.id === 'btnListesRefresh') {
-    renderListesSource();
-    toast('Vue par source rafraîchie', 'success');
-  }
+  if (e.target.id === 'btnListesRefresh') { renderListesSource(); toast('Vue par source rafraîchie', 'success'); }
 });
 
 function getListesSourceRows(sourceKey) {
@@ -3596,29 +3710,11 @@ function getListesSourceRows(sourceKey) {
   const rows = [];
   src.sites.forEach((s) => {
     s.vehicules.forEach((v) => {
-      rows.push({
-        sourceLabel: src.sourceLabel,
-        siteLabel: s.siteName,
-        immat: v.immat || '',
-        marque: v.marque || '',
-        modele: v.modele || '',
-        client: v.client || '',
-        statut: STATUTS[getStatutVehicule(v)].label,
-        lastSeen: v.lastSeen ? formatDateFR(v.lastSeen) : ''
-      });
+      rows.push({ sourceLabel: src.sourceLabel, siteLabel: s.siteName, immat: v.immat || '', marque: v.marque || '', modele: v.modele || '', client: v.client || '', statut: STATUTS[getStatutVehicule(v)].label, lastSeen: v.lastSeen ? formatDateFR(v.lastSeen) : '', inactif: isAjoutManuelInactif(v) });
     });
   });
   src.nonPointes.forEach((v) => {
-    rows.push({
-      sourceLabel: src.sourceLabel,
-      siteLabel: '⚠️ Non pointés',
-      immat: v.immat || '',
-      marque: v.marque || '',
-      modele: v.modele || '',
-      client: v.client || '',
-      statut: STATUTS[getStatutVehicule(v)].label,
-      lastSeen: v.lastSeen ? formatDateFR(v.lastSeen) : ''
-    });
+    rows.push({ sourceLabel: src.sourceLabel, siteLabel: '⚠️ Non pointés', immat: v.immat || '', marque: v.marque || '', modele: v.modele || '', client: v.client || '', statut: STATUTS[getStatutVehicule(v)].label, lastSeen: v.lastSeen ? formatDateFR(v.lastSeen) : '', inactif: isAjoutManuelInactif(v) });
   });
   return { source: src, rows };
 }
@@ -3627,14 +3723,9 @@ function exportListesSourceExcel(sourceKey) {
   const payload = getListesSourceRows(sourceKey);
   if (!payload || !payload.rows.length) { toast('Aucune donnée à exporter', 'warning'); return; }
   const excelRows = payload.rows.map((r) => ({
-    'Source': r.sourceLabel,
-    'Site': r.siteLabel,
-    'Immatriculation': r.immat,
-    'Marque': r.marque,
-    'Modèle': r.modele,
-    'Client': r.client,
-    'Statut': r.statut,
-    'Dernière vue': r.lastSeen
+    'Source': r.sourceLabel, 'Site': r.siteLabel, 'Immatriculation': r.immat, 'Marque': r.marque,
+    'Modèle': r.modele, 'Client': r.client, 'Statut': r.statut, 'Dernière vue': r.lastSeen,
+    'Actif': r.inactif ? 'Non (inactif)' : 'Oui'
   }));
   exportExcel(excelRows, `NTR_${sourceKey}_${todayKey()}.xlsx`, payload.source.sourceLabel.slice(0, 30));
   toast(`Excel ${payload.source.sourceLabel} téléchargé`, 'success');
@@ -3646,63 +3737,32 @@ function exportListesSourcePDF(sourceKey) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const src = payload.source;
-
   doc.setFillColor(11, 17, 32); doc.rect(0, 0, 210, 22, 'F');
   doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
   doc.text('NTR TRACK — ' + src.sourceLabel, 14, 10);
   doc.setFontSize(9); doc.setFont(undefined, 'normal');
   doc.text(`Généré le ${new Date().toLocaleString('fr-FR')} · ${src.total} véhicule(s)`, 14, 17);
   doc.setTextColor(0, 0, 0);
-
-  let y = 30;
-  let isFirstSite = true;
-
+  let y = 30; let isFirstSite = true;
   src.sites.forEach((s) => {
-    if (!isFirstSite) y += 4;
-    isFirstSite = false;
+    if (!isFirstSite) y += 4; isFirstSite = false;
     if (y > 240) { doc.addPage(); y = 20; }
     doc.setFillColor(37, 48, 68); doc.rect(14, y - 4, 182, 8, 'F');
     doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'bold');
     doc.text(`📍 ${s.siteName} — ${s.vehicules.length} véhicule(s)`, 16, y + 1.5);
-    doc.setTextColor(0, 0, 0);
-    y += 8;
-    doc.autoTable({
-      startY: y,
-      head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue']],
-      body: s.vehicules.map((v, i) => [
-        String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '',
-        STATUTS[getStatutVehicule(v)].label, v.lastSeen ? formatDateFR(v.lastSeen) : '—'
-      ]),
-      theme: 'striped',
-      headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 8 },
-      styles: { fontSize: 8, cellPadding: 1.8 },
-      margin: { left: 14, right: 14 }
-    });
+    doc.setTextColor(0, 0, 0); y += 8;
+    doc.autoTable({ startY: y, head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue']], body: s.vehicules.map((v, i) => [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label, v.lastSeen ? formatDateFR(v.lastSeen) : '—']), theme: 'striped', headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 8 }, styles: { fontSize: 8, cellPadding: 1.8 }, margin: { left: 14, right: 14 } });
     y = doc.lastAutoTable.finalY + 6;
   });
-
   if (src.nonPointes.length) {
     if (y > 220) { doc.addPage(); y = 20; }
     y += 4;
     doc.setFillColor(220, 38, 38); doc.rect(14, y - 4, 182, 8, 'F');
     doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'bold');
     doc.text(`⚠️ Non pointés — ${src.nonPointes.length} véhicule(s)`, 16, y + 1.5);
-    doc.setTextColor(0, 0, 0);
-    y += 8;
-    doc.autoTable({
-      startY: y,
-      head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut']],
-      body: src.nonPointes.map((v, i) => [
-        String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '',
-        STATUTS[getStatutVehicule(v)].label
-      ]),
-      theme: 'striped',
-      headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 8 },
-      styles: { fontSize: 8, cellPadding: 1.8 },
-      margin: { left: 14, right: 14 }
-    });
+    doc.setTextColor(0, 0, 0); y += 8;
+    doc.autoTable({ startY: y, head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut']], body: src.nonPointes.map((v, i) => [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label]), theme: 'striped', headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 8 }, styles: { fontSize: 8, cellPadding: 1.8 }, margin: { left: 14, right: 14 } });
   }
-
   doc.save(`NTR_${sourceKey}_${todayKey()}.pdf`);
   toast(`PDF ${src.sourceLabel} téléchargé`, 'success');
 }
@@ -3714,110 +3774,43 @@ async function exportListesSourceWord(sourceKey) {
   try {
     const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType } = docx;
     const src = payload.source;
-
-    const makeHeaderCell = (txt) => new TableCell({
-      children: [new Paragraph({ children: [new TextRun({ text: txt, bold: true, size: 20, color: 'FFFFFF' })], alignment: AlignmentType.CENTER })],
-      shading: { fill: '0B1120' }
-    });
-    const makeCell = (txt) => new TableCell({
-      children: [new Paragraph({ children: [new TextRun({ text: String(txt || ''), size: 20 })], alignment: AlignmentType.LEFT })]
-    });
-
+    const makeHeaderCell = (txt) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: txt, bold: true, size: 20, color: 'FFFFFF' })], alignment: AlignmentType.CENTER })], shading: { fill: '0B1120' } });
+    const makeCell = (txt) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: String(txt || ''), size: 20 })], alignment: AlignmentType.LEFT })] });
     const children = [
-      new Paragraph({
-        children: [new TextRun({ text: `NTR TRACK — ${src.sourceLabel}`, bold: true, size: 32 })],
-        alignment: AlignmentType.CENTER,
-        spacing: { after: 100 }
-      }),
-      new Paragraph({
-        children: [new TextRun({ text: `Généré le ${new Date().toLocaleString('fr-FR')} · ${src.total} véhicule(s)`, size: 20, italics: true })],
-        alignment: AlignmentType.CENTER,
-        spacing: { after: 300 }
-      })
+      new Paragraph({ children: [new TextRun({ text: `NTR TRACK — ${src.sourceLabel}`, bold: true, size: 32 })], alignment: AlignmentType.CENTER, spacing: { after: 100 } }),
+      new Paragraph({ children: [new TextRun({ text: `Généré le ${new Date().toLocaleString('fr-FR')} · ${src.total} véhicule(s)`, size: 20, italics: true })], alignment: AlignmentType.CENTER, spacing: { after: 300 } })
     ];
-
     src.sites.forEach((s) => {
-      children.push(new Paragraph({
-        children: [new TextRun({ text: `📍 ${s.siteName} — ${s.vehicules.length} véhicule(s)`, bold: true, size: 24 })],
-        spacing: { before: 200, after: 100 }
-      }));
-      const rows = [new TableRow({
-        children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue'].map(makeHeaderCell),
-        tableHeader: true
-      })];
-      s.vehicules.forEach((v, i) => {
-        rows.push(new TableRow({
-          children: [
-            String(i + 1), v.immat || '', v.marque || '', v.modele || '',
-            v.client || '', STATUTS[getStatutVehicule(v)].label,
-            v.lastSeen ? formatDateFR(v.lastSeen) : '—'
-          ].map(makeCell)
-        }));
-      });
+      children.push(new Paragraph({ children: [new TextRun({ text: `📍 ${s.siteName} — ${s.vehicules.length} véhicule(s)`, bold: true, size: 24 })], spacing: { before: 200, after: 100 } }));
+      const rows = [new TableRow({ children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue'].map(makeHeaderCell), tableHeader: true })];
+      s.vehicules.forEach((v, i) => { rows.push(new TableRow({ children: [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label, v.lastSeen ? formatDateFR(v.lastSeen) : '—'].map(makeCell) })); });
       children.push(new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } }));
     });
-
     if (src.nonPointes.length) {
-      children.push(new Paragraph({
-        children: [new TextRun({ text: `⚠️ Non pointés — ${src.nonPointes.length} véhicule(s)`, bold: true, size: 24, color: 'DC2626' })],
-        spacing: { before: 300, after: 100 }
-      }));
-      const rows = [new TableRow({
-        children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut'].map(makeHeaderCell),
-        tableHeader: true
-      })];
-      src.nonPointes.forEach((v, i) => {
-        rows.push(new TableRow({
-          children: [
-            String(i + 1), v.immat || '', v.marque || '', v.modele || '',
-            v.client || '', STATUTS[getStatutVehicule(v)].label
-          ].map(makeCell)
-        }));
-      });
+      children.push(new Paragraph({ children: [new TextRun({ text: `⚠️ Non pointés — ${src.nonPointes.length} véhicule(s)`, bold: true, size: 24, color: 'DC2626' })], spacing: { before: 300, after: 100 } }));
+      const rows = [new TableRow({ children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut'].map(makeHeaderCell), tableHeader: true })];
+      src.nonPointes.forEach((v, i) => { rows.push(new TableRow({ children: [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label].map(makeCell) })); });
       children.push(new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } }));
     }
-
     const doc = new Document({ sections: [{ children }] });
     const blob = await Packer.toBlob(doc);
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
     a.download = `NTR_${sourceKey}_${todayKey()}.docx`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     toast(`Word ${src.sourceLabel} téléchargé`, 'success');
-  } catch (e) {
-    console.error('[exportListesSourceWord]', e);
-    toast('Erreur export Word : ' + e.message, 'error');
-  }
+  } catch (e) { console.error('[exportListesSourceWord]', e); toast('Erreur export Word : ' + e.message, 'error'); }
 }
 
-/* Exports globaux */
+/* Exports globaux Par source */
 function exportListesSourceExcelGlobal() {
   const data = buildListesSourceData();
   if (!data.length) { toast('Aucune donnée', 'warning'); return; }
   const rows = [];
   data.forEach((src) => {
     src.sites.forEach((s) => {
-      s.vehicules.forEach((v) => rows.push({
-        'Source': src.sourceLabel,
-        'Site': s.siteName,
-        'Immatriculation': v.immat || '',
-        'Marque': v.marque || '',
-        'Modèle': v.modele || '',
-        'Client': v.client || '',
-        'Statut': STATUTS[getStatutVehicule(v)].label,
-        'Dernière vue': v.lastSeen ? formatDateFR(v.lastSeen) : ''
-      }));
+      s.vehicules.forEach((v) => rows.push({ 'Source': src.sourceLabel, 'Site': s.siteName, 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modèle': v.modele || '', 'Client': v.client || '', 'Statut': STATUTS[getStatutVehicule(v)].label, 'Dernière vue': v.lastSeen ? formatDateFR(v.lastSeen) : '', 'Actif': isAjoutManuelInactif(v) ? 'Non' : 'Oui' }));
     });
-    src.nonPointes.forEach((v) => rows.push({
-      'Source': src.sourceLabel,
-      'Site': '⚠️ Non pointés',
-      'Immatriculation': v.immat || '',
-      'Marque': v.marque || '',
-      'Modèle': v.modele || '',
-      'Client': v.client || '',
-      'Statut': STATUTS[getStatutVehicule(v)].label,
-      'Dernière vue': v.lastSeen ? formatDateFR(v.lastSeen) : ''
-    }));
+    src.nonPointes.forEach((v) => rows.push({ 'Source': src.sourceLabel, 'Site': '⚠️ Non pointés', 'Immatriculation': v.immat || '', 'Marque': v.marque || '', 'Modèle': v.modele || '', 'Client': v.client || '', 'Statut': STATUTS[getStatutVehicule(v)].label, 'Dernière vue': v.lastSeen ? formatDateFR(v.lastSeen) : '', 'Actif': isAjoutManuelInactif(v) ? 'Non' : 'Oui' }));
   });
   exportExcel(rows, `NTR_ParSource_${todayKey()}.xlsx`, 'Par source');
   toast('Excel global téléchargé', 'success');
@@ -3829,66 +3822,35 @@ function exportListesSourcePDFGlobal() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   let firstPage = true;
-
   data.forEach((src) => {
-    if (!firstPage) doc.addPage();
-    firstPage = false;
-
+    if (!firstPage) doc.addPage(); firstPage = false;
     doc.setFillColor(11, 17, 32); doc.rect(0, 0, 210, 22, 'F');
     doc.setTextColor(255, 255, 255); doc.setFontSize(14); doc.setFont(undefined, 'bold');
     doc.text('NTR TRACK — ' + src.sourceLabel, 14, 10);
     doc.setFontSize(9); doc.setFont(undefined, 'normal');
     doc.text(`Généré le ${new Date().toLocaleString('fr-FR')} · ${src.total} véhicule(s)`, 14, 17);
     doc.setTextColor(0, 0, 0);
-
     let y = 30;
     src.sites.forEach((s) => {
       if (y > 240) { doc.addPage(); y = 20; }
       doc.setFillColor(37, 48, 68); doc.rect(14, y - 4, 182, 8, 'F');
       doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'bold');
       doc.text(`📍 ${s.siteName} — ${s.vehicules.length} véhicule(s)`, 16, y + 1.5);
-      doc.setTextColor(0, 0, 0);
-      y += 8;
-      doc.autoTable({
-        startY: y,
-        head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue']],
-        body: s.vehicules.map((v, i) => [
-          String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '',
-          STATUTS[getStatutVehicule(v)].label, v.lastSeen ? formatDateFR(v.lastSeen) : '—'
-        ]),
-        theme: 'striped',
-        headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 8 },
-        styles: { fontSize: 8, cellPadding: 1.8 },
-        margin: { left: 14, right: 14 }
-      });
+      doc.setTextColor(0, 0, 0); y += 8;
+      doc.autoTable({ startY: y, head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue']], body: s.vehicules.map((v, i) => [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label, v.lastSeen ? formatDateFR(v.lastSeen) : '—']), theme: 'striped', headStyles: { fillColor: [11, 17, 32], textColor: 255, fontSize: 8 }, styles: { fontSize: 8, cellPadding: 1.8 }, margin: { left: 14, right: 14 } });
       y = doc.lastAutoTable.finalY + 6;
     });
-
     if (src.nonPointes.length) {
       if (y > 220) { doc.addPage(); y = 20; }
       y += 4;
       doc.setFillColor(220, 38, 38); doc.rect(14, y - 4, 182, 8, 'F');
       doc.setTextColor(255, 255, 255); doc.setFontSize(11); doc.setFont(undefined, 'bold');
       doc.text(`⚠️ Non pointés — ${src.nonPointes.length} véhicule(s)`, 16, y + 1.5);
-      doc.setTextColor(0, 0, 0);
-      y += 8;
-      doc.autoTable({
-        startY: y,
-        head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut']],
-        body: src.nonPointes.map((v, i) => [
-          String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '',
-          STATUTS[getStatutVehicule(v)].label
-        ]),
-        theme: 'striped',
-        headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 8 },
-        styles: { fontSize: 8, cellPadding: 1.8 },
-        margin: { left: 14, right: 14 }
-      });
+      doc.setTextColor(0, 0, 0); y += 8;
+      doc.autoTable({ startY: y, head: [['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut']], body: src.nonPointes.map((v, i) => [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label]), theme: 'striped', headStyles: { fillColor: [220, 38, 38], textColor: 255, fontSize: 8 }, styles: { fontSize: 8, cellPadding: 1.8 }, margin: { left: 14, right: 14 } });
     }
   });
-
-  doc.save(`NTR_ParSource_${todayKey()}.pdf`);
-  toast('PDF global téléchargé', 'success');
+  doc.save(`NTR_ParSource_${todayKey()}.pdf`); toast('PDF global téléchargé', 'success');
 }
 
 async function exportListesSourceWordGlobal() {
@@ -3897,79 +3859,37 @@ async function exportListesSourceWordGlobal() {
   if (typeof docx === 'undefined') { toast('Bibliothèque Word non chargée', 'error'); return; }
   try {
     const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType, PageBreak } = docx;
-
-    const makeHeaderCell = (txt, color) => new TableCell({
-      children: [new Paragraph({ children: [new TextRun({ text: txt, bold: true, size: 20, color: 'FFFFFF' })], alignment: AlignmentType.CENTER })],
-      shading: { fill: color }
-    });
-    const makeCell = (txt) => new TableCell({
-      children: [new Paragraph({ children: [new TextRun({ text: String(txt || ''), size: 20 })] })]
-    });
-
+    const makeHeaderCell = (txt, color) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: txt, bold: true, size: 20, color: 'FFFFFF' })], alignment: AlignmentType.CENTER })], shading: { fill: color } });
+    const makeCell = (txt) => new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: String(txt || ''), size: 20 })] })] });
     const children = [];
     data.forEach((src, idx) => {
       if (idx > 0) children.push(new Paragraph({ children: [new PageBreak()] }));
-      children.push(new Paragraph({
-        children: [new TextRun({ text: `NTR TRACK — ${src.sourceLabel}`, bold: true, size: 32 })],
-        alignment: AlignmentType.CENTER,
-        spacing: { after: 100 }
-      }));
-      children.push(new Paragraph({
-        children: [new TextRun({ text: `Généré le ${new Date().toLocaleString('fr-FR')} · ${src.total} véhicule(s)`, size: 20, italics: true })],
-        alignment: AlignmentType.CENTER,
-        spacing: { after: 300 }
-      }));
-
+      children.push(new Paragraph({ children: [new TextRun({ text: `NTR TRACK — ${src.sourceLabel}`, bold: true, size: 32 })], alignment: AlignmentType.CENTER, spacing: { after: 100 } }));
+      children.push(new Paragraph({ children: [new TextRun({ text: `Généré le ${new Date().toLocaleString('fr-FR')} · ${src.total} véhicule(s)`, size: 20, italics: true })], alignment: AlignmentType.CENTER, spacing: { after: 300 } }));
       src.sites.forEach((s) => {
-        children.push(new Paragraph({
-          children: [new TextRun({ text: `📍 ${s.siteName} — ${s.vehicules.length} véhicule(s)`, bold: true, size: 24 })],
-          spacing: { before: 200, after: 100 }
-        }));
-        const rows = [new TableRow({
-          children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue'].map((h) => makeHeaderCell(h, '0B1120')),
-          tableHeader: true
-        })];
-        s.vehicules.forEach((v, i) => {
-          rows.push(new TableRow({
-            children: [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label, v.lastSeen ? formatDateFR(v.lastSeen) : '—'].map(makeCell)
-          }));
-        });
+        children.push(new Paragraph({ children: [new TextRun({ text: `📍 ${s.siteName} — ${s.vehicules.length} véhicule(s)`, bold: true, size: 24 })], spacing: { before: 200, after: 100 } }));
+        const rows = [new TableRow({ children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut', 'Dernière vue'].map((h) => makeHeaderCell(h, '0B1120')), tableHeader: true })];
+        s.vehicules.forEach((v, i) => { rows.push(new TableRow({ children: [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label, v.lastSeen ? formatDateFR(v.lastSeen) : '—'].map(makeCell) })); });
         children.push(new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } }));
       });
-
       if (src.nonPointes.length) {
-        children.push(new Paragraph({
-          children: [new TextRun({ text: `⚠️ Non pointés — ${src.nonPointes.length} véhicule(s)`, bold: true, size: 24, color: 'DC2626' })],
-          spacing: { before: 300, after: 100 }
-        }));
-        const rows = [new TableRow({
-          children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut'].map((h) => makeHeaderCell(h, 'DC2626')),
-          tableHeader: true
-        })];
-        src.nonPointes.forEach((v, i) => {
-          rows.push(new TableRow({
-            children: [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label].map(makeCell)
-          }));
-        });
+        children.push(new Paragraph({ children: [new TextRun({ text: `⚠️ Non pointés — ${src.nonPointes.length} véhicule(s)`, bold: true, size: 24, color: 'DC2626' })], spacing: { before: 300, after: 100 } }));
+        const rows = [new TableRow({ children: ['N°', 'Immat', 'Marque', 'Modèle', 'Client', 'Statut'].map((h) => makeHeaderCell(h, 'DC2626')), tableHeader: true })];
+        src.nonPointes.forEach((v, i) => { rows.push(new TableRow({ children: [String(i + 1), v.immat || '', v.marque || '', v.modele || '', v.client || '', STATUTS[getStatutVehicule(v)].label].map(makeCell) })); });
         children.push(new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } }));
       }
     });
-
     const doc = new Document({ sections: [{ children }] });
     const blob = await Packer.toBlob(doc);
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
     a.download = `NTR_ParSource_${todayKey()}.docx`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     toast('Word global téléchargé', 'success');
-  } catch (e) {
-    console.error('[exportListesSourceWordGlobal]', e);
-    toast('Erreur export Word : ' + e.message, 'error');
-  }
+  } catch (e) { console.error('[exportListesSourceWordGlobal]', e); toast('Erreur export Word : ' + e.message, 'error'); }
 }
 
 /* ============================================================
-   ATTESTATION (inchangé)
+   ATTESTATION
    ============================================================ */
 function getMoisCleFR() { const now = new Date(); return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`; }
 function formatNumAttestation(numero, dateRef = new Date()) { const mois = MOIS_NOMS_FR[dateRef.getMonth()]; const annee = dateRef.getFullYear(); return `N°${numero}/${mois}/${annee}`; }
@@ -4279,7 +4199,7 @@ function renderChefDashboard() {
   const t = r7.reduce((s, r) => s + (r.stats?.total ?? 0), 0);
   $('#chef7Rate').textContent = (t ? Math.round((p / t) * 100) : 0) + '%';
   const pointedIds = new Set(state.pointages.map((pt) => pt.vehiculeId));
-  $('#chefMissing').textContent = state.vehicules.filter((v) => !pointedIds.has(v.id)).length;
+  $('#chefMissing').textContent = getVehiculesComptables().filter((v) => !pointedIds.has(v.id)).length;
   const byStatut = {};
   Object.keys(STATUTS).forEach((k) => byStatut[k] = 0);
   state.vehicules.forEach((v) => { const s = getStatutVehicule(v); byStatut[s] = (byStatut[s] || 0) + 1; });
@@ -4350,6 +4270,7 @@ async function init() {
     renderOuEst();
     updateSmartTabs();
     initListesSourceFilters();
+    renderAjoutsManuelsAdminStats();
   } catch (e) { console.warn('[init UI]', e); }
   hideLoading();
 
